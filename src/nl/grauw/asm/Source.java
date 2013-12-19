@@ -16,8 +16,10 @@ public class Source {
 	
 	public String toString() {
 		StringBuilder string = new StringBuilder();
-		for (Line line : lines)
+		for (Line line : lines) {
 			string.append(line);
+			string.append('\n');
+		}
 		return string.toString();
 	}
 	
