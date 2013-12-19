@@ -1,6 +1,7 @@
 package nl.grauw.asm;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Statement {
 	
@@ -14,6 +15,14 @@ public class Statement {
 	public String AddArgument(String argument) {
 		arguments.add(argument);
 		return argument;
+	}
+	
+	public String getInstruction() {
+		return instruction;
+	}
+	
+	public List<String> getArguments() {
+		return arguments;
 	}
 	
 	public String toString() {
