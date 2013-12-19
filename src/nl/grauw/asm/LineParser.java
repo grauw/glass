@@ -14,6 +14,9 @@ public class LineParser {
 	private String text;
 	
 	public Line parse(String text, File sourceFile, int lineNumber) {
+		if (accumulator.length() > 0)
+			throw new RuntimeException("Accumulator not consumed.");
+		
 		state = labelStartState;
 		label = null;
 		statement = null;
@@ -51,13 +54,12 @@ public class LineParser {
 	private class LabelStartState extends State {
 		public State parse(char character) {
 			if (isIdentifierStart(character)) {
-				accumulator.setLength(0);
 				accumulator.append(character);
 				return labelReadState;
 			} else if (isWhitespace(character)) {
 				return statementStartState;
 			} else if (character == ';') {
-				return commentStartState;
+				return commentReadState;
 			} else if (character == '\0') {
 				return endState;
 			}
@@ -73,10 +75,11 @@ public class LineParser {
 				return this;
 			} else {
 				label = new Label(accumulator.toString());
+				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
 				} else if (character == ';') {
-					return commentStartState;
+					return commentReadState;
 				} else if (character == '\0') {
 					return endState;
 				}
@@ -89,13 +92,12 @@ public class LineParser {
 	private class StatementStartState extends State {
 		public State parse(char character) {
 			if (isIdentifierStart(character)) {
-				accumulator.setLength(0);
 				accumulator.append(character);
 				return statementReadState;
 			} else if (isWhitespace(character)) {
 				return this;
 			} else if (character == ';') {
-				return commentStartState;
+				return commentReadState;
 			} else if (character == '\0') {
 				return endState;
 			}
@@ -111,10 +113,11 @@ public class LineParser {
 				return this;
 			} else {
 				statement = new Statement(accumulator.toString());
+				accumulator.setLength(0);
 				if (isWhitespace(character)) {
 					return argumentStartState;
 				} else if (character == ';') {
-					return commentStartState;
+					return commentReadState;
 				} else if (character == '\0') {
 					return endState;
 				}
@@ -164,29 +167,17 @@ public class LineParser {
 		}
 	}
 	
-	private CommentStartState commentStartState = new CommentStartState();
-	private class CommentStartState extends State {
-		public State parse(char character) {
-			if (character == '\0') {
-				comment = new Comment("");
-				return endState;
-			} else {
-				accumulator.setLength(0);
-				accumulator.append(character);
-				return commentReadState;
-			}
-		}
-	}
-	
 	private CommentReadState commentReadState = new CommentReadState();
 	private class CommentReadState extends State {
 		public State parse(char character) {
 			accumulator.append(character);
 			if (character == '\0') {
 				comment = new Comment(accumulator.toString());
+				accumulator.setLength(0);
 				return endState;
+			} else {
+				return this;
 			}
-			return this;
 		}
 	}
 	
