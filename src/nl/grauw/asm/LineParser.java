@@ -33,10 +33,6 @@ public class LineParser {
 	private abstract class State {
 		public abstract State parse(char character);
 		
-		public boolean isLineEnd(char character) {
-			return character == '\0';
-		}
-		
 		public boolean isWhitespace(char character) {
 			return character == ' ' || character == '\t';
 		}
@@ -49,10 +45,6 @@ public class LineParser {
 			return character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z' ||
 				character == '_' || character == '.' || character == '?' || character == '@';
 		}
-		
-		public boolean isComment(char character) {
-			return character == ';';
-		}
 	}
 	
 	private LabelStartState labelStartState = new LabelStartState();
@@ -64,9 +56,9 @@ public class LineParser {
 				return labelReadState;
 			} else if (isWhitespace(character)) {
 				return statementStartState;
-			} else if (isComment(character)) {
+			} else if (character == ';') {
 				return commentStartState;
-			} else if (isLineEnd(character)) {
+			} else if (character == '\0') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -83,9 +75,9 @@ public class LineParser {
 				label = new Label(accumulator.toString());
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
-				} else if (isComment(character)) {
+				} else if (character == ';') {
 					return commentStartState;
-				} else if (isLineEnd(character)) {
+				} else if (character == '\0') {
 					return endState;
 				}
 			}
@@ -102,9 +94,9 @@ public class LineParser {
 				return statementReadState;
 			} else if (isWhitespace(character)) {
 				return this;
-			} else if (isComment(character)) {
+			} else if (character == ';') {
 				return commentStartState;
-			} else if (isLineEnd(character)) {
+			} else if (character == '\0') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -121,9 +113,9 @@ public class LineParser {
 				statement = new Statement(accumulator.toString());
 				if (isWhitespace(character)) {
 					return argumentStartState;
-				} else if (isComment(character)) {
+				} else if (character == ';') {
 					return commentStartState;
-				} else if (isLineEnd(character)) {
+				} else if (character == '\0') {
 					return endState;
 				}
 			}
@@ -145,9 +137,9 @@ public class LineParser {
 //				return statementReadState;
 //			} else if (isWhitespace(character)) {
 //				return this;
-//			} else if (isComment(character)) {
+//			} else if (character == ';') {
 //				return commentStartState;
-//			} else if (isLineEnd(character)) {
+//			} else if (character == '\0') {
 //				return endState;
 //			}
 			throw new SyntaxError();
@@ -163,9 +155,9 @@ public class LineParser {
 //				return statementReadState;
 //			} else if (isWhitespace(character)) {
 //				return this;
-//			} else if (isComment(character)) {
+//			} else if (character == ';') {
 //				return commentStartState;
-//			} else if (isLineEnd(character)) {
+//			} else if (character == '\0') {
 //				return endState;
 //			}
 			throw new SyntaxError();
@@ -175,7 +167,7 @@ public class LineParser {
 	private CommentStartState commentStartState = new CommentStartState();
 	private class CommentStartState extends State {
 		public State parse(char character) {
-			if (isLineEnd(character)) {
+			if (character == '\0') {
 				comment = new Comment("");
 				return endState;
 			} else {
@@ -190,7 +182,7 @@ public class LineParser {
 	private class CommentReadState extends State {
 		public State parse(char character) {
 			accumulator.append(character);
-			if (isLineEnd(character)) {
+			if (character == '\0') {
 				comment = new Comment(accumulator.toString());
 				return endState;
 			}
