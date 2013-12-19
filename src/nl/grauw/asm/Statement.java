@@ -11,7 +11,11 @@ public class Statement {
 		this.instruction = instruction;
 	}
 	
-	@Override
+	public String AddArgument(String argument) {
+		arguments.add(argument);
+		return argument;
+	}
+	
 	public String toString() {
 		StringBuilder builder = new StringBuilder(instruction);
 		builder.append(' ');

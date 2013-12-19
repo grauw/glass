@@ -129,22 +129,20 @@ public class LineParser {
 	private ArgumentStartState argumentStartState = new ArgumentStartState();
 	private class ArgumentStartState extends State {
 		public State parse(char character) {
-//			if (character == '"') {
-//				return stringReadState;
-//			} else if (character == ',' || character == ';' || character == '\0') {
-//				
-//			}
-//			if (isIdentifierStart(character)) {
-//				accumulator.setLength(0);
-//				accumulator.append(character);
-//				return statementReadState;
-//			} else if (isWhitespace(character)) {
-//				return this;
-//			} else if (character == ';') {
-//				return commentStartState;
-//			} else if (character == '\0') {
-//				return endState;
-//			}
+			if (isIdentifier(character) || character == '(' || character == '"') {
+				accumulator.append(character);
+				if (character == '"') {
+					return argumentStringState;
+				} else {
+					return argumentReadState;
+				}
+			} else if (isWhitespace(character)) {
+				return this;
+			} else if (character == ';') {
+				return commentReadState;
+			} else if (character == '\0') {
+				return endState;
+			}
 			throw new SyntaxError();
 		}
 	}
@@ -152,18 +150,53 @@ public class LineParser {
 	private ArgumentReadState argumentReadState = new ArgumentReadState();
 	private class ArgumentReadState extends State {
 		public State parse(char character) {
-//			if (isIdentifierStart(character)) {
-//				accumulator.setLength(0);
-//				accumulator.append(character);
-//				return statementReadState;
-//			} else if (isWhitespace(character)) {
-//				return this;
-//			} else if (character == ';') {
-//				return commentStartState;
-//			} else if (character == '\0') {
-//				return endState;
-//			}
+			if (isIdentifier(character) || character == '(' || character == ')' || character == '"') {
+				accumulator.append(character);
+				if (character == '"') {
+					return argumentStringState;
+				} else {
+					return argumentReadState;
+				}
+			} else if (character == ',' || character == ';' || character == '\0') {
+				statement.AddArgument(accumulator.toString().trim());
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else if (isWhitespace(character)) {
+				return this;
+			} else if (character == ';') {
+				return commentReadState;
+			} else if (character == '\0') {
+				return endState;
+			}
 			throw new SyntaxError();
+		}
+	}
+	
+	private ArgumentStringState argumentStringState = new ArgumentStringState();
+	private class ArgumentStringState extends State {
+		public State parse(char character) {
+			accumulator.append(character);
+			if (character == '\\') {
+				return argumentStringEscapeState;
+			} else if (character == '"') {
+				return argumentReadState;
+			} else if (character == '\0') {
+				throw new SyntaxError();
+			} else {
+				return this;
+			}
+		}
+	}
+	
+	private ArgumentStringEscapeState argumentStringEscapeState = new ArgumentStringEscapeState();
+	private class ArgumentStringEscapeState extends State {
+		public State parse(char character) {
+			accumulator.append(character);
+			if (character == '\0') {
+				throw new SyntaxError();
+			} else {
+				return this;
+			}
 		}
 	}
 	
