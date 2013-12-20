@@ -30,6 +30,7 @@ public class LineParser {
 			columnNumber = i;
 			state = state.parse(text.charAt(i));
 		}
+		columnNumber = text.length();
 		state.parse('\0');
 		
 		return new Line(label, statement, comment, sourceFile, lineNumber);
