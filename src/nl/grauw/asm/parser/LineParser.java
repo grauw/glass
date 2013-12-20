@@ -38,7 +38,9 @@ public class LineParser {
 				state = state.parse(text.charAt(i));
 			}
 			columnNumber = text.length();
-			state.parse('\0');
+			state = state.parse('\0');
+			if (state != endState)
+				throw new RuntimeException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(NumberFormatException e) {
 			throw e;
 		}
