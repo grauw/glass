@@ -12,6 +12,7 @@ public class LineParser {
 	private File sourceFile;
 	private int lineNumber;
 	private String text;
+	private int columnNumber;
 	
 	public Line parse(String text, File sourceFile, int lineNumber) {
 		if (accumulator.length() > 0)
@@ -26,6 +27,7 @@ public class LineParser {
 		this.text = text;
 		
 		for (int i = 0, length = text.length(); i < length; i++) {
+			columnNumber = i;
 			state = state.parse(text.charAt(i));
 		}
 		state.parse('\0');
@@ -224,7 +226,8 @@ public class LineParser {
 	private class SyntaxError extends RuntimeException {
 		private static final long serialVersionUID = 1L;
 		public SyntaxError() {
-			super("Syntax error on line " + lineNumber + " of file " + sourceFile + "\n" + text);
+			super("Syntax error on line " + lineNumber + ", column " + columnNumber + " of file " + sourceFile +
+					"\n" + text + "\n" + (text.substring(0, columnNumber).replaceAll("[^\t]", " ") + "^"));
 		}
 	}
 	
