@@ -2,6 +2,8 @@ package nl.grauw.asm;
 
 import java.io.File;
 
+import nl.grauw.asm.parser.SourceParser;
+
 public class Assembler {
 	
 	private static Assembler instance;

@@ -1,4 +1,4 @@
-package nl.grauw.asm;
+package nl.grauw.asm.parser;
 
 import java.util.ArrayList;
 import java.util.List;

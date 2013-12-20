@@ -1,6 +1,11 @@
-package nl.grauw.asm;
+package nl.grauw.asm.parser;
 
 import java.io.File;
+
+import nl.grauw.asm.Comment;
+import nl.grauw.asm.Label;
+import nl.grauw.asm.Line;
+import nl.grauw.asm.Statement;
 
 public class LineParser {
 	
