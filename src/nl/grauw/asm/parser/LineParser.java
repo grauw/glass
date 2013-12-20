@@ -253,26 +253,30 @@ public class LineParser {
 					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
-			} else if (character == 'H' || character == 'h') {
-				int value = Integer.parseInt(accumulator.toString(), 16);
-				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
-				accumulator.setLength(0);
-				return argumentStartState;
-			} else if (character == 'B' || character == 'b') {
-				int value = Integer.parseInt(accumulator.toString(), 2);
-				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
-				accumulator.setLength(0);
-				return argumentStartState;
-			} else if (character == 'O' || character == 'o') {
-				int value = Integer.parseInt(accumulator.toString(), 8);
-				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
-				accumulator.setLength(0);
-				return argumentStartState;
 			} else {
-				int value = Integer.parseInt(accumulator.toString());
-				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
-				accumulator.setLength(0);
-				return argumentNoIdentifierState.parse(character);
+				String string = accumulator.toString();
+				if (character == 'H' || character == 'h') {
+					int value = Integer.parseInt(string, 16);
+					expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+					accumulator.setLength(0);
+					return argumentStartState;
+				} else if (character == 'O' || character == 'o') {
+					int value = Integer.parseInt(string, 8);
+					expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+					accumulator.setLength(0);
+					return argumentStartState;
+				} else {
+					if (string.endsWith("B") || string.endsWith("b")) {
+						int value = Integer.parseInt(string.substring(0, string.length() - 1), 2);
+						expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+						accumulator.setLength(0);
+					} else {
+						int value = Integer.parseInt(string);
+						expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+						accumulator.setLength(0);
+					}
+					return argumentNoIdentifierState.parse(character);
+				}
 			}
 		}
 	}
