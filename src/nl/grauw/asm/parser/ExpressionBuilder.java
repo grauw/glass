@@ -1,7 +1,7 @@
 package nl.grauw.asm.parser;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.IntegerLiteral;
@@ -9,7 +9,7 @@ import nl.grauw.asm.expressions.StringLiteral;
 
 public class ExpressionBuilder {
 	
-	private List<Token> tokens = new ArrayList<Token>();
+	private Queue<Token> tokens = new ArrayDeque<Token>();
 	
 	public void AddToken(Token token) {
 		tokens.add(token);
@@ -21,10 +21,10 @@ public class ExpressionBuilder {
 	
 	public Expression getExpression() {
 		Expression expression;
-		if (tokens.size() > 0 && (tokens.get(0) instanceof StringLiteralToken))
-			expression = new StringLiteral(((StringLiteralToken)tokens.get(0)).string);
-		else if (tokens.size() > 0 && (tokens.get(0) instanceof IntegerLiteralToken))
-			expression = new IntegerLiteral(((IntegerLiteralToken)tokens.get(0)).value);
+		if (tokens.peek() instanceof StringLiteralToken)
+			expression = new StringLiteral(((StringLiteralToken)tokens.remove()).string);
+		else if (tokens.peek() instanceof IntegerLiteralToken)
+			expression = new IntegerLiteral(((IntegerLiteralToken)tokens.remove()).value);
 		else
 			expression = new StringLiteral("XXX");
 		
