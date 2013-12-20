@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.StringLiteral;
 
 public class ExpressionBuilder {
@@ -22,6 +23,8 @@ public class ExpressionBuilder {
 		Expression expression;
 		if (tokens.size() > 0 && (tokens.get(0) instanceof StringLiteralToken))
 			expression = new StringLiteral(((StringLiteralToken)tokens.get(0)).string);
+		else if (tokens.size() > 0 && (tokens.get(0) instanceof IntegerLiteralToken))
+			expression = new IntegerLiteral(((IntegerLiteralToken)tokens.get(0)).value);
 		else
 			expression = new StringLiteral("XXX");
 		
