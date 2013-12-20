@@ -249,8 +249,8 @@ public class LineParser {
 	private ArgumentNumberState argumentNumberState = new ArgumentNumberState();
 	private class ArgumentNumberState extends State {
 		public State parse(char character) {
-			if (character >= '0' || character <= '9' || character >= 'A' || character <= 'F' ||
-					character >= 'a' || character <= 'f') {
+			if (character >= '0' && character <= '9' || character >= 'A' && character <= 'F' ||
+					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
 			} else if (character == 'H' || character == 'h') {
