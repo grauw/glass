@@ -1,6 +1,8 @@
 package nl.grauw.asm;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import nl.grauw.asm.parser.SourceParser;
 
@@ -13,17 +15,32 @@ public class Assembler {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		if (args.length < 1) {
+		if (args.length == 0) {
 			System.out.println("Usage: java -jar asm.jar SOURCE [OBJECT]");
 			System.exit(1);
 		}
 		
-		instance = new Assembler(args[0]);
+		File sourcePath = null;
+		File objectPath = null;
+		List<File> includePaths = new ArrayList<File>();
+		for (int i = 0; i < args.length; i++) {
+			if (args[i].equals("-I") && (i + 1) < args.length) {
+				includePaths.add(new File(args[++i]));
+			} else if (sourcePath == null) {
+				sourcePath = new File(args[i]);
+			} else if (objectPath == null) {
+				objectPath = new File(args[i]);
+			} else {
+				throw new RuntimeException("Too many arguments.");
+			}
+		}
+		
+		instance = new Assembler(sourcePath, objectPath, includePaths);
 		System.out.print(instance.source);
 	}
 	
-	public Assembler(String path) {
-		source = new SourceParser().parse(new File(path));
+	public Assembler(File sourcePath, File objectPath, List<File> includePaths) {
+		source = new SourceParser(includePaths).parse(sourcePath);
 	}
 	
 }
