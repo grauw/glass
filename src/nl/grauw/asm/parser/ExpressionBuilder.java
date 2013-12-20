@@ -39,7 +39,7 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		public String toString() {
-			return ":" + this.string;
+			return this.string;
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		public String toString() {
-			return this.string;
+			return "\"" + this.string + "\"";
 		}
 	}
 	
