@@ -37,61 +37,83 @@ public class ExpressionBuilder {
 	}
 	
 	public static class IdentifierToken extends Token {
+		
 		private String string;
+		
 		public IdentifierToken(String string) {
 			this.string = string;
 		}
+		
 		public String toString() {
 			return this.string;
 		}
+		
 	}
 	
 	public static class CurrentToken extends Token {
+		
 		public String toString() {
 			return "$";
 		}
+		
 	}
 	
 	public static class OperatorToken extends Token {
+		
 		private String string;
+		
 		public OperatorToken(String string) {
 			this.string = string;
 		}
+		
 		public String toString() {
 			return this.string;
 		}
+		
 	}
 	
 	public static class StringLiteralToken extends Token {
+		
 		private String string;
+		
 		public StringLiteralToken(String string) {
 			this.string = string;
 		}
+		
 		public String toString() {
 			return "\"" + this.string + "\"";
 		}
+		
 	}
 	
 	public static class IntegerLiteralToken extends Token {
+		
 		private int value;
+		
 		public IntegerLiteralToken(int value) {
 			this.value = value;
 		}
+		
 		public String toString() {
 			return "" + value;
 		}
+		
 	}
 	
 	public static class GroupOpenToken extends Token {
+		
 		public String toString() {
 			return "(";
 		}
+		
 	}
 	
 	public static class GroupCloseToken extends Token {
+		
 		public String toString() {
 			return ")";
 		}
+		
 	}
 	
 }
