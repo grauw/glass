@@ -30,8 +30,11 @@ public class Statement {
 	public String toString() {
 		StringBuilder builder = new StringBuilder(instruction);
 		builder.append(' ');
-		for (Expression argument : arguments)
-			builder.append(argument);
+		for (int i = 0; i < arguments.size(); i++) {
+			if (i > 0)
+				builder.append(", ");
+			builder.append(arguments.get(i));
+		}
 		return builder.toString();
 	}
 	
