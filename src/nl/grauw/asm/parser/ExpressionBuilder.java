@@ -1,6 +1,7 @@
 package nl.grauw.asm.parser;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Queue;
 
 import nl.grauw.asm.expressions.Expression;
@@ -23,20 +24,25 @@ public class ExpressionBuilder {
 		if (tokens.isEmpty())
 			throw new RuntimeException("No tokens queued.");
 		
-		Expression expression;
-		if (tokens.peek() instanceof StringLiteralToken)
-			expression = new StringLiteral(((StringLiteralToken)tokens.remove()).string);
-		else if (tokens.peek() instanceof IntegerLiteralToken)
-			expression = new IntegerLiteral(((IntegerLiteralToken)tokens.remove()).value);
-		else
-			expression = new StringLiteral("XXX");
+		Deque<Expression> stack = new ArrayDeque<Expression>();
 		
+		tokens.remove().process(tokens, stack);
+		
+//		if (!tokens.isEmpty())
+//			throw new RuntimeException("Not all tokens were processed.");
 		tokens.clear();
 		
-		return expression;
+		if (stack.size() > 1)
+			throw new RuntimeException("Not all expressions were processed.");
+		if (!stack.isEmpty())
+			return stack.pop();
+		return new Identifier("XXX");
 	}
 	
 	private abstract static class Token {
+		
+		public abstract void process(Queue<Token> tokens, Deque<Expression> stack);
+		
 	}
 	
 	public static class IdentifierToken extends Token {
@@ -47,6 +53,9 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+		}
+		
 		public String toString() {
 			return this.string;
 		}
@@ -54,6 +63,9 @@ public class ExpressionBuilder {
 	}
 	
 	public static class CurrentToken extends Token {
+		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+		}
 		
 		public String toString() {
 			return "$";
@@ -67,6 +79,9 @@ public class ExpressionBuilder {
 		
 		public OperatorToken(String string) {
 			this.string = string;
+		}
+		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
 		}
 		
 		public String toString() {
@@ -83,6 +98,10 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+			stack.push(new StringLiteral(string));
+		}
+		
 		public String toString() {
 			return "\"" + this.string + "\"";
 		}
@@ -97,6 +116,10 @@ public class ExpressionBuilder {
 			this.value = value;
 		}
 		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+			stack.push(new IntegerLiteral(value));
+		}
+		
 		public String toString() {
 			return "" + value;
 		}
@@ -105,6 +128,9 @@ public class ExpressionBuilder {
 	
 	public static class GroupOpenToken extends Token {
 		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+		}
+		
 		public String toString() {
 			return "(";
 		}
@@ -112,6 +138,9 @@ public class ExpressionBuilder {
 	}
 	
 	public static class GroupCloseToken extends Token {
+		
+		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+		}
 		
 		public String toString() {
 			return ")";
