@@ -15,7 +15,7 @@ public class LineParser {
 	
 	public Line parse(String text, File sourceFile, int lineNumber) {
 		if (accumulator.length() > 0)
-			throw new RuntimeException("Accumulator not consumed.");
+			throw new RuntimeException("Accumulator not consumed. Value: " + accumulator.toString());
 		
 		state = labelStartState;
 		label = null;
