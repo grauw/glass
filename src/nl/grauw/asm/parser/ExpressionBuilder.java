@@ -20,6 +20,9 @@ public class ExpressionBuilder {
 	}
 	
 	public Expression getExpression() {
+		if (tokens.isEmpty())
+			throw new RuntimeException("No tokens queued.");
+		
 		Expression expression;
 		if (tokens.peek() instanceof StringLiteralToken)
 			expression = new StringLiteral(((StringLiteralToken)tokens.remove()).string);
