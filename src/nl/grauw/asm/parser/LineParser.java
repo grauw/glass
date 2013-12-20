@@ -21,9 +21,6 @@ public class LineParser {
 	private int columnNumber;
 	
 	public Line parse(String text, File sourceFile, int lineNumber) {
-		if (accumulator.length() > 0)
-			throw new RuntimeException("Accumulator not consumed. Value: " + accumulator.toString());
-		
 		state = labelStartState;
 		label = null;
 		statement = null;
@@ -39,6 +36,9 @@ public class LineParser {
 			}
 			columnNumber = text.length();
 			state = state.parse('\0');
+			
+			if (accumulator.length() > 0)
+				throw new RuntimeException("Accumulator not consumed. Value: " + accumulator.toString());
 			if (state != endState)
 				throw new RuntimeException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(NumberFormatException e) {
