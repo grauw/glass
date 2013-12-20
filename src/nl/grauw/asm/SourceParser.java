@@ -31,7 +31,7 @@ public class SourceParser {
 				
 				Statement statement = line.getStatement();
 				if (statement != null && (statement.getInstruction().equals("INCLUDE") || statement.getInstruction().equals("include"))) {
-					if (line.getStatement().getArguments().size() > 1)
+					if (line.getStatement().getArguments().size() != 1)
 						throw new RuntimeException("Include only accepts 1 argument.");
 					String argument = line.getStatement().getArguments().get(0);
 					String includeFile = argument.substring(1, argument.length() - 1);
