@@ -154,7 +154,7 @@ public class LineParser {
 	private ArgumentStartState argumentStartState = new ArgumentStartState();
 	private class ArgumentStartState extends State {
 		public State parse(char character) {
-			if (isIdentifier(character)) {
+			if (isIdentifierStart(character)) {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character >= '0' && character <= '9') {
