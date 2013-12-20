@@ -8,6 +8,7 @@ public class LineParser {
 	private StringBuilder accumulator = new StringBuilder();
 	private Label label;
 	private Statement statement;
+	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	private Comment comment;
 	private File sourceFile;
 	private int lineNumber;
@@ -26,12 +27,16 @@ public class LineParser {
 		this.lineNumber = lineNumber;
 		this.text = text;
 		
-		for (int i = 0, length = text.length(); i < length; i++) {
-			columnNumber = i;
-			state = state.parse(text.charAt(i));
+		try {
+			for (int i = 0, length = text.length(); i < length; i++) {
+				columnNumber = i;
+				state = state.parse(text.charAt(i));
+			}
+			columnNumber = text.length();
+			state.parse('\0');
+		} catch(NumberFormatException e) {
+			throw e;
 		}
-		columnNumber = text.length();
-		state.parse('\0');
 		
 		return new Line(label, statement, comment, sourceFile, lineNumber);
 	}
@@ -44,13 +49,23 @@ public class LineParser {
 		}
 		
 		public boolean isIdentifier(char character) {
-			return isIdentifierStart(character) || character >= '0' && character <= '9';
+			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
+					character == '\'';  // for ex af,af'...
 		}
 		
 		public boolean isIdentifierStart(char character) {
 			return character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z' ||
-				character == '_' || character == '.' || character == '?' || character == '@';
+					character == '_' || character == '.' || character == '?' || character == '@';
 		}
+		
+		public boolean isOperator(char character) {
+			return character == '!' || character == '%' || character == '&' || character == '*' ||
+					character == '+' || character == '-' || character == '/' || character == ':' ||
+					character == '<' || character == '=' || character == '>' || character == '?' ||
+					character == '^' || character == '|' || character == '~' || character == '#';
+				// character == "," (sequence operator)
+		}
+		
 	}
 	
 	private LabelStartState labelStartState = new LabelStartState();
@@ -75,7 +90,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (isIdentifier(character)) {
 				accumulator.append(character);
-				return this;
+				return labelReadState;
 			} else {
 				label = new Label(accumulator.toString());
 				accumulator.setLength(0);
@@ -98,7 +113,7 @@ public class LineParser {
 				accumulator.append(character);
 				return statementReadState;
 			} else if (isWhitespace(character)) {
-				return this;
+				return statementStartState;
 			} else if (character == ';') {
 				return commentReadState;
 			} else if (character == '\0') {
@@ -113,7 +128,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (isIdentifierStart(character)) {
 				accumulator.append(character);
-				return this;
+				return statementReadState;
 			} else {
 				statement = new Statement(accumulator.toString());
 				accumulator.setLength(0);
@@ -132,61 +147,82 @@ public class LineParser {
 	private ArgumentStartState argumentStartState = new ArgumentStartState();
 	private class ArgumentStartState extends State {
 		public State parse(char character) {
-			if (isIdentifier(character) || character == '(' || character == '"') {
+			if (isIdentifier(character)) {
 				accumulator.append(character);
-				if (character == '"') {
-					return argumentStringState;
-				} else {
-					return argumentReadState;
-				}
+				return argumentIdentifierState;
+			} else if (character >= '0' && character <= '9') {
+				accumulator.append(character);
+				return argumentNumberState;
+			} else {
+				return argumentNoIdentifierState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentNoIdentifierState argumentNoIdentifierState = new ArgumentNoIdentifierState();
+	private class ArgumentNoIdentifierState extends State {
+		public State parse(char character) {
+			if (character == '(') {
+				expressionBuilder.AddToken(new ExpressionBuilder.GroupOpenToken());
+				return argumentStartState;
+			} else if (character == ')') {
+				expressionBuilder.AddToken(new ExpressionBuilder.GroupCloseToken());
+				return argumentStartState;
+			} else if (character == '$') {
+				expressionBuilder.AddToken(new ExpressionBuilder.CurrentToken());
+				return argumentStartState;
+			} else if (character == '"') {
+				return argumentStringState;
+			} else if (isOperator(character)) {
+				accumulator.append(character);
+				return argumentOperatorState;
 			} else if (isWhitespace(character)) {
-				return this;
+				return argumentStartState;
+			} else if (character == ',') {
+				statement.AddArgument(expressionBuilder.getExpression());
+				return argumentStartState;
 			} else if (character == ';') {
+				if (expressionBuilder.hasExpression())
+					statement.AddArgument(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
+				if (expressionBuilder.hasExpression())
+					statement.AddArgument(expressionBuilder.getExpression());
 				return endState;
 			}
 			throw new SyntaxError();
 		}
 	}
 	
-	private ArgumentReadState argumentReadState = new ArgumentReadState();
-	private class ArgumentReadState extends State {
+	private ArgumentIdentifierState argumentIdentifierState = new ArgumentIdentifierState();
+	private class ArgumentIdentifierState extends State {
 		public State parse(char character) {
-			if (isIdentifier(character) || character == '(' || character == ')' || character == '"') {
+			if (isIdentifier(character)) {
 				accumulator.append(character);
-				if (character == '"') {
-					return argumentStringState;
-				} else {
-					return argumentReadState;
-				}
-			} else if (character == ',' || character == ';' || character == '\0') {
-				statement.AddArgument(accumulator.toString().trim());
+				return argumentIdentifierState;
+			} else {
+				expressionBuilder.AddToken(new ExpressionBuilder.IdentifierToken(accumulator.toString()));
 				accumulator.setLength(0);
-				return argumentStartState;
-			} else if (isWhitespace(character)) {
-				return this;
-			} else if (character == ';') {
-				return commentReadState;
-			} else if (character == '\0') {
-				return endState;
+				return argumentNoIdentifierState.parse(character);
 			}
-			throw new SyntaxError();
 		}
 	}
 	
 	private ArgumentStringState argumentStringState = new ArgumentStringState();
 	private class ArgumentStringState extends State {
 		public State parse(char character) {
-			accumulator.append(character);
-			if (character == '\\') {
+			if (character == '"') {
+				expressionBuilder.AddToken(new ExpressionBuilder.StringLiteralToken(accumulator.toString()));
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else if (character == '\\') {
+				accumulator.append(character);  // TODO
 				return argumentStringEscapeState;
-			} else if (character == '"') {
-				return argumentReadState;
 			} else if (character == '\0') {
 				throw new SyntaxError();
 			} else {
-				return this;
+				accumulator.append(character);
+				return argumentStringState;
 			}
 		}
 	}
@@ -198,7 +234,54 @@ public class LineParser {
 			if (character == '\0') {
 				throw new SyntaxError();
 			} else {
-				return this;
+				return argumentStringState;
+			}
+		}
+	}
+	
+	private ArgumentNumberState argumentNumberState = new ArgumentNumberState();
+	private class ArgumentNumberState extends State {
+		public State parse(char character) {
+			if (character >= '0' || character <= '9' || character >= 'A' || character <= 'F' ||
+					character >= 'a' || character <= 'f') {
+				accumulator.append(character);
+				return argumentNumberState;
+			} else if (character == 'H' || character == 'h') {
+				int value = Integer.parseInt(accumulator.toString(), 16);
+				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else if (character == 'B' || character == 'b') {
+				int value = Integer.parseInt(accumulator.toString(), 2);
+				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else if (character == 'O' || character == 'o') {
+				int value = Integer.parseInt(accumulator.toString(), 8);
+				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else {
+				int value = Integer.parseInt(accumulator.toString());
+				expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+				accumulator.setLength(0);
+				return argumentNoIdentifierState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentOperatorState argumentOperatorState = new ArgumentOperatorState();
+	private class ArgumentOperatorState extends State {
+		public State parse(char character) {
+			if (isOperator(character)) {
+				accumulator.append(character);
+				expressionBuilder.AddToken(new ExpressionBuilder.OperatorToken(accumulator.toString()));
+				accumulator.setLength(0);
+				return argumentStartState;
+			} else {
+				expressionBuilder.AddToken(new ExpressionBuilder.OperatorToken(accumulator.toString()));
+				accumulator.setLength(0);
+				return argumentStartState.parse(character);
 			}
 		}
 	}
@@ -212,7 +295,7 @@ public class LineParser {
 				accumulator.setLength(0);
 				return endState;
 			} else {
-				return this;
+				return commentReadState;
 			}
 		}
 	}

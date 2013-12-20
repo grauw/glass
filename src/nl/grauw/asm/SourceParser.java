@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.Charset;
 
+import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.StringLiteral;
+
 public class SourceParser {
 	
 	LineParser lineParser = new LineParser();
@@ -31,10 +34,12 @@ public class SourceParser {
 				
 				Statement statement = line.getStatement();
 				if (statement != null && (statement.getInstruction().equals("INCLUDE") || statement.getInstruction().equals("include"))) {
-					if (line.getStatement().getArguments().size() != 1)
+					if (statement.getArguments().size() != 1)
 						throw new RuntimeException("Include only accepts 1 argument.");
-					String argument = line.getStatement().getArguments().get(0);
-					String includeFile = argument.substring(1, argument.length() - 1);
+					Expression argument = statement.getArguments().get(0);
+					if (!(argument instanceof StringLiteral))
+						throw new RuntimeException("A string literal is expected.");
+					String includeFile = ((StringLiteral)argument).getString();
 					parse(new File(includeFile));
 				}
 			}
