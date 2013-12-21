@@ -1,5 +1,5 @@
 package nl.grauw.asm.expressions;
 
-public class Operator extends Expression {
+public abstract class Operator extends Expression {
 
 }

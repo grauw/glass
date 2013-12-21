@@ -1,5 +1,5 @@
 package nl.grauw.asm.expressions;
 
-public class Expression {
-
+public abstract class Expression {
+	
 }
