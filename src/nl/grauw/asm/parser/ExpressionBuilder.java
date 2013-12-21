@@ -15,12 +15,12 @@ public class ExpressionBuilder {
 	
 	private Queue<Token> tokens = new ArrayDeque<Token>();
 	
-	public void AddToken(Token token) {
-		tokens.add(token);
+	public void addValueToken(Expression value) {
+		tokens.add(new ValueToken(value));
 	}
 	
-	public void AddToken(Expression value) {
-		tokens.add(new ValueToken(value));
+	public void addOperatorToken(String operator) {
+		tokens.add(new OperatorToken(operator));
 	}
 	
 	public boolean hasExpression() {
@@ -40,7 +40,7 @@ public class ExpressionBuilder {
 		return result;
 	}
 	
-	private abstract static class Token {
+	private abstract class Token {
 		
 		// consume()?
 		public abstract Expression process(Queue<Token> tokens);
@@ -50,7 +50,7 @@ public class ExpressionBuilder {
 		
 	}
 	
-	public static class ValueToken extends Token {
+	public class ValueToken extends Token {
 
 		private Expression value;
 		
@@ -77,7 +77,7 @@ public class ExpressionBuilder {
 		
 	}
 	
-	public static class OperatorToken extends Token {
+	public class OperatorToken extends Token {
 		
 		private String string;
 		

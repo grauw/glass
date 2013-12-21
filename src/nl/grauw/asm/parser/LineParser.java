@@ -168,7 +168,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentNumberState;
 			} else if (character == '$') {
-				expressionBuilder.AddToken(new Current());
+				expressionBuilder.addValueToken(new Current());
 				return argumentStartState;
 			} else {
 				return argumentNoIdentifierState.parse(character);
@@ -209,7 +209,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.AddToken(new Identifier(accumulator.toString()));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString()));
 				accumulator.setLength(0);
 				return argumentNoIdentifierState.parse(character);
 			}
@@ -220,7 +220,7 @@ public class LineParser {
 	private class ArgumentStringState extends State {
 		public State parse(char character) {
 			if (character == '"') {
-				expressionBuilder.AddToken(new StringLiteral(accumulator.toString()));
+				expressionBuilder.addValueToken(new StringLiteral(accumulator.toString()));
 				accumulator.setLength(0);
 				return argumentStartState;
 			} else if (character == '\\') {
@@ -258,22 +258,22 @@ public class LineParser {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
 					int value = Integer.parseInt(string, 16);
-					expressionBuilder.AddToken(new IntegerLiteral(value));
+					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentStartState;
 				} else if (character == 'O' || character == 'o') {
 					int value = Integer.parseInt(string, 8);
-					expressionBuilder.AddToken(new IntegerLiteral(value));
+					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentStartState;
 				} else {
 					if (string.endsWith("B") || string.endsWith("b")) {
 						int value = Integer.parseInt(string.substring(0, string.length() - 1), 2);
-						expressionBuilder.AddToken(new IntegerLiteral(value));
+						expressionBuilder.addValueToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					} else {
 						int value = Integer.parseInt(string);
-						expressionBuilder.AddToken(new IntegerLiteral(value));
+						expressionBuilder.addValueToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					}
 					return argumentNoIdentifierState.parse(character);
@@ -288,11 +288,11 @@ public class LineParser {
 			if (isOperator(character)) {
 				// XXX: what about !!1 (not-not), or 4+-5? this parsing won’t do
 				accumulator.append(character);
-				expressionBuilder.AddToken(new ExpressionBuilder.OperatorToken(accumulator.toString()));
+				expressionBuilder.addOperatorToken(accumulator.toString());
 				accumulator.setLength(0);
 				return argumentStartState;
 			} else {
-				expressionBuilder.AddToken(new ExpressionBuilder.OperatorToken(accumulator.toString()));
+				expressionBuilder.addOperatorToken(accumulator.toString());
 				accumulator.setLength(0);
 				return argumentStartState.parse(character);
 			}
