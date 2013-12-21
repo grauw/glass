@@ -49,7 +49,7 @@ public class ExpressionBuilder {
 		if (tokens.isEmpty())
 			throw new RuntimeException("No tokens queued.");
 		
-		Expression expression = tokens.remove().process(Precedence.NONE);
+		Expression expression = tokens.remove().processValue(Precedence.NONE);
 		while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(Precedence.NONE))
 			expression = tokens.remove().processOperator(expression);
 		
@@ -61,7 +61,7 @@ public class ExpressionBuilder {
 	
 	private abstract class Token {
 		
-		public abstract Expression process(Precedence lastPrecedence);
+		public abstract Expression processValue(Precedence lastPrecedence);
 		
 		public abstract Expression processOperator(Expression expression);
 		
@@ -78,7 +78,7 @@ public class ExpressionBuilder {
 		}
 		
 		@Override
-		public Expression process(Precedence lastPrecedence) {
+		public Expression processValue(Precedence lastPrecedence) {
 			Expression expression = value;
 			while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
 				expression = tokens.remove().processOperator(expression);
@@ -110,7 +110,7 @@ public class ExpressionBuilder {
 		}
 		
 		@Override
-		public Expression process(Precedence lastPrecedence) {
+		public Expression processValue(Precedence lastPrecedence) {
 			switch (operator) {
 			case POSITIVE:
 				return new Positive(processNext());
@@ -183,7 +183,7 @@ public class ExpressionBuilder {
 		}
 		
 		public Expression processNext() {
-			return tokens.remove().process(operator.precedence);
+			return tokens.remove().processValue(operator.precedence);
 		}
 		
 		@Override
