@@ -13,7 +13,7 @@ public class Positive extends Operator {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return "+" + term.toDebugString();
 	}
 	
 }

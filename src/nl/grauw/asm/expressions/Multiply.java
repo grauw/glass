@@ -15,7 +15,7 @@ public class Multiply extends Operator {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + multiplicand.toDebugString() + " * " + multiplier.toDebugString() + "}";
 	}
 	
 }

@@ -15,7 +15,7 @@ public class LessOrEquals extends Operator {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + term1.toDebugString() + " <= " + term2.toDebugString() + "}";
 	}
 	
 }

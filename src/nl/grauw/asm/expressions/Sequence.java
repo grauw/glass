@@ -15,7 +15,7 @@ public class Sequence extends Expression {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + value.toDebugString() + (tail != null ? ", " + tail.toDebugString() : "") + "}";
 	}
 	
 }

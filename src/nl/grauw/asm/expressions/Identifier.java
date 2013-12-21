@@ -13,7 +13,7 @@ public class Identifier extends Expression {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return toString();
 	}
 	
 }

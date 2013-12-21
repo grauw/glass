@@ -7,7 +7,7 @@ public class Current extends Expression {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return toString();
 	}
 	
 }

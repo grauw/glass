@@ -17,7 +17,7 @@ public class StringLiteral extends Literal {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return toString();
 	}
 	
 }

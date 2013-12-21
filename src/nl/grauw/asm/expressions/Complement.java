@@ -13,7 +13,7 @@ public class Complement extends Operator {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return "~" + term.toDebugString();
 	}
 	
 }

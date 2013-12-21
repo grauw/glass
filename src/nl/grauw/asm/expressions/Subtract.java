@@ -15,7 +15,7 @@ public class Subtract extends Operator {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + minuend.toDebugString() + " - " + subtrahend.toDebugString() + "}";
 	}
 	
 }

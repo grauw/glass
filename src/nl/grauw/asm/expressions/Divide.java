@@ -15,7 +15,7 @@ public class Divide extends Operator {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + dividend.toDebugString() + " * " + divisor.toDebugString() + "}";
 	}
 	
 }

@@ -13,7 +13,7 @@ public class Group extends Expression {
 	}
 	
 	public String toDebugString() {
-		return this.toString();
+		return "(" + term.toDebugString() + ")";
 	}
 	
 }

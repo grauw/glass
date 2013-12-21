@@ -15,7 +15,7 @@ public class Add extends Operator {
 	}
 	
 	public String toDebugString() {
-		return "[" + this + "]";
+		return "{" + augend.toDebugString() + " + " + addend.toDebugString() + "}";
 	}
 	
 }
