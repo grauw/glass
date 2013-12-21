@@ -14,4 +14,8 @@ public class ShiftRight extends Operator {
 		return "" + term1 + " >> " + term2;
 	}
 	
+	public String toDebugString() {
+		return "[" + this + "]";
+	}
+	
 }

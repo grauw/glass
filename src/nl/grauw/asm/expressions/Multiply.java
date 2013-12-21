@@ -14,4 +14,8 @@ public class Multiply extends Operator {
 		return "" + multiplicand + " * " + multiplier;
 	}
 	
+	public String toDebugString() {
+		return "[" + this + "]";
+	}
+	
 }

@@ -12,4 +12,8 @@ public class Group extends Expression {
 		return "(" + term + ")";
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }

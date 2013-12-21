@@ -6,4 +6,8 @@ public class Current extends Expression {
 		return "$";
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }

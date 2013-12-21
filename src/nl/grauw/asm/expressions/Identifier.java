@@ -12,4 +12,8 @@ public class Identifier extends Expression {
 		return name;
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }

@@ -12,4 +12,8 @@ public class Negative extends Operator {
 		return "-" + term;
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }

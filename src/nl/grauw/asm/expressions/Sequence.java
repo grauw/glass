@@ -14,4 +14,8 @@ public class Sequence extends Expression {
 		return "" + value + (tail != null ? ", " + tail : "");
 	}
 	
+	public String toDebugString() {
+		return "[" + this + "]";
+	}
+	
 }

@@ -17,4 +17,8 @@ public class IntegerLiteral extends Literal {
 		return (string.charAt(0) >= 'A' && string.charAt(0) <= 'F' ? "0" : "") + string + "H";
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }

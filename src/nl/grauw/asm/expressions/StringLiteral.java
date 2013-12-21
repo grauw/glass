@@ -16,4 +16,8 @@ public class StringLiteral extends Literal {
 		return "\"" + string + "\"";
 	}
 	
+	public String toDebugString() {
+		return this.toString();
+	}
+	
 }
