@@ -96,7 +96,7 @@ public class ExpressionBuilder {
 				return new Not(tokens.remove().process(tokens));
 			if ("(".equals(string))
 				return new Group(tokens.remove().process(tokens));
-			throw new ExpressionError("Not an unary operator.");
+			throw new ExpressionError("Not an unary operator or value.");
 		}
 		
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
