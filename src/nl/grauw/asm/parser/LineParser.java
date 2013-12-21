@@ -11,6 +11,7 @@ import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.StringLiteral;
 import nl.grauw.asm.parser.ExpressionBuilder.ExpressionError;
+import nl.grauw.asm.parser.ExpressionBuilder.Operator;
 
 public class LineParser {
 	
@@ -49,6 +50,8 @@ public class LineParser {
 		} catch(NumberFormatException e) {
 			throw new SyntaxError(e);
 		} catch(ExpressionError e) {
+			throw new SyntaxError(e);
+		} catch(Exception e) {
 			throw new SyntaxError(e);
 		}
 		
@@ -165,19 +168,19 @@ public class LineParser {
 			} else if (character == '"') {
 				return argumentStringState;
 			} else if (character == '+') {
-				expressionBuilder.addOperatorToken("+");
+				expressionBuilder.addOperatorToken(Operator.POSITIVE);
 				return argumentValueState;
 			} else if (character == '-') {
-				expressionBuilder.addOperatorToken("-");
+				expressionBuilder.addOperatorToken(Operator.NEGATIVE);
 				return argumentValueState;
 			} else if (character == '~') {
-				expressionBuilder.addOperatorToken("~");
+				expressionBuilder.addOperatorToken(Operator.COMPLEMENT);
 				return argumentValueState;
 			} else if (character == '!') {
-				expressionBuilder.addOperatorToken("!");
+				expressionBuilder.addOperatorToken(Operator.NOT);
 				return argumentValueState;
 			} else if (character == '(') {
-				expressionBuilder.addOperatorToken("(");
+				expressionBuilder.addOperatorToken(Operator.GROUP_OPEN);
 				return argumentValueState;
 			} else if (isWhitespace(character)) {
 				return argumentValueState;
@@ -278,41 +281,41 @@ public class LineParser {
 	private class ArgumentOperatorState extends State {
 		public State parse(char character) {
 			if (character == ')') {
-				expressionBuilder.addOperatorToken(")");
+				expressionBuilder.addOperatorToken(Operator.GROUP_CLOSE);
 				return argumentOperatorState;
 			} else if (character == '*') {
-				expressionBuilder.addOperatorToken("*");
+				expressionBuilder.addOperatorToken(Operator.MULTIPLY);
 				return argumentValueState;
 			} else if (character == '/') {
-				expressionBuilder.addOperatorToken("/");
+				expressionBuilder.addOperatorToken(Operator.DIVIDE);
 				return argumentValueState;
 			} else if (character == '%') {
-				expressionBuilder.addOperatorToken("%");
+				expressionBuilder.addOperatorToken(Operator.MODULO);
 				return argumentValueState;
 			} else if (character == '+') {
-				expressionBuilder.addOperatorToken("+");
+				expressionBuilder.addOperatorToken(Operator.ADD);
 				return argumentValueState;
 			} else if (character == '-') {
-				expressionBuilder.addOperatorToken("-");
+				expressionBuilder.addOperatorToken(Operator.SUBTRACT);
 				return argumentValueState;
 			} else if (character == '<') {
 				return argumentLessThanState;
 			} else if (character == '>') {
 				return argumentGreaterThanState;
 			} else if (character == '=') {
-				expressionBuilder.addOperatorToken("=");
+				expressionBuilder.addOperatorToken(Operator.EQUALS);
 				return argumentValueState;
 			} else if (character == '!') {
 				return argumentNotEqualsState;
 			} else if (character == '&') {
 				return argumentAndState;
 			} else if (character == '^') {
-				expressionBuilder.addOperatorToken("^");
+				expressionBuilder.addOperatorToken(Operator.BITWISE_XOR);
 				return argumentValueState;
 			} else if (character == '|') {
 				return argumentOrState;
 			} else if (character == ',') {
-				expressionBuilder.addOperatorToken(",");
+				expressionBuilder.addOperatorToken(Operator.SEQUENCE);
 				return argumentValueState;
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
@@ -333,13 +336,13 @@ public class LineParser {
 	private class ArgumentLessThanState extends State {
 		public State parse(char character) {
 			if (character == '<') {
-				expressionBuilder.addOperatorToken("<<");
+				expressionBuilder.addOperatorToken(Operator.SHIFT_LEFT);
 				return argumentValueState;
 			} else if (character == '=') {
-				expressionBuilder.addOperatorToken("<=");
+				expressionBuilder.addOperatorToken(Operator.LESS_OR_EQUALS);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken("<");
+				expressionBuilder.addOperatorToken(Operator.LESS_THAN);
 				return argumentValueState.parse(character);
 			}
 		}
@@ -349,13 +352,13 @@ public class LineParser {
 	private class ArgumentGreaterThanState extends State {
 		public State parse(char character) {
 			if (character == '>') {
-				expressionBuilder.addOperatorToken(">>");
+				expressionBuilder.addOperatorToken(Operator.SHIFT_RIGHT);
 				return argumentValueState;
 			} else if (character == '=') {
-				expressionBuilder.addOperatorToken(">=");
+				expressionBuilder.addOperatorToken(Operator.GREATER_OR_EQUALS);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken(">");
+				expressionBuilder.addOperatorToken(Operator.GREATER_THAN);
 				return argumentValueState.parse(character);
 			}
 		}
@@ -365,7 +368,7 @@ public class LineParser {
 	private class ArgumentNotEqualsState extends State {
 		public State parse(char character) {
 			if (character == '=') {
-				expressionBuilder.addOperatorToken("!=");
+				expressionBuilder.addOperatorToken(Operator.NOT_EQUALS);
 				return argumentValueState;
 			}
 			throw new SyntaxError();
@@ -376,10 +379,10 @@ public class LineParser {
 	private class ArgumentAndState extends State {
 		public State parse(char character) {
 			if (character == '&') {
-				expressionBuilder.addOperatorToken("&&");
+				expressionBuilder.addOperatorToken(Operator.AND);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken("&");
+				expressionBuilder.addOperatorToken(Operator.BITWISE_AND);
 				return argumentValueState.parse(character);
 			}
 		}
@@ -389,10 +392,10 @@ public class LineParser {
 	private class ArgumentOrState extends State {
 		public State parse(char character) {
 			if (character == '|') {
-				expressionBuilder.addOperatorToken("||");
+				expressionBuilder.addOperatorToken(Operator.OR);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken("|");
+				expressionBuilder.addOperatorToken(Operator.BITWISE_OR);
 				return argumentValueState.parse(character);
 			}
 		}

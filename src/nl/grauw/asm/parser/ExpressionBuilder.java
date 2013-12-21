@@ -37,7 +37,7 @@ public class ExpressionBuilder {
 		tokens.add(new ValueToken(value));
 	}
 	
-	public void addOperatorToken(String operator) {
+	public void addOperatorToken(Operator operator) {
 		tokens.add(new OperatorToken(operator));
 	}
 	
@@ -103,118 +103,127 @@ public class ExpressionBuilder {
 	
 	public class OperatorToken extends Token {
 		
-		private final String string;
+		private final Operator operator;
 		
-		public OperatorToken(String string) {
-			this.string = string;
+		public OperatorToken(Operator operator) {
+			this.operator = operator;
 		}
 		
 		@Override
 		public Expression process(Precedence lastPrecedence) {
-			if ("+".equals(string))
+			switch (operator) {
+			case POSITIVE:
 				return new Positive(tokens.remove().process(Precedence.UNARY));
-			if ("-".equals(string))
+			case NEGATIVE:
 				return new Negative(tokens.remove().process(Precedence.UNARY));
-			if ("~".equals(string))
+			case COMPLEMENT:
 				return new Complement(tokens.remove().process(Precedence.UNARY));
-			if ("!".equals(string))
+			case NOT:
 				return new Not(tokens.remove().process(Precedence.UNARY));
-			if ("(".equals(string)) {
+			case GROUP_OPEN:
 				Group group = new Group(tokens.remove().process(Precedence.GROUPING));
 				if (tokens.isEmpty())
 					throw new ExpressionError("Mismatching parentheses.");
 				tokens.remove();
 				return group;
+			default:
+				throw new ExpressionError("Not an unary operator, grouping operator or value: " + this);
 			}
-			throw new ExpressionError("Not an unary operator, grouping operator or value: " + this);
 		}
 		
 		@Override
 		public Expression processOperator(Expression expression) {
-			if (")".equals(string))
+			switch (operator) {
+			case GROUP_CLOSE:
 				return expression;
-			if ("*".equals(string))
+			case MULTIPLY:
 				return new Multiply(expression, tokens.remove().process(Precedence.MULTIPLICATION));
-			if ("/".equals(string))
+			case DIVIDE:
 				return new Divide(expression, tokens.remove().process(Precedence.MULTIPLICATION));
-			if ("%".equals(string))
+			case MODULO:
 				return new Modulo(expression, tokens.remove().process(Precedence.MULTIPLICATION));
-			if ("+".equals(string))
+			case ADD:
 				return new Add(expression, tokens.remove().process(Precedence.ADDITION));
-			if ("-".equals(string))
+			case SUBTRACT:
 				return new Subtract(expression, tokens.remove().process(Precedence.ADDITION));
-			if ("<<".equals(string))
+			case SHIFT_LEFT:
 				return new ShiftLeft(expression, tokens.remove().process(Precedence.SHIFT));
-			if (">>".equals(string))
+			case SHIFT_RIGHT:
 				return new ShiftRight(expression, tokens.remove().process(Precedence.SHIFT));
-			if ("<".equals(string))
+			case LESS_THAN:
 				return new LessThan(expression, tokens.remove().process(Precedence.COMPARISON));
-			if ("<=".equals(string))
+			case LESS_OR_EQUALS:
 				return new LessOrEquals(expression, tokens.remove().process(Precedence.COMPARISON));
-			if (">".equals(string))
+			case GREATER_THAN:
 				return new GreaterThan(expression, tokens.remove().process(Precedence.COMPARISON));
-			if (">=".equals(string))
+			case GREATER_OR_EQUALS:
 				return new GreaterOrEquals(expression, tokens.remove().process(Precedence.COMPARISON));
-			if ("=".equals(string))
+			case EQUALS:
 				return new Equals(expression, tokens.remove().process(Precedence.EQUALITY));
-			if ("!=".equals(string))
+			case NOT_EQUALS:
 				return new NotEquals(expression, tokens.remove().process(Precedence.EQUALITY));
-			if ("&".equals(string))
-				return new BitwiseAnd(expression, tokens.remove().process(Precedence.BITWISE_AND));
-			if ("^".equals(string))
-				return new BitwiseXor(expression, tokens.remove().process(Precedence.BITWISE_XOR));
-			if ("|".equals(string))
-				return new BitwiseOr(expression, tokens.remove().process(Precedence.BITWISE_OR));
-			if ("&&".equals(string))
-				return new And(expression, tokens.remove().process(Precedence.AND));
-			if ("||".equals(string))
-				return new Or(expression, tokens.remove().process(Precedence.OR));
-			if (",".equals(string)) {
+			case BITWISE_AND:
+				return new BitwiseAnd(expression, tokens.remove().process(Precedence.AND));
+			case BITWISE_XOR:
+				return new BitwiseXor(expression, tokens.remove().process(Precedence.XOR));
+			case BITWISE_OR:
+				return new BitwiseOr(expression, tokens.remove().process(Precedence.OR));
+			case AND:
+				return new And(expression, tokens.remove().process(Precedence.LOGICAL_AND));
+			case OR:
+				return new Or(expression, tokens.remove().process(Precedence.LOGICAL_OR));
+			case SEQUENCE:
 				Expression tail = tokens.remove().process(Precedence.SEQUENCE);
 				if (tail instanceof Sequence)
 					return new Sequence(expression, (Sequence)tail);
 				return new Sequence(expression, null);
+			default:
+				throw new ExpressionError("Not a binary operator: " + this);
 			}
-			throw new ExpressionError("Not a binary operator: " + this);
 		}
 		
 		@Override
 		public boolean isHigherPrecedence(Precedence lastPrecedence) {
-			return getBinaryPrecedence().compareTo(lastPrecedence) < 0;
-		}
-		
-		private Precedence getBinaryPrecedence() {
-			if ("*".equals(string) || "/".equals(string) || "%".equals(string))
-				return Precedence.MULTIPLICATION;
-			if ("+".equals(string) || "-".equals(string))
-				return Precedence.ADDITION;
-			if ("<<".equals(string) || ">>".equals(string))
-				return Precedence.SHIFT;
-			if ("<".equals(string) || "<=".equals(string) || ">".equals(string) || ">=".equals(string))
-				return Precedence.COMPARISON;
-			if ("==".equals(string) || "!=".equals(string))
-				return Precedence.EQUALITY;
-			if ("&".equals(string))
-				return Precedence.BITWISE_AND;
-			if ("^".equals(string))
-				return Precedence.BITWISE_XOR;
-			if ("|".equals(string))
-				return Precedence.BITWISE_OR;
-			if ("&&".equals(string))
-				return Precedence.AND;
-			if ("||".equals(string))
-				return Precedence.OR;
-			if (",".equals(string))
-				return Precedence.SEQUENCE;
-			if (")".equals(string))
-				return Precedence.GROUPING;
-			throw new ExpressionError("Not a binary operator: " + this);
+			return operator.precedence.compareTo(lastPrecedence) < 0;
 		}
 		
 		public String toString() {
-			return string;
+			return operator.toString();
 		}
 		
+	}
+	
+	public static enum Operator {
+		POSITIVE(Precedence.UNARY),
+		NEGATIVE(Precedence.UNARY),
+		COMPLEMENT(Precedence.UNARY),
+		NOT(Precedence.UNARY),
+		MULTIPLY(Precedence.MULTIPLICATION),
+		DIVIDE(Precedence.MULTIPLICATION),
+		MODULO(Precedence.MULTIPLICATION),
+		ADD(Precedence.ADDITION),
+		SUBTRACT(Precedence.ADDITION),
+		SHIFT_LEFT(Precedence.SHIFT),
+		SHIFT_RIGHT(Precedence.SHIFT),
+		LESS_THAN(Precedence.COMPARISON),
+		LESS_OR_EQUALS(Precedence.COMPARISON),
+		GREATER_THAN(Precedence.COMPARISON),
+		GREATER_OR_EQUALS(Precedence.COMPARISON),
+		EQUALS(Precedence.EQUALITY),
+		NOT_EQUALS(Precedence.EQUALITY),
+		BITWISE_AND(Precedence.AND),
+		BITWISE_XOR(Precedence.XOR),
+		BITWISE_OR(Precedence.OR),
+		AND(Precedence.LOGICAL_AND),
+		OR(Precedence.LOGICAL_OR),
+		GROUP_OPEN(Precedence.GROUPING),
+		GROUP_CLOSE(Precedence.GROUPING),
+		SEQUENCE(Precedence.SEQUENCE);
+		
+		private Precedence precedence;
+		private Operator(Precedence precedence) {
+			this.precedence = precedence;
+		}
 	}
 	
 	private static enum Precedence {
@@ -224,11 +233,11 @@ public class ExpressionBuilder {
 		SHIFT,
 		COMPARISON,
 		EQUALITY,
-		BITWISE_AND,
-		BITWISE_XOR,
-		BITWISE_OR,
 		AND,
+		XOR,
 		OR,
+		LOGICAL_AND,
+		LOGICAL_OR,
 		ASSIGNMENT,
 		SEQUENCE,
 		GROUPING,
