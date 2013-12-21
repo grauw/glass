@@ -4,7 +4,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
 
+import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.StringLiteral;
 
@@ -54,6 +56,7 @@ public class ExpressionBuilder {
 		}
 		
 		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+			stack.push(new Identifier(string));
 		}
 		
 		public String toString() {
@@ -65,6 +68,7 @@ public class ExpressionBuilder {
 	public static class CurrentToken extends Token {
 		
 		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+			stack.push(new Current());
 		}
 		
 		public String toString() {
