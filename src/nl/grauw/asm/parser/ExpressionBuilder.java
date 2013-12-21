@@ -5,9 +5,6 @@ import java.util.Queue;
 
 import nl.grauw.asm.expressions.Add;
 import nl.grauw.asm.expressions.And;
-import nl.grauw.asm.expressions.BitwiseAnd;
-import nl.grauw.asm.expressions.BitwiseOr;
-import nl.grauw.asm.expressions.BitwiseXor;
 import nl.grauw.asm.expressions.Complement;
 import nl.grauw.asm.expressions.Divide;
 import nl.grauw.asm.expressions.Equals;
@@ -17,6 +14,8 @@ import nl.grauw.asm.expressions.GreaterThan;
 import nl.grauw.asm.expressions.Group;
 import nl.grauw.asm.expressions.LessOrEquals;
 import nl.grauw.asm.expressions.LessThan;
+import nl.grauw.asm.expressions.LogicalAnd;
+import nl.grauw.asm.expressions.LogicalOr;
 import nl.grauw.asm.expressions.Modulo;
 import nl.grauw.asm.expressions.Multiply;
 import nl.grauw.asm.expressions.Negative;
@@ -28,6 +27,7 @@ import nl.grauw.asm.expressions.Sequence;
 import nl.grauw.asm.expressions.ShiftLeft;
 import nl.grauw.asm.expressions.ShiftRight;
 import nl.grauw.asm.expressions.Subtract;
+import nl.grauw.asm.expressions.Xor;
 
 public class ExpressionBuilder {
 	
@@ -163,15 +163,15 @@ public class ExpressionBuilder {
 			case NOT_EQUALS:
 				return new NotEquals(expression, tokens.remove().process(Precedence.EQUALITY));
 			case BITWISE_AND:
-				return new BitwiseAnd(expression, tokens.remove().process(Precedence.AND));
+				return new And(expression, tokens.remove().process(Precedence.AND));
 			case BITWISE_XOR:
-				return new BitwiseXor(expression, tokens.remove().process(Precedence.XOR));
+				return new Xor(expression, tokens.remove().process(Precedence.XOR));
 			case BITWISE_OR:
-				return new BitwiseOr(expression, tokens.remove().process(Precedence.OR));
+				return new Or(expression, tokens.remove().process(Precedence.OR));
 			case AND:
-				return new And(expression, tokens.remove().process(Precedence.LOGICAL_AND));
+				return new LogicalAnd(expression, tokens.remove().process(Precedence.LOGICAL_AND));
 			case OR:
-				return new Or(expression, tokens.remove().process(Precedence.LOGICAL_OR));
+				return new LogicalOr(expression, tokens.remove().process(Precedence.LOGICAL_OR));
 			case SEQUENCE:
 				Expression tail = tokens.remove().process(Precedence.SEQUENCE);
 				if (tail instanceof Sequence)
