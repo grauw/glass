@@ -113,15 +113,15 @@ public class ExpressionBuilder {
 		public Expression process(Precedence lastPrecedence) {
 			switch (operator) {
 			case POSITIVE:
-				return new Positive(tokens.remove().process(Precedence.UNARY));
+				return new Positive(processNext());
 			case NEGATIVE:
-				return new Negative(tokens.remove().process(Precedence.UNARY));
+				return new Negative(processNext());
 			case COMPLEMENT:
-				return new Complement(tokens.remove().process(Precedence.UNARY));
+				return new Complement(processNext());
 			case NOT:
-				return new Not(tokens.remove().process(Precedence.UNARY));
+				return new Not(processNext());
 			case GROUP_OPEN:
-				Group group = new Group(tokens.remove().process(Precedence.GROUPING));
+				Group group = new Group(processNext());
 				if (tokens.isEmpty())
 					throw new ExpressionError("Mismatching parentheses.");
 				tokens.remove();
@@ -137,49 +137,53 @@ public class ExpressionBuilder {
 			case GROUP_CLOSE:
 				return expression;
 			case MULTIPLY:
-				return new Multiply(expression, tokens.remove().process(Precedence.MULTIPLICATION));
+				return new Multiply(expression, processNext());
 			case DIVIDE:
-				return new Divide(expression, tokens.remove().process(Precedence.MULTIPLICATION));
+				return new Divide(expression, processNext());
 			case MODULO:
-				return new Modulo(expression, tokens.remove().process(Precedence.MULTIPLICATION));
+				return new Modulo(expression, processNext());
 			case ADD:
-				return new Add(expression, tokens.remove().process(Precedence.ADDITION));
+				return new Add(expression, processNext());
 			case SUBTRACT:
-				return new Subtract(expression, tokens.remove().process(Precedence.ADDITION));
+				return new Subtract(expression, processNext());
 			case SHIFT_LEFT:
-				return new ShiftLeft(expression, tokens.remove().process(Precedence.SHIFT));
+				return new ShiftLeft(expression, processNext());
 			case SHIFT_RIGHT:
-				return new ShiftRight(expression, tokens.remove().process(Precedence.SHIFT));
+				return new ShiftRight(expression, processNext());
 			case LESS_THAN:
-				return new LessThan(expression, tokens.remove().process(Precedence.COMPARISON));
+				return new LessThan(expression, processNext());
 			case LESS_OR_EQUALS:
-				return new LessOrEquals(expression, tokens.remove().process(Precedence.COMPARISON));
+				return new LessOrEquals(expression, processNext());
 			case GREATER_THAN:
-				return new GreaterThan(expression, tokens.remove().process(Precedence.COMPARISON));
+				return new GreaterThan(expression, processNext());
 			case GREATER_OR_EQUALS:
-				return new GreaterOrEquals(expression, tokens.remove().process(Precedence.COMPARISON));
+				return new GreaterOrEquals(expression, processNext());
 			case EQUALS:
-				return new Equals(expression, tokens.remove().process(Precedence.EQUALITY));
+				return new Equals(expression, processNext());
 			case NOT_EQUALS:
-				return new NotEquals(expression, tokens.remove().process(Precedence.EQUALITY));
+				return new NotEquals(expression, processNext());
 			case BITWISE_AND:
-				return new And(expression, tokens.remove().process(Precedence.AND));
+				return new And(expression, processNext());
 			case BITWISE_XOR:
-				return new Xor(expression, tokens.remove().process(Precedence.XOR));
+				return new Xor(expression, processNext());
 			case BITWISE_OR:
-				return new Or(expression, tokens.remove().process(Precedence.OR));
+				return new Or(expression, processNext());
 			case AND:
-				return new LogicalAnd(expression, tokens.remove().process(Precedence.LOGICAL_AND));
+				return new LogicalAnd(expression, processNext());
 			case OR:
-				return new LogicalOr(expression, tokens.remove().process(Precedence.LOGICAL_OR));
+				return new LogicalOr(expression, processNext());
 			case SEQUENCE:
-				Expression tail = tokens.remove().process(Precedence.SEQUENCE);
+				Expression tail = processNext();
 				if (tail instanceof Sequence)
 					return new Sequence(expression, (Sequence)tail);
 				return new Sequence(expression, null);
 			default:
 				throw new ExpressionError("Not a binary operator: " + this);
 			}
+		}
+		
+		public Expression processNext() {
+			return tokens.remove().process(operator.precedence);
 		}
 		
 		@Override
