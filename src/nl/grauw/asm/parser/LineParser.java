@@ -72,14 +72,6 @@ public class LineParser {
 					character == '_' || character == '.' || character == '?' || character == '@';
 		}
 		
-		public boolean isOperator(char character) {
-			return character == '!' || character == '%' || character == '&' || character == '(' ||
-					character == ')' || character == '*' || character == '+' || character == '-' ||
-					character == '/' || character == ':' || character == '<' || character == '=' ||
-					character == '>' || character == '?' || character == '^' || character == '|' ||
-					character == '~' || character == '#';  // character == "," (sequence operator)
-		}
-		
 	}
 	
 	private LabelStartState labelStartState = new LabelStartState();
@@ -147,7 +139,7 @@ public class LineParser {
 				statement = new Statement(accumulator.toString());
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
-					return argumentStartState;
+					return argumentValueState;
 				} else if (character == ';') {
 					return commentReadState;
 				} else if (character == '\0') {
@@ -158,37 +150,37 @@ public class LineParser {
 		}
 	}
 	
-	private ArgumentStartState argumentStartState = new ArgumentStartState();
-	private class ArgumentStartState extends State {
+	private ArgumentValueState argumentValueState = new ArgumentValueState();
+	private class ArgumentValueState extends State {
 		public State parse(char character) {
 			if (isIdentifierStart(character)) {
 				accumulator.append(character);
 				return argumentIdentifierState;
+			} else if (character == '$') {
+				expressionBuilder.addValueToken(new Current());
+				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
 				return argumentNumberState;
-			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Current());
-				return argumentStartState;
-			} else {
-				return argumentNoIdentifierState.parse(character);
-			}
-		}
-	}
-	
-	private ArgumentNoIdentifierState argumentNoIdentifierState = new ArgumentNoIdentifierState();
-	private class ArgumentNoIdentifierState extends State {
-		public State parse(char character) {
-			if (character == '"') {
+			} else if (character == '"') {
 				return argumentStringState;
-			} else if (isOperator(character)) {
-				accumulator.append(character);
-				return argumentOperatorState;
+			} else if (character == '+') {
+				expressionBuilder.addOperatorToken("+");
+				return argumentValueState;
+			} else if (character == '-') {
+				expressionBuilder.addOperatorToken("-");
+				return argumentValueState;
+			} else if (character == '~') {
+				expressionBuilder.addOperatorToken("~");
+				return argumentValueState;
+			} else if (character == '!') {
+				expressionBuilder.addOperatorToken("!");
+				return argumentValueState;
+			} else if (character == '(') {
+				expressionBuilder.addOperatorToken("(");
+				return argumentValueState;
 			} else if (isWhitespace(character)) {
-				return argumentStartState;
-			} else if (character == ',') {
-				statement.AddArgument(expressionBuilder.getExpression());
-				return argumentStartState;
+				return argumentValueState;
 			} else if (character == ';') {
 				if (expressionBuilder.hasExpression())
 					statement.AddArgument(expressionBuilder.getExpression());
@@ -211,7 +203,7 @@ public class LineParser {
 			} else {
 				expressionBuilder.addValueToken(new Identifier(accumulator.toString()));
 				accumulator.setLength(0);
-				return argumentNoIdentifierState.parse(character);
+				return argumentOperatorState.parse(character);
 			}
 		}
 	}
@@ -222,7 +214,7 @@ public class LineParser {
 			if (character == '"') {
 				expressionBuilder.addValueToken(new StringLiteral(accumulator.toString()));
 				accumulator.setLength(0);
-				return argumentStartState;
+				return argumentOperatorState;
 			} else if (character == '\\') {
 				accumulator.append(character);  // TODO
 				return argumentStringEscapeState;
@@ -260,12 +252,12 @@ public class LineParser {
 					int value = Integer.parseInt(string, 16);
 					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
-					return argumentStartState;
+					return argumentOperatorState;
 				} else if (character == 'O' || character == 'o') {
 					int value = Integer.parseInt(string, 8);
 					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
-					return argumentStartState;
+					return argumentOperatorState;
 				} else {
 					if (string.endsWith("B") || string.endsWith("b")) {
 						int value = Integer.parseInt(string.substring(0, string.length() - 1), 2);
@@ -276,7 +268,7 @@ public class LineParser {
 						expressionBuilder.addValueToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					}
-					return argumentNoIdentifierState.parse(character);
+					return argumentOperatorState.parse(character);
 				}
 			}
 		}
@@ -285,16 +277,123 @@ public class LineParser {
 	private ArgumentOperatorState argumentOperatorState = new ArgumentOperatorState();
 	private class ArgumentOperatorState extends State {
 		public State parse(char character) {
-			if (isOperator(character)) {
-				// XXX: what about !!1 (not-not), or 4+-5? this parsing won’t do
-				accumulator.append(character);
-				expressionBuilder.addOperatorToken(accumulator.toString());
-				accumulator.setLength(0);
-				return argumentStartState;
+			if (character == ')') {
+				expressionBuilder.addOperatorToken(")");
+				return argumentOperatorState;
+			} else if (character == '*') {
+				expressionBuilder.addOperatorToken("*");
+				return argumentValueState;
+			} else if (character == '/') {
+				expressionBuilder.addOperatorToken("/");
+				return argumentValueState;
+			} else if (character == '%') {
+				expressionBuilder.addOperatorToken("%");
+				return argumentValueState;
+			} else if (character == '+') {
+				expressionBuilder.addOperatorToken("+");
+				return argumentValueState;
+			} else if (character == '-') {
+				expressionBuilder.addOperatorToken("-");
+				return argumentValueState;
+			} else if (character == '<') {
+				return argumentLessThanState;
+			} else if (character == '>') {
+				return argumentGreaterThanState;
+			} else if (character == '=') {
+				expressionBuilder.addOperatorToken("=");
+				return argumentValueState;
+			} else if (character == '!') {
+				return argumentNotEqualsState;
+			} else if (character == '&') {
+				return argumentAndState;
+			} else if (character == '^') {
+				expressionBuilder.addOperatorToken("^");
+				return argumentValueState;
+			} else if (character == '|') {
+				return argumentOrState;
+			} else if (character == ',') {
+				expressionBuilder.addOperatorToken(",");
+				return argumentValueState;
+			} else if (isWhitespace(character)) {
+				return argumentOperatorState;
+			} else if (character == ';') {
+				if (expressionBuilder.hasExpression())
+					statement.AddArgument(expressionBuilder.getExpression());
+				return commentReadState;
+			} else if (character == '\0') {
+				if (expressionBuilder.hasExpression())
+					statement.AddArgument(expressionBuilder.getExpression());
+				return endState;
+			}
+			throw new SyntaxError();
+		}
+	}
+	
+	private ArgumentLessThanState argumentLessThanState = new ArgumentLessThanState();
+	private class ArgumentLessThanState extends State {
+		public State parse(char character) {
+			if (character == '<') {
+				expressionBuilder.addOperatorToken("<<");
+				return argumentValueState;
+			} else if (character == '=') {
+				expressionBuilder.addOperatorToken("<=");
+				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken(accumulator.toString());
-				accumulator.setLength(0);
-				return argumentStartState.parse(character);
+				expressionBuilder.addOperatorToken("<");
+				return argumentValueState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentGreaterThanState argumentGreaterThanState = new ArgumentGreaterThanState();
+	private class ArgumentGreaterThanState extends State {
+		public State parse(char character) {
+			if (character == '>') {
+				expressionBuilder.addOperatorToken(">>");
+				return argumentValueState;
+			} else if (character == '=') {
+				expressionBuilder.addOperatorToken(">=");
+				return argumentValueState;
+			} else {
+				expressionBuilder.addOperatorToken(">");
+				return argumentValueState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentNotEqualsState argumentNotEqualsState = new ArgumentNotEqualsState();
+	private class ArgumentNotEqualsState extends State {
+		public State parse(char character) {
+			if (character == '=') {
+				expressionBuilder.addOperatorToken("!=");
+				return argumentValueState;
+			}
+			throw new SyntaxError();
+		}
+	}
+	
+	private ArgumentAndState argumentAndState = new ArgumentAndState();
+	private class ArgumentAndState extends State {
+		public State parse(char character) {
+			if (character == '&') {
+				expressionBuilder.addOperatorToken("&&");
+				return argumentValueState;
+			} else {
+				expressionBuilder.addOperatorToken("&");
+				return argumentValueState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentOrState argumentOrState = new ArgumentOrState();
+	private class ArgumentOrState extends State {
+		public State parse(char character) {
+			if (character == '|') {
+				expressionBuilder.addOperatorToken("||");
+				return argumentValueState;
+			} else {
+				expressionBuilder.addOperatorToken("|");
+				return argumentValueState.parse(character);
 			}
 		}
 	}
