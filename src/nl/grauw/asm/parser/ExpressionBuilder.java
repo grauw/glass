@@ -50,9 +50,8 @@ public class ExpressionBuilder {
 		
 		Expression result = tokens.remove().process(tokens);
 		
-//		if (!tokens.isEmpty())
-//			throw new RuntimeException("Not all tokens were processed.");
-		tokens.clear();
+		if (!tokens.isEmpty())
+			throw new RuntimeException("Not all tokens were processed.");
 		
 		return result;
 	}
@@ -78,8 +77,8 @@ public class ExpressionBuilder {
 		@Override
 		public Expression process(Queue<Token> tokens) {
 			Expression expression = value;
-//			while not(tokens.isEmpty() || tokens.peekOperator().isGroupClose() || tokens.peekOperator().isLowerPrecedence())
-//				expression = tokens.remove().processOperator(expression, tokens);
+			while (!tokens.isEmpty())  // || tokens.peekOperator().isLowerPrecedence()
+				expression = tokens.remove().processOperator(expression, tokens);
 			return expression;
 		}
 		
