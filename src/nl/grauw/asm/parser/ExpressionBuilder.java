@@ -58,10 +58,8 @@ public class ExpressionBuilder {
 	
 	private abstract class Token {
 		
-		// consume()?
 		public abstract Expression process();
 		
-		// process(expression, tokens)?
 		public abstract Expression processOperator(Expression expression);
 		
 	}
