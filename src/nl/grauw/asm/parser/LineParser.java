@@ -6,6 +6,10 @@ import nl.grauw.asm.Comment;
 import nl.grauw.asm.Label;
 import nl.grauw.asm.Line;
 import nl.grauw.asm.Statement;
+import nl.grauw.asm.expressions.Current;
+import nl.grauw.asm.expressions.Identifier;
+import nl.grauw.asm.expressions.IntegerLiteral;
+import nl.grauw.asm.expressions.StringLiteral;
 import nl.grauw.asm.parser.ExpressionBuilder.ExpressionError;
 
 public class LineParser {
@@ -164,7 +168,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentNumberState;
 			} else if (character == '$') {
-				expressionBuilder.AddToken(new ExpressionBuilder.CurrentToken());
+				expressionBuilder.AddToken(new Current());
 				return argumentStartState;
 			} else {
 				return argumentNoIdentifierState.parse(character);
@@ -205,7 +209,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.AddToken(new ExpressionBuilder.IdentifierToken(accumulator.toString()));
+				expressionBuilder.AddToken(new Identifier(accumulator.toString()));
 				accumulator.setLength(0);
 				return argumentNoIdentifierState.parse(character);
 			}
@@ -216,7 +220,7 @@ public class LineParser {
 	private class ArgumentStringState extends State {
 		public State parse(char character) {
 			if (character == '"') {
-				expressionBuilder.AddToken(new ExpressionBuilder.StringLiteralToken(accumulator.toString()));
+				expressionBuilder.AddToken(new StringLiteral(accumulator.toString()));
 				accumulator.setLength(0);
 				return argumentStartState;
 			} else if (character == '\\') {
@@ -254,22 +258,22 @@ public class LineParser {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
 					int value = Integer.parseInt(string, 16);
-					expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+					expressionBuilder.AddToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentStartState;
 				} else if (character == 'O' || character == 'o') {
 					int value = Integer.parseInt(string, 8);
-					expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+					expressionBuilder.AddToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentStartState;
 				} else {
 					if (string.endsWith("B") || string.endsWith("b")) {
 						int value = Integer.parseInt(string.substring(0, string.length() - 1), 2);
-						expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+						expressionBuilder.AddToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					} else {
 						int value = Integer.parseInt(string);
-						expressionBuilder.AddToken(new ExpressionBuilder.IntegerLiteralToken(value));
+						expressionBuilder.AddToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					}
 					return argumentNoIdentifierState.parse(character);

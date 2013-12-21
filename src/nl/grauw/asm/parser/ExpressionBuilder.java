@@ -1,20 +1,15 @@
 package nl.grauw.asm.parser;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Queue;
 
 import nl.grauw.asm.expressions.Add;
 import nl.grauw.asm.expressions.Complement;
-import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Group;
-import nl.grauw.asm.expressions.Identifier;
-import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.Negate;
 import nl.grauw.asm.expressions.Not;
 import nl.grauw.asm.expressions.Positive;
-import nl.grauw.asm.expressions.StringLiteral;
 
 public class ExpressionBuilder {
 	
@@ -22,6 +17,10 @@ public class ExpressionBuilder {
 	
 	public void AddToken(Token token) {
 		tokens.add(token);
+	}
+	
+	public void AddToken(Expression value) {
+		tokens.add(new ValueToken(value));
 	}
 	
 	public boolean hasExpression() {
@@ -51,17 +50,17 @@ public class ExpressionBuilder {
 		
 	}
 	
-	public static class IdentifierToken extends Token {
+	public static class ValueToken extends Token {
+
+		private Expression value;
 		
-		private String string;
-		
-		public IdentifierToken(String string) {
-			this.string = string;
+		public ValueToken(Expression value) {
+			this.value = value;
 		}
 		
 		@Override
 		public Expression process(Queue<Token> tokens) {
-			Expression expression = new Identifier(string);
+			Expression expression = value;
 //			while not(tokens.isEmpty() || tokens.peekOperator().isGroupClose() || tokens.peekOperator().isLowerPrecedence())
 //				expression = tokens.remove().processOperator(expression, tokens);
 			return expression;
@@ -73,25 +72,7 @@ public class ExpressionBuilder {
 		}
 		
 		public String toString() {
-			return this.string;
-		}
-		
-	}
-	
-	public static class CurrentToken extends Token {
-		
-		@Override
-		public Expression process(Queue<Token> tokens) {
-			return new Current();
-		}
-		
-		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
-		}
-		
-		public String toString() {
-			return "$";
+			return value.toString();
 		}
 		
 	}
@@ -125,55 +106,7 @@ public class ExpressionBuilder {
 		}
 		
 		public String toString() {
-			return this.string;
-		}
-		
-	}
-	
-	public static class StringLiteralToken extends Token {
-		
-		private String string;
-		
-		public StringLiteralToken(String string) {
-			this.string = string;
-		}
-		
-		@Override
-		public Expression process(Queue<Token> tokens) {
-			return new StringLiteral(string);
-		}
-		
-		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
-		}
-		
-		public String toString() {
-			return "\"" + this.string + "\"";
-		}
-		
-	}
-	
-	public static class IntegerLiteralToken extends Token {
-		
-		private int value;
-		
-		public IntegerLiteralToken(int value) {
-			this.value = value;
-		}
-		
-		@Override
-		public Expression process(Queue<Token> tokens) {
-			return new IntegerLiteral(value);
-		}
-		
-		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
-		}
-		
-		public String toString() {
-			return "" + value;
+			return string;
 		}
 		
 	}
