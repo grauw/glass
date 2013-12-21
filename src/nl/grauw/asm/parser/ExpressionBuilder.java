@@ -113,13 +113,15 @@ public class ExpressionBuilder {
 				return new Complement(tokens.remove().process(tokens));
 			if ("!".equals(string))
 				return new Not(tokens.remove().process(tokens));
-			throw new ExpressionError("Non-unary operator not valid following an operator.");
+			if ("(".equals(string))
+				return new Group(tokens.remove().process(tokens));
+			throw new ExpressionError("Not an unary operator.");
 		}
 		
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
 			if ("+".equals(string))
 				return new Add(expression, process(tokens));
-			throw new ExpressionError("Unrecognised operator.");
+			throw new ExpressionError("Not a binary operator.");
 		}
 		
 		public String toString() {
@@ -172,48 +174,6 @@ public class ExpressionBuilder {
 		
 		public String toString() {
 			return "" + value;
-		}
-		
-	}
-	
-	public static class GroupOpenToken extends Token {
-		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-		}
-		
-		@Override
-		public Expression process(Queue<Token> tokens) {
-			return new Group(tokens.remove().process(tokens));
-		}
-		
-		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
-		}
-		
-		public String toString() {
-			return "(";
-		}
-		
-	}
-	
-	public static class GroupCloseToken extends Token {
-		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-		}
-		
-		@Override
-		public Expression process(Queue<Token> tokens) {
-			throw new ExpressionError("Not an expression.");
-		}
-		
-		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
-		}
-		
-		public String toString() {
-			return ")";
 		}
 		
 	}

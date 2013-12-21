@@ -60,7 +60,7 @@ public class LineParser {
 		
 		public boolean isIdentifier(char character) {
 			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
-					character == '\'';  // for ex af,af'...
+					character == '\'';
 		}
 		
 		public boolean isIdentifierStart(char character) {
@@ -69,11 +69,11 @@ public class LineParser {
 		}
 		
 		public boolean isOperator(char character) {
-			return character == '!' || character == '%' || character == '&' || character == '*' ||
-					character == '+' || character == '-' || character == '/' || character == ':' ||
-					character == '<' || character == '=' || character == '>' || character == '?' ||
-					character == '^' || character == '|' || character == '~' || character == '#';
-				// character == "," (sequence operator)
+			return character == '!' || character == '%' || character == '&' || character == '(' ||
+					character == ')' || character == '*' || character == '+' || character == '-' ||
+					character == '/' || character == ':' || character == '<' || character == '=' ||
+					character == '>' || character == '?' || character == '^' || character == '|' ||
+					character == '~' || character == '#';  // character == "," (sequence operator)
 		}
 		
 	}
@@ -175,13 +175,7 @@ public class LineParser {
 	private ArgumentNoIdentifierState argumentNoIdentifierState = new ArgumentNoIdentifierState();
 	private class ArgumentNoIdentifierState extends State {
 		public State parse(char character) {
-			if (character == '(') {
-				expressionBuilder.AddToken(new ExpressionBuilder.GroupOpenToken());
-				return argumentStartState;
-			} else if (character == ')') {
-				expressionBuilder.AddToken(new ExpressionBuilder.GroupCloseToken());
-				return argumentStartState;
-			} else if (character == '"') {
+			if (character == '"') {
 				return argumentStringState;
 			} else if (isOperator(character)) {
 				accumulator.append(character);
