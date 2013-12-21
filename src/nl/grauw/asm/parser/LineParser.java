@@ -6,6 +6,7 @@ import nl.grauw.asm.Comment;
 import nl.grauw.asm.Label;
 import nl.grauw.asm.Line;
 import nl.grauw.asm.Statement;
+import nl.grauw.asm.parser.ExpressionBuilder.ExpressionError;
 
 public class LineParser {
 	
@@ -42,7 +43,9 @@ public class LineParser {
 			if (state != endState)
 				throw new RuntimeException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(NumberFormatException e) {
-			throw e;
+			throw new SyntaxError(e);
+		} catch(ExpressionError e) {
+			throw new SyntaxError(e);
 		}
 		
 		return new Line(label, statement, comment, sourceFile, lineNumber);
@@ -285,6 +288,7 @@ public class LineParser {
 	private class ArgumentOperatorState extends State {
 		public State parse(char character) {
 			if (isOperator(character)) {
+				// XXX: what about !!1 (not-not), or 4+-5? this parsing won’t do
 				accumulator.append(character);
 				expressionBuilder.AddToken(new ExpressionBuilder.OperatorToken(accumulator.toString()));
 				accumulator.setLength(0);
@@ -318,12 +322,18 @@ public class LineParser {
 		}
 	}
 	
-	private class SyntaxError extends RuntimeException {
+	public class SyntaxError extends RuntimeException {
 		private static final long serialVersionUID = 1L;
+		
 		public SyntaxError() {
-			super("Syntax error on line " + lineNumber + ", column " + columnNumber + " of file " + sourceFile +
-					"\n" + text + "\n" + (text.substring(0, columnNumber).replaceAll("[^\t]", " ") + "^"));
+			this(null);
 		}
+		
+		public SyntaxError(Throwable cause) {
+			super("Syntax error on line " + lineNumber + ", column " + columnNumber + " of file " + sourceFile +
+					"\n" + text + "\n" + (text.substring(0, columnNumber).replaceAll("[^\t]", " ") + "^"), cause);
+		}
+		
 	}
 	
 }

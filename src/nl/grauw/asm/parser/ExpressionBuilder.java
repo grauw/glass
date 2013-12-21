@@ -4,10 +4,16 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
 
+import nl.grauw.asm.expressions.Add;
+import nl.grauw.asm.expressions.Complement;
 import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Group;
 import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
+import nl.grauw.asm.expressions.Negate;
+import nl.grauw.asm.expressions.Not;
+import nl.grauw.asm.expressions.Positive;
 import nl.grauw.asm.expressions.StringLiteral;
 
 public class ExpressionBuilder {
@@ -26,24 +32,22 @@ public class ExpressionBuilder {
 		if (tokens.isEmpty())
 			throw new RuntimeException("No tokens queued.");
 		
-		Deque<Expression> stack = new ArrayDeque<Expression>();
-		
-		tokens.remove().process(tokens, stack);
+		Expression result = tokens.remove().process(tokens);
 		
 //		if (!tokens.isEmpty())
 //			throw new RuntimeException("Not all tokens were processed.");
 		tokens.clear();
 		
-		if (stack.size() > 1)
-			throw new RuntimeException("Not all expressions were processed.");
-		if (!stack.isEmpty())
-			return stack.pop();
-		return new Identifier("XXX");
+		return result;
 	}
 	
 	private abstract static class Token {
 		
-		public abstract void process(Queue<Token> tokens, Deque<Expression> stack);
+		// consume()?
+		public abstract Expression process(Queue<Token> tokens);
+		
+		// process(expression, tokens)?
+		public abstract Expression processOperator(Expression expression, Queue<Token> tokens);
 		
 	}
 	
@@ -55,8 +59,17 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-			stack.push(new Identifier(string));
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			Expression expression = new Identifier(string);
+//			while not(tokens.isEmpty() || tokens.peekOperator().isGroupClose() || tokens.peekOperator().isLowerPrecedence())
+//				expression = tokens.remove().processOperator(expression, tokens);
+			return expression;
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
 		}
 		
 		public String toString() {
@@ -67,8 +80,14 @@ public class ExpressionBuilder {
 	
 	public static class CurrentToken extends Token {
 		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-			stack.push(new Current());
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			return new Current();
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
 		}
 		
 		public String toString() {
@@ -85,7 +104,22 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
+		public Expression process(Queue<Token> tokens) {
+			if ("+".equals(string))
+				return new Positive(tokens.remove().process(tokens));
+			if ("-".equals(string))
+				return new Negate(tokens.remove().process(tokens));
+			if ("~".equals(string))
+				return new Complement(tokens.remove().process(tokens));
+			if ("!".equals(string))
+				return new Not(tokens.remove().process(tokens));
+			throw new ExpressionError("Non-unary operator not valid following an operator.");
+		}
+		
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			if ("+".equals(string))
+				return new Add(expression, process(tokens));
+			throw new ExpressionError("Unrecognised operator.");
 		}
 		
 		public String toString() {
@@ -102,8 +136,14 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-			stack.push(new StringLiteral(string));
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			return new StringLiteral(string);
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
 		}
 		
 		public String toString() {
@@ -120,8 +160,14 @@ public class ExpressionBuilder {
 			this.value = value;
 		}
 		
-		public void process(Queue<Token> tokens, Deque<Expression> stack) {
-			stack.push(new IntegerLiteral(value));
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			return new IntegerLiteral(value);
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
 		}
 		
 		public String toString() {
@@ -135,6 +181,16 @@ public class ExpressionBuilder {
 		public void process(Queue<Token> tokens, Deque<Expression> stack) {
 		}
 		
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			return new Group(tokens.remove().process(tokens));
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
+		}
+		
 		public String toString() {
 			return "(";
 		}
@@ -146,10 +202,27 @@ public class ExpressionBuilder {
 		public void process(Queue<Token> tokens, Deque<Expression> stack) {
 		}
 		
+		@Override
+		public Expression process(Queue<Token> tokens) {
+			throw new ExpressionError("Not an expression.");
+		}
+		
+		@Override
+		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			throw new ExpressionError("Not an operator.");
+		}
+		
 		public String toString() {
 			return ")";
 		}
 		
+	}
+	
+	public static class ExpressionError extends RuntimeException {
+		private static final long serialVersionUID = 1L;
+		public ExpressionError(String message) {
+			super("Expression error: " + message);
+		}
 	}
 	
 }
