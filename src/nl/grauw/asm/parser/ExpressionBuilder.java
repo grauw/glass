@@ -7,9 +7,11 @@ import nl.grauw.asm.expressions.Add;
 import nl.grauw.asm.expressions.Complement;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Group;
+import nl.grauw.asm.expressions.Multiply;
 import nl.grauw.asm.expressions.Negate;
 import nl.grauw.asm.expressions.Not;
 import nl.grauw.asm.expressions.Positive;
+import nl.grauw.asm.expressions.Subtract;
 
 public class ExpressionBuilder {
 	
@@ -101,7 +103,11 @@ public class ExpressionBuilder {
 		
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
 			if ("+".equals(string))
-				return new Add(expression, process(tokens));
+				return new Add(expression, tokens.remove().process(tokens));
+			if ("-".equals(string))
+				return new Subtract(expression, tokens.remove().process(tokens));
+			if ("*".equals(string))
+				return new Multiply(expression, tokens.remove().process(tokens));
 			throw new ExpressionError("Not a binary operator: " + this);
 		}
 		
