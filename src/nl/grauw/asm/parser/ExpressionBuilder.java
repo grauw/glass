@@ -68,7 +68,7 @@ public class ExpressionBuilder {
 		
 		@Override
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
-			throw new ExpressionError("Not an operator.");
+			throw new ExpressionError("Not an operator: " + this);
 		}
 		
 		public String toString() {
@@ -96,13 +96,13 @@ public class ExpressionBuilder {
 				return new Not(tokens.remove().process(tokens));
 			if ("(".equals(string))
 				return new Group(tokens.remove().process(tokens));
-			throw new ExpressionError("Not an unary operator or value.");
+			throw new ExpressionError("Not an unary operator or value: " + this);
 		}
 		
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
 			if ("+".equals(string))
 				return new Add(expression, process(tokens));
-			throw new ExpressionError("Not a binary operator.");
+			throw new ExpressionError("Not a binary operator: " + this);
 		}
 		
 		public String toString() {
