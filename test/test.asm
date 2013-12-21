@@ -26,10 +26,12 @@ test_label7: push af;test comment
 
 ; ### Expression builder tests
 	exx
+	and a
 	ex hl,de
 	ld a,(hl)
 	ld a,(ix + 0)
-	ld a,10 + 15 * (5 - 2) + 4
+	cp 10 + 15 * (5 - 2) + 4
+	ld a,(10 + 15) * (5 - 2) + 4
 
 	INCLUDE "test2"
 	INCLUDE "include-relative/test3"
