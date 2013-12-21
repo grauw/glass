@@ -163,6 +163,9 @@ public class LineParser {
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
 				return argumentNumberState;
+			} else if (character == '$') {
+				expressionBuilder.AddToken(new ExpressionBuilder.CurrentToken());
+				return argumentStartState;
 			} else {
 				return argumentNoIdentifierState.parse(character);
 			}
@@ -177,9 +180,6 @@ public class LineParser {
 				return argumentStartState;
 			} else if (character == ')') {
 				expressionBuilder.AddToken(new ExpressionBuilder.GroupCloseToken());
-				return argumentStartState;
-			} else if (character == '$') {
-				expressionBuilder.AddToken(new ExpressionBuilder.CurrentToken());
 				return argumentStartState;
 			} else if (character == '"') {
 				return argumentStringState;
