@@ -24,7 +24,7 @@ public class ExpressionBuilder {
 	}
 	
 	public boolean hasExpression() {
-		return tokens.size() > 0;
+		return !tokens.isEmpty();
 	}
 	
 	public Expression getExpression() {
