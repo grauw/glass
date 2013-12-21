@@ -11,7 +11,7 @@ public class Sequence extends Expression {
 	}
 	
 	public String toString() {
-		return "" + value + (tail != null ? ", " : "");
+		return "" + value + (tail != null ? ", " + tail : "");
 	}
 	
 }
