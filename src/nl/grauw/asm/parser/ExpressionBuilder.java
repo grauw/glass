@@ -51,7 +51,7 @@ public class ExpressionBuilder {
 		Expression result = tokens.remove().process();
 		
 		if (!tokens.isEmpty())
-			throw new RuntimeException("Not all tokens were processed.");
+			throw new RuntimeException("Not all tokens were processed: " + tokens);
 		
 		return result;
 	}
