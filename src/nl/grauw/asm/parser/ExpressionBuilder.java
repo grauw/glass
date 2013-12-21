@@ -48,7 +48,7 @@ public class ExpressionBuilder {
 		if (tokens.isEmpty())
 			throw new RuntimeException("No tokens queued.");
 		
-		Expression result = tokens.remove().process(tokens);
+		Expression result = tokens.remove().process();
 		
 		if (!tokens.isEmpty())
 			throw new RuntimeException("Not all tokens were processed.");
@@ -59,10 +59,10 @@ public class ExpressionBuilder {
 	private abstract class Token {
 		
 		// consume()?
-		public abstract Expression process(Queue<Token> tokens);
+		public abstract Expression process();
 		
 		// process(expression, tokens)?
-		public abstract Expression processOperator(Expression expression, Queue<Token> tokens);
+		public abstract Expression processOperator(Expression expression);
 		
 	}
 	
@@ -75,15 +75,15 @@ public class ExpressionBuilder {
 		}
 		
 		@Override
-		public Expression process(Queue<Token> tokens) {
+		public Expression process() {
 			Expression expression = value;
 			while (!tokens.isEmpty())  // || tokens.peekOperator().isLowerPrecedence()
-				expression = tokens.remove().processOperator(expression, tokens);
+				expression = tokens.remove().processOperator(expression);
 			return expression;
 		}
 		
 		@Override
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+		public Expression processOperator(Expression expression) {
 			throw new ExpressionError("Not an operator: " + this);
 		}
 		
@@ -101,59 +101,59 @@ public class ExpressionBuilder {
 			this.string = string;
 		}
 		
-		public Expression process(Queue<Token> tokens) {
+		public Expression process() {
 			if ("+".equals(string))
-				return new Positive(tokens.remove().process(tokens));
+				return new Positive(tokens.remove().process());
 			if ("-".equals(string))
-				return new Negate(tokens.remove().process(tokens));
+				return new Negate(tokens.remove().process());
 			if ("~".equals(string))
-				return new Complement(tokens.remove().process(tokens));
+				return new Complement(tokens.remove().process());
 			if ("!".equals(string))
-				return new Not(tokens.remove().process(tokens));
+				return new Not(tokens.remove().process());
 			if ("(".equals(string))
-				return new Group(tokens.remove().process(tokens));
+				return new Group(tokens.remove().process());
 			throw new ExpressionError("Not an unary operator or value: " + this);
 		}
 		
-		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+		public Expression processOperator(Expression expression) {
 			if (")".equals(string))
 				return expression;
 			if ("*".equals(string))
-				return new Multiply(expression, tokens.remove().process(tokens));
+				return new Multiply(expression, tokens.remove().process());
 			if ("/".equals(string))
-				return new Divide(expression, tokens.remove().process(tokens));
+				return new Divide(expression, tokens.remove().process());
 			if ("%".equals(string))
-				return new Modulo(expression, tokens.remove().process(tokens));
+				return new Modulo(expression, tokens.remove().process());
 			if ("+".equals(string))
-				return new Add(expression, tokens.remove().process(tokens));
+				return new Add(expression, tokens.remove().process());
 			if ("-".equals(string))
-				return new Subtract(expression, tokens.remove().process(tokens));
+				return new Subtract(expression, tokens.remove().process());
 			if ("<<".equals(string))
-				return new ShiftLeft(expression, tokens.remove().process(tokens));
+				return new ShiftLeft(expression, tokens.remove().process());
 			if (">>".equals(string))
-				return new ShiftRight(expression, tokens.remove().process(tokens));
+				return new ShiftRight(expression, tokens.remove().process());
 			if ("<".equals(string))
-				return new LessThan(expression, tokens.remove().process(tokens));
+				return new LessThan(expression, tokens.remove().process());
 			if ("<=".equals(string))
-				return new LessOrEquals(expression, tokens.remove().process(tokens));
+				return new LessOrEquals(expression, tokens.remove().process());
 			if (">".equals(string))
-				return new GreaterThan(expression, tokens.remove().process(tokens));
+				return new GreaterThan(expression, tokens.remove().process());
 			if (">=".equals(string))
-				return new GreaterOrEquals(expression, tokens.remove().process(tokens));
+				return new GreaterOrEquals(expression, tokens.remove().process());
 			if ("=".equals(string))
-				return new Equals(expression, tokens.remove().process(tokens));
+				return new Equals(expression, tokens.remove().process());
 			if ("!=".equals(string))
-				return new NotEquals(expression, tokens.remove().process(tokens));
+				return new NotEquals(expression, tokens.remove().process());
 			if ("&".equals(string))
-				return new BitwiseAnd(expression, tokens.remove().process(tokens));
+				return new BitwiseAnd(expression, tokens.remove().process());
 			if ("^".equals(string))
-				return new BitwiseXor(expression, tokens.remove().process(tokens));
+				return new BitwiseXor(expression, tokens.remove().process());
 			if ("|".equals(string))
-				return new BitwiseOr(expression, tokens.remove().process(tokens));
+				return new BitwiseOr(expression, tokens.remove().process());
 			if ("&&".equals(string))
-				return new And(expression, tokens.remove().process(tokens));
+				return new And(expression, tokens.remove().process());
 			if ("||".equals(string))
-				return new Or(expression, tokens.remove().process(tokens));
+				return new Or(expression, tokens.remove().process());
 			throw new ExpressionError("Not a binary operator: " + this);
 		}
 		
