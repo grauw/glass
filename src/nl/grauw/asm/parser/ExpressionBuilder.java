@@ -176,7 +176,7 @@ public class ExpressionBuilder {
 				Expression tail = processNext();
 				if (tail instanceof Sequence)
 					return new Sequence(expression, (Sequence)tail);
-				return new Sequence(expression, null);
+				return new Sequence(expression, new Sequence(tail, null));
 			default:
 				throw new ExpressionError("Not a binary operator: " + this);
 			}
