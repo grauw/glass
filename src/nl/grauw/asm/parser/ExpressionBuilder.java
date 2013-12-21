@@ -4,13 +4,28 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import nl.grauw.asm.expressions.Add;
+import nl.grauw.asm.expressions.And;
+import nl.grauw.asm.expressions.BitwiseAnd;
+import nl.grauw.asm.expressions.BitwiseOr;
+import nl.grauw.asm.expressions.BitwiseXor;
 import nl.grauw.asm.expressions.Complement;
+import nl.grauw.asm.expressions.Divide;
+import nl.grauw.asm.expressions.Equals;
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.GreaterOrEquals;
+import nl.grauw.asm.expressions.GreaterThan;
 import nl.grauw.asm.expressions.Group;
+import nl.grauw.asm.expressions.LessOrEquals;
+import nl.grauw.asm.expressions.LessThan;
+import nl.grauw.asm.expressions.Modulo;
 import nl.grauw.asm.expressions.Multiply;
 import nl.grauw.asm.expressions.Negate;
 import nl.grauw.asm.expressions.Not;
+import nl.grauw.asm.expressions.NotEquals;
+import nl.grauw.asm.expressions.Or;
 import nl.grauw.asm.expressions.Positive;
+import nl.grauw.asm.expressions.ShiftLeft;
+import nl.grauw.asm.expressions.ShiftRight;
 import nl.grauw.asm.expressions.Subtract;
 
 public class ExpressionBuilder {
@@ -102,12 +117,44 @@ public class ExpressionBuilder {
 		}
 		
 		public Expression processOperator(Expression expression, Queue<Token> tokens) {
+			if (")".equals(string))
+				return expression;
+			if ("*".equals(string))
+				return new Multiply(expression, tokens.remove().process(tokens));
+			if ("/".equals(string))
+				return new Divide(expression, tokens.remove().process(tokens));
+			if ("%".equals(string))
+				return new Modulo(expression, tokens.remove().process(tokens));
 			if ("+".equals(string))
 				return new Add(expression, tokens.remove().process(tokens));
 			if ("-".equals(string))
 				return new Subtract(expression, tokens.remove().process(tokens));
-			if ("*".equals(string))
-				return new Multiply(expression, tokens.remove().process(tokens));
+			if ("<<".equals(string))
+				return new ShiftLeft(expression, tokens.remove().process(tokens));
+			if (">>".equals(string))
+				return new ShiftRight(expression, tokens.remove().process(tokens));
+			if ("<".equals(string))
+				return new LessThan(expression, tokens.remove().process(tokens));
+			if ("<=".equals(string))
+				return new LessOrEquals(expression, tokens.remove().process(tokens));
+			if (">".equals(string))
+				return new GreaterThan(expression, tokens.remove().process(tokens));
+			if (">=".equals(string))
+				return new GreaterOrEquals(expression, tokens.remove().process(tokens));
+			if ("=".equals(string))
+				return new Equals(expression, tokens.remove().process(tokens));
+			if ("!=".equals(string))
+				return new NotEquals(expression, tokens.remove().process(tokens));
+			if ("&".equals(string))
+				return new BitwiseAnd(expression, tokens.remove().process(tokens));
+			if ("^".equals(string))
+				return new BitwiseXor(expression, tokens.remove().process(tokens));
+			if ("|".equals(string))
+				return new BitwiseOr(expression, tokens.remove().process(tokens));
+			if ("&&".equals(string))
+				return new And(expression, tokens.remove().process(tokens));
+			if ("||".equals(string))
+				return new Or(expression, tokens.remove().process(tokens));
 			throw new ExpressionError("Not a binary operator: " + this);
 		}
 		
