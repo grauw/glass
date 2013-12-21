@@ -1,10 +1,10 @@
 package nl.grauw.asm.expressions;
 
-public class Negate extends Operator {
+public class Negative extends Operator {
 	
 	private Expression term;
 	
-	public Negate(Expression term) {
+	public Negative(Expression term) {
 		this.term = term;
 	}
 	

@@ -19,7 +19,7 @@ import nl.grauw.asm.expressions.LessOrEquals;
 import nl.grauw.asm.expressions.LessThan;
 import nl.grauw.asm.expressions.Modulo;
 import nl.grauw.asm.expressions.Multiply;
-import nl.grauw.asm.expressions.Negate;
+import nl.grauw.asm.expressions.Negative;
 import nl.grauw.asm.expressions.Not;
 import nl.grauw.asm.expressions.NotEquals;
 import nl.grauw.asm.expressions.Or;
@@ -114,7 +114,7 @@ public class ExpressionBuilder {
 			if ("+".equals(string))
 				return new Positive(tokens.remove().process(Precedence.UNARY));
 			if ("-".equals(string))
-				return new Negate(tokens.remove().process(Precedence.UNARY));
+				return new Negative(tokens.remove().process(Precedence.UNARY));
 			if ("~".equals(string))
 				return new Complement(tokens.remove().process(Precedence.UNARY));
 			if ("!".equals(string))
