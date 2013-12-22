@@ -10,6 +10,10 @@ public class Sequence extends Expression {
 		this.tail = tail;
 	}
 	
+	public Sequence getTail() {
+		return tail;
+	}
+	
 	public String toString() {
 		return "" + value + (tail != null ? ", " + tail : "");
 	}
