@@ -3,14 +3,14 @@ package nl.grauw.asm.expressions;
 public class Sequence extends Expression {
 	
 	private final Expression value;
-	private final Sequence tail;
+	private final Expression tail;
 	
-	public Sequence(Expression value, Sequence tail) {
+	public Sequence(Expression value, Expression tail) {
 		this.value = value;
 		this.tail = tail;
 	}
 	
-	public Sequence getTail() {
+	public Expression getTail() {
 		return tail;
 	}
 	

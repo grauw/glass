@@ -193,9 +193,7 @@ public class ExpressionBuilder {
 			case OR:
 				return new LogicalOr(operand1, operand2);
 			case SEQUENCE:
-				if (operand2 instanceof Sequence)
-					return new Sequence(operand1, (Sequence)operand2);
-				return new Sequence(operand1, new Sequence(operand2, null));
+				return new Sequence(operand1, operand2);
 			default:
 				throw new ExpressionError("Not a binary operator: " + this);
 			}
