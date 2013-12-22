@@ -9,7 +9,7 @@ public class Source {
 	public Source() {
 	}
 	
-	public Line AddLine(Line line) {
+	public Line addLine(Line line) {
 		lines.add(line);
 		return line;
 	}

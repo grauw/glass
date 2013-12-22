@@ -51,7 +51,7 @@ public class SourceParser {
 	private void parse(LineNumberReader reader, File sourceFile) {
 		try {
 			while (reader.ready()) {
-				Line line = source.AddLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
+				Line line = source.addLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
 				
 				Statement statement = line.getStatement();
 				if (statement != null && (statement.getInstruction().equals("INCLUDE") || statement.getInstruction().equals("include"))) {
