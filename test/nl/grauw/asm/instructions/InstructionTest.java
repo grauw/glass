@@ -13,422 +13,769 @@ public class InstructionTest {
 	
 	@Test
 	public void testAdc() {
-		Instruction in = parse("adc");
-		assertEquals("adc", in.getName());
+		assertEquals("adc", parse("adc a,a").getName());
+		assertArrayEquals(b(0x88), parse("adc a,b").getBytes());
+		assertArrayEquals(b(0x89), parse("adc a,c").getBytes());
+		assertArrayEquals(b(0x8A), parse("adc a,d").getBytes());
+		assertArrayEquals(b(0x8B), parse("adc a,e").getBytes());
+		assertArrayEquals(b(0x8C), parse("adc a,h").getBytes());
+		assertArrayEquals(b(0x8D), parse("adc a,l").getBytes());
+		assertArrayEquals(b(0x8E), parse("adc a,(hl)").getBytes());
+		assertArrayEquals(b(0x8F), parse("adc a,a").getBytes());
+		assertArrayEquals(b(0xCE, 0x86), parse("adc a,86H").getBytes());
+		assertArrayEquals(b(0xDD, 0x8E, 0x47), parse("adc a,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x8E, 0x86), parse("adc a,(iy - 7AH)").getBytes());
+		
+		assertArrayEquals(b(0xED, 0x4A), parse("adc hl,bc").getBytes());
+		assertArrayEquals(b(0xED, 0x5A), parse("adc hl,de").getBytes());
+		assertArrayEquals(b(0xED, 0x6A), parse("adc hl,hl").getBytes());
+		assertArrayEquals(b(0xED, 0x7A), parse("adc hl,sp").getBytes());
 	}
 	
 	@Test
 	public void testAdd() {
-		Instruction in = parse("add");
-		assertEquals("add", in.getName());
+		assertEquals("add", parse("add a,a").getName());
+		assertArrayEquals(b(0x80), parse("add a,b").getBytes());
+		assertArrayEquals(b(0x81), parse("add a,c").getBytes());
+		assertArrayEquals(b(0x82), parse("add a,d").getBytes());
+		assertArrayEquals(b(0x83), parse("add a,e").getBytes());
+		assertArrayEquals(b(0x84), parse("add a,h").getBytes());
+		assertArrayEquals(b(0x85), parse("add a,l").getBytes());
+		assertArrayEquals(b(0x86), parse("add a,(hl)").getBytes());
+		assertArrayEquals(b(0x87), parse("add a,a").getBytes());
+		assertArrayEquals(b(0xC6, 0x86), parse("add a,86H").getBytes());
+		assertArrayEquals(b(0xDD, 0x86, 0x47), parse("add a,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x86, 0x86), parse("add a,(iy - 7AH)").getBytes());
+		
+		assertArrayEquals(b(0x09), parse("add hl,bc").getBytes());
+		assertArrayEquals(b(0x19), parse("add hl,de").getBytes());
+		assertArrayEquals(b(0x29), parse("add hl,hl").getBytes());
+		assertArrayEquals(b(0x39), parse("add hl,sp").getBytes());
+		assertArrayEquals(b(0xDD, 0x09), parse("add ix,bc").getBytes());
+		assertArrayEquals(b(0xDD, 0x19), parse("add ix,de").getBytes());
+		assertArrayEquals(b(0xDD, 0x29), parse("add ix,ix").getBytes());
+		assertArrayEquals(b(0xDD, 0x39), parse("add ix,sp").getBytes());
+		assertArrayEquals(b(0xFD, 0x09), parse("add iy,bc").getBytes());
+		assertArrayEquals(b(0xFD, 0x19), parse("add iy,de").getBytes());
+		assertArrayEquals(b(0xFD, 0x29), parse("add iy,ix").getBytes());
+		assertArrayEquals(b(0xFD, 0x39), parse("add iy,sp").getBytes());
 	}
 	
 	@Test
 	public void testAnd() {
-		Instruction in = parse("and");
-		assertEquals("and", in.getName());
+		assertEquals("and", parse("and a").getName());
+		assertArrayEquals(b(0xA0), parse("and b").getBytes());
+		assertArrayEquals(b(0xA1), parse("and c").getBytes());
+		assertArrayEquals(b(0xA2), parse("and d").getBytes());
+		assertArrayEquals(b(0xA3), parse("and e").getBytes());
+		assertArrayEquals(b(0xA4), parse("and h").getBytes());
+		assertArrayEquals(b(0xA5), parse("and l").getBytes());
+		assertArrayEquals(b(0xA6), parse("and (hl)").getBytes());
+		assertArrayEquals(b(0xA7), parse("and a").getBytes());
+		assertArrayEquals(b(0xE6, 0x86), parse("and 86H").getBytes());
+		assertArrayEquals(b(0xDD, 0xA6, 0x47), parse("and (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xA6, 0x86), parse("and (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testBit() {
-		Instruction in = parse("bit");
-		assertEquals("bit", in.getName());
+		assertEquals("bit", parse("bit 0,a").getName());
+		assertArrayEquals(b(0xCB, 0x78), parse("bit 7,b").getBytes());
+		assertArrayEquals(b(0xCB, 0x71), parse("bit 6,c").getBytes());
+		assertArrayEquals(b(0xCB, 0x6A), parse("bit 5,d").getBytes());
+		assertArrayEquals(b(0xCB, 0x63), parse("bit 4,e").getBytes());
+		assertArrayEquals(b(0xCB, 0x5C), parse("bit 3,h").getBytes());
+		assertArrayEquals(b(0xCB, 0x55), parse("bit 2,l").getBytes());
+		assertArrayEquals(b(0xCB, 0x4E), parse("bit 1,(hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x47), parse("bit 0,a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x5E), parse("bit 3,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0x66), parse("bit 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testCall() {
-		Instruction in = parse("call");
-		assertEquals("call", in.getName());
+		assertEquals("call", parse("call 0").getName());
+		assertArrayEquals(b(0xCD, 0x86, 0x47), parse("call 4786H").getBytes());
+		assertArrayEquals(b(0xC4, 0x86, 0x47), parse("call nz,4786H").getBytes());
+		assertArrayEquals(b(0xCC, 0x86, 0x47), parse("call z,4786H").getBytes());
+		assertArrayEquals(b(0xD4, 0x86, 0x47), parse("call nc,4786H").getBytes());
+		assertArrayEquals(b(0xDC, 0x86, 0x47), parse("call c,4786H").getBytes());
+		assertArrayEquals(b(0xE4, 0x86, 0x47), parse("call po,4786H").getBytes());
+		assertArrayEquals(b(0xEC, 0x86, 0x47), parse("call pe,4786H").getBytes());
+		assertArrayEquals(b(0xF4, 0x86, 0x47), parse("call p,4786H").getBytes());
+		assertArrayEquals(b(0xFC, 0x86, 0x47), parse("call m,4786H").getBytes());
 	}
 	
 	@Test
 	public void testCcf() {
-		Instruction in = parse("ccf");
-		assertEquals("ccf", in.getName());
+		assertEquals("ccf", parse("ccf").getName());
+		assertArrayEquals(b(0x3F), parse("ccf").getBytes());
 	}
 	
 	@Test
 	public void testCp() {
-		Instruction in = parse("cp");
-		assertEquals("cp", in.getName());
+		assertEquals("cp", parse("cp a").getName());
+		assertArrayEquals(b(0xB8), parse("cp b").getBytes());
+		assertArrayEquals(b(0xB9), parse("cp c").getBytes());
+		assertArrayEquals(b(0xBA), parse("cp d").getBytes());
+		assertArrayEquals(b(0xBB), parse("cp e").getBytes());
+		assertArrayEquals(b(0xBC), parse("cp h").getBytes());
+		assertArrayEquals(b(0xBD), parse("cp l").getBytes());
+		assertArrayEquals(b(0xBE), parse("cp (hl)").getBytes());
+		assertArrayEquals(b(0xBF), parse("cp a").getBytes());
+		assertArrayEquals(b(0xFE, 0x86), parse("cp 86H").getBytes());
+		assertArrayEquals(b(0xDD, 0xBE, 0x47), parse("cp (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xBE, 0x86), parse("cp (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testCpd() {
-		Instruction in = parse("cpd");
-		assertEquals("cpd", in.getName());
+		assertEquals("cpd", parse("cpd").getName());
+		assertArrayEquals(b(0xED, 0xA9), parse("cpd").getBytes());
 	}
 	
 	@Test
 	public void testCpdr() {
-		Instruction in = parse("cpdr");
-		assertEquals("cpdr", in.getName());
+		assertEquals("cpdr", parse("cpdr").getName());
+		assertArrayEquals(b(0xED, 0xB9), parse("cpdr").getBytes());
 	}
 	
 	@Test
 	public void testCpi() {
-		Instruction in = parse("cpi");
-		assertEquals("cpi", in.getName());
+		assertEquals("cpi", parse("cpi").getName());
+		assertArrayEquals(b(0xED, 0xA1), parse("cpi").getBytes());
 	}
 	
 	@Test
 	public void testCpir() {
-		Instruction in = parse("cpir");
-		assertEquals("cpir", in.getName());
+		assertEquals("cpir", parse("cpir").getName());
+		assertArrayEquals(b(0xED, 0xB1), parse("cpir").getBytes());
 	}
 	
 	@Test
 	public void testCpl() {
-		Instruction in = parse("cpl");
-		assertEquals("cpl", in.getName());
+		assertEquals("cpl", parse("cpl").getName());
+		assertArrayEquals(b(0x2F), parse("cpl").getBytes());
 	}
 	
 	@Test
 	public void testDaa() {
-		Instruction in = parse("daa");
-		assertEquals("daa", in.getName());
+		assertEquals("daa", parse("daa").getName());
+		assertArrayEquals(b(0x27), parse("daa").getBytes());
 	}
 	
 	@Test
 	public void testDec() {
-		Instruction in = parse("dec");
-		assertEquals("dec", in.getName());
+		assertEquals("dec", parse("dec a").getName());
+		assertArrayEquals(b(0x05), parse("dec b").getBytes());
+		assertArrayEquals(b(0x0D), parse("dec c").getBytes());
+		assertArrayEquals(b(0x15), parse("dec d").getBytes());
+		assertArrayEquals(b(0x1D), parse("dec e").getBytes());
+		assertArrayEquals(b(0x25), parse("dec h").getBytes());
+		assertArrayEquals(b(0x2D), parse("dec l").getBytes());
+		assertArrayEquals(b(0x35), parse("dec (hl)").getBytes());
+		assertArrayEquals(b(0x3D), parse("dec a").getBytes());
+		assertArrayEquals(b(0xDD, 0x35, 0x47), parse("dec (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x35, 0x86), parse("dec (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testDi() {
-		Instruction in = parse("di");
-		assertEquals("di", in.getName());
+		assertEquals("di", parse("di").getName());
+		assertArrayEquals(b(0xF3), parse("di").getBytes());
 	}
 	
 	@Test
 	public void testDjnz() {
-		Instruction in = parse("djnz");
-		assertEquals("djnz", in.getName());
+		assertEquals("djnz", parse("djnz $").getName());
+		assertArrayEquals(b(0x10, 0x02), parse("djnz $").getBytes());
 	}
 	
 	@Test
 	public void testEi() {
-		Instruction in = parse("ei");
-		assertEquals("ei", in.getName());
+		assertEquals("ei", parse("ei").getName());
+		assertArrayEquals(b(0xFB), parse("ei").getBytes());
 	}
 	
 	@Test
 	public void testEx() {
-		Instruction in = parse("ex");
-		assertEquals("ex", in.getName());
+		assertEquals("ex", parse("ex af,af'").getName());
+		assertArrayEquals(b(0x08), parse("ex af,af'").getBytes());
+		assertArrayEquals(b(0xEB), parse("ex de,hl").getBytes());
+		assertArrayEquals(b(0xE3), parse("ex (sp),hl").getBytes());
+		assertArrayEquals(b(0xDD, 0xE3), parse("ex (sp),ix").getBytes());
+		assertArrayEquals(b(0xFD, 0xE3), parse("ex (sp),iy").getBytes());
 	}
 	
 	@Test
 	public void testExx() {
-		Instruction in = parse("exx");
-		assertEquals("exx", in.getName());
+		assertEquals("exx", parse("exx").getName());
+		assertArrayEquals(b(0xD9), parse("exx").getBytes());
 	}
 	
 	@Test
 	public void testHalt() {
-		Instruction in = parse("halt");
-		assertEquals("halt", in.getName());
+		assertEquals("halt", parse("halt").getName());
+		assertArrayEquals(b(0x76), parse("halt").getBytes());
 	}
 	
 	@Test
 	public void testIm() {
-		Instruction in = parse("im");
-		assertEquals("im", in.getName());
+		assertEquals("im", parse("im 0").getName());
+		assertArrayEquals(b(0xED, 0x46), parse("im 0").getBytes());
+		assertArrayEquals(b(0xED, 0x56), parse("im 1").getBytes());
+		assertArrayEquals(b(0xED, 0x5E), parse("im 2").getBytes());
 	}
 	
 	@Test
 	public void testIn() {
-		Instruction in = parse("in");
-		assertEquals("in", in.getName());
+		assertEquals("in", parse("in a,(c)").getName());
+		assertArrayEquals(b(0xEB, 0x40), parse("in b,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x48), parse("in c,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x50), parse("in d,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x58), parse("in e,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x60), parse("in h,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x68), parse("in l,(c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x70), parse("in (c)").getBytes());
+		assertArrayEquals(b(0xEB, 0x78), parse("in a,(c)").getBytes());
+		assertArrayEquals(b(0xDB, 0x86), parse("in a,(86H)").getBytes());
 	}
 	
 	@Test
 	public void testInc() {
-		Instruction in = parse("inc");
-		assertEquals("inc", in.getName());
+		assertEquals("inc", parse("inc a").getName());
+		assertArrayEquals(b(0x04), parse("inc b").getBytes());
+		assertArrayEquals(b(0x0C), parse("inc c").getBytes());
+		assertArrayEquals(b(0x14), parse("inc d").getBytes());
+		assertArrayEquals(b(0x1C), parse("inc e").getBytes());
+		assertArrayEquals(b(0x24), parse("inc h").getBytes());
+		assertArrayEquals(b(0x2C), parse("inc l").getBytes());
+		assertArrayEquals(b(0x34), parse("inc (hl)").getBytes());
+		assertArrayEquals(b(0x3C), parse("inc a").getBytes());
+		assertArrayEquals(b(0xDD, 0x34, 0x47), parse("inc (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x34, 0x86), parse("inc (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testInd() {
-		Instruction in = parse("ind");
-		assertEquals("ind", in.getName());
+		assertEquals("ind", parse("ind").getName());
+		assertArrayEquals(b(0xED, 0xAA), parse("ind").getBytes());
 	}
 	
 	@Test
 	public void testIndr() {
-		Instruction in = parse("indr");
-		assertEquals("indr", in.getName());
+		assertEquals("indr", parse("indr").getName());
+		assertArrayEquals(b(0xED, 0xBA), parse("indr").getBytes());
 	}
 	
 	@Test
 	public void testIni() {
-		Instruction in = parse("ini");
-		assertEquals("ini", in.getName());
+		assertEquals("ini", parse("ini").getName());
+		assertArrayEquals(b(0xED, 0xA2), parse("ini").getBytes());
 	}
 	
 	@Test
 	public void testInir() {
-		Instruction in = parse("inir");
-		assertEquals("inir", in.getName());
+		assertEquals("inir", parse("inir").getName());
+		assertArrayEquals(b(0xED, 0xB2), parse("inir").getBytes());
 	}
 	
 	@Test
 	public void testJp() {
-		Instruction in = parse("jp");
-		assertEquals("jp", in.getName());
+		assertEquals("jp", parse("jp 0").getName());
+		assertArrayEquals(b(0xC3, 0x86, 0x47), parse("jp 4786H").getBytes());
+		assertArrayEquals(b(0xC2, 0x86, 0x47), parse("jp nz,4786H").getBytes());
+		assertArrayEquals(b(0xCA, 0x86, 0x47), parse("jp z,4786H").getBytes());
+		assertArrayEquals(b(0xD2, 0x86, 0x47), parse("jp nc,4786H").getBytes());
+		assertArrayEquals(b(0xDA, 0x86, 0x47), parse("jp c,4786H").getBytes());
+		assertArrayEquals(b(0xE2, 0x86, 0x47), parse("jp po,4786H").getBytes());
+		assertArrayEquals(b(0xEA, 0x86, 0x47), parse("jp pe,4786H").getBytes());
+		assertArrayEquals(b(0xF2, 0x86, 0x47), parse("jp p,4786H").getBytes());
+		assertArrayEquals(b(0xFA, 0x86, 0x47), parse("jp m,4786H").getBytes());
+		assertArrayEquals(b(0xE9), parse("jp (hl)").getBytes());
+		assertArrayEquals(b(0xDD, 0xE9), parse("jp (ix)").getBytes());
+		assertArrayEquals(b(0xFD, 0xE9), parse("jp (iy)").getBytes());
 	}
 	
 	@Test
 	public void testJr() {
-		Instruction in = parse("jr");
-		assertEquals("jr", in.getName());
+		assertEquals("jr", parse("jr $").getName());
+		assertArrayEquals(b(0x18, 0x02), parse("jr $").getBytes());
+		assertArrayEquals(b(0x20, 0x02), parse("jr nz,$").getBytes());
+		assertArrayEquals(b(0x28, 0x02), parse("jr z,$").getBytes());
+		assertArrayEquals(b(0x30, 0x02), parse("jr nc,$").getBytes());
+		assertArrayEquals(b(0x38, 0x02), parse("jr c,$").getBytes());
 	}
 	
 	@Test
 	public void testLd() {
-		Instruction in = parse("ld");
-		assertEquals("ld", in.getName());
+		assertEquals("ld", parse("ld a,a").getName());
+		assertArrayEquals(b(0x78), parse("ld a,b").getBytes());
+		assertArrayEquals(b(0x71), parse("ld (hl),c").getBytes());
+		assertArrayEquals(b(0x6A), parse("ld l,d").getBytes());
+		assertArrayEquals(b(0x63), parse("ld h,e").getBytes());
+		assertArrayEquals(b(0x5C), parse("ld e,h").getBytes());
+		assertArrayEquals(b(0x55), parse("ld d,l").getBytes());
+		assertArrayEquals(b(0x4E), parse("ld c,(hl)").getBytes());
+		assertArrayEquals(b(0x47), parse("ld b,a").getBytes());
+		assertArrayEquals(b(0xDD, 0x4E, 0x47), parse("add c,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x71, 0x86), parse("add (iy - 7AH),c").getBytes());
+		
+		assertArrayEquals(b(0x06, 0x86), parse("ld b,86H").getBytes());
+		assertArrayEquals(b(0x0E, 0x86), parse("ld c,86H").getBytes());
+		assertArrayEquals(b(0x16, 0x86), parse("ld d,86H").getBytes());
+		assertArrayEquals(b(0x1E, 0x86), parse("ld e,86H").getBytes());
+		assertArrayEquals(b(0x26, 0x86), parse("ld h,86H").getBytes());
+		assertArrayEquals(b(0x2E, 0x86), parse("ld l,86H").getBytes());
+		assertArrayEquals(b(0x36, 0x86), parse("ld (hl),86H").getBytes());
+		assertArrayEquals(b(0x3E, 0x86), parse("ld a,86H").getBytes());
+		assertArrayEquals(b(0xDD, 0x36, 0x47, 0x86), parse("ld (ix + 47H),86H").getBytes());
+		assertArrayEquals(b(0xFD, 0x36, 0x86, 0x47), parse("ld (iy - 7AH),47H").getBytes());
+		
+		assertArrayEquals(b(0xED, 0x57), parse("ld a,i").getBytes());
+		assertArrayEquals(b(0xED, 0x5F), parse("ld a,r").getBytes());
+		assertArrayEquals(b(0xED, 0x47), parse("ld i,a").getBytes());
+		assertArrayEquals(b(0xED, 0x4F), parse("ld r,a").getBytes());
+		
+		assertArrayEquals(b(0x0A), parse("ld a,(bc)").getBytes());
+		assertArrayEquals(b(0x1A), parse("ld a,(de)").getBytes());
+		assertArrayEquals(b(0x2A), parse("ld hl,(4786H)").getBytes());
+		assertArrayEquals(b(0x3A, 0x86, 0x47), parse("ld a,(4786H)").getBytes());
+		assertArrayEquals(b(0xDD, 0x2A, 0x86, 0x47), parse("ld ix,(4786H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x2A, 0x86, 0x47), parse("ld iy,(4786H)").getBytes());
+		assertArrayEquals(b(0xED, 0xCB, 0x86, 0x47), parse("ld bc,(4786H)").getBytes());
+		assertArrayEquals(b(0xED, 0xDB, 0x86, 0x47), parse("ld de,(4786H)").getBytes());
+		assertArrayEquals(b(0xED, 0xFB, 0x86, 0x47), parse("ld sp,(4786H)").getBytes());
+		
+		assertArrayEquals(b(0x02), parse("ld (bc),a").getBytes());
+		assertArrayEquals(b(0x12), parse("ld (de),a").getBytes());
+		assertArrayEquals(b(0x22, 0x86, 0x47), parse("ld (4786H),hl").getBytes());
+		assertArrayEquals(b(0x32, 0x86, 0x47), parse("ld (4786H),a").getBytes());
+		assertArrayEquals(b(0xDD, 0x22, 0x86, 0x47), parse("ld (4786H),ix").getBytes());
+		assertArrayEquals(b(0xFD, 0x22, 0x86, 0x47), parse("ld (4786H),iy").getBytes());
+		assertArrayEquals(b(0xED, 0xC3, 0x86, 0x47), parse("ld (4786H),bc").getBytes());
+		assertArrayEquals(b(0xED, 0xD3, 0x86, 0x47), parse("ld (4786H),de").getBytes());
+		assertArrayEquals(b(0xED, 0xF3, 0x86, 0x47), parse("ld (4786H),sp").getBytes());
+		
+		assertArrayEquals(b(0x01), parse("ld bc,4786H").getBytes());
+		assertArrayEquals(b(0x11), parse("ld de,4786H").getBytes());
+		assertArrayEquals(b(0x21), parse("ld hl,4786H").getBytes());
+		assertArrayEquals(b(0x31), parse("ld sp,4786H").getBytes());
+		assertArrayEquals(b(0xDD, 0x21), parse("ld ix,4786H").getBytes());
+		assertArrayEquals(b(0xFD, 0x21), parse("ld iy,4786H").getBytes());
+		
+		assertArrayEquals(b(0xF9), parse("ld sp,hl").getBytes());
+		assertArrayEquals(b(0xDD, 0xF9), parse("ld sp,ix").getBytes());
+		assertArrayEquals(b(0xFE, 0xF9), parse("ld sp,iy").getBytes());
 	}
 	
 	@Test
 	public void testLdd() {
-		Instruction in = parse("ldd");
-		assertEquals("ldd", in.getName());
+		assertEquals("ldd", parse("ldd").getName());
+		assertArrayEquals(b(0xED, 0xA8), parse("ldd").getBytes());
 	}
 	
 	@Test
 	public void testLddr() {
-		Instruction in = parse("lddr");
-		assertEquals("lddr", in.getName());
+		assertEquals("lddr", parse("lddr").getName());
+		assertArrayEquals(b(0xED, 0xB8), parse("lddr").getBytes());
 	}
 	
 	@Test
 	public void testLdi() {
-		Instruction in = parse("ldi");
-		assertEquals("ldi", in.getName());
+		assertEquals("ldi", parse("ldi").getName());
+		assertArrayEquals(b(0xED, 0xA0), parse("ldi").getBytes());
 	}
 	
 	@Test
 	public void testLdir() {
-		Instruction in = parse("ldir");
-		assertEquals("ldir", in.getName());
+		assertEquals("ldir", parse("ldir").getName());
+		assertArrayEquals(b(0xED, 0xB0), parse("ldir").getBytes());
 	}
 	
 	@Test
 	public void testMulub() {
-		Instruction in = parse("mulub");
-		assertEquals("mulub", in.getName());
+		assertEquals("mulub", parse("mulub a,b").getName());
+		assertArrayEquals(b(0xED, 0xC1), parse("mulub a,b").getBytes());
+		assertArrayEquals(b(0xED, 0xC8), parse("mulub a,c").getBytes());
+		assertArrayEquals(b(0xED, 0xD1), parse("mulub a,d").getBytes());
+		assertArrayEquals(b(0xED, 0xD8), parse("mulub a,e").getBytes());
 	}
 	
 	@Test
 	public void testMuluw() {
-		Instruction in = parse("muluw");
-		assertEquals("muluw", in.getName());
+		assertEquals("muluw", parse("muluw hl,bc").getName());
+		assertArrayEquals(b(0xED, 0xC3), parse("mulub hl,bc").getBytes());
+		assertArrayEquals(b(0xED, 0xF3), parse("mulub hl,sp").getBytes());
 	}
 	
 	@Test
 	public void testNeg() {
-		Instruction in = parse("neg");
-		assertEquals("neg", in.getName());
+		assertEquals("neg", parse("neg").getName());
+		assertArrayEquals(b(0xED, 0x44), parse("neg").getBytes());
 	}
 	
 	@Test
 	public void testNop() {
-		Instruction in = parse("nop");
-		assertEquals("nop", in.getName());
+		assertEquals("nop", parse("nop").getName());
+		assertArrayEquals(b(0x00), parse("nop").getBytes());
 	}
 	
 	@Test
 	public void testOr() {
-		Instruction in = parse("or");
-		assertEquals("or", in.getName());
+		assertEquals("or", parse("or a").getName());
+		assertArrayEquals(b(0xB0), parse("or b").getBytes());
+		assertArrayEquals(b(0xB1), parse("or c").getBytes());
+		assertArrayEquals(b(0xB2), parse("or d").getBytes());
+		assertArrayEquals(b(0xB3), parse("or e").getBytes());
+		assertArrayEquals(b(0xB4), parse("or h").getBytes());
+		assertArrayEquals(b(0xB5), parse("or l").getBytes());
+		assertArrayEquals(b(0xB6), parse("or (hl)").getBytes());
+		assertArrayEquals(b(0xB7), parse("or a").getBytes());
+		assertArrayEquals(b(0xF6, 0x86), parse("or 86H").getBytes());
+		assertArrayEquals(b(0xDD, 0xB6, 0x47), parse("or (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xB6, 0x86), parse("or (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testOtdr() {
-		Instruction in = parse("otdr");
-		assertEquals("otdr", in.getName());
+		assertEquals("otdr", parse("otdr").getName());
+		assertArrayEquals(b(0xED, 0xBB), parse("otdr").getBytes());
 	}
 	
 	@Test
 	public void testOtir() {
-		Instruction in = parse("otir");
-		assertEquals("otir", in.getName());
+		assertEquals("otir", parse("otir").getName());
+		assertArrayEquals(b(0xED, 0xB3), parse("otir").getBytes());
 	}
 	
 	@Test
 	public void testOut() {
-		Instruction in = parse("out");
-		assertEquals("out", in.getName());
+		assertEquals("out", parse("out a,(c)").getName());
+		assertArrayEquals(b(0xED, 0x41), parse("out (c),b").getBytes());
+		assertArrayEquals(b(0xED, 0x49), parse("out (c),c").getBytes());
+		assertArrayEquals(b(0xED, 0x51), parse("out (c),d").getBytes());
+		assertArrayEquals(b(0xED, 0x59), parse("out (c),e").getBytes());
+		assertArrayEquals(b(0xED, 0x61), parse("out (c),h").getBytes());
+		assertArrayEquals(b(0xED, 0x69), parse("out (c),l").getBytes());
+		assertArrayEquals(b(0xED, 0x78), parse("out (c),a").getBytes());
+		assertArrayEquals(b(0xD3, 0x86), parse("out (86H),a").getBytes());
 	}
 	
 	@Test
 	public void testOutd() {
-		Instruction in = parse("outd");
-		assertEquals("outd", in.getName());
+		assertEquals("outd", parse("outd").getName());
+		assertArrayEquals(b(0xED, 0xAB), parse("outd").getBytes());
 	}
 	
 	@Test
 	public void testOuti() {
-		Instruction in = parse("outi");
-		assertEquals("outi", in.getName());
+		assertEquals("outi", parse("outi").getName());
+		assertArrayEquals(b(0xED, 0xA3), parse("outi").getBytes());
 	}
 	
 	@Test
 	public void testPop() {
-		Instruction in = parse("pop");
-		assertEquals("pop", in.getName());
+		assertEquals("pop", parse("pop af").getName());
+		assertArrayEquals(b(0xC1), parse("pop bc").getBytes());
+		assertArrayEquals(b(0xD1), parse("pop de").getBytes());
+		assertArrayEquals(b(0xE1), parse("pop hl").getBytes());
+		assertArrayEquals(b(0xF1), parse("pop af").getBytes());
+		assertArrayEquals(b(0xDD, 0xE1), parse("pop ix").getBytes());
+		assertArrayEquals(b(0xFD, 0xE1), parse("pop iy").getBytes());
 	}
 	
 	@Test
 	public void testPush() {
-		Instruction in = parse("push");
-		assertEquals("push", in.getName());
+		assertEquals("push", parse("push af").getName());
+		assertArrayEquals(b(0xC5), parse("pop bc").getBytes());
+		assertArrayEquals(b(0xD5), parse("pop de").getBytes());
+		assertArrayEquals(b(0xE5), parse("pop hl").getBytes());
+		assertArrayEquals(b(0xF5), parse("pop af").getBytes());
+		assertArrayEquals(b(0xDD, 0xE5), parse("pop ix").getBytes());
+		assertArrayEquals(b(0xFD, 0xE5), parse("pop iy").getBytes());
 	}
 	
 	@Test
 	public void testRes() {
-		Instruction in = parse("res");
-		assertEquals("res", in.getName());
+		assertEquals("res", parse("res 0,a").getName());
+		assertArrayEquals(b(0xCB, 0xB8), parse("res 7,b").getBytes());
+		assertArrayEquals(b(0xCB, 0xB1), parse("res 6,c").getBytes());
+		assertArrayEquals(b(0xCB, 0xAA), parse("res 5,d").getBytes());
+		assertArrayEquals(b(0xCB, 0xA3), parse("res 4,e").getBytes());
+		assertArrayEquals(b(0xCB, 0x9C), parse("res 3,h").getBytes());
+		assertArrayEquals(b(0xCB, 0x95), parse("res 2,l").getBytes());
+		assertArrayEquals(b(0xCB, 0x8E), parse("res 1,(hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x87), parse("res 0,a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x9E), parse("res 3,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0xA6), parse("res 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testRet() {
-		Instruction in = parse("ret");
-		assertEquals("ret", in.getName());
+		assertEquals("ret", parse("ret").getName());
+		assertArrayEquals(b(0xC9), parse("ret").getBytes());
+		assertArrayEquals(b(0xC0), parse("ret nz").getBytes());
+		assertArrayEquals(b(0xC8), parse("ret z").getBytes());
+		assertArrayEquals(b(0xD0), parse("ret nc").getBytes());
+		assertArrayEquals(b(0xD8), parse("ret c").getBytes());
+		assertArrayEquals(b(0xE0), parse("ret po").getBytes());
+		assertArrayEquals(b(0xE8), parse("ret pe").getBytes());
+		assertArrayEquals(b(0xF0), parse("ret p").getBytes());
+		assertArrayEquals(b(0xF8), parse("ret m").getBytes());
 	}
 	
 	@Test
 	public void testReti() {
-		Instruction in = parse("reti");
-		assertEquals("reti", in.getName());
+		assertEquals("reti", parse("reti").getName());
+		assertArrayEquals(b(0xED, 0x4D), parse("reti").getBytes());
 	}
 	
 	@Test
 	public void testRetn() {
-		Instruction in = parse("retn");
-		assertEquals("retn", in.getName());
+		assertEquals("retn", parse("retn").getName());
+		assertArrayEquals(b(0xED, 0x45), parse("retn").getBytes());
 	}
 	
 	@Test
 	public void testRl() {
-		Instruction in = parse("rl");
-		assertEquals("rl", in.getName());
+		assertEquals("rl", parse("rl a").getName());
+		assertArrayEquals(b(0xCB, 0x10), parse("rl b").getBytes());
+		assertArrayEquals(b(0xCB, 0x11), parse("rl c").getBytes());
+		assertArrayEquals(b(0xCB, 0x12), parse("rl d").getBytes());
+		assertArrayEquals(b(0xCB, 0x13), parse("rl e").getBytes());
+		assertArrayEquals(b(0xCB, 0x14), parse("rl h").getBytes());
+		assertArrayEquals(b(0xCB, 0x15), parse("rl l").getBytes());
+		assertArrayEquals(b(0xCB, 0x16), parse("rl (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x17), parse("rl a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x16), parse("rl (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x16), parse("rl (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testRla() {
-		Instruction in = parse("rla");
-		assertEquals("rla", in.getName());
+		assertEquals("rla", parse("rla").getName());
+		assertArrayEquals(b(0x17), parse("rla").getBytes());
 	}
 	
 	@Test
 	public void testRlc() {
-		Instruction in = parse("rlc");
-		assertEquals("rlc", in.getName());
+		assertEquals("rlc", parse("rlc a").getName());
+		assertArrayEquals(b(0xCB, 0x00), parse("rlc b").getBytes());
+		assertArrayEquals(b(0xCB, 0x01), parse("rlc c").getBytes());
+		assertArrayEquals(b(0xCB, 0x02), parse("rlc d").getBytes());
+		assertArrayEquals(b(0xCB, 0x03), parse("rlc e").getBytes());
+		assertArrayEquals(b(0xCB, 0x04), parse("rlc h").getBytes());
+		assertArrayEquals(b(0xCB, 0x05), parse("rlc l").getBytes());
+		assertArrayEquals(b(0xCB, 0x06), parse("rlc (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x07), parse("rlc a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x06), parse("rlc (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x06), parse("rlc (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testRlca() {
-		Instruction in = parse("rlca");
-		assertEquals("rlca", in.getName());
+		assertEquals("rlca", parse("rlca").getName());
+		assertArrayEquals(b(0x07), parse("rlca").getBytes());
 	}
 	
 	@Test
 	public void testRld() {
-		Instruction in = parse("rld");
-		assertEquals("rld", in.getName());
+		assertEquals("rld", parse("rld").getName());
+		assertArrayEquals(b(0xED, 0x6F), parse("rld").getBytes());
 	}
 	
 	@Test
 	public void testRr() {
-		Instruction in = parse("rr");
-		assertEquals("rr", in.getName());
+		assertEquals("rr", parse("rr a").getName());
+		assertArrayEquals(b(0xCB, 0x18), parse("rr b").getBytes());
+		assertArrayEquals(b(0xCB, 0x19), parse("rr c").getBytes());
+		assertArrayEquals(b(0xCB, 0x1A), parse("rr d").getBytes());
+		assertArrayEquals(b(0xCB, 0x1B), parse("rr e").getBytes());
+		assertArrayEquals(b(0xCB, 0x1C), parse("rr h").getBytes());
+		assertArrayEquals(b(0xCB, 0x1D), parse("rr l").getBytes());
+		assertArrayEquals(b(0xCB, 0x1E), parse("rr (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x1F), parse("rr a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x1E), parse("rr (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x1E), parse("rr (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testRra() {
-		Instruction in = parse("rra");
-		assertEquals("rra", in.getName());
+		assertEquals("rra", parse("rra").getName());
+		assertArrayEquals(b(0x1F), parse("rra").getBytes());
 	}
 	
 	@Test
 	public void testRrc() {
-		Instruction in = parse("rrc");
-		assertEquals("rrc", in.getName());
+		assertEquals("rrc", parse("rrc a").getName());
+		assertArrayEquals(b(0xCB, 0x08), parse("rrc b").getBytes());
+		assertArrayEquals(b(0xCB, 0x09), parse("rrc c").getBytes());
+		assertArrayEquals(b(0xCB, 0x0A), parse("rrc d").getBytes());
+		assertArrayEquals(b(0xCB, 0x0B), parse("rrc e").getBytes());
+		assertArrayEquals(b(0xCB, 0x0C), parse("rrc h").getBytes());
+		assertArrayEquals(b(0xCB, 0x0D), parse("rrc l").getBytes());
+		assertArrayEquals(b(0xCB, 0x0E), parse("rrc (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x0F), parse("rrc a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x0E), parse("rrc (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x0E), parse("rrc (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testRrca() {
-		Instruction in = parse("rrca");
-		assertEquals("rrca", in.getName());
+		assertEquals("rrca", parse("rrca").getName());
+		assertArrayEquals(b(0x0F), parse("rrca").getBytes());
 	}
 	
 	@Test
 	public void testRrd() {
-		Instruction in = parse("rrd");
-		assertEquals("rrd", in.getName());
+		assertEquals("rrd", parse("rrd").getName());
+		assertArrayEquals(b(0xED, 0x67), parse("rrd").getBytes());
 	}
 	
 	@Test
 	public void testRst() {
-		Instruction in = parse("rst");
-		assertEquals("rst", in.getName());
+		assertEquals("rst", parse("rst 0").getName());
+		assertArrayEquals(b(0xC7), parse("rst 00H").getBytes());
+		assertArrayEquals(b(0xCF), parse("rst 08H").getBytes());
+		assertArrayEquals(b(0xD7), parse("rst 10H").getBytes());
+		assertArrayEquals(b(0xDF), parse("rst 18H").getBytes());
+		assertArrayEquals(b(0xE7), parse("rst 20H").getBytes());
+		assertArrayEquals(b(0xEF), parse("rst 28H").getBytes());
+		assertArrayEquals(b(0xF7), parse("rst 30H").getBytes());
+		assertArrayEquals(b(0xFF), parse("rst 38H").getBytes());
 	}
 	
 	@Test
 	public void testSbc() {
-		Instruction in = parse("sbc");
-		assertEquals("sbc", in.getName());
+		assertEquals("sbc", parse("sbc a,a").getName());
+		assertArrayEquals(b(0x98), parse("sbc a,b").getBytes());
+		assertArrayEquals(b(0x99), parse("sbc a,c").getBytes());
+		assertArrayEquals(b(0x9A), parse("sbc a,d").getBytes());
+		assertArrayEquals(b(0x9B), parse("sbc a,e").getBytes());
+		assertArrayEquals(b(0x9C), parse("sbc a,h").getBytes());
+		assertArrayEquals(b(0x9D), parse("sbc a,l").getBytes());
+		assertArrayEquals(b(0x9E), parse("sbc a,(hl)").getBytes());
+		assertArrayEquals(b(0x9F), parse("sbc a,a").getBytes());
+		assertArrayEquals(b(0xDE, 0x86), parse("sbc a,86H").getBytes());
+		assertArrayEquals(b(0xDD, 0x9E, 0x47), parse("sbc a,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x9E, 0x86), parse("sbc a,(iy - 7AH)").getBytes());
+		
+		assertArrayEquals(b(0xED, 0x42), parse("sbc hl,bc").getBytes());
+		assertArrayEquals(b(0xED, 0x52), parse("sbc hl,de").getBytes());
+		assertArrayEquals(b(0xED, 0x62), parse("sbc hl,hl").getBytes());
+		assertArrayEquals(b(0xED, 0x72), parse("sbc hl,sp").getBytes());
 	}
 	
 	@Test
 	public void testScf() {
-		Instruction in = parse("scf");
-		assertEquals("scf", in.getName());
+		assertEquals("scf", parse("scf").getName());
+		assertArrayEquals(b(0x37), parse("scf").getBytes());
 	}
 	
 	@Test
 	public void testSet() {
-		Instruction in = parse("set");
-		assertEquals("set", in.getName());
+		assertEquals("set", parse("set 0,a").getName());
+		assertArrayEquals(b(0xCB, 0xF8), parse("set 7,b").getBytes());
+		assertArrayEquals(b(0xCB, 0xF1), parse("set 6,c").getBytes());
+		assertArrayEquals(b(0xCB, 0xEA), parse("set 5,d").getBytes());
+		assertArrayEquals(b(0xCB, 0xE3), parse("set 4,e").getBytes());
+		assertArrayEquals(b(0xCB, 0xDC), parse("set 3,h").getBytes());
+		assertArrayEquals(b(0xCB, 0xD5), parse("set 2,l").getBytes());
+		assertArrayEquals(b(0xCB, 0xCE), parse("set 1,(hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0xC7), parse("set 0,a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0xDE), parse("set 3,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0xE6), parse("set 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testSla() {
-		Instruction in = parse("sla");
-		assertEquals("sla", in.getName());
+		assertEquals("sla", parse("sla a").getName());
+		assertArrayEquals(b(0xCB, 0x20), parse("sla b").getBytes());
+		assertArrayEquals(b(0xCB, 0x21), parse("sla c").getBytes());
+		assertArrayEquals(b(0xCB, 0x22), parse("sla d").getBytes());
+		assertArrayEquals(b(0xCB, 0x23), parse("sla e").getBytes());
+		assertArrayEquals(b(0xCB, 0x24), parse("sla h").getBytes());
+		assertArrayEquals(b(0xCB, 0x25), parse("sla l").getBytes());
+		assertArrayEquals(b(0xCB, 0x26), parse("sla (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x27), parse("sla a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x26), parse("sla (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x26), parse("sla (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testSra() {
-		Instruction in = parse("sra");
-		assertEquals("sra", in.getName());
+		assertEquals("sra", parse("sra a").getName());
+		assertArrayEquals(b(0xCB, 0x28), parse("sra b").getBytes());
+		assertArrayEquals(b(0xCB, 0x29), parse("sra c").getBytes());
+		assertArrayEquals(b(0xCB, 0x2A), parse("sra d").getBytes());
+		assertArrayEquals(b(0xCB, 0x2B), parse("sra e").getBytes());
+		assertArrayEquals(b(0xCB, 0x2C), parse("sra h").getBytes());
+		assertArrayEquals(b(0xCB, 0x2D), parse("sra l").getBytes());
+		assertArrayEquals(b(0xCB, 0x2E), parse("sra (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x2F), parse("sra a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x2E), parse("sra (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x2E), parse("sra (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testSrl() {
-		Instruction in = parse("srl");
-		assertEquals("srl", in.getName());
+		assertEquals("srl", parse("srl a").getName());
+		assertArrayEquals(b(0xCB, 0x38), parse("srl b").getBytes());
+		assertArrayEquals(b(0xCB, 0x39), parse("srl c").getBytes());
+		assertArrayEquals(b(0xCB, 0x3A), parse("srl d").getBytes());
+		assertArrayEquals(b(0xCB, 0x3B), parse("srl e").getBytes());
+		assertArrayEquals(b(0xCB, 0x3C), parse("srl h").getBytes());
+		assertArrayEquals(b(0xCB, 0x3D), parse("srl l").getBytes());
+		assertArrayEquals(b(0xCB, 0x3E), parse("srl (hl)").getBytes());
+		assertArrayEquals(b(0xCB, 0x3F), parse("srl a").getBytes());
+		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x3E), parse("srl (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x3E), parse("srl (hl - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testSub() {
-		Instruction in = parse("sub");
-		assertEquals("sub", in.getName());
+		assertEquals("sub", parse("sub a").getName());
+		assertArrayEquals(b(0x90), parse("sub b").getBytes());
+		assertArrayEquals(b(0x91), parse("sub c").getBytes());
+		assertArrayEquals(b(0x92), parse("sub d").getBytes());
+		assertArrayEquals(b(0x93), parse("sub e").getBytes());
+		assertArrayEquals(b(0x94), parse("sub h").getBytes());
+		assertArrayEquals(b(0x95), parse("sub l").getBytes());
+		assertArrayEquals(b(0x96), parse("sub (hl)").getBytes());
+		assertArrayEquals(b(0x97), parse("sub a").getBytes());
+		assertArrayEquals(b(0xD6, 0x86), parse("sub 86H").getBytes());
+		assertArrayEquals(b(0xDD, 0x96, 0x47), parse("sub (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x96, 0x86), parse("sub (iy - 7AH)").getBytes());
 	}
 	
 	@Test
 	public void testXor() {
-		Instruction in = parse("xor");
-		assertEquals("xor", in.getName());
+		assertEquals("xor", parse("xor a").getName());
+		assertArrayEquals(b(0xA8), parse("xor b").getBytes());
+		assertArrayEquals(b(0xA9), parse("xor c").getBytes());
+		assertArrayEquals(b(0xAA), parse("xor d").getBytes());
+		assertArrayEquals(b(0xAB), parse("xor e").getBytes());
+		assertArrayEquals(b(0xAC), parse("xor h").getBytes());
+		assertArrayEquals(b(0xAD), parse("xor l").getBytes());
+		assertArrayEquals(b(0xAE), parse("xor (hl)").getBytes());
+		assertArrayEquals(b(0xAF), parse("xor a").getBytes());
+		assertArrayEquals(b(0xEE, 0x86), parse("xor 86H").getBytes());
+		assertArrayEquals(b(0xDD, 0xAE, 0x47), parse("xor (ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0xAE, 0x86), parse("xor (iy - 7AH)").getBytes());
 	}
 	
 	public Instruction parse(String string) {
 		Line line = new LineParser().parse(" " + string, null, 0);
 		line.resolveInstruction(factory);
 		return line.getStatement().getInstruction();
+	}
+	
+	public byte[] b(int... values) {
+		byte[] bytes = new byte[values.length];
+		for (int i = 0; i < values.length; i++)
+			bytes[i] = (byte)values[i];
+		return bytes;
 	}
 	
 }
