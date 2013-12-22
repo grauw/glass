@@ -142,7 +142,7 @@ public class LineParser {
 				statement = new Statement(accumulator.toString());
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
-					return argumentValueState;
+					return argumentStartState;
 				} else if (character == ';') {
 					return commentReadState;
 				} else if (character == '\0') {
@@ -150,6 +150,21 @@ public class LineParser {
 				}
 			}
 			throw new SyntaxError();
+		}
+	}
+	
+	private ArgumentStartState argumentStartState = new ArgumentStartState();
+	private class ArgumentStartState extends State {
+		public State parse(char character) {
+			if (character == ';') {
+				return commentReadState;
+			} else if (character == '\0') {
+				return endState;
+			} else if (isWhitespace(character)) {
+				return argumentStartState;
+			} else {
+				return argumentValueState.parse(character);
+			}
 		}
 	}
 	
@@ -184,14 +199,6 @@ public class LineParser {
 				return argumentValueState;
 			} else if (isWhitespace(character)) {
 				return argumentValueState;
-			} else if (character == ';') {
-				if (expressionBuilder.hasExpression())
-					statement.AddArgument(expressionBuilder.getExpression());
-				return commentReadState;
-			} else if (character == '\0') {
-				if (expressionBuilder.hasExpression())
-					statement.AddArgument(expressionBuilder.getExpression());
-				return endState;
 			}
 			throw new SyntaxError();
 		}
