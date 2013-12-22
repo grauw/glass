@@ -2,9 +2,12 @@ package nl.grauw.asm;
 
 import java.util.ArrayList;
 
+import nl.grauw.asm.instructions.InstructionFactory;
+
 public class Source {
 	
-	private ArrayList<Line> lines = new ArrayList<Line>();
+	private final ArrayList<Line> lines = new ArrayList<Line>();
+	private final InstructionFactory instructionFactory = new InstructionFactory();
 	
 	public Source() {
 	}
@@ -12,6 +15,11 @@ public class Source {
 	public Line addLine(Line line) {
 		lines.add(line);
 		return line;
+	}
+	
+	public void resolveInstructions() {
+		for (Line line : lines)
+			line.resolveInstruction(instructionFactory);
 	}
 	
 	public String toString() {

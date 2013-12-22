@@ -2,6 +2,8 @@ package nl.grauw.asm;
 
 import java.io.File;
 
+import nl.grauw.asm.instructions.InstructionFactory;
+
 public class Line {
 	
 	private final Label label;
@@ -36,6 +38,11 @@ public class Line {
 	
 	public int getLineNumber() {
 		return lineNumber;
+	}
+	
+	public void resolveInstruction(InstructionFactory factory) {
+		if (statement != null)
+			statement.resolveInstruction(factory);
 	}
 	
 	public String toString() {
