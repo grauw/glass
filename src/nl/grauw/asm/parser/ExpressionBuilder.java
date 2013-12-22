@@ -121,11 +121,13 @@ public class ExpressionBuilder {
 			case NOT:
 				return new Not(processNext());
 			case GROUP_OPEN:
-				Group group = new Group(processNext());
+				Expression expression = new Group(processNext());
 				if (tokens.isEmpty())
 					throw new ExpressionError("Mismatching parenthesis.");
 				tokens.remove();
-				return group;
+				while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
+					expression = tokens.remove().processOperator(expression);
+				return expression;
 			default:
 				throw new ExpressionError("Not an unary operator, grouping operator or value: " + this);
 			}
