@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Exx extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Exx extends Instruction {
+	
+	public Exx(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "exx";

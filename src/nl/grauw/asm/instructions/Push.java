@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Push extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Push extends Instruction {
+	
+	public Push(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "push";

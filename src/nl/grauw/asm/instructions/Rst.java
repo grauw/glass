@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Rst extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Rst extends Instruction {
+	
+	public Rst(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "rst";

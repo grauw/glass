@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Nop extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Nop extends Instruction {
+	
+	public Nop(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "nop";

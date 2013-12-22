@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Ldir extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Ldir extends Instruction {
+	
+	public Ldir(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "ldir";

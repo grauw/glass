@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Xor extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Xor extends Instruction {
+	
+	public Xor(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "xor";

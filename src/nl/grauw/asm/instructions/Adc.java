@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Adc extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Adc extends Instruction {
+	
+	public Adc(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "adc";

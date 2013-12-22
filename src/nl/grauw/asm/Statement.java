@@ -32,7 +32,7 @@ public class Statement {
 	}
 	
 	public void resolveInstruction(InstructionFactory factory) {
-		instruction = factory.createInstruction(mnemonic);
+		instruction = factory.createInstruction(mnemonic, arguments);
 	}
 	
 	public String toString() {

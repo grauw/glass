@@ -1,147 +1,149 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Expression;
+
 public class InstructionFactory {
 	
-	public Instruction createInstruction(String name) {
+	public Instruction createInstruction(String name, Expression arguments) {
 		switch (name) {
 		case "adc":
-			return new Adc();
+			return new Adc(arguments);
 		case "add":
-			return new Add();
+			return new Add(arguments);
 		case "and":
-			return new And();
+			return new And(arguments);
 		case "bit":
-			return new Bit();
+			return new Bit(arguments);
 		case "call":
-			return new Call();
+			return new Call(arguments);
 		case "ccf":
-			return new Ccf();
+			return new Ccf(arguments);
 		case "cp":
-			return new Cp();
+			return new Cp(arguments);
 		case "cpd":
-			return new Cpd();
+			return new Cpd(arguments);
 		case "cpdr":
-			return new Cpdr();
+			return new Cpdr(arguments);
 		case "cpi":
-			return new Cpi();
+			return new Cpi(arguments);
 		case "cpir":
-			return new Cpir();
+			return new Cpir(arguments);
 		case "cpl":
-			return new Cpl();
+			return new Cpl(arguments);
 		case "daa":
-			return new Daa();
+			return new Daa(arguments);
 		case "dec":
-			return new Dec();
+			return new Dec(arguments);
 		case "di":
-			return new Di();
+			return new Di(arguments);
 		case "djnz":
-			return new Djnz();
+			return new Djnz(arguments);
 		case "ei":
-			return new Ei();
+			return new Ei(arguments);
 		case "ex":
-			return new Ex();
+			return new Ex(arguments);
 		case "exx":
-			return new Exx();
+			return new Exx(arguments);
 		case "halt":
-			return new Halt();
+			return new Halt(arguments);
 		case "im":
-			return new Im();
+			return new Im(arguments);
 		case "in":
-			return new In();
+			return new In(arguments);
 		case "inc":
-			return new Inc();
+			return new Inc(arguments);
 		case "ind":
-			return new Ind();
+			return new Ind(arguments);
 		case "indr":
-			return new Indr();
+			return new Indr(arguments);
 		case "ini":
-			return new Ini();
+			return new Ini(arguments);
 		case "inir":
-			return new Inir();
+			return new Inir(arguments);
 		case "jp":
-			return new Jp();
+			return new Jp(arguments);
 		case "jr":
-			return new Jr();
+			return new Jr(arguments);
 		case "ld":
-			return new Ld();
+			return new Ld(arguments);
 		case "ldd":
-			return new Ldd();
+			return new Ldd(arguments);
 		case "lddr":
-			return new Lddr();
+			return new Lddr(arguments);
 		case "ldi":
-			return new Ldi();
+			return new Ldi(arguments);
 		case "ldir":
-			return new Ldir();
+			return new Ldir(arguments);
 		case "mulub":
-			return new Mulub();
+			return new Mulub(arguments);
 		case "muluw":
-			return new Muluw();
+			return new Muluw(arguments);
 		case "neg":
-			return new Neg();
+			return new Neg(arguments);
 		case "nop":
-			return new Nop();
+			return new Nop(arguments);
 		case "or":
-			return new Or();
+			return new Or(arguments);
 		case "otdr":
-			return new Otdr();
+			return new Otdr(arguments);
 		case "otir":
-			return new Otir();
+			return new Otir(arguments);
 		case "out":
-			return new Out();
+			return new Out(arguments);
 		case "outi":
-			return new Outi();
+			return new Outi(arguments);
 		case "outd":
-			return new Outd();
+			return new Outd(arguments);
 		case "pop":
-			return new Pop();
+			return new Pop(arguments);
 		case "push":
-			return new Push();
+			return new Push(arguments);
 		case "res":
-			return new Res();
+			return new Res(arguments);
 		case "ret":
-			return new Ret();
+			return new Ret(arguments);
 		case "reti":
-			return new Reti();
+			return new Reti(arguments);
 		case "retn":
-			return new Retn();
+			return new Retn(arguments);
 		case "rl":
-			return new Rl();
+			return new Rl(arguments);
 		case "rla":
-			return new Rla();
+			return new Rla(arguments);
 		case "rlc":
-			return new Rlc();
+			return new Rlc(arguments);
 		case "rlca":
-			return new Rlca();
+			return new Rlca(arguments);
 		case "rld":
-			return new Rld();
+			return new Rld(arguments);
 		case "rr":
-			return new Rr();
+			return new Rr(arguments);
 		case "rra":
-			return new Rra();
+			return new Rra(arguments);
 		case "rrc":
-			return new Rrc();
+			return new Rrc(arguments);
 		case "rrca":
-			return new Rrca();
+			return new Rrca(arguments);
 		case "rrd":
-			return new Rrd();
+			return new Rrd(arguments);
 		case "rst":
-			return new Rst();
+			return new Rst(arguments);
 		case "sbc":
-			return new Sbc();
+			return new Sbc(arguments);
 		case "scf":
-			return new Scf();
+			return new Scf(arguments);
 		case "set":
-			return new Set();
+			return new Set(arguments);
 		case "sla":
-			return new Sla();
+			return new Sla(arguments);
 		case "sra":
-			return new Sra();
+			return new Sra(arguments);
 		case "srl":
-			return new Srl();
+			return new Srl(arguments);
 		case "sub":
-			return new Sub();
+			return new Sub(arguments);
 		case "xor":
-			return new Xor();
+			return new Xor(arguments);
 		}
 		return null;
 	}

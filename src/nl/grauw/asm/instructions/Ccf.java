@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Ccf extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Ccf extends Instruction {
+	
+	public Ccf(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "ccf";

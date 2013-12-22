@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Or extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Or extends Instruction {
+	
+	public Or(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "or";

@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Cpdr extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Cpdr extends Instruction {
+	
+	public Cpdr(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "cpdr";

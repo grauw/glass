@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class In extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class In extends Instruction {
+	
+	public In(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "in";

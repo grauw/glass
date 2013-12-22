@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Mulub extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Mulub extends Instruction {
+	
+	public Mulub(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "mulub";

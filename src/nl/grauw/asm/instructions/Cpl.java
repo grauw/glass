@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Cpl extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Cpl extends Instruction {
+	
+	public Cpl(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "cpl";

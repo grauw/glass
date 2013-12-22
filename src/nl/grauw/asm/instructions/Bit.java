@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Bit extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Bit extends Instruction {
+	
+	public Bit(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "bit";

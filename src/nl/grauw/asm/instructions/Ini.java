@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Ini extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Ini extends Instruction {
+	
+	public Ini(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "ini";

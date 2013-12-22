@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Cpir extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Cpir extends Instruction {
+	
+	public Cpir(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "cpir";

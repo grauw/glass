@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Cp extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Cp extends Instruction {
+	
+	public Cp(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "cp";

@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Cpd extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Cpd extends Instruction {
+	
+	public Cpd(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "cpd";

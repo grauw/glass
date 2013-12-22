@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Pop extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Pop extends Instruction {
+	
+	public Pop(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "pop";

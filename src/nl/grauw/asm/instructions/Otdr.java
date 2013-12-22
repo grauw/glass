@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Otdr extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Otdr extends Instruction {
+	
+	public Otdr(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "otdr";

@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Djnz extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Djnz extends Instruction {
+	
+	public Djnz(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "djnz";

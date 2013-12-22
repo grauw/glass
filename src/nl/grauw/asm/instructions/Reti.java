@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Reti extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Reti extends Instruction {
+	
+	public Reti(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "reti";

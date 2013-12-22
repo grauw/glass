@@ -1,7 +1,12 @@
 package nl.grauw.asm.instructions;
 
-public class Daa extends Instruction {
+import nl.grauw.asm.expressions.Expression;
 
+public class Daa extends Instruction {
+	
+	public Daa(Expression arguments) {
+	}
+	
 	@Override
 	public String getName() {
 		return "daa";
