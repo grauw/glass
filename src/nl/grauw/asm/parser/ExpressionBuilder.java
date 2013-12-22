@@ -29,6 +29,11 @@ import nl.grauw.asm.expressions.ShiftRight;
 import nl.grauw.asm.expressions.Subtract;
 import nl.grauw.asm.expressions.Xor;
 
+/**
+ * Constructs an AST from the given expression tokens.
+ * 
+ * It uses a recursive-descent algorithm.
+ */
 public class ExpressionBuilder {
 	
 	private final Queue<Token> tokens = new ArrayDeque<Token>();
@@ -49,9 +54,7 @@ public class ExpressionBuilder {
 		if (tokens.isEmpty())
 			throw new RuntimeException("No tokens queued.");
 		
-		Expression expression = tokens.remove().processValue(Precedence.NONE);
-		while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(Precedence.NONE))
-			expression = tokens.remove().processOperator(expression);
+		Expression expression = tokens.remove().process(Precedence.NONE);
 		
 		if (!tokens.isEmpty())
 			throw new RuntimeException("Not all tokens were processed: " + tokens);
@@ -61,7 +64,14 @@ public class ExpressionBuilder {
 	
 	private abstract class Token {
 		
-		public abstract Expression processValue(Precedence lastPrecedence);
+		public Expression process(Precedence lastPrecedence) {
+			Expression expression = processValue();
+			while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
+				expression = tokens.remove().processOperator(expression);
+			return expression;
+		}
+		
+		public abstract Expression processValue();
 		
 		public abstract Expression processOperator(Expression expression);
 		
@@ -78,11 +88,8 @@ public class ExpressionBuilder {
 		}
 		
 		@Override
-		public Expression processValue(Precedence lastPrecedence) {
-			Expression expression = value;
-			while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
-				expression = tokens.remove().processOperator(expression);
-			return expression;
+		public Expression processValue() {
+			return value;
 		}
 		
 		@Override
@@ -110,7 +117,7 @@ public class ExpressionBuilder {
 		}
 		
 		@Override
-		public Expression processValue(Precedence lastPrecedence) {
+		public Expression processValue() {
 			switch (operator) {
 			case POSITIVE:
 				return new Positive(processNext());
@@ -125,8 +132,6 @@ public class ExpressionBuilder {
 				if (tokens.isEmpty())
 					throw new ExpressionError("Mismatching parenthesis.");
 				tokens.remove();
-				while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
-					expression = tokens.remove().processOperator(expression);
 				return expression;
 			default:
 				throw new ExpressionError("Not an unary operator, group or value: " + this);
@@ -175,7 +180,7 @@ public class ExpressionBuilder {
 			case OR:
 				return new LogicalOr(expression, processNext());
 			case SEQUENCE:
-				Expression tail = tokens.remove().processValue(Precedence.GROUPING);
+				Expression tail = tokens.remove().process(Precedence.GROUPING);
 				if (tail instanceof Sequence)
 					return new Sequence(expression, (Sequence)tail);
 				return new Sequence(expression, new Sequence(tail, null));
@@ -185,7 +190,7 @@ public class ExpressionBuilder {
 		}
 		
 		public Expression processNext() {
-			return tokens.remove().processValue(operator.precedence);
+			return tokens.remove().process(operator.precedence);
 		}
 		
 		@Override
