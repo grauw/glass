@@ -1,8 +1,5 @@
 package nl.grauw.asm;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.Instruction;
 import nl.grauw.asm.instructions.InstructionFactory;
@@ -10,7 +7,7 @@ import nl.grauw.asm.instructions.InstructionFactory;
 public class Statement {
 	
 	private final String mnemonic;
-	private final List<Expression> arguments = new ArrayList<Expression>();
+	private Expression arguments;
 	
 	private Instruction instruction;
 	
@@ -18,16 +15,15 @@ public class Statement {
 		this.mnemonic = mnemonic;
 	}
 	
-	public Expression AddArgument(Expression argument) {
-		arguments.add(argument);
-		return argument;
+	public Expression setArguments(Expression arguments) {
+		return this.arguments = arguments;
 	}
 	
 	public String getMnemonic() {
 		return mnemonic;
 	}
 	
-	public List<Expression> getArguments() {
+	public Expression getArguments() {
 		return arguments;
 	}
 	
@@ -40,14 +36,7 @@ public class Statement {
 	}
 	
 	public String toString() {
-		StringBuilder builder = new StringBuilder(mnemonic);
-		builder.append(' ');
-		for (int i = 0; i < arguments.size(); i++) {
-			if (i > 0)
-				builder.append(", ");
-			builder.append(arguments.get(i));
-		}
-		return builder.toString();
+		return "" + mnemonic + (arguments != null ? " " + arguments : "");
 	}
 	
 }

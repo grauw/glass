@@ -350,10 +350,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				statement.AddArgument(expressionBuilder.getExpression());
+				statement.setArguments(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
-				statement.AddArgument(expressionBuilder.getExpression());
+				statement.setArguments(expressionBuilder.getExpression());
 				return endState;
 			}
 			throw new SyntaxError();

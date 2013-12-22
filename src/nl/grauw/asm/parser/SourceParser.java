@@ -14,6 +14,7 @@ import nl.grauw.asm.Line;
 import nl.grauw.asm.Source;
 import nl.grauw.asm.Statement;
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Sequence;
 import nl.grauw.asm.expressions.StringLiteral;
 
 public class SourceParser {
@@ -55,9 +56,9 @@ public class SourceParser {
 				
 				Statement statement = line.getStatement();
 				if (statement != null && (statement.getMnemonic().equals("INCLUDE") || statement.getMnemonic().equals("include"))) {
-					if (statement.getArguments().size() != 1)
+					if (statement.getArguments() instanceof Sequence)
 						throw new RuntimeException("Include only accepts 1 argument.");
-					Expression argument = statement.getArguments().get(0);
+					Expression argument = statement.getArguments();
 					if (!(argument instanceof StringLiteral))
 						throw new RuntimeException("A string literal is expected.");
 					String includeFile = ((StringLiteral)argument).getString();
