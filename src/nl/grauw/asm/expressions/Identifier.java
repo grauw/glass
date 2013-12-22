@@ -2,10 +2,14 @@ package nl.grauw.asm.expressions;
 
 public class Identifier extends Expression {
 	
-	String name;
+	private final String name;
 	
 	public Identifier(String name) {
 		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public String toString() {

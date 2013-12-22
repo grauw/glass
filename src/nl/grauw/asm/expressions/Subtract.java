@@ -2,12 +2,20 @@ package nl.grauw.asm.expressions;
 
 public class Subtract extends Operator {
 	
-	private Expression minuend;
-	private Expression subtrahend;
+	private final Expression minuend;
+	private final Expression subtrahend;
 	
 	public Subtract(Expression minuend, Expression subtrahend) {
 		this.minuend = minuend;
 		this.subtrahend = subtrahend;
+	}
+	
+	public Expression getMinuend() {
+		return minuend;
+	}
+	
+	public Expression getSubtrahend() {
+		return subtrahend;
 	}
 	
 	public String toString() {

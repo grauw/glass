@@ -2,10 +2,14 @@ package nl.grauw.asm.expressions;
 
 public class Negative extends Operator {
 	
-	private Expression term;
+	private final Expression term;
 	
 	public Negative(Expression term) {
 		this.term = term;
+	}
+	
+	public Expression getTerm() {
+		return term;
 	}
 	
 	public String toString() {
