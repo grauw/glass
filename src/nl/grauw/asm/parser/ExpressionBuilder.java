@@ -175,7 +175,7 @@ public class ExpressionBuilder {
 			case OR:
 				return new LogicalOr(expression, processNext());
 			case SEQUENCE:
-				Expression tail = processNext();
+				Expression tail = tokens.remove().processValue(Precedence.GROUPING);
 				if (tail instanceof Sequence)
 					return new Sequence(expression, (Sequence)tail);
 				return new Sequence(expression, new Sequence(tail, null));
