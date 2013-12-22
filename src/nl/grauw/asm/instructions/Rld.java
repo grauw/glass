@@ -5,6 +5,8 @@ import nl.grauw.asm.expressions.Expression;
 public class Rld extends Instruction {
 	
 	public Rld(Expression arguments) {
+		if (!ARGUMENTS_NONE.check(arguments))
+			throw new ArgumentException("Too many arguments.");
 	}
 	
 	@Override

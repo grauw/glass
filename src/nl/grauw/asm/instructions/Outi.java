@@ -5,6 +5,8 @@ import nl.grauw.asm.expressions.Expression;
 public class Outi extends Instruction {
 	
 	public Outi(Expression arguments) {
+		if (!ARGUMENTS_NONE.check(arguments))
+			throw new ArgumentException("Too many arguments.");
 	}
 	
 	@Override

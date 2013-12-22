@@ -5,6 +5,8 @@ import nl.grauw.asm.expressions.Expression;
 public class Indr extends Instruction {
 	
 	public Indr(Expression arguments) {
+		if (!ARGUMENTS_NONE.check(arguments))
+			throw new ArgumentException("Too many arguments.");
 	}
 	
 	@Override
