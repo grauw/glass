@@ -224,7 +224,6 @@ public class LineParser {
 				accumulator.setLength(0);
 				return argumentOperatorState;
 			} else if (character == '\\') {
-				accumulator.append(character);  // TODO
 				return argumentStringEscapeState;
 			} else if (character == '\0') {
 				throw new SyntaxError();
@@ -238,11 +237,37 @@ public class LineParser {
 	private ArgumentStringEscapeState argumentStringEscapeState = new ArgumentStringEscapeState();
 	private class ArgumentStringEscapeState extends State {
 		public State parse(char character) {
-			accumulator.append(character);
-			if (character == '\0') {
+			if (character == '0') {
+				accumulator.append('\0');
+				return argumentStringState;
+			} else if (character == 'a') {
+				accumulator.append('\7');
+				return argumentStringState;
+			} else if (character == 't') {
+				accumulator.append('\t');
+				return argumentStringState;
+			} else if (character == 'n') {
+				accumulator.append('\n');
+				return argumentStringState;
+			} else if (character == 'f') {
+				accumulator.append('\f');
+				return argumentStringState;
+			} else if (character == 'r') {
+				accumulator.append('\r');
+				return argumentStringState;
+			} else if (character == 'e') {
+				accumulator.append('\33');
+				return argumentStringState;
+			} else if (character == '"') {
+				accumulator.append('"');
+				return argumentStringState;
+			} else if (character == '\\') {
+				accumulator.append('\\');
+				return argumentStringState;
+			} else if (character == '\0') {
 				throw new SyntaxError();
 			} else {
-				return argumentStringState;
+				throw new SyntaxError();
 			}
 		}
 	}
