@@ -19,6 +19,8 @@ public class ExpressionBuilderTest {
 		assertEquals("{{a + 1H}, {{b + 2H}}}", parse("a + 1H, b + 2H"));
 		assertEquals("{a, {{1H + 2H}, {{3H + 4H}}}}", parse("a, 1H + 2H, 3H + 4H"));
 		assertEquals("{1H + {({a, {2H, {3H}}}) * b}}", parse("1H + (a, 2H, 3H) * b"));
+		assertEquals("{{10H + {15H * ({5H - 2H})}} + 4H}", parse("10H + 15H * (5H - 2H) + 4H"));
+		assertEquals("{a, {{{({10H + 15H}) * ({5H - 2H})} + 4H}}}", parse("a, (10H + 15H) * (5H - 2H) + 4H"));
 	}
 	
 	public String parse(String text) {
