@@ -123,7 +123,7 @@ public class ExpressionBuilder {
 			case GROUP_OPEN:
 				Group group = new Group(processNext());
 				if (tokens.isEmpty())
-					throw new ExpressionError("Mismatching parentheses.");
+					throw new ExpressionError("Mismatching parenthesis.");
 				tokens.remove();
 				return group;
 			default:
