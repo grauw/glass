@@ -1,7 +1,7 @@
 package nl.grauw.asm.parser;
 
 import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.Deque;
 
 import nl.grauw.asm.expressions.Add;
 import nl.grauw.asm.expressions.And;
@@ -32,212 +32,178 @@ import nl.grauw.asm.expressions.Xor;
 /**
  * Constructs an AST from the given expression tokens.
  * 
- * It uses a recursive-descent algorithm.
+ * It uses a shunting yard algorithm.
  */
 public class ExpressionBuilder {
 	
-	private final Queue<Token> tokens = new ArrayDeque<Token>();
+	private Deque<Expression> operands = new ArrayDeque<Expression>();
+	private Deque<Operator> operators = new ArrayDeque<Operator>();
+	
+	public ExpressionBuilder() {
+		operators.push(Operator.SENTINEL);
+	}
 	
 	public void addValueToken(Expression value) {
-		tokens.add(new ValueToken(value));
+		operands.push(value);
 	}
 	
 	public void addOperatorToken(Operator operator) {
-		tokens.add(new OperatorToken(operator));
-	}
-	
-	public boolean hasExpression() {
-		return !tokens.isEmpty();
+		while (!operators.peek().yieldsTo(operator) && operators.peek() != Operator.SENTINEL)
+			operators.pop().evaluate(operands);
+		
+		if (operator == Operator.GROUP_OPEN) {
+			operators.push(operator);
+			operators.push(Operator.SENTINEL);
+		} else if (operator == Operator.GROUP_CLOSE) {
+			if (operators.pop() != Operator.SENTINEL)
+				throw new RuntimeException("Sentinel expected.");
+			if (operators.peek() != Operator.GROUP_OPEN)
+				throw new ExpressionError("Group open expected.");
+		} else {
+			operators.push(operator);
+		}
 	}
 	
 	public Expression getExpression() {
-		if (tokens.isEmpty())
-			throw new RuntimeException("No tokens queued.");
+		if (operands.isEmpty() || operators.isEmpty())
+			throw new RuntimeException("Operands / operators is empty: " + this);
 		
-		Expression expression = tokens.remove().process(Precedence.NONE);
+		// process remainder
+		while (operators.peek() != Operator.SENTINEL)
+			operators.pop().evaluate(operands);
 		
-		if (!tokens.isEmpty())
-			throw new RuntimeException("Not all tokens were processed: " + tokens);
+		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
+			throw new ExpressionError("Group close expected.");
+		if (operands.size() > 1 || operators.size() != 1)
+			throw new RuntimeException("Not all operands / operators were processed: " + this);
 		
-		return expression;
+		return operands.pop();
 	}
 	
-	private abstract class Token {
-		
-		public Expression process(Precedence lastPrecedence) {
-			Expression expression = processValue();
-			while (!tokens.isEmpty() && tokens.peek().isHigherPrecedence(lastPrecedence))
-				expression = tokens.remove().processOperator(expression);
-			return expression;
-		}
-		
-		public abstract Expression processValue();
-		
-		public abstract Expression processOperator(Expression expression);
-		
-		public abstract boolean isHigherPrecedence(Precedence lastPrecedence);
-		
+	public String toString() {
+		return "" + operands + " / " + operators;
 	}
 	
-	public class ValueToken extends Token {
-
-		private final Expression value;
+	public enum Operator {
+		POSITIVE(Precedence.UNARY, true),
+		NEGATIVE(Precedence.UNARY, true),
+		COMPLEMENT(Precedence.UNARY, true),
+		NOT(Precedence.UNARY, true),
+		MULTIPLY(Precedence.MULTIPLICATION, true),
+		DIVIDE(Precedence.MULTIPLICATION, true),
+		MODULO(Precedence.MULTIPLICATION, true),
+		ADD(Precedence.ADDITION, true),
+		SUBTRACT(Precedence.ADDITION, true),
+		SHIFT_LEFT(Precedence.SHIFT, true),
+		SHIFT_RIGHT(Precedence.SHIFT, true),
+		LESS_THAN(Precedence.COMPARISON, true),
+		LESS_OR_EQUALS(Precedence.COMPARISON, true),
+		GREATER_THAN(Precedence.COMPARISON, true),
+		GREATER_OR_EQUALS(Precedence.COMPARISON, true),
+		EQUALS(Precedence.EQUALITY, true),
+		NOT_EQUALS(Precedence.EQUALITY, true),
+		BITWISE_AND(Precedence.AND, true),
+		BITWISE_XOR(Precedence.XOR, true),
+		BITWISE_OR(Precedence.OR, true),
+		AND(Precedence.LOGICAL_AND, true),
+		OR(Precedence.LOGICAL_OR, true),
+		GROUP_OPEN(Precedence.GROUPING, true),
+		GROUP_CLOSE(Precedence.NONE, true),
+		SEQUENCE(Precedence.SEQUENCE, false),
+		SENTINEL(Precedence.NONE, true);
 		
-		public ValueToken(Expression value) {
-			this.value = value;
+		private Precedence precedence;
+		private boolean leftAssociative;
+		private Operator(Precedence precedence, boolean leftAssociative) {
+			this.precedence = precedence;
+			this.leftAssociative = leftAssociative;
 		}
 		
-		@Override
-		public Expression processValue() {
-			return value;
+		public boolean yieldsTo(Operator other) {
+			if (leftAssociative)
+				return precedence.ordinal() > other.precedence.ordinal();
+			else
+				return precedence.ordinal() >= other.precedence.ordinal();
 		}
 		
-		@Override
-		public Expression processOperator(Expression expression) {
-			throw new ExpressionError("Not an operator: " + this);
+		public void evaluate(Deque<Expression> operands) {
+			Expression operandRight = operands.pop();
+			Expression result;
+			if (precedence == Precedence.UNARY || precedence == Precedence.GROUPING) {
+				result = evaluate(operandRight);
+			} else {
+				result = evaluate(operands.pop(), operandRight);
+			}
+			operands.push(result);
 		}
 		
-		@Override
-		public boolean isHigherPrecedence(Precedence lastPrecedence) {
-			throw new ExpressionError("Not an operator: " + this);
-		}
-		
-		public String toString() {
-			return value.toString();
-		}
-		
-	}
-	
-	public class OperatorToken extends Token {
-		
-		private final Operator operator;
-		
-		public OperatorToken(Operator operator) {
-			this.operator = operator;
-		}
-		
-		@Override
-		public Expression processValue() {
-			switch (operator) {
+		private Expression evaluate(Expression operand) {
+			switch (this) {
 			case POSITIVE:
-				return new Positive(processNext());
+				return new Positive(operand);
 			case NEGATIVE:
-				return new Negative(processNext());
+				return new Negative(operand);
 			case COMPLEMENT:
-				return new Complement(processNext());
+				return new Complement(operand);
 			case NOT:
-				return new Not(processNext());
+				return new Not(operand);
 			case GROUP_OPEN:
-				Expression expression = new Group(processNext());
-				if (tokens.isEmpty())
-					throw new ExpressionError("Mismatching parenthesis.");
-				tokens.remove();
-				return expression;
+				return new Group(operand);
 			default:
-				throw new ExpressionError("Not an unary operator, group or value: " + this);
+				throw new RuntimeException("Not an unary or group operator: " + this);
 			}
 		}
 		
-		@Override
-		public Expression processOperator(Expression expression) {
-			switch (operator) {
-			case GROUP_CLOSE:
-				return expression;
+		private Expression evaluate(Expression operand1, Expression operand2) {
+			switch (this) {
 			case MULTIPLY:
-				return new Multiply(expression, processNext());
+				return new Multiply(operand1, operand2);
 			case DIVIDE:
-				return new Divide(expression, processNext());
+				return new Divide(operand1, operand2);
 			case MODULO:
-				return new Modulo(expression, processNext());
+				return new Modulo(operand1, operand2);
 			case ADD:
-				return new Add(expression, processNext());
+				return new Add(operand1, operand2);
 			case SUBTRACT:
-				return new Subtract(expression, processNext());
+				return new Subtract(operand1, operand2);
 			case SHIFT_LEFT:
-				return new ShiftLeft(expression, processNext());
+				return new ShiftLeft(operand1, operand2);
 			case SHIFT_RIGHT:
-				return new ShiftRight(expression, processNext());
+				return new ShiftRight(operand1, operand2);
 			case LESS_THAN:
-				return new LessThan(expression, processNext());
+				return new LessThan(operand1, operand2);
 			case LESS_OR_EQUALS:
-				return new LessOrEquals(expression, processNext());
+				return new LessOrEquals(operand1, operand2);
 			case GREATER_THAN:
-				return new GreaterThan(expression, processNext());
+				return new GreaterThan(operand1, operand2);
 			case GREATER_OR_EQUALS:
-				return new GreaterOrEquals(expression, processNext());
+				return new GreaterOrEquals(operand1, operand2);
 			case EQUALS:
-				return new Equals(expression, processNext());
+				return new Equals(operand1, operand2);
 			case NOT_EQUALS:
-				return new NotEquals(expression, processNext());
+				return new NotEquals(operand1, operand2);
 			case BITWISE_AND:
-				return new And(expression, processNext());
+				return new And(operand1, operand2);
 			case BITWISE_XOR:
-				return new Xor(expression, processNext());
+				return new Xor(operand1, operand2);
 			case BITWISE_OR:
-				return new Or(expression, processNext());
+				return new Or(operand1, operand2);
 			case AND:
-				return new LogicalAnd(expression, processNext());
+				return new LogicalAnd(operand1, operand2);
 			case OR:
-				return new LogicalOr(expression, processNext());
+				return new LogicalOr(operand1, operand2);
 			case SEQUENCE:
-				Expression tail = tokens.remove().process(Precedence.GROUPING);
-				if (tail instanceof Sequence)
-					return new Sequence(expression, (Sequence)tail);
-				return new Sequence(expression, new Sequence(tail, null));
+				if (operand2 instanceof Sequence)
+					return new Sequence(operand1, (Sequence)operand2);
+				return new Sequence(operand1, new Sequence(operand2, null));
 			default:
 				throw new ExpressionError("Not a binary operator: " + this);
 			}
 		}
-		
-		public Expression processNext() {
-			return tokens.remove().process(operator.precedence);
-		}
-		
-		@Override
-		public boolean isHigherPrecedence(Precedence lastPrecedence) {
-			return operator.precedence.compareTo(lastPrecedence) < 0;
-		}
-		
-		public String toString() {
-			return operator.toString();
-		}
-		
-	}
-	
-	public enum Operator {
-		POSITIVE(Precedence.UNARY),
-		NEGATIVE(Precedence.UNARY),
-		COMPLEMENT(Precedence.UNARY),
-		NOT(Precedence.UNARY),
-		MULTIPLY(Precedence.MULTIPLICATION),
-		DIVIDE(Precedence.MULTIPLICATION),
-		MODULO(Precedence.MULTIPLICATION),
-		ADD(Precedence.ADDITION),
-		SUBTRACT(Precedence.ADDITION),
-		SHIFT_LEFT(Precedence.SHIFT),
-		SHIFT_RIGHT(Precedence.SHIFT),
-		LESS_THAN(Precedence.COMPARISON),
-		LESS_OR_EQUALS(Precedence.COMPARISON),
-		GREATER_THAN(Precedence.COMPARISON),
-		GREATER_OR_EQUALS(Precedence.COMPARISON),
-		EQUALS(Precedence.EQUALITY),
-		NOT_EQUALS(Precedence.EQUALITY),
-		BITWISE_AND(Precedence.AND),
-		BITWISE_XOR(Precedence.XOR),
-		BITWISE_OR(Precedence.OR),
-		AND(Precedence.LOGICAL_AND),
-		OR(Precedence.LOGICAL_OR),
-		GROUP_OPEN(Precedence.GROUPING),
-		GROUP_CLOSE(Precedence.GROUPING),
-		SEQUENCE(Precedence.SEQUENCE);
-		
-		private Precedence precedence;
-		private Operator(Precedence precedence) {
-			this.precedence = precedence;
-		}
 	}
 	
 	private enum Precedence {
+		GROUPING,
 		UNARY,
 		MULTIPLICATION,
 		ADDITION,
@@ -251,7 +217,6 @@ public class ExpressionBuilder {
 		LOGICAL_OR,
 		ASSIGNMENT,
 		SEQUENCE,
-		GROUPING,
 		NONE
 	}
 	

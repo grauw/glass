@@ -2,6 +2,7 @@ package nl.grauw.asm.parser;
 
 import static org.junit.Assert.*;
 import nl.grauw.asm.Line;
+import nl.grauw.asm.parser.LineParser.SyntaxError;
 
 import org.junit.Test;
 
@@ -40,6 +41,16 @@ public class ExpressionBuilderTest {
 	@Test
 	public void testGrouping2() {
 		assertEquals("{{10H + ({15H * ({5H - 2H})})} + 4H}", parse("10H + (15H * (5H - 2H)) + 4H"));
+	}
+	
+	@Test(expected=SyntaxError.class)
+	public void testGrouping3() {
+		parse("10H + (15H * (5H - 2H) + 4H");
+	}
+	
+	@Test(expected=SyntaxError.class)
+	public void testGrouping4() {
+		parse("10H + 15H * (5H - 2H)) + 4H");
 	}
 	
 	@Test

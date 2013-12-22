@@ -51,8 +51,6 @@ public class LineParser {
 			throw new SyntaxError(e);
 		} catch(ExpressionError e) {
 			throw new SyntaxError(e);
-		} catch(Exception e) {
-			throw new SyntaxError(e);
 		}
 		
 		return new Line(label, statement, comment, sourceFile, lineNumber);
@@ -327,12 +325,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				if (expressionBuilder.hasExpression())
-					statement.AddArgument(expressionBuilder.getExpression());
+				statement.AddArgument(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
-				if (expressionBuilder.hasExpression())
-					statement.AddArgument(expressionBuilder.getExpression());
+				statement.AddArgument(expressionBuilder.getExpression());
 				return endState;
 			}
 			throw new SyntaxError();
