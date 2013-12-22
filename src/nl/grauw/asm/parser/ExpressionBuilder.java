@@ -129,7 +129,7 @@ public class ExpressionBuilder {
 					expression = tokens.remove().processOperator(expression);
 				return expression;
 			default:
-				throw new ExpressionError("Not an unary operator, grouping operator or value: " + this);
+				throw new ExpressionError("Not an unary operator, group or value: " + this);
 			}
 		}
 		
