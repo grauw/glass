@@ -1,11 +1,7 @@
-package nl.grauw.asm.parser;
+package nl.grauw.asm;
 
 import java.io.File;
 
-import nl.grauw.asm.Comment;
-import nl.grauw.asm.Label;
-import nl.grauw.asm.Line;
-import nl.grauw.asm.Statement;
 import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.ExpressionBuilder;
 import nl.grauw.asm.expressions.ExpressionBuilder.ExpressionError;

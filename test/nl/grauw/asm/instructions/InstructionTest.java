@@ -3,7 +3,7 @@ package nl.grauw.asm.instructions;
 import static org.junit.Assert.*;
 
 import nl.grauw.asm.Line;
-import nl.grauw.asm.parser.LineParser;
+import nl.grauw.asm.LineParser;
 
 import org.junit.Test;
 

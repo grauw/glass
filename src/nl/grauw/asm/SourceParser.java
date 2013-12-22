@@ -1,4 +1,4 @@
-package nl.grauw.asm.parser;
+package nl.grauw.asm;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,9 +10,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.grauw.asm.Line;
-import nl.grauw.asm.Source;
-import nl.grauw.asm.Statement;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Sequence;
 import nl.grauw.asm.expressions.StringLiteral;
