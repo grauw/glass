@@ -204,7 +204,7 @@ public class ExpressionBuilder {
 		
 	}
 	
-	public static enum Operator {
+	public enum Operator {
 		POSITIVE(Precedence.UNARY),
 		NEGATIVE(Precedence.UNARY),
 		COMPLEMENT(Precedence.UNARY),
@@ -237,7 +237,7 @@ public class ExpressionBuilder {
 		}
 	}
 	
-	private static enum Precedence {
+	private enum Precedence {
 		UNARY,
 		MULTIPLICATION,
 		ADDITION,
