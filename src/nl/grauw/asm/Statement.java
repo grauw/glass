@@ -7,11 +7,11 @@ import nl.grauw.asm.expressions.Expression;
 
 public class Statement {
 	
-	private final String instruction;
+	private final String mnemonic;
 	private final List<Expression> arguments = new ArrayList<Expression>();
 	
-	public Statement(String instruction) {
-		this.instruction = instruction;
+	public Statement(String mnemonic) {
+		this.mnemonic = mnemonic;
 	}
 	
 	public Expression AddArgument(Expression argument) {
@@ -19,8 +19,8 @@ public class Statement {
 		return argument;
 	}
 	
-	public String getInstruction() {
-		return instruction;
+	public String getMnemonic() {
+		return mnemonic;
 	}
 	
 	public List<Expression> getArguments() {
@@ -28,7 +28,7 @@ public class Statement {
 	}
 	
 	public String toString() {
-		StringBuilder builder = new StringBuilder(instruction);
+		StringBuilder builder = new StringBuilder(mnemonic);
 		builder.append(' ');
 		for (int i = 0; i < arguments.size(); i++) {
 			if (i > 0)

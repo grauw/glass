@@ -54,7 +54,7 @@ public class SourceParser {
 				Line line = source.addLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
 				
 				Statement statement = line.getStatement();
-				if (statement != null && (statement.getInstruction().equals("INCLUDE") || statement.getInstruction().equals("include"))) {
+				if (statement != null && (statement.getMnemonic().equals("INCLUDE") || statement.getMnemonic().equals("include"))) {
 					if (statement.getArguments().size() != 1)
 						throw new RuntimeException("Include only accepts 1 argument.");
 					Expression argument = statement.getArguments().get(0);
