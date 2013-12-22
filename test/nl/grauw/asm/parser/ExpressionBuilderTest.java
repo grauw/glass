@@ -18,7 +18,7 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
-	public void testDoubleAddition() {
+	public void testAddition2() {
 		assertEquals("{{a + 1H} + 2H}", parse("a + 1H + 2H"));
 	}
 	
@@ -39,7 +39,7 @@ public class ExpressionBuilderTest {
 	
 	@Test
 	public void testGrouping2() {
-		assertEquals("{{10H + {15H * ({5H - 2H})}} + 4H}", parse("10H + 15H * (5H - 2H) + 4H"));
+		assertEquals("{{10H + ({15H * ({5H - 2H})})} + 4H}", parse("10H + (15H * (5H - 2H)) + 4H"));
 	}
 	
 	@Test
