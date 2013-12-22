@@ -1,7 +1,8 @@
-package nl.grauw.asm.parser;
+package nl.grauw.asm.expressions;
 
 import static org.junit.Assert.*;
 import nl.grauw.asm.Line;
+import nl.grauw.asm.parser.LineParser;
 import nl.grauw.asm.parser.LineParser.SyntaxError;
 
 import org.junit.Test;

@@ -7,11 +7,12 @@ import nl.grauw.asm.Label;
 import nl.grauw.asm.Line;
 import nl.grauw.asm.Statement;
 import nl.grauw.asm.expressions.Current;
+import nl.grauw.asm.expressions.ExpressionBuilder;
+import nl.grauw.asm.expressions.ExpressionBuilder.ExpressionError;
+import nl.grauw.asm.expressions.ExpressionBuilder.Operator;
 import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.StringLiteral;
-import nl.grauw.asm.parser.ExpressionBuilder.ExpressionError;
-import nl.grauw.asm.parser.ExpressionBuilder.Operator;
 
 public class LineParser {
 	

@@ -1,33 +1,8 @@
-package nl.grauw.asm.parser;
+package nl.grauw.asm.expressions;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-import nl.grauw.asm.expressions.Add;
-import nl.grauw.asm.expressions.And;
-import nl.grauw.asm.expressions.Complement;
-import nl.grauw.asm.expressions.Divide;
-import nl.grauw.asm.expressions.Equals;
-import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.expressions.GreaterOrEquals;
-import nl.grauw.asm.expressions.GreaterThan;
-import nl.grauw.asm.expressions.Group;
-import nl.grauw.asm.expressions.LessOrEquals;
-import nl.grauw.asm.expressions.LessThan;
-import nl.grauw.asm.expressions.LogicalAnd;
-import nl.grauw.asm.expressions.LogicalOr;
-import nl.grauw.asm.expressions.Modulo;
-import nl.grauw.asm.expressions.Multiply;
-import nl.grauw.asm.expressions.Negative;
-import nl.grauw.asm.expressions.Not;
-import nl.grauw.asm.expressions.NotEquals;
-import nl.grauw.asm.expressions.Or;
-import nl.grauw.asm.expressions.Positive;
-import nl.grauw.asm.expressions.Sequence;
-import nl.grauw.asm.expressions.ShiftLeft;
-import nl.grauw.asm.expressions.ShiftRight;
-import nl.grauw.asm.expressions.Subtract;
-import nl.grauw.asm.expressions.Xor;
 
 /**
  * Constructs an AST from the given expression tokens.
