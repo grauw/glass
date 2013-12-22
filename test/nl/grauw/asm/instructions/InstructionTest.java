@@ -188,7 +188,7 @@ public class InstructionTest {
 	@Test
 	public void testDjnz() {
 		assertEquals("djnz", parse("djnz $").getName());
-		assertArrayEquals(b(0x10, 0x02), parse("djnz $").getBytes());
+		assertArrayEquals(b(0x10, 0xFE), parse("djnz $").getBytes());
 	}
 	
 	@Test
@@ -300,11 +300,11 @@ public class InstructionTest {
 	@Test
 	public void testJr() {
 		assertEquals("jr", parse("jr $").getName());
-		assertArrayEquals(b(0x18, 0x02), parse("jr $").getBytes());
-		assertArrayEquals(b(0x20, 0x02), parse("jr nz,$").getBytes());
-		assertArrayEquals(b(0x28, 0x02), parse("jr z,$").getBytes());
-		assertArrayEquals(b(0x30, 0x02), parse("jr nc,$").getBytes());
-		assertArrayEquals(b(0x38, 0x02), parse("jr c,$").getBytes());
+		assertArrayEquals(b(0x18, 0xFE), parse("jr $").getBytes());
+		assertArrayEquals(b(0x20, 0xFE), parse("jr nz,$").getBytes());
+		assertArrayEquals(b(0x28, 0xFE), parse("jr z,$").getBytes());
+		assertArrayEquals(b(0x30, 0xFE), parse("jr nc,$").getBytes());
+		assertArrayEquals(b(0x38, 0xFE), parse("jr c,$").getBytes());
 	}
 	
 	@Test
