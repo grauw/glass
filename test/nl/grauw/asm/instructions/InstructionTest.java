@@ -12,7 +12,7 @@ public class InstructionTest {
 	private InstructionRegistry factory = new InstructionRegistry();
 	
 	@Test
-	public void testAdc() {
+	public void testAdcA() {
 		assertArrayEquals(b(0x88), parse("adc a,b").getBytes());
 		assertArrayEquals(b(0x89), parse("adc a,c").getBytes());
 		assertArrayEquals(b(0x8A), parse("adc a,d").getBytes());
@@ -24,7 +24,10 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCE, 0x86), parse("adc a,86H").getBytes());
 		assertArrayEquals(b(0xDD, 0x8E, 0x47), parse("adc a,(ix + 47H)").getBytes());
 		assertArrayEquals(b(0xFD, 0x8E, 0x86), parse("adc a,(iy - 7AH)").getBytes());
-		
+	}
+	
+	@Test
+	public void testAdcHL() {
 		assertArrayEquals(b(0xED, 0x4A), parse("adc hl,bc").getBytes());
 		assertArrayEquals(b(0xED, 0x5A), parse("adc hl,de").getBytes());
 		assertArrayEquals(b(0xED, 0x6A), parse("adc hl,hl").getBytes());
@@ -32,7 +35,7 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testAdd() {
+	public void testAddA() {
 		assertArrayEquals(b(0x80), parse("add a,b").getBytes());
 		assertArrayEquals(b(0x81), parse("add a,c").getBytes());
 		assertArrayEquals(b(0x82), parse("add a,d").getBytes());
@@ -44,7 +47,10 @@ public class InstructionTest {
 		assertArrayEquals(b(0xC6, 0x86), parse("add a,86H").getBytes());
 		assertArrayEquals(b(0xDD, 0x86, 0x47), parse("add a,(ix + 47H)").getBytes());
 		assertArrayEquals(b(0xFD, 0x86, 0x86), parse("add a,(iy - 7AH)").getBytes());
-		
+	}
+	
+	@Test
+	public void testAddHL() {
 		assertArrayEquals(b(0x09), parse("add hl,bc").getBytes());
 		assertArrayEquals(b(0x19), parse("add hl,de").getBytes());
 		assertArrayEquals(b(0x29), parse("add hl,hl").getBytes());
@@ -586,7 +592,7 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testSbc() {
+	public void testSbcA() {
 		assertArrayEquals(b(0x98), parse("sbc a,b").getBytes());
 		assertArrayEquals(b(0x99), parse("sbc a,c").getBytes());
 		assertArrayEquals(b(0x9A), parse("sbc a,d").getBytes());
@@ -598,7 +604,10 @@ public class InstructionTest {
 		assertArrayEquals(b(0xDE, 0x86), parse("sbc a,86H").getBytes());
 		assertArrayEquals(b(0xDD, 0x9E, 0x47), parse("sbc a,(ix + 47H)").getBytes());
 		assertArrayEquals(b(0xFD, 0x9E, 0x86), parse("sbc a,(iy - 7AH)").getBytes());
-		
+	}
+	
+	@Test
+	public void testSbcHL() {
 		assertArrayEquals(b(0xED, 0x42), parse("sbc hl,bc").getBytes());
 		assertArrayEquals(b(0xED, 0x52), parse("sbc hl,de").getBytes());
 		assertArrayEquals(b(0xED, 0x62), parse("sbc hl,hl").getBytes());
