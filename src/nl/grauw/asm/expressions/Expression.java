@@ -4,6 +4,8 @@ public abstract class Expression {
 	
 	public abstract String toDebugString();
 	
+	public abstract boolean isInteger();
+	
 	public abstract int evaluateInteger();
 	
 	public Register evaluateRegister() {

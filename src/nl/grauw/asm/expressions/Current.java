@@ -7,6 +7,11 @@ public class Current extends Expression {
 		throw new EvaluationException("Currently not supported.");
 	}
 	
+	@Override
+	public boolean isInteger() {
+		return true;
+	}
+	
 	public String toString() {
 		return "$";
 	}

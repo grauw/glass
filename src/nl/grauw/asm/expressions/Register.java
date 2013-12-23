@@ -58,6 +58,11 @@ public class Register extends Expression {
 	}
 	
 	@Override
+	public boolean isInteger() {
+		return false;
+	}
+	
+	@Override
 	public int evaluateInteger() {
 		throw new EvaluationException("Can not evaluate register to integer.");
 	}

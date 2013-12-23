@@ -13,6 +13,11 @@ public class StringLiteral extends Literal {
 	}
 	
 	@Override
+	public boolean isInteger() {
+		return string.length() == 1;
+	}
+	
+	@Override
 	public int evaluateInteger() {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");

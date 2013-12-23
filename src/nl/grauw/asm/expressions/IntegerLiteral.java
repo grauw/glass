@@ -13,6 +13,11 @@ public class IntegerLiteral extends Literal {
 	}
 	
 	@Override
+	public boolean isInteger() {
+		return true;
+	}
+	
+	@Override
 	public int evaluateInteger() {
 		return getValue();
 	}

@@ -13,6 +13,11 @@ public class Identifier extends Expression {
 	}
 	
 	@Override
+	public boolean isInteger() {
+		return false;  // TODO recur
+	}
+	
+	@Override
 	public int evaluateInteger() {
 		throw new EvaluationException("Currently not supported.");
 	}

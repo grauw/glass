@@ -17,6 +17,11 @@ public class Group extends Expression {
 	}
 	
 	@Override
+	public boolean isInteger() {
+		return term.isInteger();
+	}
+	
+	@Override
 	public int evaluateInteger() {
 		return term.evaluateInteger();
 	}

@@ -18,6 +18,11 @@ public abstract class BinaryOperator extends Operator {
 		return term2;
 	}
 	
+	@Override
+	public boolean isInteger() {
+		return term1.isInteger() && term2.isInteger();
+	}
+	
 	public abstract String getSymbol();
 	
 	public String toString() {

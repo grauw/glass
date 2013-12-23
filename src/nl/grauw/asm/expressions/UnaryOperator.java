@@ -12,6 +12,11 @@ public abstract class UnaryOperator extends Operator {
 		return term;
 	}
 	
+	@Override
+	public boolean isInteger() {
+		return term.isInteger();
+	}
+	
 	public abstract String getSymbol();
 	
 	public String toString() {
