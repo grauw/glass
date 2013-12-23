@@ -2,26 +2,27 @@ package nl.grauw.asm.expressions;
 
 public class Register extends Literal {
 	
+	public static final int NONE = -1;
 	public static final int IX_CODE = 0xDD;
 	public static final int IY_CODE = 0xFD;
 	
-	public static Register B = new Register("b", false, 0, -1);
-	public static Register C = new Register("c", false, 1, -1);
-	public static Register D = new Register("d", false, 2, -1);
-	public static Register E = new Register("e", false, 3, -1);
-	public static Register H = new Register("h", false, 4, -1);
-	public static Register L = new Register("l", false, 5, -1);
-	public static Register A = new Register("a", false, 7, -1);
+	public static Register B = new Register("b", false, 0, NONE);
+	public static Register C = new Register("c", false, 1, NONE);
+	public static Register D = new Register("d", false, 2, NONE);
+	public static Register E = new Register("e", false, 3, NONE);
+	public static Register H = new Register("h", false, 4, NONE);
+	public static Register L = new Register("l", false, 5, NONE);
+	public static Register A = new Register("a", false, 7, NONE);
 	public static Register IXH = new Register("ixh", false, 4, IX_CODE);
 	public static Register IXL = new Register("ixl", false, 5, IX_CODE);
 	public static Register IYH = new Register("iyh", false, 4, IY_CODE);
 	public static Register IYL = new Register("iyl", false, 5, IY_CODE);
-	public static Register BC = new Register("bc", true, 0, -1);
-	public static Register DE = new Register("de", true, 1, -1);
-	public static Register HL = new Register("hl", true, 2, -1);
-	public static Register SP = new Register("sp", true, 3, -1);
-	public static Register AF = new Register("af", true, 3, -1);
-	public static Register AF_ = new Register("af'", true, -1, -1);
+	public static Register BC = new Register("bc", true, 0, NONE);
+	public static Register DE = new Register("de", true, 1, NONE);
+	public static Register HL = new Register("hl", true, 2, NONE);
+	public static Register SP = new Register("sp", true, 3, NONE);
+	public static Register AF = new Register("af", true, 3, NONE);
+	public static Register AF_ = new Register("af'", true, NONE, NONE);
 	public static Register IX = new Register("ix", true, 2, IX_CODE);
 	public static Register IY = new Register("iy", true, 2, IY_CODE);
 	
@@ -36,7 +37,7 @@ public class Register extends Literal {
 	}
 	
 	public Register(String name, boolean pair, int code, int indexCode, int offset) {
-		if (offset != 0 && (!pair || indexCode == -1))
+		if (offset != 0 && (!pair || indexCode == NONE))
 			throw new RuntimeException("Can only specify offset for 16-bit index registers.");
 		
 		this.name = name;
@@ -55,17 +56,17 @@ public class Register extends Literal {
 	}
 	
 	public int getCode() {
-		if (code == -1)
+		if (code == NONE)
 			throw new EvaluationException("Register does not have a code.");
 		return code;
 	}
 	
 	public boolean isIndex() {
-		return indexCode != -1;
+		return indexCode != NONE;
 	}
 	
 	public byte getIndexCode() {
-		if (indexCode == -1)
+		if (indexCode == NONE)
 			throw new EvaluationException("Register does not have an index code.");
 		return (byte)indexCode;
 	}
