@@ -24,11 +24,11 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	public String toString() {
-		return "" + value + (tail != null ? ", " + tail : "");
+		return "" + value + ", " + tail;
 	}
 	
 	public String toDebugString() {
-		return "{" + value.toDebugString() + (tail != null ? ", " + tail.toDebugString() : "") + "}";
+		return "{" + value.toDebugString() + ", " + tail.toDebugString() + "}";
 	}
 	
 }
