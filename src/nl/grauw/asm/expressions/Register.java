@@ -67,11 +67,13 @@ public class Register extends Literal {
 	
 	public byte getIndexCode() {
 		if (indexCode == NONE)
-			throw new EvaluationException("Register does not have an index code.");
+			throw new EvaluationException("Not an index register.");
 		return (byte)indexCode;
 	}
 	
 	public byte getIndexOffset() {
+		if (indexCode == NONE || !pair)
+			throw new EvaluationException("Not an index register pair.");
 		return (byte)indexOffset;
 	}
 	
