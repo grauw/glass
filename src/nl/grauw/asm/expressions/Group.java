@@ -23,6 +23,11 @@ public class Group extends Expression {
 	}
 	
 	@Override
+	public boolean isRegister() {
+		return term.isRegister();
+	}
+	
+	@Override
 	public Register evaluateRegister() {
 		return term.evaluateRegister();
 	}

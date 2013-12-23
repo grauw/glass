@@ -68,6 +68,11 @@ public class Register extends Expression {
 	}
 	
 	@Override
+	public boolean isRegister() {
+		return true;
+	}
+	
+	@Override
 	public Register evaluateRegister() {
 		return this;
 	}

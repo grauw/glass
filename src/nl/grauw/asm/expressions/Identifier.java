@@ -23,6 +23,11 @@ public class Identifier extends Expression {
 	}
 	
 	@Override
+	public boolean isRegister() {
+		return false;  // TODO recur
+	}
+	
+	@Override
 	public Register evaluateRegister() {
 		throw new EvaluationException("Currently not supported.");
 	}
