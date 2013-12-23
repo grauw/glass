@@ -1,10 +1,10 @@
 package nl.grauw.asm.expressions;
 
-public class ExpressionSchema {
+public class Schema {
 	
 	private Type[] types;
 	
-	public ExpressionSchema(Type... types) {
+	public Schema(Type... types) {
 		this.types = types;
 	}
 	

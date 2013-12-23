@@ -1,11 +1,11 @@
 package nl.grauw.asm.instructions;
 
-import nl.grauw.asm.expressions.ExpressionSchema;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.expressions.Register;
 
 public abstract class Instruction {
 	
-	public static ExpressionSchema ARGUMENTS_NONE = new ExpressionSchema();
+	public static Schema ARGUMENTS_NONE = new Schema();
 	
 	public abstract byte[] getBytes();
 	
