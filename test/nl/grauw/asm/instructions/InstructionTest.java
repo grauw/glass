@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class InstructionTest {
 	
-	private InstructionFactory factory = new InstructionFactory();
+	private InstructionRegistry factory = new InstructionRegistry();
 	
 	@Test
 	public void testAdc() {

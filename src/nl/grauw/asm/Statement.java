@@ -2,7 +2,7 @@ package nl.grauw.asm;
 
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.Instruction;
-import nl.grauw.asm.instructions.InstructionFactory;
+import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Statement {
 	
@@ -31,7 +31,7 @@ public class Statement {
 		return instruction;
 	}
 	
-	public void resolveInstruction(InstructionFactory factory) {
+	public void resolveInstruction(InstructionRegistry factory) {
 		instruction = factory.createInstruction(mnemonic, arguments);
 	}
 	

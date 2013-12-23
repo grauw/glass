@@ -2,7 +2,7 @@ package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
 
-public class InstructionFactory {
+public class InstructionRegistry {
 	
 	public Instruction createInstruction(String name, Expression arguments) {
 		switch (name) {

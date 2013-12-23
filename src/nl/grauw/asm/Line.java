@@ -2,7 +2,7 @@ package nl.grauw.asm;
 
 import java.io.File;
 
-import nl.grauw.asm.instructions.InstructionFactory;
+import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Line {
 	
@@ -40,7 +40,7 @@ public class Line {
 		return lineNumber;
 	}
 	
-	public void resolveInstruction(InstructionFactory factory) {
+	public void resolveInstruction(InstructionRegistry factory) {
 		if (statement != null)
 			statement.resolveInstruction(factory);
 	}

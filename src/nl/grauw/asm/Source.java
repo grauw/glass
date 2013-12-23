@@ -2,12 +2,12 @@ package nl.grauw.asm;
 
 import java.util.ArrayList;
 
-import nl.grauw.asm.instructions.InstructionFactory;
+import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Source {
 	
 	private final ArrayList<Line> lines = new ArrayList<Line>();
-	private final InstructionFactory instructionFactory = new InstructionFactory();
+	private final InstructionRegistry instructionFactory = new InstructionRegistry();
 	
 	public Source() {
 	}
