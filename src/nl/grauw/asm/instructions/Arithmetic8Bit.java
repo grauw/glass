@@ -26,15 +26,9 @@ public abstract class Arithmetic8Bit extends Instruction {
 		} else if (argument.isRegister()) {
 			Register register = argument.evaluateRegister();
 			if (!register.isPair()) {
-				if (!register.isIndex())
-					return new byte[] { (byte)(0x80 | getMask() | register.getCode()) };
-				else
-					return new byte[] { register.getIndexCode(), (byte)(0x80 | getMask() | register.getCode()) };
+				return indexifyDirect(register, (byte)(0x80 | getMask() | register.getCode()));
 			} else if (argument instanceof Group && (register == Register.HL || register.isIndex())) {
-				if (!register.isIndex())
-					return new byte[] { (byte)(0x80 | getMask() | 6) };  // TODO magic constant
-				else
-					return new byte[] { register.getIndexCode(), (byte)(0x80 | getMask() | 6), (byte)register.getOffset() };
+				return indexifyIndirect(register, (byte)(0x80 | getMask() | 6));  // TODO magic constant
 			}
 		}
 		throw new ArgumentException();
