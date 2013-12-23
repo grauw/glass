@@ -2,14 +2,8 @@ package nl.grauw.asm.expressions;
 
 public class Not extends UnaryOperator {
 	
-	private final Expression term;
-	
 	public Not(Expression term) {
-		this.term = term;
-	}
-	
-	public Expression getTerm() {
-		return term;
+		super(term);
 	}
 	
 	@Override
