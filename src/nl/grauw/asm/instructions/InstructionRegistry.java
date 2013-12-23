@@ -12,8 +12,10 @@ public class InstructionRegistry {
 	private Map<String, List<InstructionFactory>> registry = new HashMap<>();
 	
 	public InstructionRegistry() {
-		add(new Adc.Factory());
-		add(new Add.Factory());
+		add(new AdcA.Factory());
+		add(new AdcHL.Factory());
+		add(new AddA.Factory());
+		add(new AddHL.Factory());
 		add(new And.Factory());
 		add(new Bit.Factory());
 		add(new Call.Factory());
@@ -73,7 +75,8 @@ public class InstructionRegistry {
 		add(new Rrca.Factory());
 		add(new Rrd.Factory());
 		add(new Rst.Factory());
-		add(new Sbc.Factory());
+		add(new SbcA.Factory());
+		add(new SbcHL.Factory());
 		add(new Scf.Factory());
 		add(new Set.Factory());
 		add(new Sla.Factory());

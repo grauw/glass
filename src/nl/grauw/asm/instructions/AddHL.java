@@ -3,9 +3,9 @@ package nl.grauw.asm.instructions;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class Add extends Instruction {
+public class AddHL extends Instruction {
 	
-	public Add(Expression arguments) {
+	public AddHL(Expression arguments) {
 	}
 	
 	@Override
@@ -22,7 +22,7 @@ public class Add extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Add(arguments);
+			return new AddHL(arguments);
 		}
 		
 	}

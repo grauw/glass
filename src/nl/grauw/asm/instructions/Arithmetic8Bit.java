@@ -14,8 +14,6 @@ public abstract class Arithmetic8Bit extends Instruction {
 	private InstructionMask mask;
 	
 	public Arithmetic8Bit(Expression arguments, InstructionMask mask) {
-		if (mask.stripA)
-			arguments = stripAArgument(arguments);
 		if (arguments instanceof Sequence)
 			throw new ArgumentException();
 		
@@ -99,30 +97,19 @@ public abstract class Arithmetic8Bit extends Instruction {
 		throw new ArgumentException("Not an offset.");
 	}
 	
-	public Expression stripAArgument(Expression arguments) {
-		if (!(arguments instanceof Sequence))
-			throw new ArgumentException();
-		Sequence sequence = (Sequence)arguments;
-		if (sequence.getValue() != Register.A)
-			throw new ArgumentException();
-		return sequence.getTail();
-	}
-	
 	public enum InstructionMask {
-		ADD_A(0b00000000, true),
-		ADC_A(0b00001000, true),
-		SUB(0b00010000, false),
-		SBC_A(0b00011000, true),
-		AND(0b00100000, false),
-		XOR(0b00101000, false),
-		OR(0b00110000, false),
-		CP(0b00111000, false);
+		ADD_A(0b00000000),
+		ADC_A(0b00001000),
+		SUB(0b00010000),
+		SBC_A(0b00011000),
+		AND(0b00100000),
+		XOR(0b00101000),
+		OR(0b00110000),
+		CP(0b00111000);
 		
 		private final int mask;
-		private final boolean stripA;
-		private InstructionMask(int mask, boolean stripA) {
+		private InstructionMask(int mask) {
 			this.mask = mask;
-			this.stripA = stripA;
 		}
 	}
 	

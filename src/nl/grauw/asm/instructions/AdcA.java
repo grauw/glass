@@ -1,16 +1,14 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Register;
+import nl.grauw.asm.expressions.Sequence;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class Adc extends Instruction {
+public class AdcA extends Arithmetic8Bit {
 	
-	public Adc(Expression arguments) {
-	}
-	
-	@Override
-	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+	public AdcA(Expression arguments) {
+		super(arguments, InstructionMask.ADC_A);
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +20,9 @@ public class Adc extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Adc(arguments);
+			if (arguments instanceof Sequence && ((Sequence)arguments).getValue() == Register.A)
+				return new AdcA(((Sequence)arguments).getTail());
+			return null;
 		}
 		
 	}
