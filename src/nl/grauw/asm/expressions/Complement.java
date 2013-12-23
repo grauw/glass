@@ -12,6 +12,11 @@ public class Complement extends Operator {
 		return term;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return ~term.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "~" + term;
 	}

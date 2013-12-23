@@ -16,6 +16,11 @@ public class Group extends Expression {
 		return "(" + term + ")";
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return term.evaluateInteger();
+	}
+	
 	public String toDebugString() {
 		return "(" + term.toDebugString() + ")";
 	}

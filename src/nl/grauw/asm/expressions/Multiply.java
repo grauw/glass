@@ -18,6 +18,11 @@ public class Multiply extends Operator {
 		return multiplier;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return multiplicand.evaluateInteger() * multiplier.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + multiplicand + " * " + multiplier;
 	}

@@ -12,6 +12,11 @@ public class Not extends Operator {
 		return term;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return term.evaluateInteger() == 0 ? -1 : 0;
+	}
+	
 	public String toString() {
 		return "!" + term;
 	}

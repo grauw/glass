@@ -18,6 +18,11 @@ public class Or extends Operator {
 		return term2;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return term1.evaluateInteger() | term2.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + term1 + " | " + term2;
 	}

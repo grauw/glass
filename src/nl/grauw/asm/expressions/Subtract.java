@@ -18,6 +18,11 @@ public class Subtract extends Operator {
 		return subtrahend;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return minuend.evaluateInteger() - subtrahend.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + minuend + " - " + subtrahend;
 	}

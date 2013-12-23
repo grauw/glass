@@ -18,6 +18,12 @@ public class LogicalAnd extends Operator {
 		return term2;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		int value1 = term1.evaluateInteger();
+		return value1 == 0 ? value1 : term2.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + term1 + " && " + term2;
 	}

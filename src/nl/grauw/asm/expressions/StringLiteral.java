@@ -12,6 +12,13 @@ public class StringLiteral extends Literal {
 		return string;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		if (string.length() != 1)
+			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
+		return string.codePointAt(0);
+	}
+	
 	public String toString() {
 		String escaped = string;
 		escaped = escaped.replace("\\", "\\\\");

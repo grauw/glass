@@ -18,6 +18,11 @@ public class Sequence extends Expression {
 		return tail;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		throw new EvaluationException("Can not evaluate sequence to integer.");
+	}
+	
 	public String toString() {
 		return "" + value + (tail != null ? ", " + tail : "");
 	}

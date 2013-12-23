@@ -12,6 +12,11 @@ public class Identifier extends Expression {
 		return name;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		throw new EvaluationException("Currently not supported.");
+	}
+	
 	public String toString() {
 		return name;
 	}

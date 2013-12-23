@@ -18,6 +18,11 @@ public class Divide extends Operator {
 		return divisor;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return dividend.evaluateInteger() / divisor.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + dividend + " * " + divisor;
 	}

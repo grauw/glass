@@ -18,6 +18,11 @@ public class Add extends Operator {
 		return addend;
 	}
 	
+	@Override
+	public int evaluateInteger() {
+		return augend.evaluateInteger() + addend.evaluateInteger();
+	}
+	
 	public String toString() {
 		return "" + augend + " + " + addend;
 	}

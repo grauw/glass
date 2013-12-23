@@ -42,7 +42,7 @@ public class Register extends Identifier {
 	
 	public int getCode() {
 		if (code == -1)
-			throw new RuntimeException("Register does not have a code.");
+			throw new EvaluationException("Register does not have a code.");
 		return code;
 	}
 	
@@ -52,8 +52,13 @@ public class Register extends Identifier {
 	
 	public byte getIndexCode() {
 		if (code == -1)
-			throw new RuntimeException("Register does not have an index code.");
+			throw new EvaluationException("Register does not have an index code.");
 		return (byte)indexCode;
+	}
+	
+	@Override
+	public int evaluateInteger() {
+		throw new EvaluationException("Can not evaluate register to integer.");
 	}
 	
 	public static Register getByName(String name) {
