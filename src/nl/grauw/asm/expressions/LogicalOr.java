@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class LogicalOr extends Operator {
+public class LogicalOr extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

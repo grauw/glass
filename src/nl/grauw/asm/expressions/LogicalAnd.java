@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class LogicalAnd extends Operator {
+public class LogicalAnd extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

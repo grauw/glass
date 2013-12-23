@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class GreaterThan extends Operator {
+public class GreaterThan extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

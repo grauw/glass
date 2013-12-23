@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class LessOrEquals extends Operator {
+public class LessOrEquals extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

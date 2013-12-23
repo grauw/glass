@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Complement extends Operator {
+public class Complement extends UnaryOperator {
 	
 	private final Expression term;
 	

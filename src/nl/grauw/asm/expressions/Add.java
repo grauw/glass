@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Add extends Operator {
+public class Add extends BinaryOperator {
 	
 	private final Expression augend;
 	private final Expression addend;

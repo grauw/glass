@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Equals extends Operator {
+public class Equals extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class ShiftLeft extends Operator {
+public class ShiftLeft extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;

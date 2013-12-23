@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Subtract extends Operator {
+public class Subtract extends BinaryOperator {
 	
 	private final Expression minuend;
 	private final Expression subtrahend;

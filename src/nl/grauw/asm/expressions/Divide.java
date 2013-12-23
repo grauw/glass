@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Divide extends Operator {
+public class Divide extends BinaryOperator {
 	
 	private final Expression dividend;
 	private final Expression divisor;

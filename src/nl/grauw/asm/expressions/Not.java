@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Not extends Operator {
+public class Not extends UnaryOperator {
 	
 	private final Expression term;
 	

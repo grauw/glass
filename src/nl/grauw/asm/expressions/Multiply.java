@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Multiply extends Operator {
+public class Multiply extends BinaryOperator {
 	
 	private final Expression multiplicand;
 	private final Expression multiplier;

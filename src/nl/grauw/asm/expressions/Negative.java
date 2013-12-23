@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Negative extends Operator {
+public class Negative extends UnaryOperator {
 	
 	private final Expression term;
 	

@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Sequence extends Expression {
+public class Sequence extends BinaryOperator {
 	
 	private final Expression value;
 	private final Expression tail;

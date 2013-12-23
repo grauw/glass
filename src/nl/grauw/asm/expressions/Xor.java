@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Xor extends Operator {
+public class Xor extends BinaryOperator {
 	
 	private final Expression term1;
 	private final Expression term2;
