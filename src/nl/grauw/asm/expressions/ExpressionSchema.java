@@ -17,11 +17,12 @@ public class ExpressionSchema {
 		return arguments == null;
 	}
 	
-	public abstract class Type {
+	public abstract static class Type {
 		public abstract boolean check(Expression argument);
 	}
 	
-	public class Any {
+	public static Type ANY = new Any();
+	public static class Any extends Type {
 		public boolean check(Expression argument) {
 			return true;
 		}
