@@ -5,7 +5,7 @@ import nl.grauw.asm.expressions.Register;
 
 public abstract class Instruction {
 	
-	public static ExpressionSchema ARGUMENTS_NONE = ExpressionSchema.NONE;
+	public static ExpressionSchema ARGUMENTS_NONE = new ExpressionSchema();
 	
 	public abstract byte[] getBytes();
 	

@@ -4,8 +4,6 @@ public class ExpressionSchema {
 	
 	private Type[] types;
 	
-	public static ExpressionSchema NONE = new ExpressionSchema();
-	
 	public ExpressionSchema(Type... types) {
 		this.types = types;
 	}
