@@ -1,6 +1,7 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Outi extends Instruction {
 	
@@ -10,13 +11,22 @@ public class Outi extends Instruction {
 	}
 	
 	@Override
-	public String getName() {
-		return "outi";
-	}
-
-	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xA3 };
 	}
-
+	
+	public static class Factory implements InstructionFactory {
+		
+		@Override
+		public String getMnemonic() {
+			return "outi";
+		}
+		
+		@Override
+		public Instruction createInstruction(Expression arguments) {
+			return new Outi(arguments);
+		}
+		
+	}
+	
 }

@@ -1,6 +1,7 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Cp extends Arithmetic8Bit {
 	
@@ -8,9 +9,18 @@ public class Cp extends Arithmetic8Bit {
 		super(arguments, InstructionMask.CP);
 	}
 	
-	@Override
-	public String getName() {
-		return "cp";
+	public static class Factory implements InstructionFactory {
+		
+		@Override
+		public String getMnemonic() {
+			return "cp";
+		}
+		
+		@Override
+		public Instruction createInstruction(Expression arguments) {
+			return new Cp(arguments);
+		}
+		
 	}
 	
 }
