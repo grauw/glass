@@ -30,7 +30,7 @@ public class Register extends Literal {
 	private final boolean pair;
 	private final int code;
 	private final int indexCode;
-	private final int offset;
+	private final int indexOffset;
 	
 	public Register(String name, boolean pair, int code, int indexCode) {
 		this(name, pair, code, indexCode, 0);
@@ -44,7 +44,7 @@ public class Register extends Literal {
 		this.pair = pair;
 		this.code = code;
 		this.indexCode = indexCode;
-		this.offset = offset;
+		this.indexOffset = offset;
 	}
 	
 	public Register(Register register, int offset) {
@@ -71,8 +71,8 @@ public class Register extends Literal {
 		return (byte)indexCode;
 	}
 	
-	public int getOffset() {
-		return offset;
+	public byte getIndexOffset() {
+		return (byte)indexOffset;
 	}
 	
 	@Override

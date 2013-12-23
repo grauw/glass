@@ -41,8 +41,8 @@ public abstract class Instruction {
 			throw new RuntimeException("Can not indexify ED prefixed instructions.");
 		
 		if (objectCode.length == 1)
-			return new byte[] { register.getIndexCode(), objectCode[0], (byte)register.getOffset() };
-		return new byte[] { register.getIndexCode(), objectCode[0], (byte)register.getOffset(), objectCode[1] };
+			return new byte[] { register.getIndexCode(), objectCode[0], register.getIndexOffset() };
+		return new byte[] { register.getIndexCode(), objectCode[0], register.getIndexOffset(), objectCode[1] };
 	}
 	
 }
