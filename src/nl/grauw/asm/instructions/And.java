@@ -2,19 +2,15 @@ package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
 
-public class And extends Instruction {
+public class And extends Arithmetic8Bit {
 	
 	public And(Expression arguments) {
+		super(arguments, InstructionMask.AND);
 	}
 	
 	@Override
 	public String getName() {
 		return "and";
 	}
-
-	@Override
-	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
-	}
-
+	
 }
