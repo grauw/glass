@@ -1,13 +1,15 @@
 package nl.grauw.asm.instructions;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import nl.grauw.asm.expressions.Expression;
 
 public class InstructionRegistry {
 	
-	private Map<String, InstructionFactory> registry = new HashMap<>();
+	private Map<String, List<InstructionFactory>> registry = new HashMap<>();
 	
 	public InstructionRegistry() {
 		add(new Adc.Factory());
@@ -82,13 +84,25 @@ public class InstructionRegistry {
 	}
 	
 	public void add(InstructionFactory factory) {
-		registry.put(factory.getMnemonic(), factory);
+		List<InstructionFactory> factoryList = registry.get(factory.getMnemonic());
+		if (factoryList == null) {
+			factoryList = new ArrayList<InstructionFactory>();
+			registry.put(factory.getMnemonic(), factoryList);
+		}
+		factoryList.add(factory);
 	}
 	
-	public Instruction createInstruction(String name, Expression arguments) {
-		InstructionFactory factory = registry.get(name);
-		if (factory != null)
-			return factory.createInstruction(arguments);
+	public Instruction createInstruction(String mnemonic, Expression arguments) {
+		List<InstructionFactory> factoryList = registry.get(mnemonic);
+		if (factoryList != null) {
+			for (InstructionFactory factory : factoryList) {
+				Instruction instruction = factory.createInstruction(arguments);
+				if (instruction != null)
+					return instruction;
+			}
+			//throw new ArgumentException();
+		}
+		//throw new RuntimeException("Mnemonic not recognised.");
 		return null;
 	}
 	
