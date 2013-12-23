@@ -65,7 +65,7 @@ public class Register extends Literal {
 	}
 	
 	public byte getIndexCode() {
-		if (code == -1)
+		if (indexCode == -1)
 			throw new EvaluationException("Register does not have an index code.");
 		return (byte)indexCode;
 	}
