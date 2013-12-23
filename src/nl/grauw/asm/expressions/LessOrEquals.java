@@ -11,12 +11,9 @@ public class LessOrEquals extends BinaryOperator {
 		return term1.evaluateInteger() <= term2.evaluateInteger() ? -1 : 0;
 	}
 	
-	public String toString() {
-		return "" + term1 + " <= " + term2;
-	}
-	
-	public String toDebugString() {
-		return "{" + term1.toDebugString() + " <= " + term2.toDebugString() + "}";
+	@Override
+	public String getSymbol() {
+		return "<=";
 	}
 	
 }

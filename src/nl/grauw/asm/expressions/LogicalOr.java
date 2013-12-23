@@ -12,12 +12,9 @@ public class LogicalOr extends BinaryOperator {
 		return value1 != 0 ? value1 : term2.evaluateInteger();
 	}
 	
-	public String toString() {
-		return "" + term1 + " || " + term2;
-	}
-	
-	public String toDebugString() {
-		return "{" + term1.toDebugString() + " || " + term2.toDebugString() + "}";
+	@Override
+	public String getSymbol() {
+		return "||";
 	}
 	
 }

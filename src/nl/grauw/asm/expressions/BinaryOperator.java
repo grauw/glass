@@ -18,4 +18,14 @@ public abstract class BinaryOperator extends Operator {
 		return term2;
 	}
 	
+	public abstract String getSymbol();
+	
+	public String toString() {
+		return "" + term1 + " " + getSymbol() + " " + term2;
+	}
+	
+	public String toDebugString() {
+		return "{" + term1.toDebugString() + " " + getSymbol() + " " + term2.toDebugString() + "}";
+	}
+	
 }
