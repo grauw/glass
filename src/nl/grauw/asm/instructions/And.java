@@ -23,7 +23,9 @@ public class And extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new And(arguments);
+			if (ARGUMENTS_N.check(arguments) || ARGUMENTS_R.check(arguments))
+				return new And(arguments);
+			return null;
 		}
 		
 	}

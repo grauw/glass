@@ -23,7 +23,9 @@ public class Xor extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Xor(arguments);
+			if (ARGUMENTS_N.check(arguments) || ARGUMENTS_R.check(arguments))
+				return new Xor(arguments);
+			return null;
 		}
 		
 	}

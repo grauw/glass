@@ -23,7 +23,9 @@ public class Cp extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Cp(arguments);
+			if (ARGUMENTS_N.check(arguments) || ARGUMENTS_R.check(arguments))
+				return new Cp(arguments);
+			return null;
 		}
 		
 	}

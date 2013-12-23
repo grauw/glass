@@ -23,7 +23,9 @@ public class Sub extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Sub(arguments);
+			if (ARGUMENTS_N.check(arguments) || ARGUMENTS_R.check(arguments))
+				return new Sub(arguments);
+			return null;
 		}
 		
 	}

@@ -23,7 +23,9 @@ public class Or extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Or(arguments);
+			if (ARGUMENTS_N.check(arguments) || ARGUMENTS_R.check(arguments))
+				return new Or(arguments);
+			return null;
 		}
 		
 	}
