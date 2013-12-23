@@ -12,10 +12,6 @@ public class Group extends Expression {
 		return term;
 	}
 	
-	public String toString() {
-		return "(" + term + ")";
-	}
-	
 	@Override
 	public boolean isInteger() {
 		return term.isInteger();
@@ -29,6 +25,10 @@ public class Group extends Expression {
 	@Override
 	public Register evaluateRegister() {
 		return term.evaluateRegister();
+	}
+	
+	public String toString() {
+		return "(" + term + ")";
 	}
 	
 	public String toDebugString() {
