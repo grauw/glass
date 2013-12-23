@@ -19,6 +19,10 @@ public class Sequence extends BinaryOperator {
 		throw new EvaluationException("Can not evaluate sequence to integer.");
 	}
 	
+	public Expression getElement(int index) {
+		return index == 0 ? term1 : term2.getElement(index - 1);
+	}
+	
 	@Override
 	public String getSymbol() {
 		return ",";

@@ -16,4 +16,8 @@ public abstract class Expression {
 		throw new EvaluationException("Not a register.");
 	}
 	
+	public Expression getElement(int index) {
+		return index == 0 ? this : null;
+	}
+	
 }
