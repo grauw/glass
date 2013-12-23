@@ -18,7 +18,7 @@ public class IntegerLiteral extends Literal {
 	}
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		return getValue();
 	}
 	

@@ -15,7 +15,7 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		throw new EvaluationException("Can not evaluate sequence to integer.");
 	}
 	

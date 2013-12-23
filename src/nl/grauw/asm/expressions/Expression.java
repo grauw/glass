@@ -6,13 +6,13 @@ public abstract class Expression {
 	
 	public abstract boolean isInteger();
 	
-	public abstract int evaluateInteger();
+	public abstract int getInteger();
 	
 	public boolean isRegister() {
 		return false;
 	}
 	
-	public Register evaluateRegister() {
+	public Register getRegister() {
 		throw new EvaluationException("Not a register.");
 	}
 	

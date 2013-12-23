@@ -83,7 +83,7 @@ public class Register extends Literal {
 	}
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		throw new EvaluationException("Can not evaluate register to integer.");
 	}
 	
@@ -93,7 +93,7 @@ public class Register extends Literal {
 	}
 	
 	@Override
-	public Register evaluateRegister() {
+	public Register getRegister() {
 		return this;
 	}
 	

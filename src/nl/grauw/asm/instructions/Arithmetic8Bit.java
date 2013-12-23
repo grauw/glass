@@ -21,10 +21,10 @@ public abstract class Arithmetic8Bit extends Instruction {
 	@Override
 	public byte[] getBytes() {
 		if (argument.isInteger()) {
-			int value = argument.evaluateInteger();
+			int value = argument.getInteger();
 			return new byte[] { (byte)(0xC6 | getMask()), (byte)value };
 		} else if (argument.isRegister()) {
-			Register register = argument.evaluateRegister();
+			Register register = argument.getRegister();
 			if (!register.isPair()) {
 				return indexifyDirect(register, (byte)(0x80 | getMask() | register.getCode()));
 			} else if (argument instanceof Group && (register == Register.HL || register.isIndex())) {

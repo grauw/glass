@@ -7,8 +7,8 @@ public class Negative extends UnaryOperator {
 	}
 	
 	@Override
-	public int evaluateInteger() {
-		return -term.evaluateInteger();
+	public int getInteger() {
+		return -term.getInteger();
 	}
 	
 	@Override

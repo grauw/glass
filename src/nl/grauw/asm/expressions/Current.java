@@ -3,7 +3,7 @@ package nl.grauw.asm.expressions;
 public class Current extends Expression {
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		throw new EvaluationException("Currently not supported.");
 	}
 	

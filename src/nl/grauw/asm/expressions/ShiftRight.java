@@ -7,8 +7,8 @@ public class ShiftRight extends BinaryOperator {
 	}
 	
 	@Override
-	public int evaluateInteger() {
-		return term1.evaluateInteger() >> term2.evaluateInteger();
+	public int getInteger() {
+		return term1.getInteger() >> term2.getInteger();
 	}
 	
 	@Override

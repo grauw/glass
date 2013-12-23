@@ -7,8 +7,8 @@ public class Not extends UnaryOperator {
 	}
 	
 	@Override
-	public int evaluateInteger() {
-		return term.evaluateInteger() == 0 ? -1 : 0;
+	public int getInteger() {
+		return term.getInteger() == 0 ? -1 : 0;
 	}
 	
 	@Override

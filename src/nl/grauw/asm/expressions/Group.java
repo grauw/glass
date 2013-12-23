@@ -18,8 +18,8 @@ public class Group extends Expression {
 	}
 	
 	@Override
-	public int evaluateInteger() {
-		return term.evaluateInteger();
+	public int getInteger() {
+		return term.getInteger();
 	}
 	
 	@Override
@@ -28,8 +28,8 @@ public class Group extends Expression {
 	}
 	
 	@Override
-	public Register evaluateRegister() {
-		return term.evaluateRegister();
+	public Register getRegister() {
+		return term.getRegister();
 	}
 	
 	public String toString() {

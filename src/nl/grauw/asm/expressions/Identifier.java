@@ -18,7 +18,7 @@ public class Identifier extends Expression {
 	}
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		throw new EvaluationException("Currently not supported.");
 	}
 	
@@ -28,7 +28,7 @@ public class Identifier extends Expression {
 	}
 	
 	@Override
-	public Register evaluateRegister() {
+	public Register getRegister() {
 		throw new EvaluationException("Currently not supported.");
 	}
 	

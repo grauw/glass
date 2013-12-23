@@ -18,7 +18,7 @@ public class StringLiteral extends Literal {
 	}
 	
 	@Override
-	public int evaluateInteger() {
+	public int getInteger() {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);
