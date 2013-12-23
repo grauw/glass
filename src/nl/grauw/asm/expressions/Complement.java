@@ -11,12 +11,9 @@ public class Complement extends UnaryOperator {
 		return ~term.evaluateInteger();
 	}
 	
-	public String toString() {
-		return "~" + term;
-	}
-	
-	public String toDebugString() {
-		return "~" + term.toDebugString();
+	@Override
+	public String getSymbol() {
+		return "~";
 	}
 	
 }

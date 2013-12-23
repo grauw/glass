@@ -12,4 +12,14 @@ public abstract class UnaryOperator extends Operator {
 		return term;
 	}
 	
+	public abstract String getSymbol();
+	
+	public String toString() {
+		return getSymbol() + term;
+	}
+	
+	public String toDebugString() {
+		return getSymbol() + term.toDebugString();
+	}
+	
 }

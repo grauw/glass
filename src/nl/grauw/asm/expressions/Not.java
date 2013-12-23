@@ -11,12 +11,9 @@ public class Not extends UnaryOperator {
 		return term.evaluateInteger() == 0 ? -1 : 0;
 	}
 	
-	public String toString() {
-		return "!" + term;
-	}
-	
-	public String toDebugString() {
-		return "!" + term.toDebugString();
+	@Override
+	public String getSymbol() {
+		return "!";
 	}
 	
 }
