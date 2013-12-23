@@ -6,7 +6,12 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class Xor extends Arithmetic8Bit {
 	
 	public Xor(Expression arguments) {
-		super(arguments, InstructionMask.XOR);
+		super(arguments);
+	}
+	
+	@Override
+	protected int getMask() {
+		return 0b00101000;
 	}
 	
 	public static class Factory implements InstructionFactory {

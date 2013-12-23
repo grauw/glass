@@ -6,7 +6,12 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class And extends Arithmetic8Bit {
 	
 	public And(Expression arguments) {
-		super(arguments, InstructionMask.AND);
+		super(arguments);
+	}
+	
+	@Override
+	protected int getMask() {
+		return 0b00100000;
 	}
 	
 	public static class Factory implements InstructionFactory {

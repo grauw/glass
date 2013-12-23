@@ -6,7 +6,12 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class Or extends Arithmetic8Bit {
 	
 	public Or(Expression arguments) {
-		super(arguments, InstructionMask.OR);
+		super(arguments);
+	}
+	
+	@Override
+	protected int getMask() {
+		return 0b00110000;
 	}
 	
 	public static class Factory implements InstructionFactory {

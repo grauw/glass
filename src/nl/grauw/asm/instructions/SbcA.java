@@ -8,7 +8,12 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class SbcA extends Arithmetic8Bit {
 	
 	public SbcA(Expression arguments) {
-		super(arguments, InstructionMask.SBC_A);
+		super(arguments);
+	}
+	
+	@Override
+	protected int getMask() {
+		return 0b00011000;
 	}
 	
 	public static class Factory implements InstructionFactory {

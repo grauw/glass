@@ -11,34 +11,34 @@ import nl.grauw.asm.expressions.Subtract;
 public abstract class Arithmetic8Bit extends Instruction {
 	
 	private Expression argument;
-	private InstructionMask mask;
 	
-	public Arithmetic8Bit(Expression arguments, InstructionMask mask) {
+	public Arithmetic8Bit(Expression arguments) {
 		if (arguments instanceof Sequence)
 			throw new ArgumentException();
 		
 		this.argument = arguments;
-		this.mask = mask;
 	}
+	
+	protected abstract int getMask();
 	
 	@Override
 	public byte[] getBytes() {
 		if (argument instanceof IntegerLiteral) {
 			int value = ((IntegerLiteral)argument).getValue();
-			return new byte[] { (byte)(0xC6 | mask.mask), (byte)value };
+			return new byte[] { (byte)(0xC6 | getMask()), (byte)value };
 		} else {
 			Register register = getRegister(argument);
 			if (register != null) {
 				if (!register.isPair()) {
 					if (!register.isIndex())
-						return new byte[] { (byte)(0x80 | mask.mask | register.getCode()) };
+						return new byte[] { (byte)(0x80 | getMask() | register.getCode()) };
 					else
-						return new byte[] { register.getIndexCode(), (byte)(0x80 | mask.mask | register.getCode()) };
+						return new byte[] { register.getIndexCode(), (byte)(0x80 | getMask() | register.getCode()) };
 				} else {
 					if (!register.isIndex())
-						return new byte[] { (byte)(0x80 | mask.mask | 6) };  // TODO magic constant
+						return new byte[] { (byte)(0x80 | getMask() | 6) };  // TODO magic constant
 					else
-						return new byte[] { register.getIndexCode(), (byte)(0x80 | mask.mask | 6), getOffset(argument) };
+						return new byte[] { register.getIndexCode(), (byte)(0x80 | getMask() | 6), getOffset(argument) };
 				}
 			}
 		}
@@ -95,22 +95,6 @@ public abstract class Arithmetic8Bit extends Instruction {
 			}
 		}
 		throw new ArgumentException("Not an offset.");
-	}
-	
-	public enum InstructionMask {
-		ADD_A(0b00000000),
-		ADC_A(0b00001000),
-		SUB(0b00010000),
-		SBC_A(0b00011000),
-		AND(0b00100000),
-		XOR(0b00101000),
-		OR(0b00110000),
-		CP(0b00111000);
-		
-		private final int mask;
-		private InstructionMask(int mask) {
-			this.mask = mask;
-		}
 	}
 	
 }

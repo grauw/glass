@@ -6,7 +6,12 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class Cp extends Arithmetic8Bit {
 	
 	public Cp(Expression arguments) {
-		super(arguments, InstructionMask.CP);
+		super(arguments);
+	}
+	
+	@Override
+	protected int getMask() {
+		return 0b00111000;
 	}
 	
 	public static class Factory implements InstructionFactory {
