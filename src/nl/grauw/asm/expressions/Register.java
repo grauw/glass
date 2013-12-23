@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Register extends Expression {
+public class Register extends Literal {
 	
 	public static final int IX_CODE = 0xDD;
 	public static final int IY_CODE = 0xFD;
