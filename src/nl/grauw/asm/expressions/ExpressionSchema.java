@@ -11,18 +11,12 @@ public class ExpressionSchema {
 	}
 	
 	public boolean check(Expression arguments) {
-		Expression current = arguments;
-		for (Type type : types) {
-			if (current == null)
+		for (int i = 0; arguments != null && i < types.length; i++) {
+			if (!types[i].check(arguments instanceof Sequence ? ((Sequence)arguments).getValue() : arguments))
 				return false;
-			
-			type.check(current);
-			
-			current = current instanceof Sequence ? ((Sequence)current).getTail() : null;
+			arguments = arguments instanceof Sequence ? ((Sequence)arguments).getTail() : null;
 		}
-		if (current != null)
-			return false;
-		return true;
+		return arguments == null;
 	}
 	
 	public abstract class Type {
