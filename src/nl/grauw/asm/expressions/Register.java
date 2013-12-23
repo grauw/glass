@@ -1,6 +1,6 @@
 package nl.grauw.asm.expressions;
 
-public class Register extends Identifier {
+public class Register extends Expression {
 	
 	public static final int IX_CODE = 0xDD;
 	public static final int IY_CODE = 0xFD;
@@ -25,12 +25,13 @@ public class Register extends Identifier {
 	public static Register IX = new Register("ix", true, 2, IX_CODE);
 	public static Register IY = new Register("iy", true, 2, IY_CODE);
 	
+	private final String name;
 	private final boolean pair;
 	private final int code;
 	private final int indexCode;
 	
 	public Register(String name, boolean pair, int code, int indexCode) {
-		super(name);
+		this.name = name;
 		this.pair = pair;
 		this.code = code;
 		this.indexCode = indexCode;
@@ -59,6 +60,16 @@ public class Register extends Identifier {
 	@Override
 	public int evaluateInteger() {
 		throw new EvaluationException("Can not evaluate register to integer.");
+	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	@Override
+	public String toDebugString() {
+		return toString();
 	}
 	
 	public static Register getByName(String name) {
