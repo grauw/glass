@@ -29,12 +29,25 @@ public class Register extends Literal {
 	private final boolean pair;
 	private final int code;
 	private final int indexCode;
+	private final int offset;
 	
 	public Register(String name, boolean pair, int code, int indexCode) {
+		this(name, pair, code, indexCode, 0);
+	}
+	
+	public Register(String name, boolean pair, int code, int indexCode, int offset) {
+		if (offset != 0 && (!pair || indexCode == -1))
+			throw new RuntimeException("Can only specify offset for 16-bit index registers.");
+		
 		this.name = name;
 		this.pair = pair;
 		this.code = code;
 		this.indexCode = indexCode;
+		this.offset = offset;
+	}
+	
+	public Register(Register register, int offset) {
+		this(register.name, register.pair, register.code, register.indexCode, offset);
 	}
 	
 	public boolean isPair() {
@@ -55,6 +68,10 @@ public class Register extends Literal {
 		if (code == -1)
 			throw new EvaluationException("Register does not have an index code.");
 		return (byte)indexCode;
+	}
+	
+	public int getOffset() {
+		return offset;
 	}
 	
 	@Override

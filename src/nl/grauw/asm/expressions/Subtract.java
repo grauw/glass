@@ -20,6 +20,25 @@ public class Subtract extends BinaryOperator {
 	}
 	
 	@Override
+	public boolean isRegister() {
+		if (term1.isRegister() && term2.isInteger()) {
+			Register register = term1.evaluateRegister();
+			return register == Register.IX || register == Register.IY;
+		}
+		return false;
+	}
+	
+	@Override
+	public Register evaluateRegister() {
+		if (term1.isRegister() && term2.isInteger()) {
+			Register register = term1.evaluateRegister();
+			if (register == Register.IX || register == Register.IY)
+				return new Register(register, -term2.evaluateInteger());
+		}
+		throw new EvaluationException("Not a register.");
+	}
+	
+	@Override
 	public String getSymbol() {
 		return "-";
 	}
