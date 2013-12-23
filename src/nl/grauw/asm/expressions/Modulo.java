@@ -2,33 +2,29 @@ package nl.grauw.asm.expressions;
 
 public class Modulo extends BinaryOperator {
 	
-	private final Expression dividend;
-	private final Expression divisor;
-	
 	public Modulo(Expression dividend, Expression divisor) {
-		this.dividend = dividend;
-		this.divisor = divisor;
+		super(dividend, divisor);
 	}
 	
 	public Expression getDividend() {
-		return dividend;
+		return term1;
 	}
 	
 	public Expression getDivisor() {
-		return divisor;
+		return term2;
 	}
 	
 	@Override
 	public int evaluateInteger() {
-		return dividend.evaluateInteger() % divisor.evaluateInteger();
+		return term1.evaluateInteger() % term2.evaluateInteger();
 	}
 	
 	public String toString() {
-		return "" + dividend + " % " + divisor;
+		return "" + term1 + " % " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + dividend.toDebugString() + " % " + divisor.toDebugString() + "}";
+		return "{" + term1.toDebugString() + " % " + term2.toDebugString() + "}";
 	}
 	
 }

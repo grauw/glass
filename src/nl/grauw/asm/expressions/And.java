@@ -2,20 +2,8 @@ package nl.grauw.asm.expressions;
 
 public class And extends BinaryOperator {
 	
-	private final Expression term1;
-	private final Expression term2;
-	
 	public And(Expression term1, Expression term2) {
-		this.term1 = term1;
-		this.term2 = term2;
-	}
-	
-	public Expression getTerm1() {
-		return term1;
-	}
-	
-	public Expression getTerm2() {
-		return term2;
+		super(term1, term2);
 	}
 	
 	@Override

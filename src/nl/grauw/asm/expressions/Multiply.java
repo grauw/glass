@@ -2,33 +2,29 @@ package nl.grauw.asm.expressions;
 
 public class Multiply extends BinaryOperator {
 	
-	private final Expression multiplicand;
-	private final Expression multiplier;
-	
 	public Multiply(Expression multiplicand, Expression multiplier) {
-		this.multiplicand = multiplicand;
-		this.multiplier = multiplier;
+		super(multiplicand, multiplier);
 	}
 	
 	public Expression getMultiplicand() {
-		return multiplicand;
+		return term1;
 	}
 	
 	public Expression getMultiplier() {
-		return multiplier;
+		return term2;
 	}
 	
 	@Override
 	public int evaluateInteger() {
-		return multiplicand.evaluateInteger() * multiplier.evaluateInteger();
+		return term1.evaluateInteger() * term2.evaluateInteger();
 	}
 	
 	public String toString() {
-		return "" + multiplicand + " * " + multiplier;
+		return "" + term1 + " * " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + multiplicand.toDebugString() + " * " + multiplier.toDebugString() + "}";
+		return "{" + term1.toDebugString() + " * " + term2.toDebugString() + "}";
 	}
 	
 }

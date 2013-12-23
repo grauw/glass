@@ -2,33 +2,29 @@ package nl.grauw.asm.expressions;
 
 public class Add extends BinaryOperator {
 	
-	private final Expression augend;
-	private final Expression addend;
-	
 	public Add(Expression augend, Expression addend) {
-		this.augend = augend;
-		this.addend = addend;
+		super(augend, addend);
 	}
 	
 	public Expression getAugend() {
-		return augend;
+		return term1;
 	}
 	
 	public Expression getAddend() {
-		return addend;
+		return term2;
 	}
 	
 	@Override
 	public int evaluateInteger() {
-		return augend.evaluateInteger() + addend.evaluateInteger();
+		return term1.evaluateInteger() + term2.evaluateInteger();
 	}
 	
 	public String toString() {
-		return "" + augend + " + " + addend;
+		return "" + term1 + " + " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + augend.toDebugString() + " + " + addend.toDebugString() + "}";
+		return "{" + term1.toDebugString() + " + " + term2.toDebugString() + "}";
 	}
 	
 }

@@ -2,20 +2,16 @@ package nl.grauw.asm.expressions;
 
 public class Sequence extends BinaryOperator {
 	
-	private final Expression value;
-	private final Expression tail;
-	
 	public Sequence(Expression value, Expression tail) {
-		this.value = value;
-		this.tail = tail;
+		super(value, tail);
 	}
 	
 	public Expression getValue() {
-		return value;
+		return term1;
 	}
 	
 	public Expression getTail() {
-		return tail;
+		return term2;
 	}
 	
 	@Override
@@ -24,11 +20,11 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	public String toString() {
-		return "" + value + ", " + tail;
+		return "" + term1 + ", " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + value.toDebugString() + ", " + tail.toDebugString() + "}";
+		return "{" + term1.toDebugString() + ", " + term2.toDebugString() + "}";
 	}
 	
 }

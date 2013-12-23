@@ -2,33 +2,29 @@ package nl.grauw.asm.expressions;
 
 public class Subtract extends BinaryOperator {
 	
-	private final Expression minuend;
-	private final Expression subtrahend;
-	
 	public Subtract(Expression minuend, Expression subtrahend) {
-		this.minuend = minuend;
-		this.subtrahend = subtrahend;
+		super(minuend, subtrahend);
 	}
 	
 	public Expression getMinuend() {
-		return minuend;
+		return term1;
 	}
 	
 	public Expression getSubtrahend() {
-		return subtrahend;
+		return term2;
 	}
 	
 	@Override
 	public int evaluateInteger() {
-		return minuend.evaluateInteger() - subtrahend.evaluateInteger();
+		return term1.evaluateInteger() - term2.evaluateInteger();
 	}
 	
 	public String toString() {
-		return "" + minuend + " - " + subtrahend;
+		return "" + term1 + " - " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + minuend.toDebugString() + " - " + subtrahend.toDebugString() + "}";
+		return "{" + term1.toDebugString() + " - " + term2.toDebugString() + "}";
 	}
 	
 }
