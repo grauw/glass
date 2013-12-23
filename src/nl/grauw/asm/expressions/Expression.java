@@ -6,4 +6,8 @@ public abstract class Expression {
 	
 	public abstract int evaluateInteger();
 	
+	public Register evaluateRegister() {
+		throw new EvaluationException("Not a register.");
+	}
+	
 }

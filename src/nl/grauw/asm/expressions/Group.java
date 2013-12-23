@@ -21,6 +21,11 @@ public class Group extends Expression {
 		return term.evaluateInteger();
 	}
 	
+	@Override
+	public Register evaluateRegister() {
+		return term.evaluateRegister();
+	}
+	
 	public String toDebugString() {
 		return "(" + term.toDebugString() + ")";
 	}

@@ -63,6 +63,11 @@ public class Register extends Expression {
 	}
 	
 	@Override
+	public Register evaluateRegister() {
+		return this;
+	}
+	
+	@Override
 	public String toString() {
 		return name;
 	}

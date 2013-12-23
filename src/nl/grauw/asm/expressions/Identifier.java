@@ -17,6 +17,11 @@ public class Identifier extends Expression {
 		throw new EvaluationException("Currently not supported.");
 	}
 	
+	@Override
+	public Register evaluateRegister() {
+		throw new EvaluationException("Currently not supported.");
+	}
+	
 	public String toString() {
 		return name;
 	}
