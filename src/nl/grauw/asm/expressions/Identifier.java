@@ -5,18 +5,9 @@ public class Identifier extends Expression {
 	private Context context;
 	private final String name;
 	
-	public Identifier(String name) {
+	public Identifier(String name, Context context) {
 		this.name = name;
-		this.context = new Context() {
-			@Override
-			public Expression getLabel(String label) {
-				throw new EvaluationException("Label not found: " + label);
-			}
-			@Override
-			public int getAddress() {
-				return 0;
-			}
-		};
+		this.context = context;
 	}
 	
 	public String getName() {

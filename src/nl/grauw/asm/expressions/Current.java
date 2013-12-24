@@ -4,17 +4,8 @@ public class Current extends Expression {
 	
 	private Context context;
 	
-	public Current() {
-		this.context = new Context() {
-			@Override
-			public Expression getLabel(String label) {
-				throw new EvaluationException("Label not found: " + label);
-			}
-			@Override
-			public int getAddress() {
-				return 0;
-			}
-		};
+	public Current(Context context) {
+		this.context = context;
 	}
 	
 	@Override

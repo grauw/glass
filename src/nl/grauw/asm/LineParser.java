@@ -12,24 +12,16 @@ import nl.grauw.asm.expressions.StringLiteral;
 
 public class LineParser {
 	
+	private Line line;
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
-	private Label label;
-	private Statement statement;
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-	private Comment comment;
-	private File sourceFile;
-	private int lineNumber;
 	private String text;
 	private int columnNumber;
 	
 	public Line parse(String text, File sourceFile, int lineNumber) {
+		line = new Line(sourceFile, lineNumber);
 		state = labelStartState;
-		label = null;
-		statement = null;
-		comment = null;
-		this.sourceFile = sourceFile;
-		this.lineNumber = lineNumber;
 		this.text = text;
 		
 		try {
@@ -50,7 +42,7 @@ public class LineParser {
 			throw new SyntaxError(e);
 		}
 		
-		return new Line(label, statement, comment, sourceFile, lineNumber);
+		return line;
 	}
 	
 	private abstract class State {
@@ -96,7 +88,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				label = new Label(accumulator.toString());
+				line.setLabel(new Label(accumulator.toString()));
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
@@ -134,7 +126,7 @@ public class LineParser {
 				accumulator.append(character);
 				return statementReadState;
 			} else {
-				statement = new Statement(accumulator.toString());
+				line.setStatement(new Statement(accumulator.toString()));
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
 					return argumentStartState;
@@ -170,7 +162,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Current());
+				expressionBuilder.addValueToken(new Current(line));
 				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
@@ -206,7 +198,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.addValueToken(new Identifier(accumulator.toString()));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}
@@ -347,10 +339,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				statement.setArguments(expressionBuilder.getExpression());
+				line.getStatement().setArguments(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
-				statement.setArguments(expressionBuilder.getExpression());
+				line.getStatement().setArguments(expressionBuilder.getExpression());
 				return endState;
 			}
 			throw new SyntaxError();
@@ -431,7 +423,7 @@ public class LineParser {
 		public State parse(char character) {
 			accumulator.append(character);
 			if (character == '\0') {
-				comment = new Comment(accumulator.toString());
+				line.setComment(new Comment(accumulator.toString()));
 				accumulator.setLength(0);
 				return endState;
 			} else {
@@ -455,7 +447,7 @@ public class LineParser {
 		}
 		
 		public SyntaxError(Throwable cause) {
-			super("Syntax error on line " + lineNumber + ", column " + columnNumber + " of file " + sourceFile +
+			super("Syntax error on line " + line.getLineNumber() + ", column " + columnNumber + " of file " + line.getSourceFile() +
 					"\n" + text + "\n" + (text.substring(0, columnNumber).replaceAll("[^\t]", " ") + "^"), cause);
 		}
 		
