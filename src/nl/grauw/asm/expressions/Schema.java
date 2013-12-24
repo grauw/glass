@@ -74,8 +74,8 @@ public class Schema {
 		}
 	}
 	
-	public static Type DIRECT_A_INDIRECT_HL_IX_IY = new DirectAIndirectHLIXIY();
-	public static class DirectAIndirectHLIXIY extends Type {
+	public static Type DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
+	public static class DirectRIndirectHLIXIY extends Type {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
 				Register register = argument.getRegister();
