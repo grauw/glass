@@ -249,15 +249,19 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testIn() {
-		assertArrayEquals(b(0xEB, 0x40), parse("in b,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x48), parse("in c,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x50), parse("in d,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x58), parse("in e,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x60), parse("in h,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x68), parse("in l,(c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x70), parse("in (c)").getBytes());
-		assertArrayEquals(b(0xEB, 0x78), parse("in a,(c)").getBytes());
+	public void testIn_C() {
+		assertArrayEquals(b(0xED, 0x40), parse("in b,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x48), parse("in c,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x50), parse("in d,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x58), parse("in e,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x60), parse("in h,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x68), parse("in l,(c)").getBytes());
+		assertArrayEquals(b(0xED, 0x70), parse("in (c)").getBytes());
+		assertArrayEquals(b(0xED, 0x78), parse("in a,(c)").getBytes());
+	}
+	
+	@Test
+	public void testIn_N() {
 		assertArrayEquals(b(0xDB, 0x86), parse("in a,(86H)").getBytes());
 	}
 	
