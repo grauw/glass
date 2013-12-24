@@ -17,46 +17,72 @@ public class Schema {
 		return arguments == null;
 	}
 	
+	public static Type ANY = new Any();
+	public static Type DIRECT = new Direct();
+	public static Type INDIRECT = new Indirect();
+	public static Type INTEGER = new Integer();
+	public static Type DIRECT_INT = new And(DIRECT, INTEGER);
+	public static Type DIRECT_A = new And(DIRECT, new Reg(Register.A));
+	public static Type DIRECT_RR = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP));
+	public static Type DIRECT_RR_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY));
+	public static Type DIRECT_DE = new And(DIRECT, new Reg(Register.DE));
+	public static Type DIRECT_HL = new And(DIRECT, new Reg(Register.HL));
+	public static Type DIRECT_HL_IX_IY = new And(DIRECT, new Reg(Register.HL, Register.IX, Register.IY));
+	public static Type DIRECT_AF = new And(DIRECT, new Reg(Register.AF));
+	public static Type DIRECT_AF_ = new And(DIRECT, new Reg(Register.AF_));
+	public static Type INDIRECT_INT = new And(INDIRECT, INTEGER);
+	public static Type INDIRECT_C = new And(INDIRECT, new Reg(Register.C));
+	public static Type INDIRECT_SP = new And(INDIRECT, new Reg(Register.SP));
+	public static Type DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
+	
 	public abstract static class Type {
 		public abstract boolean check(Expression argument);
 	}
 	
-	public static Type ANY = new Any();
 	public static class Any extends Type {
 		public boolean check(Expression argument) {
 			return true;
 		}
 	}
 	
-	public static Type DIRECT = new Direct();
+	public static class And extends Type {
+		private Type[] types;
+		public And(Type... types) {
+			this.types = types;
+		}
+		public boolean check(Expression argument) {
+			for (Type type : types)
+				if (!type.check(argument))
+					return false;
+			return true;
+		}
+	}
+	
 	public static class Direct extends Type {
 		public boolean check(Expression argument) {
 			return !(argument instanceof Group);
 		}
 	}
 	
-	public static Type DIRECT_INT = new DirectInteger();
-	public static class DirectInteger extends Type {
+	public static class Indirect extends Type {
 		public boolean check(Expression argument) {
-			return DIRECT.check(argument) && argument.isInteger();
+			return argument instanceof Group;
 		}
 	}
 	
-	public static Type DIRECT_A = new DirectRegister(Register.A);
-	public static Type DIRECT_RR = new DirectRegister(Register.BC, Register.DE, Register.HL, Register.SP);
-	public static Type DIRECT_RR_INDEX = new DirectRegister(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY);
-	public static Type DIRECT_DE = new DirectRegister(Register.DE);
-	public static Type DIRECT_HL = new DirectRegister(Register.HL);
-	public static Type DIRECT_HL_IX_IY = new DirectRegister(Register.HL, Register.IX, Register.IY);
-	public static Type DIRECT_AF = new DirectRegister(Register.AF);
-	public static Type DIRECT_AF_ = new DirectRegister(Register.AF_);
-	public static class DirectRegister extends Type {
+	public static class Integer extends Type {
+		public boolean check(Expression argument) {
+			return argument.isInteger();
+		}
+	}
+	
+	public static class Reg extends Type {
 		private Register[] registers;
-		public DirectRegister(Register... registers) {
+		public Reg(Register... registers) {
 			this.registers = registers;
 		}
 		public boolean check(Expression argument) {
-			if (DIRECT.check(argument) && argument.isRegister()) {
+			if (argument.isRegister()) {
 				Register register = argument.getRegister();
 				for (Register expected : registers)
 					if (register == expected)
@@ -66,35 +92,6 @@ public class Schema {
 		}
 	}
 	
-	public static Type INDIRECT = new Indirect();
-	public static class Indirect extends Type {
-		public boolean check(Expression argument) {
-			return argument instanceof Group;
-		}
-	}
-	
-	public static Type INDIRECT_INT = new IndirectInteger();
-	public static class IndirectInteger extends Type {
-		public boolean check(Expression argument) {
-			return INDIRECT.check(argument) && argument.isInteger();
-		}
-	}
-	
-	public static Type INDIRECT_C = new IndirectC();
-	public static class IndirectC extends Type {
-		public boolean check(Expression argument) {
-			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.C;
-		}
-	}
-	
-	public static Type INDIRECT_SP = new IndirectSP();
-	public static class IndirectSP extends Type {
-		public boolean check(Expression argument) {
-			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.SP;
-		}
-	}
-	
-	public static Type DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
 	public static class DirectRIndirectHLIXIY extends Type {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
