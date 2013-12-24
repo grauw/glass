@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Outi extends Instruction {
 	
-	public Outi(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xA3 };
@@ -24,7 +19,9 @@ public class Outi extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Outi(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Outi();
+			return null;
 		}
 		
 	}

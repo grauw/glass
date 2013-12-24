@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Cpi extends Instruction {
 	
-	public Cpi(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xA1 };
@@ -24,7 +19,9 @@ public class Cpi extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Cpi(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Cpi();
+			return null;
 		}
 		
 	}

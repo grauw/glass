@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Otdr extends Instruction {
 	
-	public Otdr(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xBB };
@@ -24,7 +19,9 @@ public class Otdr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Otdr(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Otdr();
+			return null;
 		}
 		
 	}

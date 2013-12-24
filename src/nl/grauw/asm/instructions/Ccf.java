@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Ccf extends Instruction {
 	
-	public Ccf(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0x3F };
@@ -24,7 +19,9 @@ public class Ccf extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Ccf(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Ccf();
+			return null;
 		}
 		
 	}

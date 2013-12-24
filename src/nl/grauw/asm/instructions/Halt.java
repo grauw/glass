@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Halt extends Instruction {
 	
-	public Halt(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0x76 };
@@ -24,7 +19,9 @@ public class Halt extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Halt(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Halt();
+			return null;
 		}
 		
 	}

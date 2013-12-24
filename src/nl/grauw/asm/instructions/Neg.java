@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Neg extends Instruction {
 	
-	public Neg(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0x44 };
@@ -24,7 +19,9 @@ public class Neg extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Neg(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Neg();
+			return null;
 		}
 		
 	}

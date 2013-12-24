@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Rlca extends Instruction {
 	
-	public Rlca(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0x07 };
@@ -24,7 +19,9 @@ public class Rlca extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Rlca(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Rlca();
+			return null;
 		}
 		
 	}

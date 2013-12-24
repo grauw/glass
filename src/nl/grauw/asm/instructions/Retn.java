@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Retn extends Instruction {
 	
-	public Retn(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0x45 };
@@ -24,7 +19,9 @@ public class Retn extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Retn(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Retn();
+			return null;
 		}
 		
 	}

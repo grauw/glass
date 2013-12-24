@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Inir extends Instruction {
 	
-	public Inir(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xB2 };
@@ -24,7 +19,9 @@ public class Inir extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Inir(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Inir();
+			return null;
 		}
 		
 	}

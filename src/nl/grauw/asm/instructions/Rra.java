@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Rra extends Instruction {
 	
-	public Rra(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0x1F };
@@ -24,7 +19,9 @@ public class Rra extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Rra(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Rra();
+			return null;
 		}
 		
 	}

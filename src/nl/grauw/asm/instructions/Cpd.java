@@ -5,11 +5,6 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Cpd extends Instruction {
 	
-	public Cpd(Expression arguments) {
-		if (!ARGUMENTS_NONE.check(arguments))
-			throw new ArgumentException("Too many arguments.");
-	}
-	
 	@Override
 	public byte[] getBytes() {
 		return new byte[] { (byte)0xED, (byte)0xA9 };
@@ -24,7 +19,9 @@ public class Cpd extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Cpd(arguments);
+			if (ARGUMENTS_NONE.check(arguments))
+				return new Cpd();
+			return null;
 		}
 		
 	}
