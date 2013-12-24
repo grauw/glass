@@ -456,15 +456,15 @@ public class InstructionTest {
 	@Test
 	public void testMulub() {
 		assertArrayEquals(b(0xED, 0xC1), parse("mulub a,b").getBytes());
-		assertArrayEquals(b(0xED, 0xC8), parse("mulub a,c").getBytes());
+		assertArrayEquals(b(0xED, 0xC9), parse("mulub a,c").getBytes());
 		assertArrayEquals(b(0xED, 0xD1), parse("mulub a,d").getBytes());
-		assertArrayEquals(b(0xED, 0xD8), parse("mulub a,e").getBytes());
+		assertArrayEquals(b(0xED, 0xD9), parse("mulub a,e").getBytes());
 	}
 	
 	@Test
 	public void testMuluw() {
-		assertArrayEquals(b(0xED, 0xC3), parse("mulub hl,bc").getBytes());
-		assertArrayEquals(b(0xED, 0xF3), parse("mulub hl,sp").getBytes());
+		assertArrayEquals(b(0xED, 0xC3), parse("muluw hl,bc").getBytes());
+		assertArrayEquals(b(0xED, 0xF3), parse("muluw hl,sp").getBytes());
 	}
 	
 	@Test

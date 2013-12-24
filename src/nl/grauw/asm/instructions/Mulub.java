@@ -1,16 +1,22 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Mulub extends Instruction {
 	
-	public Mulub(Expression arguments) {
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_A, Schema.DIRECT_R);
+	
+	private Expression argument;
+	
+	public Mulub(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+		return new byte[] { (byte)0xED, (byte)(0xC1 | argument.getRegister().get8BitCode() << 3) };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +28,9 @@ public class Mulub extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Mulub(arguments);
+			if (ARGUMENTS.check(arguments))
+				return new Mulub(arguments.getElement(1));
+			return null;
 		}
 		
 	}
