@@ -42,8 +42,8 @@ public class InstructionRegistry {
 		add(new Exx.Factory());
 		add(new Halt.Factory());
 		add(new Im.Factory());
-		add(new In_N.Factory());
 		add(new In_C.Factory());
+		add(new In_N.Factory());
 		add(new Inc.Factory());
 		add(new Ind.Factory());
 		add(new Indr.Factory());
@@ -79,8 +79,8 @@ public class InstructionRegistry {
 		add(new Or_N.Factory());
 		add(new Otdr.Factory());
 		add(new Otir.Factory());
-		add(new Out_N.Factory());
 		add(new Out_C.Factory());
+		add(new Out_N.Factory());
 		add(new Outi.Factory());
 		add(new Outd.Factory());
 		add(new Pop.Factory());
