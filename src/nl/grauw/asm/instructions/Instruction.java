@@ -13,6 +13,7 @@ public abstract class Instruction {
 	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_HL_RR = new Schema(Schema.DIRECT_HL, Schema.DIRECT_RR);
 	public static Schema ARGUMENTS_HLIXIY_RR = new Schema(Schema.DIRECT_HL_IX_IY, Schema.DIRECT_RR_INDEX);
+	public static Schema ARGUMENTS_RR_AF_INDEX = new Schema(Schema.DIRECT_RR_AF_INDEX);
 	
 	public abstract byte[] getBytes();
 	

@@ -504,12 +504,12 @@ public class InstructionTest {
 	
 	@Test
 	public void testPush() {
-		assertArrayEquals(b(0xC5), parse("pop bc").getBytes());
-		assertArrayEquals(b(0xD5), parse("pop de").getBytes());
-		assertArrayEquals(b(0xE5), parse("pop hl").getBytes());
-		assertArrayEquals(b(0xF5), parse("pop af").getBytes());
-		assertArrayEquals(b(0xDD, 0xE5), parse("pop ix").getBytes());
-		assertArrayEquals(b(0xFD, 0xE5), parse("pop iy").getBytes());
+		assertArrayEquals(b(0xC5), parse("push bc").getBytes());
+		assertArrayEquals(b(0xD5), parse("push de").getBytes());
+		assertArrayEquals(b(0xE5), parse("push hl").getBytes());
+		assertArrayEquals(b(0xF5), parse("push af").getBytes());
+		assertArrayEquals(b(0xDD, 0xE5), parse("push ix").getBytes());
+		assertArrayEquals(b(0xFD, 0xE5), parse("push iy").getBytes());
 	}
 	
 	@Test

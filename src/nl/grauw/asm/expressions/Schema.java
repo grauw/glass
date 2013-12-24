@@ -26,6 +26,7 @@ public class Schema implements SchemaType {
 	public static SchemaType DIRECT_A = new And(DIRECT, new Reg(Register.A));
 	public static SchemaType DIRECT_RR = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP));
 	public static SchemaType DIRECT_RR_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY));
+	public static SchemaType DIRECT_RR_AF_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.AF, Register.IX, Register.IY));
 	public static SchemaType DIRECT_DE = new And(DIRECT, new Reg(Register.DE));
 	public static SchemaType DIRECT_HL = new And(DIRECT, new Reg(Register.HL));
 	public static SchemaType DIRECT_HL_IX_IY = new And(DIRECT, new Reg(Register.HL, Register.IX, Register.IY));
