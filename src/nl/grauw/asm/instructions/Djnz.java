@@ -6,12 +6,18 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Djnz extends Instruction {
 	
+	private Expression argument;
+	
 	public Djnz(Expression arguments) {
+		this.argument = arguments;
 	}
 	
 	@Override
-	public byte[] getBytes(Context line) {
-		return new byte[] { (byte)0x00 };
+	public byte[] getBytes(Context context) {
+		int offset = argument.getInteger() - (context.getAddress() + 2);
+		if (offset < -128 || offset > 127)
+			throw new ArgumentException("Jump offset out of range: " + offset);
+		return new byte[] { (byte)0x10, (byte)offset };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -23,7 +29,9 @@ public class Djnz extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Djnz(arguments);
+			if (ARGUMENTS_N.check(arguments))
+				return new Djnz(arguments);
+			return null;
 		}
 		
 	}
