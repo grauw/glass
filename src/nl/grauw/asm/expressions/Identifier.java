@@ -24,12 +24,15 @@ public class Identifier extends Expression {
 	
 	@Override
 	public boolean isRegister() {
-		return false;  // TODO recur
+		return Register.getByName(name) != null;  // TODO recur
 	}
 	
 	@Override
 	public Register getRegister() {
-		throw new EvaluationException("Currently not supported.");
+		Register register = Register.getByName(name);
+		if (register == null)
+			throw new EvaluationException("Not a register.");
+		return register;
 	}
 	
 	public String toString() {

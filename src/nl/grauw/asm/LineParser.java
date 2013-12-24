@@ -8,7 +8,6 @@ import nl.grauw.asm.expressions.ExpressionBuilder.ExpressionError;
 import nl.grauw.asm.expressions.ExpressionBuilder.Operator;
 import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
-import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.expressions.StringLiteral;
 
 public class LineParser {
@@ -207,9 +206,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				String string = accumulator.toString();
-				Register register = Register.getByName(string);
-				expressionBuilder.addValueToken(register != null ? register : new Identifier(accumulator.toString()));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString()));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}
