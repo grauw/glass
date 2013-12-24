@@ -343,7 +343,7 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testLd_A_N() {
+	public void testLd_R_N() {
 		assertArrayEquals(b(0x06, 0x86), parse("ld b,86H").getBytes());
 		assertArrayEquals(b(0x0E, 0x86), parse("ld c,86H").getBytes());
 		assertArrayEquals(b(0x16, 0x86), parse("ld d,86H").getBytes());
@@ -359,7 +359,7 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testLd_I_R() {
+	public void testLd_IR() {
 		assertArrayEquals(b(0xED, 0x57), parse("ld a,i").getBytes());
 		assertArrayEquals(b(0xED, 0x5F), parse("ld a,r").getBytes());
 		assertArrayEquals(b(0xED, 0x47), parse("ld i,a").getBytes());
@@ -367,62 +367,70 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testLd_A_BCDE_Indirect() {
+	public void testLd_A_BCDE() {
 		assertArrayEquals(b(0x0A), parse("ld a,(bc)").getBytes());
 		assertArrayEquals(b(0x1A), parse("ld a,(de)").getBytes());
 	}
 	
 	@Test
-	public void testLd_A_NN_Indirect() {
+	public void testLd_A_NN() {
 		assertArrayEquals(b(0x3A, 0x86, 0x47), parse("ld a,(4786H)").getBytes());
 	}
 	
 	@Test
-	public void testLd_RR_NN_Indirect() {
-		assertArrayEquals(b(0x2A), parse("ld hl,(4786H)").getBytes());
+	public void testLd_HL_NN() {
+		assertArrayEquals(b(0x2A, 0x86, 0x47), parse("ld hl,(4786H)").getBytes());
 		assertArrayEquals(b(0xDD, 0x2A, 0x86, 0x47), parse("ld ix,(4786H)").getBytes());
 		assertArrayEquals(b(0xFD, 0x2A, 0x86, 0x47), parse("ld iy,(4786H)").getBytes());
-		assertArrayEquals(b(0xED, 0xCB, 0x86, 0x47), parse("ld bc,(4786H)").getBytes());
-		assertArrayEquals(b(0xED, 0xDB, 0x86, 0x47), parse("ld de,(4786H)").getBytes());
-		assertArrayEquals(b(0xED, 0xFB, 0x86, 0x47), parse("ld sp,(4786H)").getBytes());
 	}
 	
 	@Test
-	public void testLd_BCDE_A_Indirect() {
+	public void testLd_RR_NN() {
+		assertArrayEquals(b(0xED, 0x4B, 0x86, 0x47), parse("ld bc,(4786H)").getBytes());
+		assertArrayEquals(b(0xED, 0x5B, 0x86, 0x47), parse("ld de,(4786H)").getBytes());
+		assertArrayEquals(b(0xED, 0x7B, 0x86, 0x47), parse("ld sp,(4786H)").getBytes());
+	}
+	
+	@Test
+	public void testLd_BCDE_A() {
 		assertArrayEquals(b(0x02), parse("ld (bc),a").getBytes());
 		assertArrayEquals(b(0x12), parse("ld (de),a").getBytes());
 	}
 	
 	@Test
-	public void testLd_NN_A_Indirect() {
+	public void testLd_NN_A() {
 		assertArrayEquals(b(0x32, 0x86, 0x47), parse("ld (4786H),a").getBytes());
 	}
 	
 	@Test
-	public void testLd_NN_RR_Indirect() {
+	public void testLd_NN_HL() {
 		assertArrayEquals(b(0x22, 0x86, 0x47), parse("ld (4786H),hl").getBytes());
 		assertArrayEquals(b(0xDD, 0x22, 0x86, 0x47), parse("ld (4786H),ix").getBytes());
 		assertArrayEquals(b(0xFD, 0x22, 0x86, 0x47), parse("ld (4786H),iy").getBytes());
-		assertArrayEquals(b(0xED, 0xC3, 0x86, 0x47), parse("ld (4786H),bc").getBytes());
-		assertArrayEquals(b(0xED, 0xD3, 0x86, 0x47), parse("ld (4786H),de").getBytes());
-		assertArrayEquals(b(0xED, 0xF3, 0x86, 0x47), parse("ld (4786H),sp").getBytes());
 	}
 	
 	@Test
-	public void testLd_RR_NN() {
-		assertArrayEquals(b(0x01), parse("ld bc,4786H").getBytes());
-		assertArrayEquals(b(0x11), parse("ld de,4786H").getBytes());
-		assertArrayEquals(b(0x21), parse("ld hl,4786H").getBytes());
-		assertArrayEquals(b(0x31), parse("ld sp,4786H").getBytes());
-		assertArrayEquals(b(0xDD, 0x21), parse("ld ix,4786H").getBytes());
-		assertArrayEquals(b(0xFD, 0x21), parse("ld iy,4786H").getBytes());
+	public void testLd_NN_RR() {
+		assertArrayEquals(b(0xED, 0x43, 0x86, 0x47), parse("ld (4786H),bc").getBytes());
+		assertArrayEquals(b(0xED, 0x53, 0x86, 0x47), parse("ld (4786H),de").getBytes());
+		assertArrayEquals(b(0xED, 0x73, 0x86, 0x47), parse("ld (4786H),sp").getBytes());
 	}
 	
 	@Test
-	public void testLd_SP_RR() {
+	public void testLd_RR_N() {
+		assertArrayEquals(b(0x01, 0x86, 0x47), parse("ld bc,4786H").getBytes());
+		assertArrayEquals(b(0x11, 0x86, 0x47), parse("ld de,4786H").getBytes());
+		assertArrayEquals(b(0x21, 0x86, 0x47), parse("ld hl,4786H").getBytes());
+		assertArrayEquals(b(0x31, 0x86, 0x47), parse("ld sp,4786H").getBytes());
+		assertArrayEquals(b(0xDD, 0x21, 0x86, 0x47), parse("ld ix,4786H").getBytes());
+		assertArrayEquals(b(0xFD, 0x21, 0x86, 0x47), parse("ld iy,4786H").getBytes());
+	}
+	
+	@Test
+	public void testLd_SP_HL() {
 		assertArrayEquals(b(0xF9), parse("ld sp,hl").getBytes());
 		assertArrayEquals(b(0xDD, 0xF9), parse("ld sp,ix").getBytes());
-		assertArrayEquals(b(0xFE, 0xF9), parse("ld sp,iy").getBytes());
+		assertArrayEquals(b(0xFD, 0xF9), parse("ld sp,iy").getBytes());
 	}
 	
 	@Test

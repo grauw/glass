@@ -30,10 +30,12 @@ public class Schema implements SchemaType {
 	public static SchemaType DIRECT_DE = new And(DIRECT, new Reg(Register.DE));
 	public static SchemaType DIRECT_HL = new And(DIRECT, new Reg(Register.HL));
 	public static SchemaType DIRECT_HL_IX_IY = new And(DIRECT, new Reg(Register.HL, Register.IX, Register.IY));
+	public static SchemaType DIRECT_SP = new And(DIRECT, new Reg(Register.SP));
 	public static SchemaType DIRECT_AF = new And(DIRECT, new Reg(Register.AF));
 	public static SchemaType DIRECT_AF_ = new And(DIRECT, new Reg(Register.AF_));
 	public static SchemaType INDIRECT_N = new And(INDIRECT, INTEGER);
 	public static SchemaType INDIRECT_C = new And(INDIRECT, new Reg(Register.C));
+	public static SchemaType INDIRECT_BC_DE = new And(INDIRECT, new Reg(Register.BC, Register.DE));
 	public static SchemaType INDIRECT_SP = new And(INDIRECT, new Reg(Register.SP));
 	public static SchemaType DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
 	
