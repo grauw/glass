@@ -1,16 +1,22 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Ret_F extends Instruction {
 	
-	public Ret_F(Expression arguments) {
+	public static Schema ARGUMENTS = new Schema(new Schema.IsFlag());
+	
+	private Expression argument;
+	
+	public Ret_F(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+		return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +28,9 @@ public class Ret_F extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Ret_F(arguments);
+			if (ARGUMENTS.check(arguments))
+				return new Ret_F(arguments.getElement(0));
+			return null;
 		}
 		
 	}
