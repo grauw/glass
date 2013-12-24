@@ -215,9 +215,17 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testEx() {
+	public void testExAF() {
 		assertArrayEquals(b(0x08), parse("ex af,af'").getBytes());
+	}
+	
+	@Test
+	public void testExDEHL() {
 		assertArrayEquals(b(0xEB), parse("ex de,hl").getBytes());
+	}
+	
+	@Test
+	public void testExSP() {
 		assertArrayEquals(b(0xE3), parse("ex (sp),hl").getBytes());
 		assertArrayEquals(b(0xDD, 0xE3), parse("ex (sp),ix").getBytes());
 		assertArrayEquals(b(0xFD, 0xE3), parse("ex (sp),iy").getBytes());

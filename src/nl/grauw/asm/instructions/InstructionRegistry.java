@@ -35,7 +35,9 @@ public class InstructionRegistry {
 		add(new Di.Factory());
 		add(new Djnz.Factory());
 		add(new Ei.Factory());
-		add(new Ex.Factory());
+		add(new ExAF.Factory());
+		add(new ExDEHL.Factory());
+		add(new ExSP.Factory());
 		add(new Exx.Factory());
 		add(new Halt.Factory());
 		add(new Im.Factory());

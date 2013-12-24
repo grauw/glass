@@ -83,6 +83,27 @@ public class Schema {
 		}
 	}
 	
+	public static Type DIRECT_DE = new DirectDE();
+	public static class DirectDE extends Type {
+		public boolean check(Expression argument) {
+			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.DE;
+		}
+	}
+	
+	public static Type DIRECT_AF = new DirectAF();
+	public static class DirectAF extends Type {
+		public boolean check(Expression argument) {
+			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.AF;
+		}
+	}
+	
+	public static Type DIRECT_AF_ = new DirectAF_();
+	public static class DirectAF_ extends Type {
+		public boolean check(Expression argument) {
+			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.AF_;
+		}
+	}
+	
 	public static Type INDIRECT_INT = new IndirectInteger();
 	public static class IndirectInteger extends Type {
 		public boolean check(Expression argument) {
@@ -106,6 +127,13 @@ public class Schema {
 						argument instanceof Group && (register == Register.HL || register.isIndex());
 			}
 			return false;
+		}
+	}
+	
+	public static Type INDIRECT_SP = new IndirectSP();
+	public static class IndirectSP extends Type {
+		public boolean check(Expression argument) {
+			return argument instanceof Group && argument.isRegister() && argument.getRegister() == Register.SP;
 		}
 	}
 	
