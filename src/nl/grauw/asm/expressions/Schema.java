@@ -87,6 +87,13 @@ public class Schema {
 		}
 	}
 	
+	public static Type INDIRECT_SP = new IndirectSP();
+	public static class IndirectSP extends Type {
+		public boolean check(Expression argument) {
+			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.SP;
+		}
+	}
+	
 	public static Type DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
 	public static class DirectRIndirectHLIXIY extends Type {
 		public boolean check(Expression argument) {
@@ -96,13 +103,6 @@ public class Schema {
 						INDIRECT.check(argument) && (register == Register.HL || register.isIndex());
 			}
 			return false;
-		}
-	}
-	
-	public static Type INDIRECT_SP = new IndirectSP();
-	public static class IndirectSP extends Type {
-		public boolean check(Expression argument) {
-			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.SP;
 		}
 	}
 	
