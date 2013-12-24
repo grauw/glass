@@ -6,11 +6,11 @@ import nl.grauw.asm.expressions.Register;
 public abstract class Instruction {
 	
 	public static Schema ARGUMENTS_NONE = new Schema();
-	public static Schema ARGUMENTS_N = new Schema(Schema.DIRECT_INT);
-	public static Schema ARGUMENTS_A_N = new Schema(Schema.DIRECT_A, Schema.DIRECT_INT);
+	public static Schema ARGUMENTS_N = new Schema(Schema.DIRECT_N);
+	public static Schema ARGUMENTS_A_N = new Schema(Schema.DIRECT_A, Schema.DIRECT_N);
 	public static Schema ARGUMENTS_R = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_A_R = new Schema(Schema.DIRECT_A, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
-	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_INT, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
+	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_HL_RR = new Schema(Schema.DIRECT_HL, Schema.DIRECT_RR);
 	public static Schema ARGUMENTS_HLIXIY_RR = new Schema(Schema.DIRECT_HL_IX_IY, Schema.DIRECT_RR_INDEX);
 	
