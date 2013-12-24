@@ -5,12 +5,23 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Im extends Instruction {
 	
-	public Im(Expression arguments) {
+	private Expression argument;
+	
+	public Im(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+		int value = argument.getInteger();
+		if (value == 0) {
+			return new byte[] { (byte)0xED, (byte)0x46 };
+		} else if (value == 1) {
+			return new byte[] { (byte)0xED, (byte)0x56 };
+		} else if (value == 2) {
+			return new byte[] { (byte)0xED, (byte)0x5E };
+		}
+		throw new ArgumentException();
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +33,9 @@ public class Im extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Im(arguments);
+			if (ARGUMENTS_N.check(arguments))
+				return new Im(arguments.getElement(0));
+			return null;
 		}
 		
 	}
