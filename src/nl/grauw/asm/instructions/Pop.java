@@ -2,9 +2,12 @@ package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Pop extends Instruction {
+	
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_AF_INDEX);
 	
 	Expression argument;
 	
@@ -27,7 +30,7 @@ public class Pop extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_RR_AF_INDEX.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Pop(arguments.getElement(0));
 			return null;
 		}

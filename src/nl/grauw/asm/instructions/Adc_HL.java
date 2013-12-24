@@ -1,9 +1,12 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Adc_HL extends Instruction {
+	
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_HL, Schema.DIRECT_RR);
 	
 	private Expression argument;
 	
@@ -25,7 +28,7 @@ public class Adc_HL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_HL_RR.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Adc_HL(arguments.getElement(1));
 			return null;
 		}

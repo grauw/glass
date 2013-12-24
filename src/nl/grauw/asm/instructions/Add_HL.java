@@ -2,9 +2,12 @@ package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
+import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Add_HL extends Instruction {
+	
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_HL_IX_IY, Schema.DIRECT_RR_INDEX);
 	
 	private Register register1;
 	private Register register2;
@@ -31,7 +34,7 @@ public class Add_HL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_HLIXIY_RR.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Add_HL(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 			return null;
 		}
