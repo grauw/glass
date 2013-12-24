@@ -7,8 +7,8 @@ public class Positive extends UnaryOperator {
 	}
 	
 	@Override
-	public int getInteger() {
-		return +term.getInteger();
+	public int getInteger(Context context) {
+		return +term.getInteger(context);
 	}
 	
 	@Override

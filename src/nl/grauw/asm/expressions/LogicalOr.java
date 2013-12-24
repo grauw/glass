@@ -7,9 +7,9 @@ public class LogicalOr extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger() {
-		int value1 = term1.getInteger();
-		return value1 != 0 ? value1 : term2.getInteger();
+	public int getInteger(Context context) {
+		int value1 = term1.getInteger(context);
+		return value1 != 0 ? value1 : term2.getInteger(context);
 	}
 	
 	@Override

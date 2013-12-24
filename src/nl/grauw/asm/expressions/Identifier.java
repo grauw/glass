@@ -12,40 +12,40 @@ public class Identifier extends Expression {
 		return name;
 	}
 	
-	@Override
-	public boolean isInteger() {
-		return false;  // TODO recur
+	public Expression resolve(Context context) {
+		return context.getLabel(name);
 	}
 	
 	@Override
-	public int getInteger() {
-		throw new EvaluationException("Currently not supported.");
+	public boolean isInteger(Context context) {
+		return resolve(context).isInteger();
 	}
 	
 	@Override
-	public boolean isRegister() {
-		return Register.getByName(name) != null;  // TODO recur
+	public int getInteger(Context context) {
+		return resolve(context).getInteger();
 	}
 	
 	@Override
-	public Register getRegister() {
+	public boolean isRegister(Context context) {
+		return Register.getByName(name) != null || resolve(context).isRegister();
+	}
+	
+	@Override
+	public Register getRegister(Context context) {
 		Register register = Register.getByName(name);
-		if (register == null)
-			throw new EvaluationException("Not a register.");
-		return register;
+		return register != null ? register : resolve(context).getRegister();
 	}
 	
 	@Override
-	public boolean isFlag() {
-		return Flag.getByName(name) != null;  // TODO recur
+	public boolean isFlag(Context context) {
+		return Flag.getByName(name) != null || resolve(context).isFlag();
 	}
 	
 	@Override
-	public Flag getFlag() {
+	public Flag getFlag(Context context) {
 		Flag flag = Flag.getByName(name);
-		if (flag == null)
-			throw new EvaluationException("Not a flag.");
-		return flag;
+		return flag != null ? flag : resolve(context).getFlag();
 	}
 	
 	public String toString() {

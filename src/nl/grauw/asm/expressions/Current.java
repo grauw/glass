@@ -3,13 +3,13 @@ package nl.grauw.asm.expressions;
 public class Current extends Expression {
 	
 	@Override
-	public int getInteger() {
-		throw new EvaluationException("Currently not supported.");
+	public boolean isInteger(Context context) {
+		return true;
 	}
 	
 	@Override
-	public boolean isInteger() {
-		return true;
+	public int getInteger(Context context) {
+		return context.getAddress();
 	}
 	
 	public String toString() {

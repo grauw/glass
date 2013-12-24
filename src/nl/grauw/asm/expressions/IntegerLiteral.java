@@ -13,12 +13,12 @@ public class IntegerLiteral extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger() {
+	public boolean isInteger(Context context) {
 		return true;
 	}
 	
 	@Override
-	public int getInteger() {
+	public int getInteger(Context context) {
 		return getValue();
 	}
 	

@@ -24,22 +24,22 @@ public class Flag extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger() {
+	public boolean isInteger(Context context) {
 		return false;
 	}
 	
 	@Override
-	public int getInteger() {
+	public int getInteger(Context context) {
 		throw new EvaluationException("Can not evaluate flag to integer.");
 	}
 	
 	@Override
-	public boolean isFlag() {
+	public boolean isFlag(Context context) {
 		return true;
 	}
 	
 	@Override
-	public Flag getFlag() {
+	public Flag getFlag(Context context) {
 		return this;
 	}
 	

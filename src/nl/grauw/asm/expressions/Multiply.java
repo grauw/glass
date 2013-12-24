@@ -15,8 +15,8 @@ public class Multiply extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger() {
-		return term1.getInteger() * term2.getInteger();
+	public int getInteger(Context context) {
+		return term1.getInteger(context) * term2.getInteger(context);
 	}
 	
 	@Override

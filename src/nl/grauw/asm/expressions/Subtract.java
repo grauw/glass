@@ -15,25 +15,25 @@ public class Subtract extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger() {
-		return term1.getInteger() - term2.getInteger();
+	public int getInteger(Context context) {
+		return term1.getInteger(context) - term2.getInteger(context);
 	}
 	
 	@Override
-	public boolean isRegister() {
-		if (term1.isRegister() && term2.isInteger()) {
-			Register register = term1.getRegister();
+	public boolean isRegister(Context context) {
+		if (term1.isRegister(context) && term2.isInteger(context)) {
+			Register register = term1.getRegister(context);
 			return register == Register.IX || register == Register.IY;
 		}
 		return false;
 	}
 	
 	@Override
-	public Register getRegister() {
-		if (term1.isRegister() && term2.isInteger()) {
-			Register register = term1.getRegister();
+	public Register getRegister(Context context) {
+		if (term1.isRegister(context) && term2.isInteger(context)) {
+			Register register = term1.getRegister(context);
 			if (register == Register.IX || register == Register.IY)
-				return new Register(register, -term2.getInteger());
+				return new Register(register, -term2.getInteger(context));
 		}
 		throw new EvaluationException("Not a register.");
 	}

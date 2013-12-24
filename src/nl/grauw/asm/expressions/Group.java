@@ -13,33 +13,33 @@ public class Group extends Expression {
 	}
 	
 	@Override
-	public boolean isInteger() {
-		return term.isInteger();
+	public boolean isInteger(Context context) {
+		return term.isInteger(context);
 	}
 	
 	@Override
-	public int getInteger() {
-		return term.getInteger();
+	public int getInteger(Context context) {
+		return term.getInteger(context);
 	}
 	
 	@Override
-	public boolean isRegister() {
-		return term.isRegister();
+	public boolean isRegister(Context context) {
+		return term.isRegister(context);
 	}
 	
 	@Override
-	public Register getRegister() {
-		return term.getRegister();
+	public Register getRegister(Context context) {
+		return term.getRegister(context);
 	}
 	
 	@Override
-	public boolean isFlag() {
-		return term.isFlag();
+	public boolean isFlag(Context context) {
+		return term.isFlag(context);
 	}
 	
 	@Override
-	public Flag getFlag() {
-		return term.getFlag();
+	public Flag getFlag(Context context) {
+		return term.getFlag(context);
 	}
 	
 	public String toString() {
