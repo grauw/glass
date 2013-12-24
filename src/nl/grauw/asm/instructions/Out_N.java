@@ -6,7 +6,7 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Out_N extends Instruction {
 	
-	public static Schema ARGUMENTS_N_A = new Schema(Schema.INDIRECT_N, Schema.DIRECT_A);
+	public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_N, Schema.DIRECT_A);
 	
 	private Expression argument;
 	
@@ -28,7 +28,7 @@ public class Out_N extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_N_A.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Out_N(arguments.getElement(0));
 			return null;
 		}

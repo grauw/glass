@@ -7,8 +7,8 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class In_C extends Instruction {
 	
-	public static Schema ARGUMENTS_R_C = new Schema(Schema.DIRECT_R, Schema.INDIRECT_C);
-	public static Schema ARGUMENTS_C = new Schema(Schema.INDIRECT_C);
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R, Schema.INDIRECT_C);
+	public static Schema ARGUMENTS_NO_R = new Schema(Schema.INDIRECT_C);
 	
 	private Expression argument;
 	
@@ -30,9 +30,9 @@ public class In_C extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_R_C.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new In_C(arguments.getElement(0));
-			if (ARGUMENTS_C.check(arguments))
+			if (ARGUMENTS_NO_R.check(arguments))
 				return new In_C(Register.HL);
 			return null;
 		}

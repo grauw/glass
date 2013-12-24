@@ -6,7 +6,7 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Ex_AF extends Instruction {
 	
-	public static Schema ARGUMENTS_AF_AF_ = new Schema(Schema.DIRECT_AF, Schema.DIRECT_AF_);
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_AF, Schema.DIRECT_AF_);
 	
 	@Override
 	public byte[] getBytes() {
@@ -22,7 +22,7 @@ public class Ex_AF extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_AF_AF_.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Ex_AF();
 			return null;
 		}
