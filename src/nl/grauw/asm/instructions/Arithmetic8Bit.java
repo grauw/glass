@@ -27,7 +27,7 @@ public abstract class Arithmetic8Bit extends Instruction {
 			Register register = argument.getRegister();
 			if (!register.isPair()) {
 				return indexifyDirect(register, (byte)(0x80 | getMask() | register.getCode()));
-			} else if (argument instanceof Group && (register == Register.HL || register.isIndex())) {
+			} else if (argument instanceof Group) {
 				return indexifyIndirect(register, (byte)(0x80 | getMask() | 6));  // TODO magic constant
 			}
 		}
