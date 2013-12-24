@@ -40,12 +40,16 @@ public abstract class Instruction {
 	public byte[] indexifyIndirect(Register register, byte byte1) {
 		if (!register.isIndex())
 			return new byte[] { byte1 };
+		if (!register.isPair())
+			return indexifyDirect(register, byte1);
 		return new byte[] { register.getIndexCode(), byte1, register.getIndexOffset() };
 	}
 	
 	public byte[] indexifyIndirect(Register register, byte byte1, byte byte2) {
 		if (!register.isIndex())
 			return new byte[] { byte1, byte2 };
+		if (!register.isPair())
+			return indexifyDirect(register, byte1, byte2);
 		return new byte[] { register.getIndexCode(), byte1, register.getIndexOffset(), byte2 };
 	}
 	
