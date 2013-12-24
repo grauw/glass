@@ -35,6 +35,19 @@ public class Identifier extends Expression {
 		return register;
 	}
 	
+	@Override
+	public boolean isFlag() {
+		return Flag.getByName(name) != null;  // TODO recur
+	}
+	
+	@Override
+	public Flag getFlag() {
+		Flag flag = Flag.getByName(name);
+		if (flag == null)
+			throw new EvaluationException("Not a flag.");
+		return flag;
+	}
+	
 	public String toString() {
 		return name;
 	}

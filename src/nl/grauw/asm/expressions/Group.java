@@ -32,6 +32,16 @@ public class Group extends Expression {
 		return term.getRegister();
 	}
 	
+	@Override
+	public boolean isFlag() {
+		return term.isFlag();
+	}
+	
+	@Override
+	public Flag getFlag() {
+		return term.getFlag();
+	}
+	
 	public String toString() {
 		return "(" + term + ")";
 	}

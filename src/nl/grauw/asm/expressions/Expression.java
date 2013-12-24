@@ -16,6 +16,14 @@ public abstract class Expression {
 		throw new EvaluationException("Not a register.");
 	}
 	
+	public boolean isFlag() {
+		return false;
+	}
+	
+	public Flag getFlag() {
+		throw new EvaluationException("Not a flag.");
+	}
+	
 	public Expression getElement(int index) {
 		return index == 0 ? this : null;
 	}

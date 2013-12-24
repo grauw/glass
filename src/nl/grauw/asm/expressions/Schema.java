@@ -114,4 +114,16 @@ public class Schema implements SchemaType {
 		}
 	}
 	
+	public static class IsFlag implements SchemaType {
+		public boolean check(Expression argument) {
+			return argument.isFlag();
+		}
+	}
+	
+	public static class IsFlagZC implements SchemaType {
+		public boolean check(Expression argument) {
+			return argument.isFlag() && argument.getFlag().getCode() < 4;
+		}
+	}
+	
 }
