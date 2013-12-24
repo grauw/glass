@@ -42,6 +42,29 @@ public class Schema {
 		}
 	}
 	
+	public static Type DIRECT_RR = new DirectRR();
+	public static class DirectRR extends Type {
+		public boolean check(Expression argument) {
+			if (!(argument instanceof Group) && argument.isRegister()) {
+				Register register = argument.getRegister();
+				return register == Register.BC || register == Register.DE || register == Register.HL || register == Register.SP;
+			}
+			return false;
+		}
+	}
+	
+	public static Type DIRECT_RR_INDEX = new DirectRRIndex();
+	public static class DirectRRIndex extends Type {
+		public boolean check(Expression argument) {
+			if (!(argument instanceof Group) && argument.isRegister()) {
+				Register register = argument.getRegister();
+				return register == Register.BC || register == Register.DE || register == Register.HL ||
+						register == Register.SP || register == Register.IX || register == Register.IY;
+			}
+			return false;
+		}
+	}
+	
 	public static Type DIRECT_HL = new DirectHL();
 	public static class DirectHL extends Type {
 		public boolean check(Expression argument) {

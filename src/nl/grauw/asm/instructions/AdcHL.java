@@ -5,12 +5,15 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class AdcHL extends Instruction {
 	
-	public AdcHL(Expression arguments) {
+	private Expression argument;
+	
+	public AdcHL(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+		return new byte[] { (byte)0xED, (byte)(0x4A | argument.getRegister().get16BitCode() << 4) };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +25,9 @@ public class AdcHL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new AdcHL(arguments);
+			if (ARGUMENTS_HL_RR.check(arguments))
+				return new AdcHL(arguments.getElement(1));
+			return null;
 		}
 		
 	}
