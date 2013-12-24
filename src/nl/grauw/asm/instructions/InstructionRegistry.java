@@ -52,6 +52,7 @@ public class InstructionRegistry {
 		add(new Jp_F.Factory());
 		add(new Jp_HL.Factory());
 		add(new Jp.Factory());
+		add(new Jr_F.Factory());
 		add(new Jr.Factory());
 		add(new Ld_R_R.Factory());
 		add(new Ld_A_BCDE.Factory());

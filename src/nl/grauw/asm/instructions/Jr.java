@@ -6,12 +6,18 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Jr extends Instruction {
 	
-	public Jr(Expression arguments) {
+	private Expression argument;
+	
+	public Jr(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		return new byte[] { (byte)0x00 };
+		int offset = argument.getInteger() - (context.getAddress() + 2);
+		if (offset < -128 || offset > 127)
+			throw new ArgumentException("Jump offset out of range: " + offset);
+		return new byte[] { (byte)0x18, (byte)offset };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -23,7 +29,9 @@ public class Jr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Jr(arguments);
+			if (ARGUMENTS_N.check(arguments))
+				return new Jr(arguments.getElement(0));
+			return null;
 		}
 		
 	}
