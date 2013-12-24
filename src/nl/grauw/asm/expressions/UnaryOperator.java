@@ -15,8 +15,8 @@ public abstract class UnaryOperator extends Operator {
 	}
 	
 	@Override
-	public boolean isInteger(Context context) {
-		return term.isInteger(context);
+	public boolean isInteger() {
+		return term.isInteger();
 	}
 	
 	public String toString() {

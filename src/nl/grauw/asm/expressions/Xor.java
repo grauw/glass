@@ -7,8 +7,8 @@ public class Xor extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger(Context context) {
-		return term1.getInteger(context) ^ term2.getInteger(context);
+	public int getInteger() {
+		return term1.getInteger() ^ term2.getInteger();
 	}
 	
 	@Override

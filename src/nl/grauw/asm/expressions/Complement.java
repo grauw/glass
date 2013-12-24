@@ -7,8 +7,8 @@ public class Complement extends UnaryOperator {
 	}
 	
 	@Override
-	public int getInteger(Context context) {
-		return ~term.getInteger(context);
+	public int getInteger() {
+		return ~term.getInteger();
 	}
 	
 	@Override

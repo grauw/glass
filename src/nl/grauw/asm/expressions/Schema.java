@@ -9,19 +9,8 @@ public class Schema implements SchemaType {
 	}
 	
 	public boolean check(Expression arguments) {
-		return check(arguments, new Context() {
-			public Expression getLabel(String label) {
-				return new IntegerLiteral(0);
-			}
-			public int getAddress() {
-				return 0;
-			}
-		});
-	}
-	
-	public boolean check(Expression arguments, Context context) {
 		for (int i = 0; arguments != null && i < types.length; i++) {
-			if (!types[i].check(arguments instanceof Sequence ? ((Sequence)arguments).getValue() : arguments, context))
+			if (!types[i].check(arguments instanceof Sequence ? ((Sequence)arguments).getValue() : arguments))
 				return false;
 			arguments = arguments instanceof Sequence ? ((Sequence)arguments).getTail() : null;
 		}
@@ -53,7 +42,7 @@ public class Schema implements SchemaType {
 	public static SchemaType DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
 	
 	public static class Any implements SchemaType {
-		public boolean check(Expression argument, Context context) {
+		public boolean check(Expression argument) {
 			return true;
 		}
 	}
@@ -63,29 +52,29 @@ public class Schema implements SchemaType {
 		public And(SchemaType... types) {
 			this.types = types;
 		}
-		public boolean check(Expression argument, Context context) {
+		public boolean check(Expression argument) {
 			for (SchemaType type : types)
-				if (!type.check(argument, context))
+				if (!type.check(argument))
 					return false;
 			return true;
 		}
 	}
 	
 	public static class Direct implements SchemaType {
-		public boolean check(Expression argument, Context context) {
+		public boolean check(Expression argument) {
 			return !(argument instanceof Group);
 		}
 	}
 	
 	public static class Indirect implements SchemaType {
-		public boolean check(Expression argument, Context context) {
+		public boolean check(Expression argument) {
 			return argument instanceof Group;
 		}
 	}
 	
 	public static class Integer implements SchemaType {
-		public boolean check(Expression argument, Context context) {
-			return argument.isInteger(context);
+		public boolean check(Expression argument) {
+			return argument.isInteger();
 		}
 	}
 	
@@ -94,9 +83,9 @@ public class Schema implements SchemaType {
 		public Reg(Register... registers) {
 			this.registers = registers;
 		}
-		public boolean check(Expression argument, Context context) {
-			if (argument.isRegister(context)) {
-				Register register = argument.getRegister(context);
+		public boolean check(Expression argument) {
+			if (argument.isRegister()) {
+				Register register = argument.getRegister();
 				for (Register expected : registers)
 					if (register == expected)
 						return true;
@@ -106,9 +95,9 @@ public class Schema implements SchemaType {
 	}
 	
 	public static class Register8Bit implements SchemaType {
-		public boolean check(Expression argument, Context context) {
-			if (argument.isRegister(context)) {
-				Register register = argument.getRegister(context);
+		public boolean check(Expression argument) {
+			if (argument.isRegister()) {
+				Register register = argument.getRegister();
 				return !register.isPair() && register != Register.I && register != Register.R;
 			}
 			return false;
@@ -116,25 +105,25 @@ public class Schema implements SchemaType {
 	}
 	
 	public static class DirectRIndirectHLIXIY implements SchemaType {
-		public boolean check(Expression argument, Context context) {
-			if (argument.isRegister(context)) {
-				Register register = argument.getRegister(context);
-				return DIRECT.check(argument, context) && !register.isPair() && register != Register.I && register != Register.R ||
-						INDIRECT.check(argument, context) && (register == Register.HL || register.isIndex());
+		public boolean check(Expression argument) {
+			if (argument.isRegister()) {
+				Register register = argument.getRegister();
+				return DIRECT.check(argument) && !register.isPair() && register != Register.I && register != Register.R ||
+						INDIRECT.check(argument) && (register == Register.HL || register.isIndex());
 			}
 			return false;
 		}
 	}
 	
 	public static class IsFlag implements SchemaType {
-		public boolean check(Expression argument, Context context) {
-			return argument.isFlag(context);
+		public boolean check(Expression argument) {
+			return argument.isFlag();
 		}
 	}
 	
 	public static class IsFlagZC implements SchemaType {
-		public boolean check(Expression argument, Context context) {
-			return argument.isFlag(context) && argument.getFlag(context).getCode() < 4;
+		public boolean check(Expression argument) {
+			return argument.isFlag() && argument.getFlag().getCode() < 4;
 		}
 	}
 	

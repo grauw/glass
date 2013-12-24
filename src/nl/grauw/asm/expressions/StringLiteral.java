@@ -13,12 +13,12 @@ public class StringLiteral extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger(Context context) {
+	public boolean isInteger() {
 		return string.length() == 1;
 	}
 	
 	@Override
-	public int getInteger(Context context) {
+	public int getInteger() {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);

@@ -15,23 +15,23 @@ public class Add extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger(Context context) {
-		return term1.getInteger(context) + term2.getInteger(context);
+	public int getInteger() {
+		return term1.getInteger() + term2.getInteger();
 	}
 	
 	@Override
-	public boolean isRegister(Context context) {
-		if (term1.isRegister(context)) {
-			Register register = term1.getRegister(context);
+	public boolean isRegister() {
+		if (term1.isRegister()) {
+			Register register = term1.getRegister();
 			return register == Register.IX || register == Register.IY;
 		}
 		return false;
 	}
 	
 	@Override
-	public Register getRegister(Context context) {
-		if (term1.isRegister(context)) {
-			Register register = term1.getRegister(context);
+	public Register getRegister() {
+		if (term1.isRegister()) {
+			Register register = term1.getRegister();
 			if (register == Register.IX || register == Register.IY)
 				return new Register(register, term2);
 		}

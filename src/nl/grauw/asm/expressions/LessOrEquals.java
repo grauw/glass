@@ -7,8 +7,8 @@ public class LessOrEquals extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger(Context context) {
-		return term1.getInteger(context) <= term2.getInteger(context) ? -1 : 0;
+	public int getInteger() {
+		return term1.getInteger() <= term2.getInteger() ? -1 : 0;
 	}
 	
 	@Override

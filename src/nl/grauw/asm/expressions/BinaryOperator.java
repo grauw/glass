@@ -21,8 +21,8 @@ public abstract class BinaryOperator extends Operator {
 	}
 	
 	@Override
-	public boolean isInteger(Context context) {
-		return term1.isInteger(context) && term2.isInteger(context);
+	public boolean isInteger() {
+		return term1.isInteger() && term2.isInteger();
 	}
 	
 	public String toString() {

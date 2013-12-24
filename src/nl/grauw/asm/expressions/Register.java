@@ -88,22 +88,22 @@ public class Register extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger(Context context) {
+	public boolean isInteger() {
 		return false;
 	}
 	
 	@Override
-	public int getInteger(Context context) {
+	public int getInteger() {
 		throw new EvaluationException("Can not evaluate register to integer.");
 	}
 	
 	@Override
-	public boolean isRegister(Context context) {
+	public boolean isRegister() {
 		return true;
 	}
 	
 	@Override
-	public Register getRegister(Context context) {
+	public Register getRegister() {
 		return this;
 	}
 	
