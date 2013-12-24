@@ -6,59 +6,67 @@ public class Register extends Literal {
 	public static final int IX_CODE = 0xDD;
 	public static final int IY_CODE = 0xFD;
 	
-	public static Register B = new Register("b", false, 0, NONE);
-	public static Register C = new Register("c", false, 1, NONE);
-	public static Register D = new Register("d", false, 2, NONE);
-	public static Register E = new Register("e", false, 3, NONE);
-	public static Register H = new Register("h", false, 4, NONE);
-	public static Register L = new Register("l", false, 5, NONE);
-	public static Register A = new Register("a", false, 7, NONE);
-	public static Register IXH = new Register("ixh", false, 4, IX_CODE);
-	public static Register IXL = new Register("ixl", false, 5, IX_CODE);
-	public static Register IYH = new Register("iyh", false, 4, IY_CODE);
-	public static Register IYL = new Register("iyl", false, 5, IY_CODE);
-	public static Register BC = new Register("bc", true, 0, NONE);
-	public static Register DE = new Register("de", true, 1, NONE);
-	public static Register HL = new Register("hl", true, 2, NONE);
-	public static Register SP = new Register("sp", true, 3, NONE);
-	public static Register AF = new Register("af", true, 3, NONE);
-	public static Register AF_ = new Register("af'", true, NONE, NONE);
-	public static Register IX = new Register("ix", true, 2, IX_CODE);
-	public static Register IY = new Register("iy", true, 2, IY_CODE);
+	public static Register B = new Register("b", false, 0, NONE, NONE);
+	public static Register C = new Register("c", false, 1, NONE, NONE);
+	public static Register D = new Register("d", false, 2, NONE, NONE);
+	public static Register E = new Register("e", false, 3, NONE, NONE);
+	public static Register H = new Register("h", false, 4, NONE, NONE);
+	public static Register L = new Register("l", false, 5, NONE, NONE);
+	public static Register A = new Register("a", false, 7, NONE, NONE);
+	public static Register IXH = new Register("ixh", false, 4, NONE, IX_CODE);
+	public static Register IXL = new Register("ixl", false, 5, NONE, IX_CODE);
+	public static Register IYH = new Register("iyh", false, 4, NONE, IY_CODE);
+	public static Register IYL = new Register("iyl", false, 5, NONE, IY_CODE);
+	public static Register BC = new Register("bc", true, NONE, 0, NONE);
+	public static Register DE = new Register("de", true, NONE, 1, NONE);
+	public static Register HL = new Register("hl", true, 6, 2, NONE);
+	public static Register SP = new Register("sp", true, NONE, 3, NONE);
+	public static Register AF = new Register("af", true, NONE, 3, NONE);
+	public static Register AF_ = new Register("af'", true, NONE, NONE, NONE);
+	public static Register IX = new Register("ix", true, 6, 2, IX_CODE);
+	public static Register IY = new Register("iy", true, 6, 2, IY_CODE);
 	
 	private final String name;
 	private final boolean pair;
-	private final int code;
+	private final int code8;
+	private final int code16;
 	private final int indexCode;
 	private final int indexOffset;
 	
-	public Register(String name, boolean pair, int code, int indexCode) {
-		this(name, pair, code, indexCode, 0);
+	public Register(String name, boolean pair, int code8, int code16, int indexCode) {
+		this(name, pair, code8, code16, indexCode, 0);
 	}
 	
-	public Register(String name, boolean pair, int code, int indexCode, int offset) {
+	public Register(String name, boolean pair, int code8, int code16, int indexCode, int offset) {
 		if (offset != 0 && (!pair || indexCode == NONE))
 			throw new RuntimeException("Can only specify offset for 16-bit index registers.");
 		
 		this.name = name;
 		this.pair = pair;
-		this.code = code;
+		this.code8 = code8;
+		this.code16 = code16;
 		this.indexCode = indexCode;
 		this.indexOffset = offset;
 	}
 	
 	public Register(Register register, int offset) {
-		this(register.name, register.pair, register.code, register.indexCode, offset);
+		this(register.name, register.pair, register.code8, register.code16, register.indexCode, offset);
 	}
 	
 	public boolean isPair() {
 		return pair;
 	}
 	
-	public int getCode() {
-		if (code == NONE)
-			throw new EvaluationException("Register does not have a code.");
-		return code;
+	public int get8BitCode() {
+		if (code8 == NONE)
+			throw new EvaluationException("Register does not have an 8-bit code.");
+		return code8;
+	}
+	
+	public int get16BitCode() {
+		if (code16 == NONE)
+			throw new EvaluationException("Register does not have a 16-bit code.");
+		return code16;
 	}
 	
 	public boolean isIndex() {
