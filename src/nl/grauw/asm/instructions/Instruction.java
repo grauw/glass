@@ -43,7 +43,10 @@ public abstract class Instruction {
 			return new byte[] { byte1 };
 		if (!register.isPair())
 			return indexifyDirect(register, byte1);
-		return new byte[] { register.getIndexCode(), byte1, (byte)register.getIndexOffset().getInteger() };
+		int offset = register.getIndexOffset().getInteger();
+		if (offset < -128 || offset > 127)
+			throw new ArgumentException("Index offset out of range: " + offset);
+		return new byte[] { register.getIndexCode(), byte1, (byte)offset };
 	}
 	
 	public byte[] indexifyIndirect(Register register, byte byte1, byte byte2) {
@@ -51,7 +54,10 @@ public abstract class Instruction {
 			return new byte[] { byte1, byte2 };
 		if (!register.isPair())
 			return indexifyDirect(register, byte1, byte2);
-		return new byte[] { register.getIndexCode(), byte1, (byte)register.getIndexOffset().getInteger(), byte2 };
+		int offset = register.getIndexOffset().getInteger();
+		if (offset < -128 || offset > 127)
+			throw new ArgumentException("Index offset out of range: " + offset);
+		return new byte[] { register.getIndexCode(), byte1, (byte)offset, byte2 };
 	}
 	
 }
