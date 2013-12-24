@@ -73,7 +73,7 @@ public class InstructionTest {
 		assertArrayEquals(b(0xDD, 0x39), parse("add ix,sp").getBytes());
 		assertArrayEquals(b(0xFD, 0x09), parse("add iy,bc").getBytes());
 		assertArrayEquals(b(0xFD, 0x19), parse("add iy,de").getBytes());
-		assertArrayEquals(b(0xFD, 0x29), parse("add iy,ix").getBytes());
+		assertArrayEquals(b(0xFD, 0x29), parse("add iy,iy").getBytes());
 		assertArrayEquals(b(0xFD, 0x39), parse("add iy,sp").getBytes());
 	}
 	
