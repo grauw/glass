@@ -1,16 +1,21 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Rl extends Instruction {
 	
-	public Rl(Expression arguments) {
+	private Expression argument;
+	
+	public Rl(Expression argument) {
+		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0x00 };
+		Register register = argument.getRegister();
+		return indexifyIndirect(register, (byte)0xCB, (byte)(0x10 + register.get8BitCode()));
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -22,7 +27,9 @@ public class Rl extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			return new Rl(arguments);
+			if (ARGUMENTS_R.check(arguments))
+				return new Rl(arguments.getElement(0));
+			return null;
 		}
 		
 	}
