@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.expressions.Schema;
@@ -16,7 +17,7 @@ public class Pop extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		Register register = argument.getRegister();
 		return indexifyDirect(register, (byte)(0xC1 | register.get16BitCode() << 4));
 	}

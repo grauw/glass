@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
@@ -15,7 +16,7 @@ public class Res extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		int value = argument1.getInteger();
 		if (value < 0 || value > 7)
 			throw new ArgumentException();

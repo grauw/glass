@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.expressions.Register;
 
@@ -12,7 +13,7 @@ public abstract class Instruction {
 	public static Schema ARGUMENTS_A_R = new Schema(Schema.DIRECT_A, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	
-	public abstract byte[] getBytes();
+	public abstract byte[] getBytes(Context context);
 	
 	/**
 	 * Inserts index register prefix in the object code if needed.

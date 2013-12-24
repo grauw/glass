@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.expressions.Schema;
@@ -29,7 +30,7 @@ public class Ld_R_R extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		return indexifyIndirect(!register1.isIndex() ? register2 : register1,
 				(byte)(0x40 | register1.get8BitCode() << 3 | register2.get8BitCode()));
 	}

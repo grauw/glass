@@ -859,10 +859,10 @@ public class InstructionTest {
 		assertArrayEquals(b(0xEE, 0x86), parse("xor 86H").getBytes());
 	}
 	
-	public Instruction parse(String string) {
+	public Line parse(String string) {
 		Line line = new LineParser().parse(" " + string, null, 0);
 		line.resolveInstruction(factory);
-		return line.getStatement().getInstruction();
+		return line;
 	}
 	
 	public byte[] b(int... values) {

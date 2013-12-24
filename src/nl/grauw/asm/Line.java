@@ -67,6 +67,10 @@ public class Line implements Context {
 			statement.resolveInstruction(factory);
 	}
 	
+	public byte[] getBytes() {
+		return statement.getInstruction().getBytes(this);
+	}
+	
 	public String toString() {
 		return (label != null ? label + ":" : "") +
 			(statement != null ? label != null ? " " + statement : "\t" + statement: "") +

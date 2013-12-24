@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
@@ -13,7 +14,7 @@ public class Adc_A extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		Register register = argument.getRegister();
 		return indexifyIndirect(register, (byte)(0x88 | register.get8BitCode()));
 	}

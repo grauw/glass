@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.expressions.Schema;
@@ -16,7 +17,7 @@ public class Ld_IR_A extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		if (argument.getRegister() == Register.I)
 			return new byte[] { (byte)0xED, (byte)0x47 };
 		return new byte[] { (byte)0xED, (byte)0x4F };

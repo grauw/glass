@@ -1,5 +1,6 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
@@ -17,7 +18,7 @@ public class Ld_NN_HL extends Instruction {
 	}
 	
 	@Override
-	public byte[] getBytes() {
+	public byte[] getBytes(Context context) {
 		return indexifyDirect(argument2.getRegister(),
 				(byte)0x22, (byte)argument1.getInteger(), (byte)(argument1.getInteger() >> 8));
 	}
