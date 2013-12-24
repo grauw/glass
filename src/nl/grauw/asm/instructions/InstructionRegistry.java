@@ -21,6 +21,7 @@ public class InstructionRegistry {
 		add(new And.Factory());
 		add(new And_N.Factory());
 		add(new Bit.Factory());
+		add(new Call_F.Factory());
 		add(new Call.Factory());
 		add(new Ccf.Factory());
 		add(new Cp.Factory());

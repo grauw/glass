@@ -117,6 +117,10 @@ public class InstructionTest {
 	@Test
 	public void testCall() {
 		assertArrayEquals(b(0xCD, 0x86, 0x47), parse("call 4786H").getBytes());
+	}
+	
+	@Test
+	public void testCall_F() {
 		assertArrayEquals(b(0xC4, 0x86, 0x47), parse("call nz,4786H").getBytes());
 		assertArrayEquals(b(0xCC, 0x86, 0x47), parse("call z,4786H").getBytes());
 		assertArrayEquals(b(0xD4, 0x86, 0x47), parse("call nc,4786H").getBytes());
