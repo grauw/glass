@@ -467,14 +467,18 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testOut() {
+	public void testOut_C() {
 		assertArrayEquals(b(0xED, 0x41), parse("out (c),b").getBytes());
 		assertArrayEquals(b(0xED, 0x49), parse("out (c),c").getBytes());
 		assertArrayEquals(b(0xED, 0x51), parse("out (c),d").getBytes());
 		assertArrayEquals(b(0xED, 0x59), parse("out (c),e").getBytes());
 		assertArrayEquals(b(0xED, 0x61), parse("out (c),h").getBytes());
 		assertArrayEquals(b(0xED, 0x69), parse("out (c),l").getBytes());
-		assertArrayEquals(b(0xED, 0x78), parse("out (c),a").getBytes());
+		assertArrayEquals(b(0xED, 0x79), parse("out (c),a").getBytes());
+	}
+	
+	@Test
+	public void testOut_N() {
 		assertArrayEquals(b(0xD3, 0x86), parse("out (86H),a").getBytes());
 	}
 	

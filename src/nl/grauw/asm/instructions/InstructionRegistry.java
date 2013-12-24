@@ -63,7 +63,8 @@ public class InstructionRegistry {
 		add(new OrN.Factory());
 		add(new Otdr.Factory());
 		add(new Otir.Factory());
-		add(new Out.Factory());
+		add(new Out_N.Factory());
+		add(new Out_C.Factory());
 		add(new Outi.Factory());
 		add(new Outd.Factory());
 		add(new Pop.Factory());
