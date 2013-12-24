@@ -3,31 +3,26 @@ package nl.grauw.asm.instructions;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class OrN extends Instruction {
+public class Ret_F extends Instruction {
 	
-	private Expression argument;
-	
-	public OrN(Expression arguments) {
-		this.argument = arguments;
+	public Ret_F(Expression arguments) {
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0xF6, (byte)argument.getInteger() };
+		return new byte[] { (byte)0x00 };
 	}
 	
 	public static class Factory implements InstructionFactory {
 		
 		@Override
 		public String getMnemonic() {
-			return "or";
+			return "ret";
 		}
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_N.check(arguments))
-				return new OrN(arguments);
-			return null;
+			return new Ret_F(arguments);
 		}
 		
 	}

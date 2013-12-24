@@ -1,35 +1,32 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class ExSP extends Instruction {
-	
-	public static Schema ARGUMENTS_SP_HLIXIY = new Schema(Schema.INDIRECT_SP, Schema.DIRECT_HL_IX_IY);
+public class Sbc_HL extends Instruction {
 	
 	private Expression argument;
 	
-	public ExSP(Expression argument) {
+	public Sbc_HL(Expression argument) {
 		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return indexifyDirect(argument.getRegister(), (byte)0xE3);
+		return new byte[] { (byte)0xED, (byte)(0x42 | argument.getRegister().get16BitCode() << 4) };
 	}
 	
 	public static class Factory implements InstructionFactory {
 		
 		@Override
 		public String getMnemonic() {
-			return "ex";
+			return "sbc";
 		}
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_SP_HLIXIY.check(arguments))
-				return new ExSP(arguments.getElement(1));
+			if (ARGUMENTS_HL_RR.check(arguments))
+				return new Sbc_HL(arguments.getElement(1));
 			return null;
 		}
 		

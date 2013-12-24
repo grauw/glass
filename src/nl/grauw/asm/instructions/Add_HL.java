@@ -3,12 +3,12 @@ package nl.grauw.asm.instructions;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class AddHL extends Instruction {
+public class Add_HL extends Instruction {
 	
 	private Expression argument1;
 	private Expression argument2;
 	
-	public AddHL(Expression argument1, Expression argument2) {
+	public Add_HL(Expression argument1, Expression argument2) {
 		this.argument1 = argument1;
 		this.argument2 = argument2;
 	}
@@ -28,7 +28,7 @@ public class AddHL extends Instruction {
 		@Override
 		public Instruction createInstruction(Expression arguments) {
 			if (ARGUMENTS_HLIXIY_RR.check(arguments))
-				return new AddHL(arguments.getElement(0), arguments.getElement(1));
+				return new Add_HL(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}
 		

@@ -12,19 +12,19 @@ public class InstructionRegistry {
 	private Map<String, List<InstructionFactory>> registry = new HashMap<>();
 	
 	public InstructionRegistry() {
-		add(new AdcA.Factory());
-		add(new AdcAN.Factory());
-		add(new AdcHL.Factory());
-		add(new AddA.Factory());
-		add(new AddAN.Factory());
-		add(new AddHL.Factory());
+		add(new Adc_A.Factory());
+		add(new Adc_A_N.Factory());
+		add(new Adc_HL.Factory());
+		add(new Add_A.Factory());
+		add(new Add_A_N.Factory());
+		add(new Add_HL.Factory());
 		add(new And.Factory());
-		add(new AndN.Factory());
+		add(new And_N.Factory());
 		add(new Bit.Factory());
 		add(new Call.Factory());
 		add(new Ccf.Factory());
 		add(new Cp.Factory());
-		add(new CpN.Factory());
+		add(new Cp_N.Factory());
 		add(new Cpd.Factory());
 		add(new Cpdr.Factory());
 		add(new Cpi.Factory());
@@ -35,9 +35,9 @@ public class InstructionRegistry {
 		add(new Di.Factory());
 		add(new Djnz.Factory());
 		add(new Ei.Factory());
-		add(new ExAF.Factory());
-		add(new ExDEHL.Factory());
-		add(new ExSP.Factory());
+		add(new Ex_AF.Factory());
+		add(new Ex_DE_HL.Factory());
+		add(new Ex_SP.Factory());
 		add(new Exx.Factory());
 		add(new Halt.Factory());
 		add(new Im.Factory());
@@ -60,7 +60,7 @@ public class InstructionRegistry {
 		add(new Neg.Factory());
 		add(new Nop.Factory());
 		add(new Or.Factory());
-		add(new OrN.Factory());
+		add(new Or_N.Factory());
 		add(new Otdr.Factory());
 		add(new Otir.Factory());
 		add(new Out_N.Factory());
@@ -71,7 +71,7 @@ public class InstructionRegistry {
 		add(new Push.Factory());
 		add(new Res.Factory());
 		add(new Ret.Factory());
-		add(new RetF.Factory());
+		add(new Ret_F.Factory());
 		add(new Reti.Factory());
 		add(new Retn.Factory());
 		add(new Rl.Factory());
@@ -85,18 +85,18 @@ public class InstructionRegistry {
 		add(new Rrca.Factory());
 		add(new Rrd.Factory());
 		add(new Rst.Factory());
-		add(new SbcA.Factory());
-		add(new SbcAN.Factory());
-		add(new SbcHL.Factory());
+		add(new Sbc_A.Factory());
+		add(new Sbc_A_N.Factory());
+		add(new Sbc_HL.Factory());
 		add(new Scf.Factory());
 		add(new Set.Factory());
 		add(new Sla.Factory());
 		add(new Sra.Factory());
 		add(new Srl.Factory());
 		add(new Sub.Factory());
-		add(new SubN.Factory());
+		add(new Sub_N.Factory());
 		add(new Xor.Factory());
-		add(new XorN.Factory());
+		add(new Xor_N.Factory());
 	}
 	
 	public void add(InstructionFactory factory) {
