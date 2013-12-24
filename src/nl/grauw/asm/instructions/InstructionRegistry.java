@@ -51,6 +51,11 @@ public class InstructionRegistry {
 		add(new Jp.Factory());
 		add(new Jr.Factory());
 		add(new Ld_R_R.Factory());
+		add(new Ld_A_BCDE.Factory());
+		add(new Ld_BCDE_A.Factory());
+		add(new Ld_SP_HL.Factory());
+		add(new Ld_A_IR.Factory());
+		add(new Ld_IR_A.Factory());
 		add(new Ld_R_N.Factory());
 		add(new Ld_RR_N.Factory());
 		add(new Ld_A_NN.Factory());
@@ -59,11 +64,6 @@ public class InstructionRegistry {
 		add(new Ld_NN_A.Factory());
 		add(new Ld_NN_HL.Factory());
 		add(new Ld_NN_RR.Factory());
-		add(new Ld_A_BCDE.Factory());
-		add(new Ld_BCDE_A.Factory());
-		add(new Ld_SP_HL.Factory());
-		add(new Ld_A_IR.Factory());
-		add(new Ld_IR_A.Factory());
 		add(new Ldd.Factory());
 		add(new Lddr.Factory());
 		add(new Ldi.Factory());
