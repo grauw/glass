@@ -43,7 +43,7 @@ public abstract class Instruction {
 			return new byte[] { byte1 };
 		if (!register.isPair())
 			return indexifyDirect(register, byte1);
-		return new byte[] { register.getIndexCode(), byte1, register.getIndexOffset() };
+		return new byte[] { register.getIndexCode(), byte1, (byte)register.getIndexOffset().getInteger() };
 	}
 	
 	public byte[] indexifyIndirect(Register register, byte byte1, byte byte2) {
@@ -51,7 +51,7 @@ public abstract class Instruction {
 			return new byte[] { byte1, byte2 };
 		if (!register.isPair())
 			return indexifyDirect(register, byte1, byte2);
-		return new byte[] { register.getIndexCode(), byte1, register.getIndexOffset(), byte2 };
+		return new byte[] { register.getIndexCode(), byte1, (byte)register.getIndexOffset().getInteger(), byte2 };
 	}
 	
 }

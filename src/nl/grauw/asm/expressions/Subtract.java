@@ -33,7 +33,7 @@ public class Subtract extends BinaryOperator {
 		if (term1.isRegister(context) && term2.isInteger(context)) {
 			Register register = term1.getRegister(context);
 			if (register == Register.IX || register == Register.IY)
-				return new Register(register, -term2.getInteger(context));
+				return new Register(register, new Negative(term2));
 		}
 		throw new EvaluationException("Not a register.");
 	}

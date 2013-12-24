@@ -23,8 +23,8 @@ public class Register extends Literal {
 	public static Register SP = new Register("sp", true, NONE, 3, NONE);
 	public static Register AF = new Register("af", true, NONE, 3, NONE);
 	public static Register AF_ = new Register("af'", true, NONE, NONE, NONE);
-	public static Register IX = new Register("ix", true, 6, 2, IX_CODE);
-	public static Register IY = new Register("iy", true, 6, 2, IY_CODE);
+	public static Register IX = new Register("ix", true, 6, 2, IX_CODE, IntegerLiteral.ZERO);
+	public static Register IY = new Register("iy", true, 6, 2, IY_CODE, IntegerLiteral.ZERO);
 	public static Register I = new Register("i", false, NONE, NONE, NONE);
 	public static Register R = new Register("r", false, NONE, NONE, NONE);
 	
@@ -33,14 +33,14 @@ public class Register extends Literal {
 	private final int code8;
 	private final int code16;
 	private final int indexCode;
-	private final int indexOffset;
+	private final Expression indexOffset;
 	
 	public Register(String name, boolean pair, int code8, int code16, int indexCode) {
-		this(name, pair, code8, code16, indexCode, 0);
+		this(name, pair, code8, code16, indexCode, null);
 	}
 	
-	public Register(String name, boolean pair, int code8, int code16, int indexCode, int offset) {
-		if (offset != 0 && (!pair || indexCode == NONE))
+	public Register(String name, boolean pair, int code8, int code16, int indexCode, Expression offset) {
+		if (offset != null && (!pair || indexCode == NONE))
 			throw new RuntimeException("Can only specify offset for 16-bit index registers.");
 		
 		this.name = name;
@@ -51,7 +51,7 @@ public class Register extends Literal {
 		this.indexOffset = offset;
 	}
 	
-	public Register(Register register, int offset) {
+	public Register(Register register, Expression offset) {
 		this(register.name, register.pair, register.code8, register.code16, register.indexCode, offset);
 	}
 	
@@ -81,10 +81,10 @@ public class Register extends Literal {
 		return (byte)indexCode;
 	}
 	
-	public byte getIndexOffset() {
+	public Expression getIndexOffset() {
 		if (indexCode == NONE || !pair)
 			throw new EvaluationException("Not an index register pair.");
-		return (byte)indexOffset;
+		return indexOffset;
 	}
 	
 	@Override

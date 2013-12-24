@@ -21,7 +21,7 @@ public class Add extends BinaryOperator {
 	
 	@Override
 	public boolean isRegister(Context context) {
-		if (term1.isRegister(context) && term2.isInteger(context)) {
+		if (term1.isRegister(context)) {
 			Register register = term1.getRegister(context);
 			return register == Register.IX || register == Register.IY;
 		}
@@ -30,10 +30,10 @@ public class Add extends BinaryOperator {
 	
 	@Override
 	public Register getRegister(Context context) {
-		if (term1.isRegister(context) && term2.isInteger(context)) {
+		if (term1.isRegister(context)) {
 			Register register = term1.getRegister(context);
 			if (register == Register.IX || register == Register.IY)
-				return new Register(register, term2.getInteger(context));
+				return new Register(register, term2);
 		}
 		throw new EvaluationException("Not a register.");
 	}

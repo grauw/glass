@@ -2,6 +2,8 @@ package nl.grauw.asm.expressions;
 
 public class IntegerLiteral extends Literal {
 	
+	public static final IntegerLiteral ZERO = new IntegerLiteral(0);
+	
 	private final int value;
 	
 	public IntegerLiteral(int value) {
