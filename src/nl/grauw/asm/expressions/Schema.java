@@ -28,93 +28,62 @@ public class Schema {
 		}
 	}
 	
+	public static Type DIRECT = new Direct();
+	public static class Direct extends Type {
+		public boolean check(Expression argument) {
+			return !(argument instanceof Group);
+		}
+	}
+	
 	public static Type DIRECT_INT = new DirectInteger();
 	public static class DirectInteger extends Type {
 		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isInteger();
+			return DIRECT.check(argument) && argument.isInteger();
 		}
 	}
 	
-	public static Type DIRECT_A = new DirectA();
-	public static class DirectA extends Type {
-		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.A;
+	public static Type DIRECT_A = new DirectRegister(Register.A);
+	public static Type DIRECT_RR = new DirectRegister(Register.BC, Register.DE, Register.HL, Register.SP);
+	public static Type DIRECT_RR_INDEX = new DirectRegister(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY);
+	public static Type DIRECT_DE = new DirectRegister(Register.DE);
+	public static Type DIRECT_HL = new DirectRegister(Register.HL);
+	public static Type DIRECT_HL_IX_IY = new DirectRegister(Register.HL, Register.IX, Register.IY);
+	public static Type DIRECT_AF = new DirectRegister(Register.AF);
+	public static Type DIRECT_AF_ = new DirectRegister(Register.AF_);
+	public static class DirectRegister extends Type {
+		private Register[] registers;
+		public DirectRegister(Register... registers) {
+			this.registers = registers;
 		}
-	}
-	
-	public static Type DIRECT_RR = new DirectRR();
-	public static class DirectRR extends Type {
 		public boolean check(Expression argument) {
-			if (!(argument instanceof Group) && argument.isRegister()) {
+			if (DIRECT.check(argument) && argument.isRegister()) {
 				Register register = argument.getRegister();
-				return register == Register.BC || register == Register.DE || register == Register.HL || register == Register.SP;
+				for (Register expected : registers)
+					if (register == expected)
+						return true;
 			}
 			return false;
 		}
 	}
 	
-	public static Type DIRECT_RR_INDEX = new DirectRRIndex();
-	public static class DirectRRIndex extends Type {
+	public static Type INDIRECT = new Indirect();
+	public static class Indirect extends Type {
 		public boolean check(Expression argument) {
-			if (!(argument instanceof Group) && argument.isRegister()) {
-				Register register = argument.getRegister();
-				return register == Register.BC || register == Register.DE || register == Register.HL ||
-						register == Register.SP || register == Register.IX || register == Register.IY;
-			}
-			return false;
-		}
-	}
-	
-	public static Type DIRECT_HL = new DirectHL();
-	public static class DirectHL extends Type {
-		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.HL;
-		}
-	}
-	
-	public static Type DIRECT_HL_IX_IY = new DirectHLIXIY();
-	public static class DirectHLIXIY extends Type {
-		public boolean check(Expression argument) {
-			if (!(argument instanceof Group) && argument.isRegister()) {
-				Register register = argument.getRegister();
-				return register == Register.HL || register == Register.IX || register == Register.IY;
-			}
-			return false;
-		}
-	}
-	
-	public static Type DIRECT_DE = new DirectDE();
-	public static class DirectDE extends Type {
-		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.DE;
-		}
-	}
-	
-	public static Type DIRECT_AF = new DirectAF();
-	public static class DirectAF extends Type {
-		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.AF;
-		}
-	}
-	
-	public static Type DIRECT_AF_ = new DirectAF_();
-	public static class DirectAF_ extends Type {
-		public boolean check(Expression argument) {
-			return !(argument instanceof Group) && argument.isRegister() && argument.getRegister() == Register.AF_;
+			return argument instanceof Group;
 		}
 	}
 	
 	public static Type INDIRECT_INT = new IndirectInteger();
 	public static class IndirectInteger extends Type {
 		public boolean check(Expression argument) {
-			return argument instanceof Group && argument.isInteger();
+			return INDIRECT.check(argument) && argument.isInteger();
 		}
 	}
 	
 	public static Type INDIRECT_C = new IndirectC();
 	public static class IndirectC extends Type {
 		public boolean check(Expression argument) {
-			return argument instanceof Group && argument.isRegister() && argument.getRegister() == Register.C;
+			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.C;
 		}
 	}
 	
@@ -123,8 +92,8 @@ public class Schema {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
 				Register register = argument.getRegister();
-				return !(argument instanceof Group) && !register.isPair() ||
-						argument instanceof Group && (register == Register.HL || register.isIndex());
+				return DIRECT.check(argument) && !register.isPair() ||
+						INDIRECT.check(argument) && (register == Register.HL || register.isIndex());
 			}
 			return false;
 		}
@@ -133,7 +102,7 @@ public class Schema {
 	public static Type INDIRECT_SP = new IndirectSP();
 	public static class IndirectSP extends Type {
 		public boolean check(Expression argument) {
-			return argument instanceof Group && argument.isRegister() && argument.getRegister() == Register.SP;
+			return INDIRECT.check(argument) && argument.isRegister() && argument.getRegister() == Register.SP;
 		}
 	}
 	
