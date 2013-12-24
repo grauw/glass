@@ -4,19 +4,20 @@ import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Schema;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class Jp extends Instruction {
+public class Jp_HL extends Instruction {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
+	public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_HL_IX_IY);
+	public static Schema ARGUMENTS_ALT = new Schema(Schema.DIRECT_HL_IX_IY);
 	
 	private Expression argument;
 	
-	public Jp(Expression argument) {
+	public Jp_HL(Expression argument) {
 		this.argument = argument;
 	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0xC3, (byte)argument.getInteger(), (byte)(argument.getInteger() >> 8) };
+		return indexifyDirect(argument.getRegister(), (byte)0xE9);
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -28,8 +29,8 @@ public class Jp extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
-				return new Jp(arguments.getElement(0));
+			if (ARGUMENTS.check(arguments) || ARGUMENTS_ALT.check(arguments))
+				return new Jp_HL(arguments.getElement(0));
 			return null;
 		}
 		

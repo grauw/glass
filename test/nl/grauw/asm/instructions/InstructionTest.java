@@ -304,6 +304,10 @@ public class InstructionTest {
 	@Test
 	public void testJp() {
 		assertArrayEquals(b(0xC3, 0x86, 0x47), parse("jp 4786H").getBytes());
+	}
+	
+	@Test
+	public void testJp_F() {
 		assertArrayEquals(b(0xC2, 0x86, 0x47), parse("jp nz,4786H").getBytes());
 		assertArrayEquals(b(0xCA, 0x86, 0x47), parse("jp z,4786H").getBytes());
 		assertArrayEquals(b(0xD2, 0x86, 0x47), parse("jp nc,4786H").getBytes());
@@ -312,6 +316,10 @@ public class InstructionTest {
 		assertArrayEquals(b(0xEA, 0x86, 0x47), parse("jp pe,4786H").getBytes());
 		assertArrayEquals(b(0xF2, 0x86, 0x47), parse("jp p,4786H").getBytes());
 		assertArrayEquals(b(0xFA, 0x86, 0x47), parse("jp m,4786H").getBytes());
+	}
+	
+	@Test
+	public void testJp_HL() {
 		assertArrayEquals(b(0xE9), parse("jp (hl)").getBytes());
 		assertArrayEquals(b(0xDD, 0xE9), parse("jp (ix)").getBytes());
 		assertArrayEquals(b(0xFD, 0xE9), parse("jp (iy)").getBytes());
