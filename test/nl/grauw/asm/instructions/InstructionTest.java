@@ -103,7 +103,7 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x4E), parse("bit 1,(hl)").getBytes());
 		assertArrayEquals(b(0xCB, 0x47), parse("bit 0,a").getBytes());
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x5E), parse("bit 3,(ix + 47H)").getBytes());
-		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0x66), parse("bit 4,(iy - 7AH)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x66), parse("bit 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
@@ -487,7 +487,7 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x8E), parse("res 1,(hl)").getBytes());
 		assertArrayEquals(b(0xCB, 0x87), parse("res 0,a").getBytes());
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x9E), parse("res 3,(ix + 47H)").getBytes());
-		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0xA6), parse("res 4,(iy - 7AH)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0xA6), parse("res 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
@@ -654,7 +654,7 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0xCE), parse("set 1,(hl)").getBytes());
 		assertArrayEquals(b(0xCB, 0xC7), parse("set 0,a").getBytes());
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0xDE), parse("set 3,(ix + 47H)").getBytes());
-		assertArrayEquals(b(0xDD, 0xCB, 0x86, 0xE6), parse("set 4,(iy - 7AH)").getBytes());
+		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0xE6), parse("set 4,(iy - 7AH)").getBytes());
 	}
 	
 	@Test
