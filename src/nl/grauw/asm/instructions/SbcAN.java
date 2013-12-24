@@ -3,15 +3,17 @@ package nl.grauw.asm.instructions;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class SbcAN extends Arithmetic8Bit {
+public class SbcAN extends Instruction {
+	
+	private Expression argument;
 	
 	public SbcAN(Expression arguments) {
-		super(arguments);
+		this.argument = arguments;
 	}
 	
 	@Override
-	protected int getMask() {
-		return 0b00011000;
+	public byte[] getBytes() {
+		return new byte[] { (byte)0xDE, (byte)argument.getInteger() };
 	}
 	
 	public static class Factory implements InstructionFactory {

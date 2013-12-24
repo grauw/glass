@@ -1,17 +1,21 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class SbcA extends Arithmetic8Bit {
+public class SbcA extends Instruction {
+	
+	private Expression argument;
 	
 	public SbcA(Expression arguments) {
-		super(arguments);
+		this.argument = arguments;
 	}
 	
 	@Override
-	protected int getMask() {
-		return 0b00011000;
+	public byte[] getBytes() {
+		Register register = argument.getRegister();
+		return indexifyIndirect(register, (byte)(0x98 | register.get8BitCode()));
 	}
 	
 	public static class Factory implements InstructionFactory {
