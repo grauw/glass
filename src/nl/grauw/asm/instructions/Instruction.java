@@ -20,18 +20,24 @@ public abstract class Instruction {
 	public byte[] indexifyDirect(Register register, byte byte1) {
 		if (!register.isIndex())
 			return new byte[] { byte1 };
+		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
+			throw new ArgumentException("Can not have index offset for direct addressing.");
 		return new byte[] { register.getIndexCode(), byte1 };
 	}
 	
 	public byte[] indexifyDirect(Register register, byte byte1, byte byte2) {
 		if (!register.isIndex())
 			return new byte[] { byte1, byte2 };
+		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
+			throw new ArgumentException("Can not have index offset for direct addressing.");
 		return new byte[] { register.getIndexCode(), byte1, byte2 };
 	}
 	
 	public byte[] indexifyDirect(Register register, byte byte1, byte byte2, byte byte3) {
 		if (!register.isIndex())
 			return new byte[] { byte1, byte2, byte3 };
+		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
+			throw new ArgumentException("Can not have index offset for direct addressing.");
 		return new byte[] { register.getIndexCode(), byte1, byte2, byte3 };
 	}
 	
