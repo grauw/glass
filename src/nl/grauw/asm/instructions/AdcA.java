@@ -23,7 +23,7 @@ public class AdcA extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_A_N.check(arguments) || ARGUMENTS_A_R.check(arguments))
+			if (ARGUMENTS_A_R.check(arguments))
 				return new AdcA(arguments.getElement(1));
 			return null;
 		}

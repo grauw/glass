@@ -13,14 +13,18 @@ public class InstructionRegistry {
 	
 	public InstructionRegistry() {
 		add(new AdcA.Factory());
+		add(new AdcAN.Factory());
 		add(new AdcHL.Factory());
 		add(new AddA.Factory());
+		add(new AddAN.Factory());
 		add(new AddHL.Factory());
 		add(new And.Factory());
+		add(new AndN.Factory());
 		add(new Bit.Factory());
 		add(new Call.Factory());
 		add(new Ccf.Factory());
 		add(new Cp.Factory());
+		add(new CpN.Factory());
 		add(new Cpd.Factory());
 		add(new Cpdr.Factory());
 		add(new Cpi.Factory());
@@ -53,6 +57,7 @@ public class InstructionRegistry {
 		add(new Neg.Factory());
 		add(new Nop.Factory());
 		add(new Or.Factory());
+		add(new OrN.Factory());
 		add(new Otdr.Factory());
 		add(new Otir.Factory());
 		add(new Out.Factory());
@@ -76,6 +81,7 @@ public class InstructionRegistry {
 		add(new Rrd.Factory());
 		add(new Rst.Factory());
 		add(new SbcA.Factory());
+		add(new SbcAN.Factory());
 		add(new SbcHL.Factory());
 		add(new Scf.Factory());
 		add(new Set.Factory());
@@ -83,7 +89,9 @@ public class InstructionRegistry {
 		add(new Sra.Factory());
 		add(new Srl.Factory());
 		add(new Sub.Factory());
+		add(new SubN.Factory());
 		add(new Xor.Factory());
+		add(new XorN.Factory());
 	}
 	
 	public void add(InstructionFactory factory) {

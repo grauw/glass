@@ -23,7 +23,7 @@ public class SbcA extends Arithmetic8Bit {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_A_N.check(arguments) || ARGUMENTS_A_R.check(arguments))
+			if (ARGUMENTS_A_R.check(arguments))
 				return new SbcA(arguments.getElement(1));
 			return null;
 		}
