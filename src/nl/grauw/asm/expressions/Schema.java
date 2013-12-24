@@ -70,7 +70,7 @@ public class Schema {
 	public static Type INDIRECT_C = new IndirectC();
 	public static class IndirectC extends Type {
 		public boolean check(Expression argument) {
-			return argument instanceof Group && argument.isRegister() && argument.getRegister().isPair();
+			return argument instanceof Group && argument.isRegister() && argument.getRegister() == Register.C;
 		}
 	}
 	
