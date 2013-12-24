@@ -25,6 +25,8 @@ public class Register extends Literal {
 	public static Register AF_ = new Register("af'", true, NONE, NONE, NONE);
 	public static Register IX = new Register("ix", true, 6, 2, IX_CODE);
 	public static Register IY = new Register("iy", true, 6, 2, IY_CODE);
+	public static Register I = new Register("i", false, NONE, NONE, NONE);
+	public static Register R = new Register("r", false, NONE, NONE, NONE);
 	
 	private final String name;
 	private final boolean pair;
@@ -155,6 +157,10 @@ public class Register extends Literal {
 			return Register.IX;
 		case "iy":
 			return Register.IY;
+		case "i":
+			return Register.I;
+		case "r":
+			return Register.R;
 		}
 		return null;
 	}

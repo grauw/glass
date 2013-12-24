@@ -24,6 +24,7 @@ public class Schema implements SchemaType {
 	public static SchemaType DIRECT_N = new And(DIRECT, INTEGER);
 	public static SchemaType DIRECT_R = new And(DIRECT, new Register8Bit());
 	public static SchemaType DIRECT_A = new And(DIRECT, new Reg(Register.A));
+	public static SchemaType DIRECT_IR = new And(DIRECT, new Reg(Register.I, Register.R));
 	public static SchemaType DIRECT_RR = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP));
 	public static SchemaType DIRECT_RR_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY));
 	public static SchemaType DIRECT_RR_AF_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.AF, Register.IX, Register.IY));
@@ -94,7 +95,11 @@ public class Schema implements SchemaType {
 	
 	public static class Register8Bit implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isRegister() && !argument.getRegister().isPair();
+			if (argument.isRegister()) {
+				Register register = argument.getRegister();
+				return !register.isPair() && register != Register.I && register != Register.R;
+			}
+			return false;
 		}
 	}
 	
@@ -102,7 +107,7 @@ public class Schema implements SchemaType {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
 				Register register = argument.getRegister();
-				return DIRECT.check(argument) && !register.isPair() ||
+				return DIRECT.check(argument) && !register.isPair() && register != Register.I && register != Register.R ||
 						INDIRECT.check(argument) && (register == Register.HL || register.isIndex());
 			}
 			return false;

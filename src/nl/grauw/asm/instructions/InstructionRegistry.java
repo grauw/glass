@@ -62,6 +62,8 @@ public class InstructionRegistry {
 		add(new Ld_A_BCDE.Factory());
 		add(new Ld_BCDE_A.Factory());
 		add(new Ld_SP_HL.Factory());
+		add(new Ld_A_IR.Factory());
+		add(new Ld_IR_A.Factory());
 		add(new Ldd.Factory());
 		add(new Lddr.Factory());
 		add(new Ldi.Factory());

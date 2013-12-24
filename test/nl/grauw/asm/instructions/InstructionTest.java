@@ -359,9 +359,13 @@ public class InstructionTest {
 	}
 	
 	@Test
-	public void testLd_IR() {
+	public void testLd_A_IR() {
 		assertArrayEquals(b(0xED, 0x57), parse("ld a,i").getBytes());
 		assertArrayEquals(b(0xED, 0x5F), parse("ld a,r").getBytes());
+	}
+	
+	@Test
+	public void testLd_IR_A() {
 		assertArrayEquals(b(0xED, 0x47), parse("ld i,a").getBytes());
 		assertArrayEquals(b(0xED, 0x4F), parse("ld r,a").getBytes());
 	}
