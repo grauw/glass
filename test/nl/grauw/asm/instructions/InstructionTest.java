@@ -515,6 +515,10 @@ public class InstructionTest {
 	@Test
 	public void testRet() {
 		assertArrayEquals(b(0xC9), parse("ret").getBytes());
+	}
+	
+	@Test
+	public void testRetF() {
 		assertArrayEquals(b(0xC0), parse("ret nz").getBytes());
 		assertArrayEquals(b(0xC8), parse("ret z").getBytes());
 		assertArrayEquals(b(0xD0), parse("ret nc").getBytes());

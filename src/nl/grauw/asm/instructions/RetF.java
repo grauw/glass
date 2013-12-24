@@ -3,11 +3,14 @@ package nl.grauw.asm.instructions;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
-public class Ret extends Instruction {
+public class RetF extends Instruction {
+	
+	public RetF(Expression arguments) {
+	}
 	
 	@Override
 	public byte[] getBytes() {
-		return new byte[] { (byte)0xC9 };
+		return new byte[] { (byte)0x00 };
 	}
 	
 	public static class Factory implements InstructionFactory {
@@ -19,9 +22,7 @@ public class Ret extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_NONE.check(arguments))
-				return new Ret();
-			return null;
+			return new RetF(arguments);
 		}
 		
 	}

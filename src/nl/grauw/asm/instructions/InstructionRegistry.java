@@ -67,6 +67,7 @@ public class InstructionRegistry {
 		add(new Push.Factory());
 		add(new Res.Factory());
 		add(new Ret.Factory());
+		add(new RetF.Factory());
 		add(new Reti.Factory());
 		add(new Retn.Factory());
 		add(new Rl.Factory());
