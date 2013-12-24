@@ -349,9 +349,9 @@ public class InstructionTest {
 		assertArrayEquals(b(0x4E), parse("ld c,(hl)").getBytes());
 		assertArrayEquals(b(0x47), parse("ld b,a").getBytes());
 		assertArrayEquals(b(0xDD, 0x6C), parse("ld ixl,ixh").getBytes());
-		assertArrayEquals(b(0xFD, 0x65), parse("ld iyh,iyl").getBytes());
-		assertArrayEquals(b(0xDD, 0x4E, 0x47), parse("ld c,(ix + 47H)").getBytes());
-		assertArrayEquals(b(0xFD, 0x71, 0x86), parse("ld (iy - 7AH),c").getBytes());
+		assertArrayEquals(b(0xFD, 0x55), parse("ld d,iyl").getBytes());
+		assertArrayEquals(b(0xDD, 0x6E, 0x47), parse("ld l,(ix + 47H)").getBytes());
+		assertArrayEquals(b(0xFD, 0x74, 0x86), parse("ld (iy - 7AH),h").getBytes());
 	}
 	
 	@Test

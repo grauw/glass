@@ -16,10 +16,16 @@ public class Ld_R_R extends Instruction {
 		this.register1 = register1;
 		this.register2 = register2;
 		
-		if (register1.isIndex() && register2.isIndex() && register1.getIndexCode() != register2.getIndexCode() ||
-				register1.isIndex() && (register2 == Register.H || register2 == Register.L || register2 == Register.HL) ||
-				register2.isIndex() && (register1 == Register.H || register1 == Register.L || register1 == Register.HL))
-			throw new ArgumentException();
+		if (register1.isPair() && register2.isPair())
+			throw new ArgumentException();  // forbid (hl),(hl), (ix+0),(ix-0), etc.
+		if (register1.isIndex() && register2.isIndex() && register1.getIndexCode() != register2.getIndexCode())
+			throw new ArgumentException();  // forbid ixh,iyl, etc.
+		if (register1.isIndex() && register2.isPair() || register1.isPair() && register2.isIndex())
+			throw new ArgumentException();  // forbid (hl),ixh, ixh,(ix+0)
+		if (register1.isIndex() && !register1.isPair() && (register2 == Register.H || register2 == Register.L))
+			throw new ArgumentException();  // forbid iyl,h
+		if (register2.isIndex() && !register2.isPair() && (register1 == Register.H || register1 == Register.L))
+			throw new ArgumentException();  // forbid h,iyl
 	}
 	
 	@Override
