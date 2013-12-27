@@ -23,7 +23,7 @@ public class Subtract extends BinaryOperator {
 	public boolean isRegister() {
 		if (term1.isRegister() && term2.isInteger()) {
 			Register register = term1.getRegister();
-			return register == Register.IX || register == Register.IY;
+			return register.isIndex() && register.isPair();
 		}
 		return false;
 	}
@@ -32,8 +32,8 @@ public class Subtract extends BinaryOperator {
 	public Register getRegister() {
 		if (term1.isRegister() && term2.isInteger()) {
 			Register register = term1.getRegister();
-			if (register == Register.IX || register == Register.IY)
-				return new Register(register, new Negative(term2));
+			if (register.isIndex() && register.isPair())
+				return new Register(register, new Subtract(register.getIndexOffset(), term2));
 		}
 		throw new EvaluationException("Not a register.");
 	}
