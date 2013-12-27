@@ -215,6 +215,12 @@ public class InstructionTest {
 	}
 	
 	@Test
+	public void testDs() {
+		assertArrayEquals(b(0x00, 0x00, 0x00, 0x00, 0x00), parse("ds 5H"));
+		assertArrayEquals(b(0x47, 0x47, 0x47, 0x47, 0x47), parse("ds 5H,47H"));
+	}
+	
+	@Test
 	public void testEi() {
 		assertArrayEquals(b(0xFB), parse("ei"));
 	}

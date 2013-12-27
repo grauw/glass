@@ -35,6 +35,7 @@ public class InstructionRegistry {
 		add(new Dec.Factory());
 		add(new Di.Factory());
 		add(new Djnz.Factory());
+		add(new Ds.Factory());
 		add(new Ei.Factory());
 		add(new Ex_AF.Factory());
 		add(new Ex_DE_HL.Factory());
