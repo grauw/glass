@@ -70,16 +70,15 @@ public class SourceParser {
 	}
 	
 	public void processDirective(Line line, LineNumberReader reader, File sourceFile) {
-		Statement statement = line.getStatement();
-		if (statement == null)
+		if (line.getMnemonic() == null)
 			return;
 		
-		switch (statement.getMnemonic()) {
+		switch (line.getMnemonic()) {
 		case "include":
 		case "INCLUDE":
-			if (statement.getArguments() instanceof Sequence)
+			if (line.getArguments() instanceof Sequence)
 				throw new RuntimeException("Include only accepts 1 argument.");
-			Expression argument = statement.getArguments();
+			Expression argument = line.getArguments();
 			if (!(argument instanceof StringLiteral))
 				throw new RuntimeException("A string literal is expected.");
 			String includeFile = ((StringLiteral)argument).getString();
@@ -89,7 +88,7 @@ public class SourceParser {
 		case "EQU":
 			if (line.getLabel() == null)
 				throw new RuntimeException("Equ statement without label.");
-			source.getScope().addLabel(line.getLabel().getName(), statement.getArguments());
+			source.getScope().addLabel(line.getLabel().getName(), line.getArguments());
 			break;
 		}
 	}

@@ -126,7 +126,7 @@ public class LineParser {
 				accumulator.append(character);
 				return statementReadState;
 			} else {
-				line.setStatement(new Statement(accumulator.toString()));
+				line.setMnemonic(accumulator.toString());
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
 					return argumentStartState;
@@ -339,10 +339,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				line.getStatement().setArguments(expressionBuilder.getExpression());
+				line.setArguments(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
-				line.getStatement().setArguments(expressionBuilder.getExpression());
+				line.setArguments(expressionBuilder.getExpression());
 				return endState;
 			}
 			throw new SyntaxError();

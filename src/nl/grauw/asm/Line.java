@@ -5,6 +5,7 @@ import java.io.File;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.IntegerLiteral;
+import nl.grauw.asm.instructions.Instruction;
 import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Line implements Context {
@@ -12,10 +13,13 @@ public class Line implements Context {
 	private final File sourceFile;
 	private final int lineNumber;
 	private Label label;
-	private Statement statement;
+	private String mnemonic;
+	private Expression arguments;
 	private Comment comment;
 	private Scope scope;
 	private int address;
+	
+	private Instruction instruction;
 	
 	public Line(File sourceFile, int lineNumber) {
 		this.sourceFile = sourceFile;
@@ -38,12 +42,20 @@ public class Line implements Context {
 		this.label = label;
 	}
 	
-	public Statement getStatement() {
-		return statement;
+	public String getMnemonic() {
+		return mnemonic;
 	}
 	
-	public void setStatement(Statement statement) {
-		this.statement = statement;
+	public void setMnemonic(String mnemonic) {
+		this.mnemonic = mnemonic;
+	}
+	
+	public Expression getArguments() {
+		return arguments;
+	}
+	
+	public void setArguments(Expression arguments) {
+		this.arguments = arguments;
 	}
 	
 	public Comment getComment() {
@@ -75,19 +87,23 @@ public class Line implements Context {
 			scope.addLabel(label.getName(), new IntegerLiteral(address));
 	}
 	
+	public Instruction getInstruction() {
+		return instruction;
+	}
+	
 	public void resolveInstruction(InstructionRegistry factory) {
-		if (statement != null)
-			statement.resolveInstruction(factory);
+		if (mnemonic != null)
+			instruction = factory.createInstruction(mnemonic, arguments);
 	}
 	
 	public byte[] getBytes() {
-		return statement.getInstruction().getBytes(this);
+		return instruction.getBytes(this);
 	}
 	
 	public String toString() {
 		return (label != null ? label + ":" : "") +
-			(statement != null ? label != null ? " " + statement : "\t" + statement: "") +
-			(comment != null ? (label != null || statement != null ? " ;" : ";") + comment : "");
+			(mnemonic != null ? (label != null ? " " : "\t") + mnemonic + (arguments != null ? " " + arguments : "") : "") +
+			(comment != null ? (label != null || mnemonic != null ? " ;" : ";") + comment : "");
 	}
 	
 }

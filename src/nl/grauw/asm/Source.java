@@ -34,11 +34,11 @@ public class Source {
 		int address = 0;
 		for (Line line : lines) {
 			line.setScopeAndAddress(scope, address);
-			if (line.getStatement() != null) {
+			if (line.getMnemonic() != null) {
 				line.resolveInstruction(instructionFactory);
-				if (line.getStatement().getInstruction() == null)
+				if (line.getInstruction() == null)
 					continue; // throw
-				byte[] object = line.getStatement().getInstruction().getBytes(line);
+				byte[] object = line.getInstruction().getBytes(line);
 				address += object.length;
 			}
 		}
@@ -46,8 +46,8 @@ public class Source {
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
 		for (Line line : lines) {
-			if (line.getStatement() != null && line.getStatement().getInstruction() != null) {
-				byte[] object = line.getStatement().getInstruction().getBytes(line);
+			if (line.getInstruction() != null) {
+				byte[] object = line.getInstruction().getBytes(line);
 				output.write(object, 0, object.length);
 			}
 		}
