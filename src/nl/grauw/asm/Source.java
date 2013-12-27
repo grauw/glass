@@ -8,8 +8,10 @@ public class Source {
 	
 	private final ArrayList<Line> lines = new ArrayList<Line>();
 	private final InstructionRegistry instructionFactory = new InstructionRegistry();
+	private final Scope scope = new Scope();
 	
-	public Source() {
+	public Scope getScope() {
+		return scope;
 	}
 	
 	public Line addLine(Line line) {
