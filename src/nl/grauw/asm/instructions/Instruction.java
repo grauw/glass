@@ -13,11 +13,11 @@ public abstract class Instruction {
 	public static Schema ARGUMENTS_A_R = new Schema(Schema.DIRECT_A, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	
-	public abstract byte[] getBytes(Context context);
-	
 	public int getSize(Context context) {
 		return getBytes(context).length;
 	}
+	
+	public abstract byte[] getBytes(Context context);
 	
 	/**
 	 * Inserts index register prefix in the object code if needed.
