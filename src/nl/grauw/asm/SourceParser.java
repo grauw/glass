@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +49,11 @@ public class SourceParser {
 	}
 	
 	public Source parse(InputStream reader, File sourceFile) {
-		return parse(new LineNumberReader(new InputStreamReader(reader, Charset.forName("US-ASCII"))), sourceFile);
+		return parse(new InputStreamReader(reader, Charset.forName("US-ASCII")), sourceFile);
+	}
+	
+	public Source parse(Reader reader, File sourceFile) {
+		return parse(new LineNumberReader(reader), sourceFile);
 	}
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
