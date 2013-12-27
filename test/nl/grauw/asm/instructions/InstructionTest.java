@@ -205,6 +205,16 @@ public class InstructionTest {
 	}
 	
 	@Test
+	public void testDec_RR() {
+		assertArrayEquals(b(0x0B), parse("dec bc"));
+		assertArrayEquals(b(0x1B), parse("dec de"));
+		assertArrayEquals(b(0x2B), parse("dec hl"));
+		assertArrayEquals(b(0x3B), parse("dec sp"));
+		assertArrayEquals(b(0xDD, 0x2B), parse("dec ix"));
+		assertArrayEquals(b(0xFD, 0x2B), parse("dec iy"));
+	}
+	
+	@Test
 	public void testDi() {
 		assertArrayEquals(b(0xF3), parse("di"));
 	}
@@ -290,6 +300,16 @@ public class InstructionTest {
 		assertArrayEquals(b(0xFD, 0x2C), parse("inc iyl"));
 		assertArrayEquals(b(0xDD, 0x34, 0x47), parse("inc (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0x34, 0x86), parse("inc (iy - 7AH)"));
+	}
+	
+	@Test
+	public void testInc_RR() {
+		assertArrayEquals(b(0x03), parse("inc bc"));
+		assertArrayEquals(b(0x13), parse("inc de"));
+		assertArrayEquals(b(0x23), parse("inc hl"));
+		assertArrayEquals(b(0x33), parse("inc sp"));
+		assertArrayEquals(b(0xDD, 0x23), parse("inc ix"));
+		assertArrayEquals(b(0xFD, 0x23), parse("inc iy"));
 	}
 	
 	@Test

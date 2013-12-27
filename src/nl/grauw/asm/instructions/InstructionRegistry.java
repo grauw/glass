@@ -33,6 +33,7 @@ public class InstructionRegistry {
 		add(new Cpl.Factory());
 		add(new Daa.Factory());
 		add(new Dec.Factory());
+		add(new Dec_RR.Factory());
 		add(new Di.Factory());
 		add(new Djnz.Factory());
 		add(new Ds.Factory());
@@ -46,6 +47,7 @@ public class InstructionRegistry {
 		add(new In_C.Factory());
 		add(new In_N.Factory());
 		add(new Inc.Factory());
+		add(new Inc_RR.Factory());
 		add(new Ind.Factory());
 		add(new Indr.Factory());
 		add(new Ini.Factory());
