@@ -10,6 +10,8 @@ import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Line implements Context {
 	
+	private static final byte[] NO_BYTES = new byte[] {};
+	
 	private final File sourceFile;
 	private final int lineNumber;
 	private Label label;
@@ -97,6 +99,8 @@ public class Line implements Context {
 	}
 	
 	public byte[] getBytes() {
+		if (instruction == null)
+			return NO_BYTES;
 		return instruction.getBytes(this);
 	}
 	

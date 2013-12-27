@@ -36,9 +36,7 @@ public class Source {
 			line.setScopeAndAddress(scope, address);
 			if (line.getMnemonic() != null) {
 				line.resolveInstruction(instructionFactory);
-				if (line.getInstruction() == null)
-					continue; // throw
-				byte[] object = line.getInstruction().getBytes(line);
+				byte[] object = line.getBytes();
 				address += object.length;
 			}
 		}
@@ -46,10 +44,8 @@ public class Source {
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
 		for (Line line : lines) {
-			if (line.getInstruction() != null) {
-				byte[] object = line.getInstruction().getBytes(line);
-				output.write(object, 0, object.length);
-			}
+			byte[] object = line.getBytes();
+			output.write(object, 0, object.length);
 		}
 	}
 	
