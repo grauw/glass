@@ -864,7 +864,9 @@ public class InstructionTest {
 		Line line = new Line(new Scope(), null, 0);
 		new LineParser().parse(" " + string, line);
 		line.resolveInstruction(factory);
-		return line.getBytes();
+		byte[] bytes = line.getBytes();
+		assertEquals(bytes.length, line.getSize());
+		return bytes;
 	}
 	
 	public byte[] b(int... values) {
