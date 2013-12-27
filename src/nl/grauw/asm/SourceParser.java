@@ -58,8 +58,9 @@ public class SourceParser {
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
 		try {
-			while (reader.ready()) {
-				Line line = source.addLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
+			String lineText;
+			while ((lineText = reader.readLine()) != null) {
+				Line line = source.addLine(lineParser.parse(lineText, sourceFile, reader.getLineNumber()));
 				processDirective(line, reader, sourceFile);
 			}
 		} catch (IOException e) {
