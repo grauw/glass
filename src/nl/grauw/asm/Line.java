@@ -28,28 +28,28 @@ public class Line implements Context {
 		return lineNumber;
 	}
 	
-	public void setLabel(Label label) {
-		this.label = label;
-	}
-	
-	public void setStatement(Statement statement) {
-		this.statement = statement;
-	}
-	
-	public void setComment(Comment comment) {
-		this.comment = comment;
-	}
-	
 	public Label getLabel() {
 		return label;
+	}
+	
+	public void setLabel(Label label) {
+		this.label = label;
 	}
 	
 	public Statement getStatement() {
 		return statement;
 	}
 	
+	public void setStatement(Statement statement) {
+		this.statement = statement;
+	}
+	
 	public Comment getComment() {
 		return comment;
+	}
+	
+	public void setComment(Comment comment) {
+		this.comment = comment;
 	}
 	
 	@Override
