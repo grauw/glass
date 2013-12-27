@@ -19,7 +19,7 @@ public class Line implements Context {
 	private String mnemonic;
 	private Expression arguments;
 	private Comment comment;
-	private int address;
+	private int address = -1;
 	
 	private Instruction instruction;
 	
@@ -83,6 +83,8 @@ public class Line implements Context {
 	public int getAddress() {
 		if ("org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger())
 			return arguments.getAddress();
+		if (address == -1)
+			throw new RuntimeException("Address not initialized.");
 		return address;
 	}
 	
