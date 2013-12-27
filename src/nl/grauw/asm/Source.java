@@ -36,8 +36,7 @@ public class Source {
 			line.setAddress(address);
 			if (line.getMnemonic() != null) {
 				line.resolveInstruction(instructionFactory);
-				byte[] object = line.getBytes();
-				address += object.length;
+				address += line.getSize();
 			}
 		}
 	}

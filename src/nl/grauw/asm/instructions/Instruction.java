@@ -15,6 +15,10 @@ public abstract class Instruction {
 	
 	public abstract byte[] getBytes(Context context);
 	
+	public int getSize(Context context) {
+		return getBytes(context).length;
+	}
+	
 	/**
 	 * Inserts index register prefix in the object code if needed.
 	 */

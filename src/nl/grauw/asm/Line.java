@@ -103,6 +103,12 @@ public class Line implements Context {
 		return instruction.getBytes(this);
 	}
 	
+	public int getSize() {
+		if (instruction == null)
+			return 0;
+		return instruction.getSize(this);
+	}
+	
 	public String toString() {
 		return (label != null ? label + ":" : "") +
 			(mnemonic != null ? (label != null ? " " : "\t") + mnemonic + (arguments != null ? " " + arguments : "") : "") +
