@@ -63,6 +63,16 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testOrg() {
+		assertArrayEquals(b(0xC3, 0x32, 0x40, 0x00, 0x18, 0xFD), assemble(
+			" jp label",
+			"label: org 4032H",
+			" nop",
+			" jr label"
+		));
+	}
+	
+	@Test
 	public void testIndexDoubleAdd() {
 		assertArrayEquals(b(
 				0xDD, 0xA6, 0x03,

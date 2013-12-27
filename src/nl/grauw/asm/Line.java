@@ -81,6 +81,8 @@ public class Line implements Context {
 	
 	@Override
 	public int getAddress() {
+		if ("org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger())
+			return arguments.getAddress();
 		return address;
 	}
 	

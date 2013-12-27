@@ -118,6 +118,7 @@ public class InstructionRegistry {
 		
 		add(new Include.Factory());
 		add(new Equ.Factory());
+		add(new Org.Factory());
 	}
 	
 	public void add(InstructionFactory factory) {
