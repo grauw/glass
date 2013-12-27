@@ -19,6 +19,10 @@ public class Source {
 		return line;
 	}
 	
+	public InstructionRegistry getInstructionFactory() {
+		return instructionFactory;
+	}
+	
 	public void resolveInstructions() {
 		for (Line line : lines)
 			line.resolveInstruction(instructionFactory);
