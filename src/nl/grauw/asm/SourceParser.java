@@ -36,17 +36,17 @@ public class SourceParser {
 		return source;
 	}
 	
-	private void parseInclude(File sourceFile) {
+	private Source parseInclude(File sourceFile) {
 		for (File includePath : includePaths) {
 			File fullPath = new File(includePath, sourceFile.getPath());
 			if (fullPath.exists()) {
 				parse(fullPath);
-				return;
+				return source;
 			}
 		}
 	}
 	
-	private void parse(LineNumberReader reader, File sourceFile) {
+	private Source parse(LineNumberReader reader, File sourceFile) {
 		try {
 			while (reader.ready()) {
 				Line line = source.addLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
@@ -76,6 +76,7 @@ public class SourceParser {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+		return source;
 	}
 	
 }
