@@ -17,7 +17,8 @@ public class Ld_NN_A extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		return new byte[] { (byte)0x3A, (byte)argument.getInteger(), (byte)(argument.getInteger() >> 8) };
+		int address = argument.getAddress();
+		return new byte[] { (byte)0x3A, (byte)address, (byte)(address >> 8) };
 	}
 	
 	public static class Factory implements InstructionFactory {

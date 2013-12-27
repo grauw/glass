@@ -24,6 +24,13 @@ public abstract class Expression {
 		throw new EvaluationException("Not a flag.");
 	}
 	
+	public int getAddress() {
+		int address = getInteger();
+		if (address < 0 || address >= 0x10000)
+			throw new EvaluationException("Address out of range: " + Integer.toHexString(address) + "H");
+		return address;
+	}
+	
 	public Expression getElement(int index) {
 		return index == 0 ? this : null;
 	}

@@ -19,8 +19,8 @@ public class Call_F extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		return new byte[] { (byte)(0xC4 | argument1.getFlag().getCode() << 3),
-				(byte)argument2.getInteger(), (byte)(argument2.getInteger() >> 8) };
+		int address = argument2.getAddress();
+		return new byte[] { (byte)(0xC4 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
 	}
 	
 	public static class Factory implements InstructionFactory {

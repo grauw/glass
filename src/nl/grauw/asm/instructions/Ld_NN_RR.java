@@ -19,8 +19,9 @@ public class Ld_NN_RR extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
+		int address = argument1.getAddress();
 		return new byte[] { (byte)0xED, (byte)(0x43 | argument2.getRegister().get16BitCode() << 4),
-				(byte)argument1.getInteger(), (byte)(argument1.getInteger() >> 8) };
+				(byte)address, (byte)(address >> 8) };
 	}
 	
 	public static class Factory implements InstructionFactory {

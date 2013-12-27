@@ -19,8 +19,8 @@ public class Ld_NN_HL extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		return indexifyDirect(argument2.getRegister(),
-				(byte)0x22, (byte)argument1.getInteger(), (byte)(argument1.getInteger() >> 8));
+		int address = argument1.getAddress();
+		return indexifyDirect(argument2.getRegister(), (byte)0x22, (byte)address, (byte)(address >> 8));
 	}
 	
 	public static class Factory implements InstructionFactory {

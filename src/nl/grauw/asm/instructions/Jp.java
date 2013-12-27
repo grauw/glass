@@ -17,7 +17,8 @@ public class Jp extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		return new byte[] { (byte)0xC3, (byte)argument.getInteger(), (byte)(argument.getInteger() >> 8) };
+		int address = argument.getAddress();
+		return new byte[] { (byte)0xC3, (byte)address, (byte)(address >> 8) };
 	}
 	
 	public static class Factory implements InstructionFactory {

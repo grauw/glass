@@ -19,7 +19,7 @@ public class Jr extends Instruction {
 	
 	@Override
 	public byte[] getBytes(Context context) {
-		int offset = argument.getInteger() - (context.getAddress() + 2);
+		int offset = argument.getAddress() - (context.getAddress() + 2);
 		if (offset < -128 || offset > 127)
 			throw new ArgumentException("Jump offset out of range: " + offset);
 		return new byte[] { (byte)0x18, (byte)offset };
