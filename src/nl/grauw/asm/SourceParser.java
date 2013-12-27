@@ -44,6 +44,7 @@ public class SourceParser {
 				return source;
 			}
 		}
+		throw new RuntimeException("Include file not found: " + sourceFile);
 	}
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
