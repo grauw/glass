@@ -115,6 +115,9 @@ public class InstructionRegistry {
 		add(new Sub_N.Factory());
 		add(new Xor.Factory());
 		add(new Xor_N.Factory());
+		
+		add(new Include.Factory());
+		add(new Equ.Factory());
 	}
 	
 	public void add(InstructionFactory factory) {
