@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.nio.charset.Charset;
@@ -28,8 +29,7 @@ public class SourceParser {
 	public Source parse(File sourceFile) {
 		System.out.println("Reading file: " + sourceFile);
 		try {
-			parse(new LineNumberReader(new InputStreamReader(new FileInputStream(sourceFile),
-					Charset.forName("US-ASCII"))), sourceFile);
+			parse(new FileInputStream(sourceFile), sourceFile);
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
@@ -45,6 +45,10 @@ public class SourceParser {
 			}
 		}
 		throw new RuntimeException("Include file not found: " + sourceFile);
+	}
+	
+	public Source parse(InputStream reader, File sourceFile) {
+		return parse(new LineNumberReader(new InputStreamReader(reader, Charset.forName("US-ASCII"))), sourceFile);
 	}
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
