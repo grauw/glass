@@ -52,14 +52,25 @@ public class SourceParser {
 				Line line = source.addLine(lineParser.parse(reader.readLine(), sourceFile, reader.getLineNumber()));
 				
 				Statement statement = line.getStatement();
-				if (statement != null && (statement.getMnemonic().equals("INCLUDE") || statement.getMnemonic().equals("include"))) {
-					if (statement.getArguments() instanceof Sequence)
-						throw new RuntimeException("Include only accepts 1 argument.");
-					Expression argument = statement.getArguments();
-					if (!(argument instanceof StringLiteral))
-						throw new RuntimeException("A string literal is expected.");
-					String includeFile = ((StringLiteral)argument).getString();
-					parseInclude(new File(includeFile));
+				if (statement != null) {
+					switch (statement.getMnemonic()) {
+					case "include":
+					case "INCLUDE":
+						if (statement.getArguments() instanceof Sequence)
+							throw new RuntimeException("Include only accepts 1 argument.");
+						Expression argument = statement.getArguments();
+						if (!(argument instanceof StringLiteral))
+							throw new RuntimeException("A string literal is expected.");
+						String includeFile = ((StringLiteral)argument).getString();
+						parseInclude(new File(includeFile), source);
+						break;
+					case "equ":
+					case "EQU":
+						if (line.getLabel() == null)
+							throw new RuntimeException("Equ statement without label.");
+						source.getScope().addLabel(line.getLabel().getName(), statement.getArguments());
+						break;
+					}
 				}
 			}
 		} catch (IOException e) {
