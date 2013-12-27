@@ -57,8 +57,8 @@ public class SourceTest {
 	@Test
 	public void testEqu() {
 		assertArrayEquals(b(0x3E, 0x10), assemble(
-			"label: equ 10H",
-			" ld a,label"
+			" ld a,label",
+			"label: equ 10H"
 		));
 	}
 	
