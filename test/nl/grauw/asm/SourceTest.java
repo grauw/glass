@@ -28,6 +28,15 @@ public class SourceTest {
 		));
 	}
 	
+	@Test
+	public void testJumpBackwardsLabel() {
+		assertArrayEquals(b(0x00, 0x00, 0xC3, 0x01, 0x00), assemble(
+			" nop",
+			"label: nop",
+			" jp label"
+		));
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

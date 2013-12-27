@@ -20,14 +20,12 @@ public class Identifier extends Expression {
 	
 	@Override
 	public boolean isInteger() {
-		return false;
-//		return resolve().isInteger();
+		return resolve().isInteger();
 	}
 	
 	@Override
 	public int getInteger() {
-		throw new EvaluationException("Currently not supported.");
-//		return resolve().getInteger();
+		return resolve().getInteger();
 	}
 	
 	@Override
