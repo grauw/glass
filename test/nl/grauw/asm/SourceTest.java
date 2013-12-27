@@ -73,6 +73,18 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testRelativeJumpAssembly() {
+		assertArrayEquals(b(0x18, 0x05, 0x28, 0x03, 0x10, 0x01, 0x00), assemble(
+			" org 100H",
+			" jr label",    // Because uninitialised labels use value 0, these
+			" jr z,label",  // would be out of range if they would generate
+			" djnz label",  // actual object code in the first pass.
+			" nop",
+			"label:"
+		));
+	}
+	
+	@Test
 	public void testIndexDoubleAdd() {
 		assertArrayEquals(b(
 				0xDD, 0xA6, 0x03,
