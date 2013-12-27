@@ -339,6 +339,10 @@ public class InstructionTest {
 	@Test
 	public void testJr() {
 		assertArrayEquals(b(0x18, 0xFE), parse("jr $"));
+	}
+	
+	@Test
+	public void testJr_F() {
 		assertArrayEquals(b(0x20, 0xFE), parse("jr nz,$"));
 		assertArrayEquals(b(0x28, 0xFE), parse("jr z,$"));
 		assertArrayEquals(b(0x30, 0xFE), parse("jr nc,$"));
