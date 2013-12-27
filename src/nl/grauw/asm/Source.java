@@ -26,11 +26,11 @@ public class Source {
 	}
 	
 	public void assemble(OutputStream output) throws IOException {
-		assemblePass1();
-		assemblePass2(output);
+		resolve();
+		generateObjectCode(output);
 	}
 	
-	public void assemblePass1() {
+	public void resolve() {
 		int address = 0;
 		for (Line line : lines) {
 			line.setScopeAndAddress(scope, address);
@@ -44,18 +44,13 @@ public class Source {
 		}
 	}
 	
-	public void assemblePass2(OutputStream output) throws IOException {
+	public void generateObjectCode(OutputStream output) throws IOException {
 		for (Line line : lines) {
 			if (line.getStatement() != null && line.getStatement().getInstruction() != null) {
 				byte[] object = line.getStatement().getInstruction().getBytes(line);
 				output.write(object, 0, object.length);
 			}
 		}
-	}
-	
-	public void resolveInstructions() {
-		for (Line line : lines)
-			line.resolveInstruction(instructionFactory);
 	}
 	
 	public String toString() {
