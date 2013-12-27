@@ -64,11 +64,20 @@ public class SourceTest {
 	
 	@Test
 	public void testIndexDoubleAdd() {
-		assertArrayEquals(b(0xDD, 0xA6, 0x03, 0xDD, 0xA6, 0x05, 0xDD, 0xA6, 0x06), assemble(
-			" and (ix + 1 + 2)",
-			" and (ix + 7 - 2)",
-			" and (ix + 3 * 2)"
-		));
+		assertArrayEquals(b(
+				0xDD, 0xA6, 0x03,
+				0xDD, 0xA6, 0x05,
+				0xDD, 0xA6, 0xFD,
+				0xDD, 0xA6, 0xFB,
+				0xDD, 0xA6, 0x06
+			), assemble(
+				" and (ix + 1 + 2)",
+				" and (ix + 7 - 2)",
+				" and (ix - 1 - 2)",
+				" and (ix - 7 + 2)",
+				" and (ix + 3 * 2)"
+			)
+		);
 	}
 	
 	public byte[] assemble(String... sourceLines) {
