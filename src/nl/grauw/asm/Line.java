@@ -9,15 +9,23 @@ import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Line implements Context {
 	
+	private final File sourceFile;
+	private final int lineNumber;
 	private Label label;
 	private Statement statement;
 	private Comment comment;
-	private final File sourceFile;
-	private final int lineNumber;
 	
 	public Line(File sourceFile, int lineNumber) {
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
+	}
+	
+	public File getSourceFile() {
+		return sourceFile;
+	}
+	
+	public int getLineNumber() {
+		return lineNumber;
 	}
 	
 	public void setLabel(Label label) {
@@ -42,14 +50,6 @@ public class Line implements Context {
 	
 	public Comment getComment() {
 		return comment;
-	}
-	
-	public File getSourceFile() {
-		return sourceFile;
-	}
-	
-	public int getLineNumber() {
-		return lineNumber;
 	}
 	
 	@Override
