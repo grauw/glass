@@ -30,6 +30,11 @@ public class Ld_R_R extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(register1.isIndex() ? register1 : register2, 1);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return indexifyIndirect(register1.isIndex() ? register1 : register2,
 				(byte)(0x40 | register1.get8BitCode() << 3 | register2.get8BitCode()));

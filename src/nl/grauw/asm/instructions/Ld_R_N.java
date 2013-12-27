@@ -19,6 +19,11 @@ public class Ld_R_N extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(argument1.getRegister(), 2);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		Register register = argument1.getRegister();
 		return indexifyIndirect(register, (byte)(0x06 | register.get8BitCode() << 3), (byte)argument2.getInteger());

@@ -14,6 +14,11 @@ public class Sra extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(argument.getRegister(), 2);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		Register register = argument.getRegister();
 		return indexifyIndirect(register, (byte)0xCB, (byte)(0x28 + register.get8BitCode()));

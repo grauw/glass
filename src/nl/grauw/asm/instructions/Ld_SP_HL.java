@@ -16,6 +16,11 @@ public class Ld_SP_HL extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyDirect(argument.getRegister(), 1);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return indexifyDirect(argument.getRegister(), (byte)0xF9);
 	}

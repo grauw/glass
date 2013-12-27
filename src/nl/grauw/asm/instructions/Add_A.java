@@ -14,6 +14,11 @@ public class Add_A extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(argument.getRegister(), 1);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		Register register = argument.getRegister();
 		return indexifyIndirect(register, (byte)(0x80 | register.get8BitCode()));

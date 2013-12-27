@@ -18,6 +18,11 @@ public class Ld_HL_NN extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyDirect(argument1.getRegister(), 3);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int address = argument2.getAddress();
 		return indexifyDirect(argument1.getRegister(), (byte)0x2A, (byte)address, (byte)(address >> 8));

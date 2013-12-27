@@ -22,6 +22,11 @@ public class Add_HL extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyDirect(register1.getRegister(), 1);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return indexifyDirect(register1.getRegister(), (byte)(0x09 | register2.getRegister().get16BitCode() << 4));
 	}

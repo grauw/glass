@@ -16,6 +16,11 @@ public class Bit extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(argument2.getRegister(), 2);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int value = argument1.getInteger();
 		if (value < 0 || value > 7)

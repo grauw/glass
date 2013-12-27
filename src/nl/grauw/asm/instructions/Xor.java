@@ -14,6 +14,11 @@ public class Xor extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return indexifyIndirect(argument.getRegister(), 1);
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		Register register = argument.getRegister();
 		return indexifyIndirect(register, (byte)(0xA8 | register.get8BitCode()));
