@@ -42,9 +42,13 @@ public class Source {
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
+		int address = 0;
 		for (Line line : lines) {
+			if (address != line.getAddress())
+				throw new RuntimeException("Address changed between passes.");
 			byte[] object = line.getBytes();
 			output.write(object, 0, object.length);
+			address += object.length;
 		}
 	}
 	
