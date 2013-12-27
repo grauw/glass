@@ -18,6 +18,11 @@ public class Jr_F extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int offset = argument2.getInteger() - (context.getAddress() + 2);
 		if (offset < -128 || offset > 127)
