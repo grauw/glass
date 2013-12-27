@@ -3,8 +3,8 @@ package nl.grauw.asm;
 import java.io.File;
 
 import nl.grauw.asm.expressions.Context;
-import nl.grauw.asm.expressions.EvaluationException;
 import nl.grauw.asm.expressions.Expression;
+import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.instructions.InstructionRegistry;
 
 public class Line implements Context {
@@ -14,6 +14,8 @@ public class Line implements Context {
 	private Label label;
 	private Statement statement;
 	private Comment comment;
+	private Scope scope;
+	private int address;
 	
 	public Line(File sourceFile, int lineNumber) {
 		this.sourceFile = sourceFile;
@@ -52,14 +54,25 @@ public class Line implements Context {
 		this.comment = comment;
 	}
 	
+	public Scope getScope() {
+		return scope;
+	}
+	
 	@Override
 	public Expression getLabel(String label) {
-		throw new EvaluationException("Label not found: " + label);
+		return scope.getLabel(label);
 	}
 	
 	@Override
 	public int getAddress() {
-		return 0;
+		return address;
+	}
+	
+	public void setScopeAndAddress(Scope scope, int address) {
+		this.scope = scope;
+		this.address = address;
+		if (label != null)
+			scope.addLabel(label.getName(), new IntegerLiteral(address));
 	}
 	
 	public void resolveInstruction(InstructionRegistry factory) {
