@@ -85,6 +85,8 @@ public class Line implements Context {
 	}
 	
 	public void setAddress(int address) {
+		if (address < 0 || address >= 0x10000)
+			throw new RuntimeException("Address out of range: " + Integer.toHexString(address) + "H");
 		this.address = address;
 	}
 	
