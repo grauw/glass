@@ -18,6 +18,11 @@ public class Jp_F extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 3;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int address = argument2.getAddress();
 		return new byte[] { (byte)(0xC2 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };

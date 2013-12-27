@@ -16,6 +16,11 @@ public class Ret_F extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 1;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
 	}

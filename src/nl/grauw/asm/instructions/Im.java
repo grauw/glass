@@ -13,6 +13,11 @@ public class Im extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int value = argument.getInteger();
 		if (value == 0) {

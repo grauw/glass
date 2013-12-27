@@ -7,6 +7,11 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class Rrca extends Instruction {
 	
 	@Override
+	public int getSize(Context context) {
+		return 1;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)0x0F };
 	}

@@ -18,6 +18,11 @@ public class Ld_NN_RR extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 4;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int address = argument1.getAddress();
 		return new byte[] { (byte)0xED, (byte)(0x43 | argument2.getRegister().get16BitCode() << 4),

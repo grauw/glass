@@ -7,6 +7,11 @@ import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 public class Cpir extends Instruction {
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)0xED, (byte)0xB1 };
 	}

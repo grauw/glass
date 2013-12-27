@@ -13,6 +13,11 @@ public class Rst extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 1;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		int value = argument.getInteger();
 		if (value < 0 || value > 0x38 || (value & 7) != 0)

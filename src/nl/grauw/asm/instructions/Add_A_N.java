@@ -13,6 +13,11 @@ public class Add_A_N extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)0xC6, (byte)argument.getInteger() };
 	}

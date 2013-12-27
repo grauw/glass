@@ -16,6 +16,11 @@ public class Sbc_HL extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)0xED, (byte)(0x42 | argument.getRegister().get16BitCode() << 4) };
 	}

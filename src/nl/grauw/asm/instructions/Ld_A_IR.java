@@ -17,6 +17,11 @@ public class Ld_A_IR extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 2;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		if (argument.getRegister() == Register.I)
 			return new byte[] { (byte)0xED, (byte)0x57 };

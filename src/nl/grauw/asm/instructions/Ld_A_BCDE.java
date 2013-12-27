@@ -16,6 +16,11 @@ public class Ld_A_BCDE extends Instruction {
 	}
 	
 	@Override
+	public int getSize(Context context) {
+		return 1;
+	}
+	
+	@Override
 	public byte[] getBytes(Context context) {
 		return new byte[] { (byte)(0x0A | argument.getRegister().get16BitCode() << 4) };
 	}
