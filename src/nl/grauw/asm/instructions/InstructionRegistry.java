@@ -134,10 +134,9 @@ public class InstructionRegistry {
 				if (instruction != null)
 					return instruction;
 			}
-			//throw new ArgumentException();
+			throw new ArgumentException("Unrecognized instruction signature.");
 		}
-		//throw new RuntimeException("Mnemonic not recognised.");
-		return null;
+		throw new RuntimeException("Unrecognized mnemonic.");
 	}
 	
 	public interface InstructionFactory {
