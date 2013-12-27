@@ -1,7 +1,5 @@
 package nl.grauw.asm;
 
-import java.io.File;
-
 import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.ExpressionBuilder;
 import nl.grauw.asm.expressions.ExpressionBuilder.ExpressionError;
@@ -19,10 +17,10 @@ public class LineParser {
 	private String text;
 	private int columnNumber;
 	
-	public Line parse(String text, File sourceFile, int lineNumber) {
-		line = new Line(sourceFile, lineNumber);
-		state = labelStartState;
+	public Line parse(String text, Line line) {
+		this.line = line;
 		this.text = text;
+		state = labelStartState;
 		
 		try {
 			for (int i = 0, length = text.length(); i < length; i++) {
@@ -88,7 +86,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				line.setLabel(new Label(accumulator.toString()));
+				line.setLabel(new Label(accumulator.toString(), line));
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;

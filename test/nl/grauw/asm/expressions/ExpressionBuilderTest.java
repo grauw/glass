@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import nl.grauw.asm.Line;
 import nl.grauw.asm.LineParser;
 import nl.grauw.asm.LineParser.SyntaxError;
+import nl.grauw.asm.Scope;
 
 import org.junit.Test;
 
@@ -80,7 +81,8 @@ public class ExpressionBuilderTest {
 	}
 	
 	public String parse(String text) {
-		Line line = new LineParser().parse(" test " + text, null, 0);
+		Line line = new Line(new Scope(), null, 0);
+		new LineParser().parse(" test " + text, line);
 		return line.getArguments().toDebugString();
 	}
 	

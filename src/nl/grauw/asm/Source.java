@@ -33,7 +33,7 @@ public class Source {
 	public void resolve() {
 		int address = 0;
 		for (Line line : lines) {
-			line.setScopeAndAddress(scope, address);
+			line.setAddress(address);
 			if (line.getMnemonic() != null) {
 				line.resolveInstruction(instructionFactory);
 				byte[] object = line.getBytes();

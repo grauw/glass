@@ -1,15 +1,23 @@
 package nl.grauw.asm;
 
+import nl.grauw.asm.expressions.Context;
+
 public class Label {
 	
 	private final String name;
+	private final Context context;
 	
-	public Label(String name) {
+	public Label(String name, Context context) {
 		this.name = name;
+		this.context = context;
 	}
 	
 	public String getName() {
 		return name;
+	}
+	
+	public int getValue() {
+		return context.getAddress();
 	}
 	
 	public String toString() {

@@ -3,8 +3,8 @@ package nl.grauw.asm;
 import java.io.File;
 
 import nl.grauw.asm.expressions.Context;
+import nl.grauw.asm.expressions.ContextLiteral;
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.instructions.Instruction;
 import nl.grauw.asm.instructions.InstructionRegistry;
 
@@ -12,18 +12,19 @@ public class Line implements Context {
 	
 	private static final byte[] NO_BYTES = new byte[] {};
 	
+	private final Scope scope;
 	private final File sourceFile;
 	private final int lineNumber;
 	private Label label;
 	private String mnemonic;
 	private Expression arguments;
 	private Comment comment;
-	private Scope scope;
 	private int address;
 	
 	private Instruction instruction;
 	
-	public Line(File sourceFile, int lineNumber) {
+	public Line(Scope scope, File sourceFile, int lineNumber) {
+		this.scope = scope;
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
 	}
@@ -42,6 +43,7 @@ public class Line implements Context {
 	
 	public void setLabel(Label label) {
 		this.label = label;
+		scope.addLabel(label.getName(), new ContextLiteral(this));
 	}
 	
 	public String getMnemonic() {
@@ -82,11 +84,8 @@ public class Line implements Context {
 		return address;
 	}
 	
-	public void setScopeAndAddress(Scope scope, int address) {
-		this.scope = scope;
+	public void setAddress(int address) {
 		this.address = address;
-		if (label != null)
-			scope.addLabel(label.getName(), new IntegerLiteral(address));
 	}
 	
 	public Instruction getInstruction() {

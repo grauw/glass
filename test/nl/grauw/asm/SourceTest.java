@@ -29,11 +29,36 @@ public class SourceTest {
 	}
 	
 	@Test
-	public void testJumpBackwardsLabel() {
+	public void testJumpLabelSelf() {
 		assertArrayEquals(b(0x00, 0x00, 0xC3, 0x01, 0x00), assemble(
 			" nop",
 			"label: nop",
 			" jp label"
+		));
+	}
+	
+	@Test
+	public void testJumpLabelBackward() {
+		assertArrayEquals(b(0x00, 0x00, 0xC3, 0x01, 0x00), assemble(
+			" nop",
+			"label: nop",
+			" jp label"
+		));
+	}
+	
+	@Test
+	public void testJumpLabelForward() {
+		assertArrayEquals(b(0xC3, 0x03, 0x00), assemble(
+			" jp label",
+			"label:"
+		));
+	}
+	
+	@Test
+	public void testEqu() {
+		assertArrayEquals(b(0x3E, 0x10), assemble(
+			"label: equ 10H",
+			" ld a,label"
 		));
 	}
 	

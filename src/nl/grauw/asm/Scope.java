@@ -15,6 +15,10 @@ public class Scope {
 		variables.put(label, value);
 	}
 	
+	public void redefineLabel(String label, Expression value) {
+		variables.put(label, value);
+	}
+	
 	public boolean hasLabel(String label) {
 		return variables.get(label) == null;
 	}

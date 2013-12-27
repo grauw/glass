@@ -60,7 +60,8 @@ public class SourceParser {
 		try {
 			String lineText;
 			while ((lineText = reader.readLine()) != null) {
-				Line line = source.addLine(lineParser.parse(lineText, sourceFile, reader.getLineNumber()));
+				Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
+				source.addLine(lineParser.parse(lineText, line));
 				processDirective(line, reader, sourceFile);
 			}
 		} catch (IOException e) {
@@ -88,7 +89,7 @@ public class SourceParser {
 		case "EQU":
 			if (line.getLabel() == null)
 				throw new RuntimeException("Equ statement without label.");
-			source.getScope().addLabel(line.getLabel().getName(), line.getArguments());
+			source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
 			break;
 		}
 	}

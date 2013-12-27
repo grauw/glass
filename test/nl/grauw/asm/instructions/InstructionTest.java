@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import nl.grauw.asm.Line;
 import nl.grauw.asm.LineParser;
+import nl.grauw.asm.Scope;
 
 import org.junit.Test;
 
@@ -860,7 +861,8 @@ public class InstructionTest {
 	}
 	
 	public Line parse(String string) {
-		Line line = new LineParser().parse(" " + string, null, 0);
+		Line line = new Line(new Scope(), null, 0);
+		new LineParser().parse(" " + string, line);
 		line.resolveInstruction(factory);
 		return line;
 	}
