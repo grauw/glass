@@ -9,6 +9,7 @@ import nl.grauw.asm.expressions.ContextLiteral;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.Instruction;
 import nl.grauw.asm.instructions.InstructionRegistry;
+import nl.grauw.asm.instructions.Org;
 
 public class Line implements Context {
 	
@@ -99,18 +100,14 @@ public class Line implements Context {
 	}
 	
 	public int resolve(int address, InstructionRegistry factory) {
-		this.address = "org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger() ?
-				arguments.getAddress() : address;
-		
 		if (mnemonic != null)
 			instruction = factory.createInstruction(mnemonic, arguments);
-		
+		this.address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
 		return this.address + getSize();
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
-		address = "org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger() ?
-				arguments.getAddress() : address;
+		address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
 		if (address != this.address)
 			throw new RuntimeException("Address changed between passes.");
 		
