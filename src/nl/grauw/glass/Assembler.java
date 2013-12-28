@@ -15,7 +15,7 @@ public class Assembler {
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			System.out.println("Usage: java -jar asm.jar SOURCE [OBJECT]");
+			System.out.println("Usage: java -jar glass.jar SOURCE [OBJECT]");
 			System.exit(1);
 		}
 		
