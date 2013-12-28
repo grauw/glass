@@ -39,11 +39,11 @@ Standard z80 instruction syntax is used:
 
 Parentheses are used to indicate indirection.
 
-In addition to the documented Z80 instructions, the undocumented 8-bit index
-instructions are supported (`ixh`, `ixl`, `iyh`, `iyl`), as well as the
+In addition to the documented Z80 instructions, the undocumented `ixh`, `ixl`,
+`iyh`, `iyl` 8-bit index instructions are supported, as well as the
 semi-documented `in (c)` and the R800 `mulub` / `muluw` instructions.
 
-For register jumps (`jp (hl)`), the parentheses are optional.
+For register jumps, `jp (hl)` etc., the parentheses are optional.
 
 For a complete description of the Z80 instruction set, see the official Zilog
 documentation: <http://www.zilog.com/docs/z80/um0080.pdf>
@@ -82,7 +82,7 @@ Strings support the following escape sequences:
   * `\\` (backslash)
 
 Numeric escape sequences are not supported. In stead, you can insert them using
-the comma operator (`"abc", 0FFH, "def"`).
+the comma operator: `"abc", 0FFH, "def"`.
 
 The character set used to read files is ISO-8859-1, this maps the file’s bytes
 1:1 to the Unicode code points used internally so the object code output matches
