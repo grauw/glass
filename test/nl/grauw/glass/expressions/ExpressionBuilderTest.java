@@ -16,16 +16,6 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
-	public void testCharacterLiteral() {
-		assertEquals("'x'", parse("'x'"));
-	}
-	
-	@Test
-	public void testCharacterLiteralEscape() {
-		assertEquals("'\"'", parse("'\"'"));
-	}
-	
-	@Test
 	public void testAddition() {
 		assertEquals("{a + 1H}", parse("a + 1H"));
 	}
