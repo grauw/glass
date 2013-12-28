@@ -56,20 +56,28 @@ public class Flag extends Literal {
 	public static Flag getByName(String name) {
 		switch (name) {
 		case "nz":
+		case "NZ":
 			return Flag.NZ;
 		case "z":
+		case "Z":
 			return Flag.Z;
 		case "nc":
+		case "NC":
 			return Flag.NC;
 		case "c":
+		case "C":
 			return Flag.C;
 		case "po":
+		case "PO":
 			return Flag.PO;
 		case "pe":
+		case "PE":
 			return Flag.PE;
 		case "p":
+		case "P":
 			return Flag.P;
 		case "m":
+		case "M":
 			return Flag.M;
 		}
 		return null;
