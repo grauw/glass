@@ -25,11 +25,13 @@ public class GlobalScope extends Scope {
 		new Cpir.Factory().register(this);
 		new Cpl.Factory().register(this);
 		new Daa.Factory().register(this);
+		new Db.Factory().register(this);
 		new Dec.Factory().register(this);
 		new Dec_RR.Factory().register(this);
 		new Di.Factory().register(this);
 		new Djnz.Factory().register(this);
 		new Ds.Factory().register(this);
+		new Dw.Factory().register(this);
 		new Ei.Factory().register(this);
 		new Ex_AF.Factory().register(this);
 		new Ex_DE_HL.Factory().register(this);

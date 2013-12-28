@@ -187,6 +187,12 @@ public class InstructionTest {
 	}
 	
 	@Test
+	public void testDb() {
+		assertArrayEquals(b(0x86), parse("db 86H"));
+		assertArrayEquals(b(0x11, 0x22, 0x33, 0x44), parse("db 11H, 22H, 33H, 44H"));
+	}
+	
+	@Test
 	public void testDec() {
 		assertArrayEquals(b(0x05), parse("dec b"));
 		assertArrayEquals(b(0x0D), parse("dec c"));
@@ -226,6 +232,12 @@ public class InstructionTest {
 	public void testDs() {
 		assertArrayEquals(b(0x00, 0x00, 0x00, 0x00, 0x00), parse("ds 5H"));
 		assertArrayEquals(b(0x47, 0x47, 0x47, 0x47, 0x47), parse("ds 5H,47H"));
+	}
+	
+	@Test
+	public void testDw() {
+		assertArrayEquals(b(0x86, 0x47), parse("dw 4786H"));
+		assertArrayEquals(b(0x22, 0x11, 0x44, 0x33, 0x66, 0x55), parse("dw 1122H, 3344H, 5566H"));
 	}
 	
 	@Test
