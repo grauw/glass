@@ -60,9 +60,14 @@ public class SourceParser {
 		try {
 			String lineText;
 			while ((lineText = reader.readLine()) != null) {
-				Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
-				source.addLine(lineParser.parse(lineText, line));
-				processDirective(line, reader, sourceFile);
+				try {
+					Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
+					source.addLine(lineParser.parse(lineText, line));
+					processDirective(line, reader, sourceFile);
+				} catch (AssemblyException e) {
+					e.setContext(sourceFile, reader.getLineNumber(), lineText);
+					throw e;
+				}
 			}
 		} catch (IOException e) {
 			throw new AssemblyException(e);
