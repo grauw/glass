@@ -122,6 +122,7 @@ public class InstructionRegistry {
 		new Include.Factory().register(this);
 		new Equ.Factory().register(this);
 		new Org.Factory().register(this);
+		new MacroDeclaration.Factory().register(this);
 	}
 	
 	public void add(String mnemonic, InstructionFactory factory) {

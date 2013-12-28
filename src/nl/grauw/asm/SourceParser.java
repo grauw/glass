@@ -15,6 +15,7 @@ import java.util.List;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Sequence;
 import nl.grauw.asm.expressions.StringLiteral;
+import nl.grauw.asm.instructions.Macro;
 
 public class SourceParser {
 	
@@ -22,9 +23,15 @@ public class SourceParser {
 	List<File> includePaths = new ArrayList<File>();
 	Source source = new Source();
 	
+	String endDirective;
+	
 	public SourceParser(List<File> includePaths) {
 		this.includePaths.add(null);
 		this.includePaths.addAll(includePaths);
+	}
+	
+	public String getEndDirective() {
+		return endDirective;
 	}
 	
 	public Source parse(File sourceFile) {
@@ -62,8 +69,11 @@ public class SourceParser {
 			while ((lineText = reader.readLine()) != null) {
 				try {
 					Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
-					source.addLine(lineParser.parse(lineText, line));
+					lineParser.parse(lineText, line);
 					processDirective(line, reader, sourceFile);
+					if (endDirective != null)
+						return source;
+					source.addLine(line);
 				} catch (AssemblyException e) {
 					e.setContext(sourceFile, reader.getLineNumber(), lineText);
 					throw e;
@@ -96,6 +106,21 @@ public class SourceParser {
 				throw new AssemblyException("Equ statement without label.");
 			source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
 			break;
+		case "macro":
+		case "MACRO":
+			if (line.getLabel() == null)
+				throw new AssemblyException("Macro without label.");
+			SourceParser parser = new SourceParser(includePaths);
+			Source macroSource = parser.parse(reader, sourceFile);
+			if (!"endm".equals(parser.getEndDirective()))
+				throw new AssemblyException("Unexpected end directive: " + parser.getEndDirective());
+			Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
+			factory.register(source.getInstructionFactory());
+			break;
+		case "endm":
+		case "ENDM":
+			endDirective = "endm";
+			return;
 		}
 	}
 	

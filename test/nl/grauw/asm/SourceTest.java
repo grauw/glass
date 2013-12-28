@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import nl.grauw.asm.instructions.ArgumentException;
+
 import org.junit.Test;
 
 public class SourceTest {
@@ -99,6 +101,61 @@ public class SourceTest {
 				" and (ix - 7 + 2)",
 				" and (ix + 3 * 2)"
 			)
+		);
+	}
+	
+	@Test
+	public void testMacro() {
+		assertArrayEquals(b(0x00, 0x00), assemble(
+			"test: MACRO",
+			" nop",
+			" ENDM",
+			" test",
+			" test"
+		));
+	}
+	
+	@Test
+	public void testMacroArguments() {
+		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x20), assemble(
+			"test: MACRO arg",
+			" ld a,arg",
+			" ENDM",
+			" test 10H",
+			" test 20H"
+		));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testMacroTooManyArguments() {
+		assemble(
+			"test: MACRO",
+			" ENDM",
+			" test 10H"
+		);
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testMacroTooFewArguments() {
+		assemble(
+			"test: MACRO arg",
+			" ENDM",
+			" test"
+		);
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testMacroNonIdentifierArguments() {
+		assemble(
+			"test: MACRO (arg)",
+			" ENDM"
+		);
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testMacroNoEnd() {
+		assemble(
+			"test: MACRO"
 		);
 	}
 	
