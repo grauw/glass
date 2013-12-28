@@ -19,8 +19,8 @@ import nl.grauw.asm.expressions.StringLiteral;
 public class SourceParser {
 	
 	LineParser lineParser = new LineParser();
-	Source source = new Source();
 	List<File> includePaths = new ArrayList<File>();
+	Source source = new Source();
 	
 	public SourceParser(List<File> includePaths) {
 		this.includePaths.add(null);
