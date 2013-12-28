@@ -108,9 +108,16 @@ public class Line implements Context {
 		return this.address + getSize();
 	}
 	
-	public void generateObjectCode(OutputStream output) throws IOException {
+	public int generateObjectCode(int address, OutputStream output) throws IOException {
+		address = "org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger() ?
+				arguments.getAddress() : address;
+		if (address != this.address)
+			throw new RuntimeException("Address changed between passes.");
+		
 		byte[] object = getBytes();
 		output.write(object, 0, object.length);
+		
+		return address + object.length;
 	}
 	
 	public int getSize() {

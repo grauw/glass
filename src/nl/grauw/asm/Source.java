@@ -38,8 +38,9 @@ public class Source {
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
+		int address = 0;
 		for (Line line : lines) {
-			line.generateObjectCode(output);
+			address = line.generateObjectCode(address, output);
 		}
 	}
 	
