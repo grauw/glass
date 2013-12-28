@@ -116,7 +116,7 @@ public class LineParser {
 	private StatementReadState statementReadState = new StatementReadState();
 	private class StatementReadState extends State {
 		public State parse(char character) {
-			if (isIdentifierStart(character)) {
+			if (isIdentifier(character)) {
 				accumulator.append(character);
 				return statementReadState;
 			} else {
