@@ -1,5 +1,7 @@
 package nl.grauw.asm.expressions;
 
+import java.util.List;
+
 public class StringLiteral extends Literal {
 	
 	private final String string;
@@ -27,6 +29,12 @@ public class StringLiteral extends Literal {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);
+	}
+	
+	@Override
+	protected void addToList(List<Expression> list) {
+		for (int i = 0, length = string.length(); i < length; i++)
+			list.add(new IntegerLiteral(string.charAt(i)));
 	}
 	
 	public String toString() {
