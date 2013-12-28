@@ -13,6 +13,10 @@ public abstract class Instruction {
 	public static Schema ARGUMENTS_A_R = new Schema(Schema.DIRECT_A, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	
+	public int resolve(Context context) {
+		return context.getAddress() + getSize(context);
+	}
+	
 	public abstract int getSize(Context context);
 	
 	public abstract byte[] getBytes(Context context);

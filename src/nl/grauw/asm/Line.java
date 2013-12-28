@@ -103,7 +103,9 @@ public class Line implements Context {
 		if (mnemonic != null)
 			instruction = factory.createInstruction(mnemonic, arguments);
 		this.address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
-		return this.address + getSize();
+		if (instruction != null)
+			return instruction.resolve(this);
+		return this.address;
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
