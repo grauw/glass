@@ -1,8 +1,8 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Neg extends Instruction {
 	
@@ -19,9 +19,9 @@ public class Neg extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("neg", this);
-			registry.add("NEG", this);
+		public void register(Scope scope) {
+			scope.addInstruction("neg", this);
+			scope.addInstruction("NEG", this);
 		}
 		
 		@Override

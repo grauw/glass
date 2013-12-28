@@ -1,8 +1,8 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Cpl extends Instruction {
 	
@@ -19,9 +19,9 @@ public class Cpl extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("cpl", this);
-			registry.add("CPL", this);
+		public void register(Scope scope) {
+			scope.addInstruction("cpl", this);
+			scope.addInstruction("CPL", this);
 		}
 		
 		@Override

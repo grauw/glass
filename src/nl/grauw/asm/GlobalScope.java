@@ -1,18 +1,10 @@
-package nl.grauw.asm.instructions;
+package nl.grauw.asm;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import nl.grauw.asm.instructions.*;
 
-import nl.grauw.asm.AssemblyException;
-import nl.grauw.asm.expressions.Expression;
-
-public class InstructionRegistry {
+public class GlobalScope extends Scope {
 	
-	private Map<String, List<InstructionFactory>> registry = new HashMap<>();
-	
-	public InstructionRegistry() {
+	public GlobalScope() {
 		new Adc_A.Factory().register(this);
 		new Adc_A_N.Factory().register(this);
 		new Adc_HL.Factory().register(this);
@@ -123,40 +115,6 @@ public class InstructionRegistry {
 		new Equ.Factory().register(this);
 		new Org.Factory().register(this);
 		new MacroDeclaration.Factory().register(this);
-	}
-	
-	public InstructionRegistry(InstructionRegistry other) {
-		registry.putAll(other.registry);
-	}
-	
-	public void add(String mnemonic, InstructionFactory factory) {
-		List<InstructionFactory> factoryList = registry.get(mnemonic);
-		if (factoryList == null) {
-			factoryList = new ArrayList<InstructionFactory>();
-			registry.put(mnemonic, factoryList);
-		}
-		factoryList.add(factory);
-	}
-	
-	public Instruction createInstruction(String mnemonic, Expression arguments) {
-		List<InstructionFactory> factoryList = registry.get(mnemonic);
-		if (factoryList != null) {
-			for (InstructionFactory factory : factoryList) {
-				Instruction instruction = factory.createInstruction(arguments);
-				if (instruction != null)
-					return instruction;
-			}
-			throw new ArgumentException("Unrecognized instruction signature.");
-		}
-		throw new AssemblyException("Unrecognized mnemonic.");
-	}
-	
-	public interface InstructionFactory {
-		
-		public abstract void register(InstructionRegistry registry);
-		
-		public abstract Instruction createInstruction(Expression arguments);
-		
 	}
 	
 }

@@ -1,8 +1,8 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Schema;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Include extends Directive {
 	
@@ -11,9 +11,9 @@ public class Include extends Directive {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("include", this);
-			registry.add("INCLUDE", this);
+		public void register(Scope scope) {
+			scope.addInstruction("include", this);
+			scope.addInstruction("INCLUDE", this);
 		}
 		
 		@Override

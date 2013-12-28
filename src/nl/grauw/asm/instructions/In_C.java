@@ -1,10 +1,10 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
 import nl.grauw.asm.expressions.Schema;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class In_C extends Instruction {
 	
@@ -30,9 +30,9 @@ public class In_C extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("in", this);
-			registry.add("IN", this);
+		public void register(Scope scope) {
+			scope.addInstruction("in", this);
+			scope.addInstruction("IN", this);
 		}
 		
 		@Override

@@ -1,9 +1,9 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Register;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Add_A extends Instruction {
 	
@@ -27,9 +27,9 @@ public class Add_A extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("add", this);
-			registry.add("ADD", this);
+		public void register(Scope scope) {
+			scope.addInstruction("add", this);
+			scope.addInstruction("ADD", this);
 		}
 		
 		@Override

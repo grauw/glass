@@ -5,26 +5,20 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
-import nl.grauw.asm.instructions.InstructionRegistry;
-
 public class Source {
 	
 	private final ArrayList<Line> lines = new ArrayList<Line>();
-	private final InstructionRegistry instructionFactory;
 	private final Scope scope;
 	
 	public Source() {
-		instructionFactory = new InstructionRegistry();
-		scope = new Scope();
+		scope = new GlobalScope();
 	}
 	
 	public Source(Scope parentScope) {
-		instructionFactory = new InstructionRegistry();
 		scope = new Scope(parentScope);
 	}
 	
 	public Source(Source other) {
-		instructionFactory = new InstructionRegistry(other.instructionFactory);
 		scope = new Scope(other.scope);
 		for (Line line : other.lines)
 			addLine(new Line(scope, line));
@@ -39,10 +33,6 @@ public class Source {
 		return line;
 	}
 	
-	public InstructionRegistry getInstructionFactory() {
-		return instructionFactory;
-	}
-	
 	public void assemble(OutputStream output) throws IOException {
 		resolve();
 		generateObjectCode(output);
@@ -55,7 +45,7 @@ public class Source {
 	public int resolve(int address) {
 		for (Line line : lines) {
 			try {
-				address = line.resolve(address, instructionFactory);
+				address = line.resolve(address);
 			} catch (AssemblyException e) {
 				e.setContext(line);
 				throw e;

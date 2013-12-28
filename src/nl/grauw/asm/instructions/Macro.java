@@ -1,11 +1,11 @@
 package nl.grauw.asm.instructions;
 
 import nl.grauw.asm.AssemblyException;
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.Source;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.Identifier;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Macro extends Directive {
 	
@@ -50,8 +50,8 @@ public class Macro extends Directive {
 		}
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add(mnemonic, this);
+		public void register(Scope scope) {
+			scope.addInstruction(mnemonic, this);
 		}
 		
 		@Override

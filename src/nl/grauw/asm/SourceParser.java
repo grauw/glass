@@ -122,7 +122,7 @@ public class SourceParser {
 			if (!"endm".equals(parser.getEndDirective()))
 				throw new AssemblyException("Unexpected end directive: " + parser.getEndDirective());
 			Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
-			factory.register(source.getInstructionFactory());
+			factory.register(source.getScope());
 			break;
 		case "endm":
 		case "ENDM":

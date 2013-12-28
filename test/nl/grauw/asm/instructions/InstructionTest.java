@@ -2,15 +2,13 @@ package nl.grauw.asm.instructions;
 
 import static org.junit.Assert.*;
 
+import nl.grauw.asm.GlobalScope;
 import nl.grauw.asm.Line;
 import nl.grauw.asm.LineParser;
-import nl.grauw.asm.Scope;
 
 import org.junit.Test;
 
 public class InstructionTest {
-	
-	private InstructionRegistry factory = new InstructionRegistry();
 	
 	@Test
 	public void testAdcA() {
@@ -891,9 +889,9 @@ public class InstructionTest {
 	}
 	
 	public byte[] parse(String string) {
-		Line line = new Line(new Scope(), null, 0);
+		Line line = new Line(new GlobalScope(), null, 0);
 		new LineParser().parse(" " + string, line);
-		line.resolve(0x4321, factory);
+		line.resolve(0x4321);
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());
 		return bytes;

@@ -8,7 +8,6 @@ import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.ContextLiteral;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.instructions.Instruction;
-import nl.grauw.asm.instructions.InstructionRegistry;
 import nl.grauw.asm.instructions.Org;
 
 public class Line implements Context {
@@ -107,9 +106,9 @@ public class Line implements Context {
 		return instruction;
 	}
 	
-	public int resolve(int address, InstructionRegistry factory) {
+	public int resolve(int address) {
 		if (mnemonic != null)
-			instruction = factory.createInstruction(mnemonic, arguments);
+			instruction = scope.createInstruction(mnemonic, arguments);
 		this.address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
 		if (instruction != null)
 			return instruction.resolve(this);

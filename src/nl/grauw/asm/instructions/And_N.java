@@ -1,8 +1,8 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class And_N extends Instruction {
 	
@@ -25,9 +25,9 @@ public class And_N extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("and", this);
-			registry.add("AND", this);
+		public void register(Scope scope) {
+			scope.addInstruction("and", this);
+			scope.addInstruction("AND", this);
 		}
 		
 		@Override

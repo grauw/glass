@@ -2,11 +2,11 @@ package nl.grauw.asm.instructions;
 
 import java.util.Arrays;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
 import nl.grauw.asm.expressions.IntegerLiteral;
 import nl.grauw.asm.expressions.Schema;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Ds extends Instruction {
 	
@@ -36,9 +36,9 @@ public class Ds extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("ds", this);
-			registry.add("DS", this);
+		public void register(Scope scope) {
+			scope.addInstruction("ds", this);
+			scope.addInstruction("DS", this);
 		}
 		
 		@Override

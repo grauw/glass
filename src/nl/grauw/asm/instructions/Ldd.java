@@ -1,8 +1,8 @@
 package nl.grauw.asm.instructions;
 
+import nl.grauw.asm.Scope;
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.Expression;
-import nl.grauw.asm.instructions.InstructionRegistry.InstructionFactory;
 
 public class Ldd extends Instruction {
 	
@@ -19,9 +19,9 @@ public class Ldd extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public void register(InstructionRegistry registry) {
-			registry.add("ldd", this);
-			registry.add("LDD", this);
+		public void register(Scope scope) {
+			scope.addInstruction("ldd", this);
+			scope.addInstruction("LDD", this);
 		}
 		
 		@Override
