@@ -30,8 +30,11 @@ public class Source {
 		generateObjectCode(output);
 	}
 	
-	public void resolve() {
-		int address = 0;
+	public int resolve() {
+		return resolve(0);
+	}
+	
+	public int resolve(int address) {
 		for (Line line : lines) {
 			try {
 				address = line.resolve(address, instructionFactory);
@@ -40,10 +43,14 @@ public class Source {
 				throw e;
 			}
 		}
+		return address;
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
-		int address = 0;
+		generateObjectCode(0, output);
+	}
+	
+	public void generateObjectCode(int address, OutputStream output) throws IOException {
 		for (Line line : lines) {
 			try {
 				address = line.generateObjectCode(address, output);
