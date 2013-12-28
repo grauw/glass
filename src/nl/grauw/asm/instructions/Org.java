@@ -21,8 +21,9 @@ public class Org extends Directive {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "org";
+		public void register(InstructionRegistry registry) {
+			registry.add("org", this);
+			registry.add("ORG", this);
 		}
 		
 		@Override

@@ -32,8 +32,9 @@ public class Res extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "res";
+		public void register(InstructionRegistry registry) {
+			registry.add("res", this);
+			registry.add("RES", this);
 		}
 		
 		@Override

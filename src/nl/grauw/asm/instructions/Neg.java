@@ -19,8 +19,9 @@ public class Neg extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "neg";
+		public void register(InstructionRegistry registry) {
+			registry.add("neg", this);
+			registry.add("NEG", this);
 		}
 		
 		@Override

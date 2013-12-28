@@ -29,8 +29,9 @@ public class Jp extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "jp";
+		public void register(InstructionRegistry registry) {
+			registry.add("jp", this);
+			registry.add("JP", this);
 		}
 		
 		@Override

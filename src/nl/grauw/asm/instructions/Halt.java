@@ -19,8 +19,9 @@ public class Halt extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "halt";
+		public void register(InstructionRegistry registry) {
+			registry.add("halt", this);
+			registry.add("HALT", this);
 		}
 		
 		@Override

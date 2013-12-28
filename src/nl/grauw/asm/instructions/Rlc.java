@@ -27,8 +27,9 @@ public class Rlc extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "rlc";
+		public void register(InstructionRegistry registry) {
+			registry.add("rlc", this);
+			registry.add("RLC", this);
 		}
 		
 		@Override

@@ -25,8 +25,9 @@ public class Xor_N extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "xor";
+		public void register(InstructionRegistry registry) {
+			registry.add("xor", this);
+			registry.add("XOR", this);
 		}
 		
 		@Override

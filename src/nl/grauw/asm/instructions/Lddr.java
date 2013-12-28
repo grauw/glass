@@ -19,8 +19,9 @@ public class Lddr extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "lddr";
+		public void register(InstructionRegistry registry) {
+			registry.add("lddr", this);
+			registry.add("LDDR", this);
 		}
 		
 		@Override

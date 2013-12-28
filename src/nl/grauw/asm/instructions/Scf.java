@@ -19,8 +19,9 @@ public class Scf extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "scf";
+		public void register(InstructionRegistry registry) {
+			registry.add("scf", this);
+			registry.add("SCF", this);
 		}
 		
 		@Override

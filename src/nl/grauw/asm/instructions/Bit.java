@@ -32,8 +32,9 @@ public class Bit extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "bit";
+		public void register(InstructionRegistry registry) {
+			registry.add("bit", this);
+			registry.add("BIT", this);
 		}
 		
 		@Override

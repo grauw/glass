@@ -25,8 +25,9 @@ public class Add_A_N extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "add";
+		public void register(InstructionRegistry registry) {
+			registry.add("add", this);
+			registry.add("ADD", this);
 		}
 		
 		@Override

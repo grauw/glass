@@ -32,8 +32,9 @@ public class Set extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "set";
+		public void register(InstructionRegistry registry) {
+			registry.add("set", this);
+			registry.add("SET", this);
 		}
 		
 		@Override

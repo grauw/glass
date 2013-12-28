@@ -31,8 +31,9 @@ public class Ld_NN_HL extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ld";
+		public void register(InstructionRegistry registry) {
+			registry.add("ld", this);
+			registry.add("LD", this);
 		}
 		
 		@Override

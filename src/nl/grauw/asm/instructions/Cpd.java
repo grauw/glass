@@ -19,8 +19,9 @@ public class Cpd extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "cpd";
+		public void register(InstructionRegistry registry) {
+			registry.add("cpd", this);
+			registry.add("CPD", this);
 		}
 		
 		@Override

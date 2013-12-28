@@ -19,8 +19,9 @@ public class Retn extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "retn";
+		public void register(InstructionRegistry registry) {
+			registry.add("retn", this);
+			registry.add("RETN", this);
 		}
 		
 		@Override

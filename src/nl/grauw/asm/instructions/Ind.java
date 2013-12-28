@@ -19,8 +19,9 @@ public class Ind extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ind";
+		public void register(InstructionRegistry registry) {
+			registry.add("ind", this);
+			registry.add("IND", this);
 		}
 		
 		@Override

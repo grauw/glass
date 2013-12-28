@@ -27,8 +27,9 @@ public class And extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "and";
+		public void register(InstructionRegistry registry) {
+			registry.add("and", this);
+			registry.add("AND", this);
 		}
 		
 		@Override

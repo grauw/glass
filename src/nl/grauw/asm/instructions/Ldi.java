@@ -19,8 +19,9 @@ public class Ldi extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ldi";
+		public void register(InstructionRegistry registry) {
+			registry.add("ldi", this);
+			registry.add("LDI", this);
 		}
 		
 		@Override

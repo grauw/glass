@@ -28,8 +28,9 @@ public class Ex_SP extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ex";
+		public void register(InstructionRegistry registry) {
+			registry.add("ex", this);
+			registry.add("EX", this);
 		}
 		
 		@Override

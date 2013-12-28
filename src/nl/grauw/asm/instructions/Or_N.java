@@ -25,8 +25,9 @@ public class Or_N extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "or";
+		public void register(InstructionRegistry registry) {
+			registry.add("or", this);
+			registry.add("OR", this);
 		}
 		
 		@Override

@@ -28,8 +28,9 @@ public class Out_C extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "out";
+		public void register(InstructionRegistry registry) {
+			registry.add("out", this);
+			registry.add("OUT", this);
 		}
 		
 		@Override

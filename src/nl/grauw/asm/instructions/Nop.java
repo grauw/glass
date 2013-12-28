@@ -19,8 +19,9 @@ public class Nop extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "nop";
+		public void register(InstructionRegistry registry) {
+			registry.add("nop", this);
+			registry.add("NOP", this);
 		}
 		
 		@Override

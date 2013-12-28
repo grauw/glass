@@ -19,8 +19,9 @@ public class Ini extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ini";
+		public void register(InstructionRegistry registry) {
+			registry.add("ini", this);
+			registry.add("INI", this);
 		}
 		
 		@Override

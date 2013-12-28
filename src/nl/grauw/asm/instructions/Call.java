@@ -29,8 +29,9 @@ public class Call extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "call";
+		public void register(InstructionRegistry registry) {
+			registry.add("call", this);
+			registry.add("CALL", this);
 		}
 		
 		@Override

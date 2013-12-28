@@ -30,8 +30,9 @@ public class In_C extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "in";
+		public void register(InstructionRegistry registry) {
+			registry.add("in", this);
+			registry.add("IN", this);
 		}
 		
 		@Override

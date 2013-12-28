@@ -11,8 +11,9 @@ public class Equ extends Directive {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "equ";
+		public void register(InstructionRegistry registry) {
+			registry.add("equ", this);
+			registry.add("EQU", this);
 		}
 		
 		@Override

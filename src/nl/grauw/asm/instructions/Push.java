@@ -30,8 +30,9 @@ public class Push extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "push";
+		public void register(InstructionRegistry registry) {
+			registry.add("push", this);
+			registry.add("PUSH", this);
 		}
 		
 		@Override

@@ -33,8 +33,9 @@ public class Jr_F extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "jr";
+		public void register(InstructionRegistry registry) {
+			registry.add("jr", this);
+			registry.add("JR", this);
 		}
 		
 		@Override

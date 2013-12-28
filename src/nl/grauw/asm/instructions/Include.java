@@ -11,8 +11,9 @@ public class Include extends Directive {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "include";
+		public void register(InstructionRegistry registry) {
+			registry.add("include", this);
+			registry.add("INCLUDE", this);
 		}
 		
 		@Override

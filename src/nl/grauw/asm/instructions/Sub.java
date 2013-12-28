@@ -27,8 +27,9 @@ public class Sub extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "sub";
+		public void register(InstructionRegistry registry) {
+			registry.add("sub", this);
+			registry.add("SUB", this);
 		}
 		
 		@Override

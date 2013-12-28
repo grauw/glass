@@ -30,8 +30,9 @@ public class Pop extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "pop";
+		public void register(InstructionRegistry registry) {
+			registry.add("pop", this);
+			registry.add("POP", this);
 		}
 		
 		@Override

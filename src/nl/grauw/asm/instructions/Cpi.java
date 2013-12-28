@@ -19,8 +19,9 @@ public class Cpi extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "cpi";
+		public void register(InstructionRegistry registry) {
+			registry.add("cpi", this);
+			registry.add("CPI", this);
 		}
 		
 		@Override

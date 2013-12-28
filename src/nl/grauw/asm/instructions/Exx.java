@@ -19,8 +19,9 @@ public class Exx extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "exx";
+		public void register(InstructionRegistry registry) {
+			registry.add("exx", this);
+			registry.add("EXX", this);
 		}
 		
 		@Override

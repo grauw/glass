@@ -28,8 +28,9 @@ public class Muluw extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "muluw";
+		public void register(InstructionRegistry registry) {
+			registry.add("muluw", this);
+			registry.add("MULUW", this);
 		}
 		
 		@Override

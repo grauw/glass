@@ -28,8 +28,9 @@ public class Djnz extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "djnz";
+		public void register(InstructionRegistry registry) {
+			registry.add("djnz", this);
+			registry.add("DJNZ", this);
 		}
 		
 		@Override

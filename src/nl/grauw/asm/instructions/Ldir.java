@@ -19,8 +19,9 @@ public class Ldir extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "ldir";
+		public void register(InstructionRegistry registry) {
+			registry.add("ldir", this);
+			registry.add("LDIR", this);
 		}
 		
 		@Override

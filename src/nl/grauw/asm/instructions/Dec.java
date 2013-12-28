@@ -27,8 +27,9 @@ public class Dec extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "dec";
+		public void register(InstructionRegistry registry) {
+			registry.add("dec", this);
+			registry.add("DEC", this);
 		}
 		
 		@Override

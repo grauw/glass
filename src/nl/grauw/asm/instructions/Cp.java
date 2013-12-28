@@ -27,8 +27,9 @@ public class Cp extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "cp";
+		public void register(InstructionRegistry registry) {
+			registry.add("cp", this);
+			registry.add("CP", this);
 		}
 		
 		@Override

@@ -19,8 +19,9 @@ public class Otir extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "otir";
+		public void register(InstructionRegistry registry) {
+			registry.add("otir", this);
+			registry.add("OTIR", this);
 		}
 		
 		@Override

@@ -28,8 +28,9 @@ public class Mulub extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "mulub";
+		public void register(InstructionRegistry registry) {
+			registry.add("mulub", this);
+			registry.add("MULUB", this);
 		}
 		
 		@Override

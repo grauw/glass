@@ -19,8 +19,9 @@ public class Cpir extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "cpir";
+		public void register(InstructionRegistry registry) {
+			registry.add("cpir", this);
+			registry.add("CPIR", this);
 		}
 		
 		@Override

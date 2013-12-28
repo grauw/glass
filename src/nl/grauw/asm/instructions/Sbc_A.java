@@ -27,8 +27,9 @@ public class Sbc_A extends Instruction {
 	public static class Factory implements InstructionFactory {
 		
 		@Override
-		public String getMnemonic() {
-			return "sbc";
+		public void register(InstructionRegistry registry) {
+			registry.add("sbc", this);
+			registry.add("SBC", this);
 		}
 		
 		@Override
