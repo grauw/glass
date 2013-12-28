@@ -30,7 +30,7 @@ public class Assembler {
 			} else if (objectPath == null) {
 				objectPath = new File(args[i]);
 			} else {
-				throw new RuntimeException("Too many arguments.");
+				throw new AssemblyException("Too many arguments.");
 			}
 		}
 		

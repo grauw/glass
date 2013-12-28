@@ -32,7 +32,7 @@ public class SourceParser {
 		try {
 			parse(new FileInputStream(sourceFile), sourceFile);
 		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
+			throw new AssemblyException(e);
 		}
 		return source;
 	}
@@ -45,7 +45,7 @@ public class SourceParser {
 				return source;
 			}
 		}
-		throw new RuntimeException("Include file not found: " + sourceFile);
+		throw new AssemblyException("Include file not found: " + sourceFile);
 	}
 	
 	public Source parse(InputStream reader, File sourceFile) {
@@ -65,7 +65,7 @@ public class SourceParser {
 				processDirective(line, reader, sourceFile);
 			}
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw new AssemblyException(e);
 		}
 		return source;
 	}
@@ -78,17 +78,17 @@ public class SourceParser {
 		case "include":
 		case "INCLUDE":
 			if (line.getArguments() instanceof Sequence)
-				throw new RuntimeException("Include only accepts 1 argument.");
+				throw new AssemblyException("Include only accepts 1 argument.");
 			Expression argument = line.getArguments();
 			if (!(argument instanceof StringLiteral))
-				throw new RuntimeException("A string literal is expected.");
+				throw new AssemblyException("A string literal is expected.");
 			String includeFile = ((StringLiteral)argument).getString();
 			parseInclude(new File(includeFile));
 			break;
 		case "equ":
 		case "EQU":
 			if (line.getLabel() == null)
-				throw new RuntimeException("Equ statement without label.");
+				throw new AssemblyException("Equ statement without label.");
 			source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
 			break;
 		}

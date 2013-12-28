@@ -31,9 +31,9 @@ public class LineParser {
 			state = state.parse('\0');
 			
 			if (accumulator.length() > 0)
-				throw new RuntimeException("Accumulator not consumed. Value: " + accumulator.toString());
+				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
 			if (state != endState)
-				throw new RuntimeException("Invalid line end state: " + state.getClass().getSimpleName());
+				throw new AssemblyException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(NumberFormatException e) {
 			throw new SyntaxError(e);
 		} catch(ExpressionError e) {
@@ -433,11 +433,11 @@ public class LineParser {
 	private EndState endState = new EndState();
 	private class EndState extends State {
 		public State parse(char character) {
-			throw new RuntimeException("End state reached but not all characters consumed.");
+			throw new AssemblyException("End state reached but not all characters consumed.");
 		}
 	}
 	
-	public class SyntaxError extends RuntimeException {
+	public class SyntaxError extends AssemblyException {
 		private static final long serialVersionUID = 1L;
 		
 		public SyntaxError() {
@@ -445,8 +445,8 @@ public class LineParser {
 		}
 		
 		public SyntaxError(Throwable cause) {
-			super("Syntax error on line " + line.getLineNumber() + ", column " + column + " of file " + line.getSourceFile() +
-					"\n" + text + "\n" + (text.substring(0, column).replaceAll("[^\t]", " ") + "^"), cause);
+			super("Syntax error.", cause);
+			setContext(line.getSourceFile(), line.getLineNumber(), column, text);
 		}
 		
 	}

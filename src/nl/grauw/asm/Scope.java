@@ -11,7 +11,7 @@ public class Scope {
 	
 	public void addLabel(String label, Expression value) {
 		if (variables.get(label) != null)
-			throw new RuntimeException("Can not redefine label.");
+			throw new AssemblyException("Can not redefine label.");
 		variables.put(label, value);
 	}
 	
@@ -26,7 +26,7 @@ public class Scope {
 	public Expression getLabel(String label) {
 		Expression value = variables.get(label);
 		if (value == null)
-			throw new RuntimeException("Label not found: " + label);
+			throw new AssemblyException("Label not found: " + label);
 		return value;
 	}
 	

@@ -35,9 +35,9 @@ public class Source {
 		for (Line line : lines) {
 			try {
 				address = line.resolve(address, instructionFactory);
-			} catch (Exception e) {
-				throw new RuntimeException("An exception occurred on line " + line.getLineNumber() +
-						" of " + line.getSourceFile() + ":\n" + line, e);
+			} catch (AssemblyException e) {
+				e.setContext(line);
+				throw e;
 			}
 		}
 	}
@@ -47,9 +47,9 @@ public class Source {
 		for (Line line : lines) {
 			try {
 				address = line.generateObjectCode(address, output);
-			} catch (Exception e) {
-				throw new RuntimeException("An exception occurred on line " + line.getLineNumber() +
-						" of " + line.getSourceFile() + ":\n" + line, e);
+			} catch (AssemblyException e) {
+				e.setContext(line);
+				throw e;
 			}
 		}
 	}

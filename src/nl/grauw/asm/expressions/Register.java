@@ -1,5 +1,7 @@
 package nl.grauw.asm.expressions;
 
+import nl.grauw.asm.AssemblyException;
+
 public class Register extends Literal {
 	
 	public static final int NONE = -1;
@@ -41,7 +43,7 @@ public class Register extends Literal {
 	
 	public Register(String name, boolean pair, int code8, int code16, int indexCode, Expression offset) {
 		if (offset != null && (!pair || indexCode == NONE))
-			throw new RuntimeException("Can only specify offset for 16-bit index registers.");
+			throw new AssemblyException("Can only specify offset for 16-bit index registers.");
 		
 		this.name = name;
 		this.pair = pair;

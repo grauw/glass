@@ -1,6 +1,8 @@
 package nl.grauw.asm.instructions;
 
-public class ArgumentException extends RuntimeException {
+import nl.grauw.asm.AssemblyException;
+
+public class ArgumentException extends AssemblyException {
 	private static final long serialVersionUID = 1L;
 	
 	public ArgumentException() {

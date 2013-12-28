@@ -3,6 +3,8 @@ package nl.grauw.asm.expressions;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
+import nl.grauw.asm.AssemblyException;
+
 
 /**
  * Constructs an AST from the given expression tokens.
@@ -31,7 +33,7 @@ public class ExpressionBuilder {
 			operators.push(Operator.SENTINEL);
 		} else if (operator == Operator.GROUP_CLOSE) {
 			if (operators.pop() != Operator.SENTINEL)
-				throw new RuntimeException("Sentinel expected.");
+				throw new AssemblyException("Sentinel expected.");
 			if (operators.peek() != Operator.GROUP_OPEN)
 				throw new ExpressionError("Group open expected.");
 		} else {
@@ -41,7 +43,7 @@ public class ExpressionBuilder {
 	
 	public Expression getExpression() {
 		if (operands.isEmpty() || operators.isEmpty())
-			throw new RuntimeException("Operands / operators is empty: " + this);
+			throw new AssemblyException("Operands / operators is empty: " + this);
 		
 		// process remainder
 		while (operators.peek() != Operator.SENTINEL)
@@ -50,7 +52,7 @@ public class ExpressionBuilder {
 		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
 			throw new ExpressionError("Group close expected.");
 		if (operands.size() > 1 || operators.size() != 1)
-			throw new RuntimeException("Not all operands / operators were processed: " + this);
+			throw new AssemblyException("Not all operands / operators were processed: " + this);
 		
 		return operands.pop();
 	}
@@ -125,7 +127,7 @@ public class ExpressionBuilder {
 			case GROUP_OPEN:
 				return new Group(operand);
 			default:
-				throw new RuntimeException("Not an unary or group operator: " + this);
+				throw new AssemblyException("Not an unary or group operator: " + this);
 			}
 		}
 		
@@ -193,7 +195,7 @@ public class ExpressionBuilder {
 		NONE
 	}
 	
-	public static class ExpressionError extends RuntimeException {
+	public static class ExpressionError extends AssemblyException {
 		private static final long serialVersionUID = 1L;
 		public ExpressionError(String message) {
 			super("Expression error: " + message);

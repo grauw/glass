@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.grauw.asm.AssemblyException;
 import nl.grauw.asm.expressions.Expression;
 
 public class InstructionRegistry {
@@ -142,7 +143,7 @@ public class InstructionRegistry {
 			}
 			throw new ArgumentException("Unrecognized instruction signature.");
 		}
-		throw new RuntimeException("Unrecognized mnemonic.");
+		throw new AssemblyException("Unrecognized mnemonic.");
 	}
 	
 	public interface InstructionFactory {

@@ -1,6 +1,8 @@
 package nl.grauw.asm.expressions;
 
-public class EvaluationException extends RuntimeException {
+import nl.grauw.asm.AssemblyException;
+
+public class EvaluationException extends AssemblyException {
 	private static final long serialVersionUID = 1L;
 	
 	public EvaluationException() {

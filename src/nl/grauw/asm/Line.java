@@ -85,13 +85,13 @@ public class Line implements Context {
 	@Override
 	public int getAddress() {
 		if (address == -1)
-			throw new RuntimeException("Address not initialized.");
+			throw new AssemblyException("Address not initialized.");
 		return address;
 	}
 	
 	public void setAddress(int address) {
 		if (address < 0 || address >= 0x10000)
-			throw new RuntimeException("Address out of range: " + Integer.toHexString(address) + "H");
+			throw new AssemblyException("Address out of range: " + Integer.toHexString(address) + "H");
 		this.address = address;
 	}
 	
@@ -109,7 +109,7 @@ public class Line implements Context {
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
 		if (address != this.address)
-			throw new RuntimeException("Address changed between passes.");
+			throw new AssemblyException("Address changed between passes.");
 		
 		byte[] object = getBytes();
 		output.write(object, 0, object.length);
