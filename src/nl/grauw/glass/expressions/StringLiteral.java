@@ -34,7 +34,7 @@ public class StringLiteral extends Literal {
 	@Override
 	protected void addToList(List<Expression> list) {
 		for (int i = 0, length = string.length(); i < length; i++)
-			list.add(new IntegerLiteral(string.charAt(i)));
+			list.add(new CharacterLiteral(string.charAt(i)));
 	}
 	
 	public String toString() {

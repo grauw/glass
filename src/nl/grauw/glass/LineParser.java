@@ -1,5 +1,6 @@
 package nl.grauw.glass;
 
+import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Current;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
@@ -163,6 +164,8 @@ public class LineParser {
 				return argumentNumberState;
 			} else if (character == '"') {
 				return argumentStringState;
+			} else if (character == '\'') {
+				return argumentCharacterState;
 			} else if (character == '+') {
 				expressionBuilder.addOperatorToken(Operator.POSITIVE);
 				return argumentValueState;
@@ -252,6 +255,43 @@ public class LineParser {
 				return argumentStringState;
 			} else if (character == '\0') {
 				throw new SyntaxError();
+			} else {
+				throw new SyntaxError();
+			}
+		}
+	}
+	
+	private ArgumentCharacterState argumentCharacterState = new ArgumentCharacterState();
+	private class ArgumentCharacterState extends State {
+		public State parse(char character) {
+			if (character == '\\') {
+				return argumentCharacterEscapeState;
+			} else if (character == '\'' || character == '\0') {
+				throw new SyntaxError();
+			} else {
+				accumulator.append(character);
+				return argumentCharacterEndState;
+			}
+		}
+	}
+	
+	private ArgumentCharacterEscapeState argumentCharacterEscapeState = new ArgumentCharacterEscapeState();
+	private class ArgumentCharacterEscapeState extends State {
+		public State parse(char character) {
+			State state = argumentStringEscapeState.parse(character);
+			if (state == argumentStringState)
+				return argumentCharacterEndState;
+			throw new AssemblyException("Unexpected state.");
+		}
+	}
+	
+	private ArgumentCharacterEndState argumentCharacterEndState = new ArgumentCharacterEndState();
+	private class ArgumentCharacterEndState extends State {
+		public State parse(char character) {
+			if (character == '\'') {
+				expressionBuilder.addValueToken(new CharacterLiteral(accumulator.charAt(0)));
+				accumulator.setLength(0);
+				return argumentOperatorState;
 			} else {
 				throw new SyntaxError();
 			}

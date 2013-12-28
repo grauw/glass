@@ -9,10 +9,20 @@ import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 import org.junit.Test;
 
 public class ExpressionBuilderTest {
-
+	
 	@Test
 	public void testSingleValue() {
 		assertEquals("a", parse("a"));
+	}
+	
+	@Test
+	public void testCharacterLiteral() {
+		assertEquals("'x'", parse("'x'"));
+	}
+	
+	@Test
+	public void testCharacterLiteralEscape() {
+		assertEquals("'\"'", parse("'\"'"));
 	}
 	
 	@Test
