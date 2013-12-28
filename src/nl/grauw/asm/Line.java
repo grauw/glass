@@ -99,10 +99,8 @@ public class Line implements Context {
 	}
 	
 	public int resolve(int address, InstructionRegistry factory) {
-		if ("org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger())
-			this.address = arguments.getAddress();
-		else
-			this.address = address;
+		this.address = "org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger() ?
+				arguments.getAddress() : address;
 		
 		if (mnemonic != null)
 			instruction = factory.createInstruction(mnemonic, arguments);
