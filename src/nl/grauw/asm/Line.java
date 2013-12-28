@@ -115,16 +115,16 @@ public class Line implements Context {
 		output.write(object, 0, object.length);
 	}
 	
-	public byte[] getBytes() {
-		if (instruction == null)
-			return NO_BYTES;
-		return instruction.getBytes(this);
-	}
-	
 	public int getSize() {
 		if (instruction == null)
 			return 0;
 		return instruction.getSize(this);
+	}
+	
+	public byte[] getBytes() {
+		if (instruction == null)
+			return NO_BYTES;
+		return instruction.getBytes(this);
 	}
 	
 	public String toString() {
