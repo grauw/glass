@@ -2,7 +2,6 @@ package nl.grauw.asm;
 
 import nl.grauw.asm.expressions.Current;
 import nl.grauw.asm.expressions.ExpressionBuilder;
-import nl.grauw.asm.expressions.ExpressionBuilder.ExpressionError;
 import nl.grauw.asm.expressions.ExpressionBuilder.Operator;
 import nl.grauw.asm.expressions.Identifier;
 import nl.grauw.asm.expressions.IntegerLiteral;
@@ -14,14 +13,12 @@ public class LineParser {
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-	private String text;
-	private int column;
 	
 	public Line parse(String text, Line line) {
 		this.line = line;
-		this.text = text;
 		state = labelStartState;
 		
+		int column = 0;
 		try {
 			for (int i = 0, length = text.length(); i < length; i++) {
 				column = i;
@@ -34,10 +31,9 @@ public class LineParser {
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
 			if (state != endState)
 				throw new AssemblyException("Invalid line end state: " + state.getClass().getSimpleName());
-		} catch(NumberFormatException e) {
-			throw new SyntaxError(e);
-		} catch(ExpressionError e) {
-			throw new SyntaxError(e);
+		} catch(AssemblyException e) {
+			e.setContext(line.getSourceFile(), line.getLineNumber(), text, column);
+			throw e;
 		}
 		
 		return line;
@@ -437,7 +433,7 @@ public class LineParser {
 		}
 	}
 	
-	public class SyntaxError extends AssemblyException {
+	public static class SyntaxError extends AssemblyException {
 		private static final long serialVersionUID = 1L;
 		
 		public SyntaxError() {
@@ -446,7 +442,6 @@ public class LineParser {
 		
 		public SyntaxError(Throwable cause) {
 			super("Syntax error.", cause);
-			setContext(line.getSourceFile(), line.getLineNumber(), column, text);
 		}
 		
 	}

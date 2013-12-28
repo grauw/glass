@@ -36,7 +36,7 @@ public class AssemblyException extends RuntimeException {
 		this.text = text;
 	}
 	
-	public void setContext(File file, int line, int column, String text) {
+	public void setContext(File file, int line, String text, int column) {
 		setContext(file, line, text);
 		this.column = column;
 	}
