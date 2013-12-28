@@ -33,14 +33,24 @@ public class Source {
 	public void resolve() {
 		int address = 0;
 		for (Line line : lines) {
-			address = line.resolve(address, instructionFactory);
+			try {
+				address = line.resolve(address, instructionFactory);
+			} catch (Exception e) {
+				throw new RuntimeException("An exception occurred on line " + line.getLineNumber() +
+						" of " + line.getSourceFile() + ":\n" + line, e);
+			}
 		}
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
 		int address = 0;
 		for (Line line : lines) {
-			address = line.generateObjectCode(address, output);
+			try {
+				address = line.generateObjectCode(address, output);
+			} catch (Exception e) {
+				throw new RuntimeException("An exception occurred on line " + line.getLineNumber() +
+						" of " + line.getSourceFile() + ":\n" + line, e);
+			}
 		}
 	}
 	
