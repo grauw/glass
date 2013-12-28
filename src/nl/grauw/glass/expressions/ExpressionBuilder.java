@@ -79,11 +79,11 @@ public class ExpressionBuilder {
 		GREATER_OR_EQUALS(Precedence.COMPARISON, true),
 		EQUALS(Precedence.EQUALITY, true),
 		NOT_EQUALS(Precedence.EQUALITY, true),
-		BITWISE_AND(Precedence.AND, true),
-		BITWISE_XOR(Precedence.XOR, true),
-		BITWISE_OR(Precedence.OR, true),
-		AND(Precedence.LOGICAL_AND, true),
-		OR(Precedence.LOGICAL_OR, true),
+		AND(Precedence.AND, true),
+		XOR(Precedence.XOR, true),
+		OR(Precedence.OR, true),
+		LOGICAL_AND(Precedence.LOGICAL_AND, true),
+		LOGICAL_OR(Precedence.LOGICAL_OR, true),
 		GROUP_OPEN(Precedence.GROUPING, true),
 		GROUP_CLOSE(Precedence.NONE, true),
 		SEQUENCE(Precedence.SEQUENCE, false),
@@ -159,15 +159,15 @@ public class ExpressionBuilder {
 				return new Equals(operand1, operand2);
 			case NOT_EQUALS:
 				return new NotEquals(operand1, operand2);
-			case BITWISE_AND:
-				return new And(operand1, operand2);
-			case BITWISE_XOR:
-				return new Xor(operand1, operand2);
-			case BITWISE_OR:
-				return new Or(operand1, operand2);
 			case AND:
-				return new LogicalAnd(operand1, operand2);
+				return new And(operand1, operand2);
+			case XOR:
+				return new Xor(operand1, operand2);
 			case OR:
+				return new Or(operand1, operand2);
+			case LOGICAL_AND:
+				return new LogicalAnd(operand1, operand2);
+			case LOGICAL_OR:
 				return new LogicalOr(operand1, operand2);
 			case SEQUENCE:
 				return new Sequence(operand1, operand2);

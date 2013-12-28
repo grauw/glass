@@ -326,7 +326,7 @@ public class LineParser {
 			} else if (character == '&') {
 				return argumentAndState;
 			} else if (character == '^') {
-				expressionBuilder.addOperatorToken(Operator.BITWISE_XOR);
+				expressionBuilder.addOperatorToken(Operator.XOR);
 				return argumentValueState;
 			} else if (character == '|') {
 				return argumentOrState;
@@ -393,10 +393,10 @@ public class LineParser {
 	private class ArgumentAndState extends State {
 		public State parse(char character) {
 			if (character == '&') {
-				expressionBuilder.addOperatorToken(Operator.AND);
+				expressionBuilder.addOperatorToken(Operator.LOGICAL_AND);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken(Operator.BITWISE_AND);
+				expressionBuilder.addOperatorToken(Operator.AND);
 				return argumentValueState.parse(character);
 			}
 		}
@@ -406,10 +406,10 @@ public class LineParser {
 	private class ArgumentOrState extends State {
 		public State parse(char character) {
 			if (character == '|') {
-				expressionBuilder.addOperatorToken(Operator.OR);
+				expressionBuilder.addOperatorToken(Operator.LOGICAL_OR);
 				return argumentValueState;
 			} else {
-				expressionBuilder.addOperatorToken(Operator.BITWISE_OR);
+				expressionBuilder.addOperatorToken(Operator.OR);
 				return argumentValueState.parse(character);
 			}
 		}
