@@ -32,6 +32,14 @@ public class Line implements Context {
 		this.lineNumber = lineNumber;
 	}
 	
+	public Line(Scope scope, Line other) {
+		this(scope, other.sourceFile, other.lineNumber);
+		label = other.label != null ? new Label(other.label, this) : null;
+		mnemonic = other.mnemonic;
+		arguments = other.arguments != null ? other.arguments.copy(this) : null;
+		comment = other.comment;
+	}
+	
 	public File getSourceFile() {
 		return sourceFile;
 	}

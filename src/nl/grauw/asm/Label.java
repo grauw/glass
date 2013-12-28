@@ -12,6 +12,10 @@ public class Label {
 		this.context = context;
 	}
 	
+	public Label(Label other, Context context) {
+		this(other.name, context);
+	}
+	
 	public String getName() {
 		return name;
 	}

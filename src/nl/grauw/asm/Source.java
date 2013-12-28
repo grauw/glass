@@ -13,6 +13,14 @@ public class Source {
 	private final InstructionRegistry instructionFactory = new InstructionRegistry();
 	private final Scope scope = new Scope();
 	
+	public Source() {
+	}
+	
+	public Source(Source other) {
+		for (Line line : other.lines)
+			addLine(new Line(scope, line));
+	}
+	
 	public Scope getScope() {
 		return scope;
 	}
