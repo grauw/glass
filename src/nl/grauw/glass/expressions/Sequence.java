@@ -29,7 +29,13 @@ public class Sequence extends BinaryOperator {
 	@Override
 	protected void addToList(List<Expression> list) {
 		term1.addToList(list);
-		term2.addToList(list);
+		Expression tail = term2;
+		while (tail instanceof Sequence) {
+			Sequence sequence = (Sequence)tail;
+			sequence.getValue().addToList(list);
+			tail = sequence.getTail();
+		}
+		tail.addToList(list);
 	}
 	
 	public Expression getElement(int index) {
