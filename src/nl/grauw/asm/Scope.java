@@ -26,27 +26,27 @@ public class Scope {
 		this.parent = parent;
 	}
 	
-	public void addLabel(String label, Expression value) {
-		if (variables.get(label) != null)
+	public void addLabel(String name, Expression value) {
+		if (variables.get(name) != null)
 			throw new AssemblyException("Can not redefine label.");
-		variables.put(label, value);
+		variables.put(name, value);
 	}
 	
-	public void redefineLabel(String label, Expression value) {
-		variables.put(label, value);
+	public void redefineLabel(String name, Expression value) {
+		variables.put(name, value);
 	}
 	
-	public boolean hasLabel(String label) {
-		return variables.get(label) == null || parent != null && parent.hasLabel(label);
+	public boolean hasLabel(String name) {
+		return variables.get(name) == null || parent != null && parent.hasLabel(name);
 	}
 	
-	public Expression getLabel(String label) {
-		Expression value = variables.get(label);
+	public Expression getLabel(String name) {
+		Expression value = variables.get(name);
 		if (value != null)
 			return value;
 		if (parent != null)
-			return parent.getLabel(label);
-		throw new AssemblyException("Label not found: " + label);
+			return parent.getLabel(name);
+		throw new AssemblyException("Label not found: " + name);
 	}
 	
 	public void addParameters(Expression parameters, Expression arguments) {
