@@ -53,6 +53,7 @@ Directives
 
   * Origin: `org`
   * Assign constant: `equ`
+  * Include: `include`
   * Macro: `macro` / `endm`
   * Repetition: `rept` / `endm`
   * Indefinite repetition: `irp` / `endm`
