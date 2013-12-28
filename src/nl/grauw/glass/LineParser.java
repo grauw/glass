@@ -244,6 +244,9 @@ public class LineParser {
 			} else if (character == '"') {
 				accumulator.append('"');
 				return argumentStringState;
+			} else if (character == '\'') {
+				accumulator.append('\'');
+				return argumentStringState;
 			} else if (character == '\\') {
 				accumulator.append('\\');
 				return argumentStringState;
