@@ -85,8 +85,8 @@ public class Line implements Context {
 	}
 	
 	@Override
-	public Expression getLabel(String label) {
-		return scope.getLabel(label);
+	public Expression getLabel(String name) {
+		return scope.getLabel(name);
 	}
 	
 	@Override
