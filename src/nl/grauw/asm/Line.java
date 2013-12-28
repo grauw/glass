@@ -1,6 +1,8 @@
 package nl.grauw.asm;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import nl.grauw.asm.expressions.Context;
 import nl.grauw.asm.expressions.ContextLiteral;
@@ -81,8 +83,6 @@ public class Line implements Context {
 	
 	@Override
 	public int getAddress() {
-		if ("org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger())
-			return arguments.getAddress();
 		if (address == -1)
 			throw new RuntimeException("Address not initialized.");
 		return address;
@@ -98,9 +98,21 @@ public class Line implements Context {
 		return instruction;
 	}
 	
-	public void resolveInstruction(InstructionRegistry factory) {
+	public int resolve(int address, InstructionRegistry factory) {
+		if ("org".equals(mnemonic) || "ORG".equals(mnemonic) && arguments != null && arguments.isInteger())
+			this.address = arguments.getAddress();
+		else
+			this.address = address;
+		
 		if (mnemonic != null)
 			instruction = factory.createInstruction(mnemonic, arguments);
+		
+		return this.address + getSize();
+	}
+	
+	public void generateObjectCode(OutputStream output) throws IOException {
+		byte[] object = getBytes();
+		output.write(object, 0, object.length);
 	}
 	
 	public byte[] getBytes() {

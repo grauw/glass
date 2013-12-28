@@ -33,18 +33,13 @@ public class Source {
 	public void resolve() {
 		int address = 0;
 		for (Line line : lines) {
-			line.setAddress(address);
-			address = line.getAddress();
-			if (line.getMnemonic() != null)
-				line.resolveInstruction(instructionFactory);
-			address += line.getSize();
+			address = line.resolve(address, instructionFactory);
 		}
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
 		for (Line line : lines) {
-			byte[] object = line.getBytes();
-			output.write(object, 0, object.length);
+			line.generateObjectCode(output);
 		}
 	}
 	
