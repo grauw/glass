@@ -39,9 +39,9 @@ Standard z80 instruction syntax is used:
 
 Parentheses are used to indicate indirection.
 
-In addition to the documented Z80 instructions, the undocumented `ixh`, `ixl`,
-`iyh`, `iyl` 8-bit index instructions are supported, as well as the
-semi-documented `in (c)` and the R800 `mulub` / `muluw` instructions.
+In addition to the documented Z80 instructions, the variations using the
+undocumented `ixh`, `ixl`, `iyh`, `iyl` index registers are supported, as well
+as the semi-documented `in (c)` and the R800 `mulub` / `muluw` instructions.
 
 For register jumps, `jp (hl)` etc., the parentheses are optional.
 
