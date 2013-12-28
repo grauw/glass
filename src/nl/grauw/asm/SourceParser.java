@@ -10,6 +10,7 @@ import java.io.LineNumberReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.asm.expressions.Expression;
@@ -19,26 +20,26 @@ import nl.grauw.asm.instructions.Macro;
 
 public class SourceParser {
 	
-	private final LineParser lineParser = new LineParser();
-	private final List<File> includePaths = new ArrayList<File>();
-	private final Source source;
+	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
+	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
 	
-	String endDirective;
+	private final Source source;
+	private final List<String> terminators;
+	private final List<File> includePaths = new ArrayList<File>();
+	private final LineParser lineParser = new LineParser();
 	
 	public SourceParser(List<File> includePaths) {
+		this.source = new Source();
+		this.terminators = END_TERMINATORS;
 		this.includePaths.add(null);
 		this.includePaths.addAll(includePaths);
-		source = new Source();
 	}
 	
-	public SourceParser(List<File> includePaths, Scope parentScope) {
+	public SourceParser(Scope parentScope, List<String> terminators, List<File> includePaths) {
+		this.source = new Source(parentScope);
+		this.terminators = terminators;
 		this.includePaths.add(null);
 		this.includePaths.addAll(includePaths);
-		source = new Source(parentScope);
-	}
-	
-	public String getEndDirective() {
-		return endDirective;
 	}
 	
 	public Source parse(File sourceFile) {
@@ -77,15 +78,17 @@ public class SourceParser {
 				try {
 					Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
 					lineParser.parse(lineText, line);
-					processDirective(line, reader, sourceFile);
-					if (endDirective != null)
+					if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
 						return source;
+					processDirective(line, reader, sourceFile);
 					source.addLine(line);
 				} catch (AssemblyException e) {
 					e.setContext(sourceFile, reader.getLineNumber(), lineText);
 					throw e;
 				}
 			}
+			if (terminators != END_TERMINATORS)
+				throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
 		} catch (IOException e) {
 			throw new AssemblyException(e);
 		}
@@ -117,17 +120,11 @@ public class SourceParser {
 		case "MACRO":
 			if (line.getLabel() == null)
 				throw new AssemblyException("Macro without label.");
-			SourceParser parser = new SourceParser(includePaths, source.getScope());
+			SourceParser parser = new SourceParser(source.getScope(), ENDM_TERMINATORS, includePaths);
 			Source macroSource = parser.parse(reader, sourceFile);
-			if (!"endm".equals(parser.getEndDirective()))
-				throw new AssemblyException("Unexpected end directive: " + parser.getEndDirective());
 			Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
 			factory.register(source.getScope());
 			break;
-		case "endm":
-		case "ENDM":
-			endDirective = "endm";
-			return;
 		}
 	}
 	
