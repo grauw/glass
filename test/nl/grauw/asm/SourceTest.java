@@ -171,6 +171,20 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testMacroNesting() {
+		assertArrayEquals(b(0x3E, 0x11, 0x3E, 0x21), assemble(
+			"test: MACRO arg",
+			"test2: MACRO arg",
+			" ld a,20H + arg",
+			" ENDM",
+			" ld a,10H + arg",
+			" test2 arg",
+			" ENDM",
+			" test 1H"
+		));
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

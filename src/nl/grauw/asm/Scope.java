@@ -12,6 +12,13 @@ public class Scope {
 	
 	Map<String, Expression> variables = new HashMap<>();
 	
+	public Scope() {
+	}
+	
+	public Scope(Scope other) {
+		variables.putAll(other.variables);
+	}
+	
 	public void addLabel(String label, Expression value) {
 		if (variables.get(label) != null)
 			throw new AssemblyException("Can not redefine label.");

@@ -10,13 +10,17 @@ import nl.grauw.asm.instructions.InstructionRegistry;
 public class Source {
 	
 	private final ArrayList<Line> lines = new ArrayList<Line>();
-	private final InstructionRegistry instructionFactory = new InstructionRegistry();
-	private final Scope scope = new Scope();
+	private final InstructionRegistry instructionFactory;
+	private final Scope scope;
 	
 	public Source() {
+		instructionFactory = new InstructionRegistry();
+		scope = new Scope();
 	}
 	
 	public Source(Source other) {
+		instructionFactory = new InstructionRegistry(other.instructionFactory);
+		scope = new Scope(other.scope);
 		for (Line line : other.lines)
 			addLine(new Line(scope, line));
 	}

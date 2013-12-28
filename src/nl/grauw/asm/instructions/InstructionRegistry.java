@@ -125,6 +125,10 @@ public class InstructionRegistry {
 		new MacroDeclaration.Factory().register(this);
 	}
 	
+	public InstructionRegistry(InstructionRegistry other) {
+		registry.putAll(other.registry);
+	}
+	
 	public void add(String mnemonic, InstructionFactory factory) {
 		List<InstructionFactory> factoryList = registry.get(mnemonic);
 		if (factoryList == null) {
