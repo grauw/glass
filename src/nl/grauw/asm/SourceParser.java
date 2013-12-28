@@ -19,9 +19,9 @@ import nl.grauw.asm.instructions.Macro;
 
 public class SourceParser {
 	
-	LineParser lineParser = new LineParser();
-	List<File> includePaths = new ArrayList<File>();
-	Source source = new Source();
+	private final LineParser lineParser = new LineParser();
+	private final List<File> includePaths = new ArrayList<File>();
+	private final Source source = new Source();
 	
 	String endDirective;
 	
