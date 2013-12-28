@@ -31,14 +31,14 @@ public class AssemblyException extends RuntimeException {
 	}
 	
 	public void setContext(File file, int line, String text) {
-		this.file = file;
-		this.line = line;
-		this.text = text;
+		this.file = this.file == null ? file : this.file;
+		this.line = this.line == -1 ? line : this.line;
+		this.text = this.text == null ? text : this.text;
 	}
 	
 	public void setContext(File file, int line, String text, int column) {
 		setContext(file, line, text);
-		this.column = column;
+		this.column = this.column == -1 ? column : this.column;
 	}
 	
 	@Override
