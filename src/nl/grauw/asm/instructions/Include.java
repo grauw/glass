@@ -12,7 +12,7 @@ public class Include extends Directive {
 		
 		@Override
 		public String getMnemonic() {
-			return "equ";
+			return "include";
 		}
 		
 		@Override
