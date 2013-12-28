@@ -21,13 +21,20 @@ public class SourceParser {
 	
 	private final LineParser lineParser = new LineParser();
 	private final List<File> includePaths = new ArrayList<File>();
-	private final Source source = new Source();
+	private final Source source;
 	
 	String endDirective;
 	
 	public SourceParser(List<File> includePaths) {
 		this.includePaths.add(null);
 		this.includePaths.addAll(includePaths);
+		source = new Source();
+	}
+	
+	public SourceParser(List<File> includePaths, Scope parentScope) {
+		this.includePaths.add(null);
+		this.includePaths.addAll(includePaths);
+		source = new Source(parentScope);
 	}
 	
 	public String getEndDirective() {
@@ -110,7 +117,7 @@ public class SourceParser {
 		case "MACRO":
 			if (line.getLabel() == null)
 				throw new AssemblyException("Macro without label.");
-			SourceParser parser = new SourceParser(includePaths);
+			SourceParser parser = new SourceParser(includePaths, source.getScope());
 			Source macroSource = parser.parse(reader, sourceFile);
 			if (!"endm".equals(parser.getEndDirective()))
 				throw new AssemblyException("Unexpected end directive: " + parser.getEndDirective());

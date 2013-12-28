@@ -18,6 +18,11 @@ public class Source {
 		scope = new Scope();
 	}
 	
+	public Source(Scope parentScope) {
+		instructionFactory = new InstructionRegistry();
+		scope = new Scope(parentScope);
+	}
+	
 	public Source(Source other) {
 		instructionFactory = new InstructionRegistry(other.instructionFactory);
 		scope = new Scope(other.scope);

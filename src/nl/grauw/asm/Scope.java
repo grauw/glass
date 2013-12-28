@@ -10,13 +10,14 @@ import nl.grauw.asm.instructions.ArgumentException;
 
 public class Scope {
 	
+	Scope parent;
 	Map<String, Expression> variables = new HashMap<>();
 	
 	public Scope() {
 	}
 	
-	public Scope(Scope other) {
-		variables.putAll(other.variables);
+	public Scope(Scope parent) {
+		this.parent = parent;
 	}
 	
 	public void addLabel(String label, Expression value) {
@@ -30,14 +31,16 @@ public class Scope {
 	}
 	
 	public boolean hasLabel(String label) {
-		return variables.get(label) == null;
+		return variables.get(label) == null || parent != null && parent.hasLabel(label);
 	}
 	
 	public Expression getLabel(String label) {
 		Expression value = variables.get(label);
-		if (value == null)
-			throw new AssemblyException("Label not found: " + label);
-		return value;
+		if (value != null)
+			return value;
+		if (parent != null)
+			return parent.getLabel(label);
+		throw new AssemblyException("Label not found: " + label);
 	}
 	
 	public void addParameters(Expression parameters, Expression arguments) {

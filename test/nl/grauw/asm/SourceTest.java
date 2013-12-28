@@ -185,6 +185,17 @@ public class SourceTest {
 		));
 	}
 	
+	@Test
+	public void testMacroOuterScope() {
+		assertArrayEquals(b(0x3E, 0x11), assemble(
+			"test: MACRO arg",
+			" ld a,value + arg",
+			" ENDM",
+			" test 1H",
+			"value: equ 10H"
+		));
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
