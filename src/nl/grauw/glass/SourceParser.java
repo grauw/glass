@@ -64,7 +64,7 @@ public class SourceParser {
 	}
 	
 	public Source parse(InputStream reader, File sourceFile) {
-		return parse(new InputStreamReader(reader, Charset.forName("US-ASCII")), sourceFile);
+		return parse(new InputStreamReader(reader, Charset.forName("ISO-8859-1")), sourceFile);
 	}
 	
 	public Source parse(Reader reader, File sourceFile) {
