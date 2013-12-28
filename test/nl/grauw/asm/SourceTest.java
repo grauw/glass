@@ -116,6 +116,18 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroAddress() {
+		assertArrayEquals(b(0x00, 0xC3, 0x01, 0x00, 0xC3, 0x04, 0x00), assemble(
+			" nop",
+			"test: MACRO",
+			" jp $",
+			" ENDM",
+			" test",
+			" test"
+		));
+	}
+	
+	@Test
 	public void testMacroArguments() {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x20), assemble(
 			"test: MACRO arg",
