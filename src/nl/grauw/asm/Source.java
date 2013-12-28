@@ -1,5 +1,6 @@
 package nl.grauw.asm;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -59,6 +60,16 @@ public class Source {
 				throw e;
 			}
 		}
+	}
+	
+	public byte[] generateObjectCode(int address) {
+		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+		try {
+			generateObjectCode(address, bytes);
+		} catch (IOException e) {
+			throw new AssemblyException(e);
+		}
+		return bytes.toByteArray();
 	}
 	
 	public String toString() {
