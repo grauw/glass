@@ -1,5 +1,8 @@
 package nl.grauw.asm.expressions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Expression {
 	
 	public abstract String toDebugString();
@@ -31,6 +34,16 @@ public abstract class Expression {
 		if (address < 0 || address >= 0x10000)
 			throw new EvaluationException("Address out of range: " + Integer.toHexString(address) + "H");
 		return address;
+	}
+	
+	public List<Expression> getList() {
+		List<Expression> list = new ArrayList<>();
+		addToList(list);
+		return list;
+	}
+
+	protected void addToList(List<Expression> list) {
+		list.add(this);
 	}
 	
 	public Expression getElement(int index) {
