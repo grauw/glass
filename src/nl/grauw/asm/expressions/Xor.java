@@ -7,6 +7,11 @@ public class Xor extends BinaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Xor(term1.copy(context), term2.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return term1.getInteger() ^ term2.getInteger();
 	}

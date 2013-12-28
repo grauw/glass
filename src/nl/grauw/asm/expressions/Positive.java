@@ -7,6 +7,11 @@ public class Positive extends UnaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Positive(term.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return +term.getInteger();
 	}

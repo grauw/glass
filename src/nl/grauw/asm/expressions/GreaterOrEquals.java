@@ -7,6 +7,11 @@ public class GreaterOrEquals extends BinaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new GreaterOrEquals(term1.copy(context), term2.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return term1.getInteger() >= term2.getInteger() ? -1 : 0;
 	}

@@ -13,6 +13,11 @@ public class StringLiteral extends Literal {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return this;
+	}
+	
+	@Override
 	public boolean isInteger() {
 		return string.length() == 1;
 	}

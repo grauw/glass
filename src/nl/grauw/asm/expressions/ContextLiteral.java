@@ -13,6 +13,11 @@ public class ContextLiteral extends Literal {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new ContextLiteral(context);
+	}
+	
+	@Override
 	public boolean isInteger() {
 		return true;
 	}

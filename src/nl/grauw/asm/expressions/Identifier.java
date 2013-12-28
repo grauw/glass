@@ -14,6 +14,11 @@ public class Identifier extends Expression {
 		return name;
 	}
 	
+	@Override
+	public Expression copy(Context context) {
+		return new Identifier(name, context);
+	}
+	
 	public Expression resolve() {
 		return context.getLabel(name);
 	}

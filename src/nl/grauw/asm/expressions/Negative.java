@@ -7,6 +7,11 @@ public class Negative extends UnaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Negative(term.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return -term.getInteger();
 	}

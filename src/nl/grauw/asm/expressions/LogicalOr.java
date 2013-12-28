@@ -7,6 +7,11 @@ public class LogicalOr extends BinaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new LogicalOr(term1.copy(context), term2.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		int value1 = term1.getInteger();
 		return value1 != 0 ? value1 : term2.getInteger();

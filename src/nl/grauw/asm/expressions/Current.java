@@ -9,6 +9,11 @@ public class Current extends Expression {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Current(context);
+	}
+	
+	@Override
 	public boolean isInteger() {
 		return true;
 	}

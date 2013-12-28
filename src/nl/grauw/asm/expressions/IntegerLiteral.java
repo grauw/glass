@@ -15,6 +15,11 @@ public class IntegerLiteral extends Literal {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return this;
+	}
+	
+	@Override
 	public boolean isInteger() {
 		return true;
 	}

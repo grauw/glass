@@ -7,6 +7,11 @@ public class Complement extends UnaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Complement(term.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return ~term.getInteger();
 	}

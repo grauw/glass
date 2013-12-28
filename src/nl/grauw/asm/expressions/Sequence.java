@@ -15,6 +15,11 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Sequence(term1.copy(context), term2.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		throw new EvaluationException("Can not evaluate sequence to integer.");
 	}

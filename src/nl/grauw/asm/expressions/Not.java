@@ -7,6 +7,11 @@ public class Not extends UnaryOperator {
 	}
 	
 	@Override
+	public Expression copy(Context context) {
+		return new Not(term.copy(context));
+	}
+	
+	@Override
 	public int getInteger() {
 		return term.getInteger() == 0 ? -1 : 0;
 	}
