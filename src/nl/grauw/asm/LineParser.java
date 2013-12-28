@@ -15,7 +15,7 @@ public class LineParser {
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	private String text;
-	private int columnNumber;
+	private int column;
 	
 	public Line parse(String text, Line line) {
 		this.line = line;
@@ -24,10 +24,10 @@ public class LineParser {
 		
 		try {
 			for (int i = 0, length = text.length(); i < length; i++) {
-				columnNumber = i;
+				column = i;
 				state = state.parse(text.charAt(i));
 			}
-			columnNumber = text.length();
+			column = text.length();
 			state = state.parse('\0');
 			
 			if (accumulator.length() > 0)
@@ -445,8 +445,8 @@ public class LineParser {
 		}
 		
 		public SyntaxError(Throwable cause) {
-			super("Syntax error on line " + line.getLineNumber() + ", column " + columnNumber + " of file " + line.getSourceFile() +
-					"\n" + text + "\n" + (text.substring(0, columnNumber).replaceAll("[^\t]", " ") + "^"), cause);
+			super("Syntax error on line " + line.getLineNumber() + ", column " + column + " of file " + line.getSourceFile() +
+					"\n" + text + "\n" + (text.substring(0, column).replaceAll("[^\t]", " ") + "^"), cause);
 		}
 		
 	}
