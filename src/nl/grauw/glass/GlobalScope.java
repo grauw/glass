@@ -5,6 +5,9 @@ import nl.grauw.glass.instructions.*;
 public class GlobalScope extends Scope {
 	
 	public GlobalScope() {
+		super();
+		setAddress(0);
+		
 		new Adc_A.Factory().register(this);
 		new Adc_A_N.Factory().register(this);
 		new Adc_HL.Factory().register(this);
