@@ -459,7 +459,7 @@ public class LineParser {
 	private class CommentReadState extends State {
 		public State parse(char character) {
 			if (character == '\0') {
-				line.setComment(new Comment(accumulator.toString()));
+				line.setComment(accumulator.toString());
 				accumulator.setLength(0);
 				return endState;
 			} else {

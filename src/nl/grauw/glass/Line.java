@@ -20,7 +20,7 @@ public class Line implements Context {
 	private Label label;
 	private String mnemonic;
 	private Expression arguments;
-	private Comment comment;
+	private String comment;
 	private int address = -1;
 	
 	private Instruction instruction;
@@ -72,11 +72,11 @@ public class Line implements Context {
 		this.arguments = arguments;
 	}
 	
-	public Comment getComment() {
+	public String getComment() {
 		return comment;
 	}
 	
-	public void setComment(Comment comment) {
+	public void setComment(String comment) {
 		this.comment = comment;
 	}
 	

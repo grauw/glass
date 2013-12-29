@@ -28,7 +28,7 @@ public class LineParserTest {
 	
 	@Test
 	public void testComment() {
-		assertEquals("test comment", parse(";test comment").getComment().toString());
+		assertEquals("test comment", parse(";test comment").getComment());
 	}
 	
 	@Test
