@@ -22,6 +22,7 @@ public class Schema implements SchemaType {
 	public static SchemaType INDIRECT = new IsIndirect();
 	public static SchemaType INTEGER = new IsInteger();
 	public static SchemaType STRING = new IsString();
+	public static SchemaType IDENTIFIER = new IsIdentifier();
 	public static SchemaType DIRECT_N = new And(DIRECT, INTEGER);
 	public static SchemaType DIRECT_R = new And(DIRECT, new IsRegister8Bit());
 	public static SchemaType DIRECT_A = new And(DIRECT, new IsRegister(Register.A));
@@ -82,6 +83,12 @@ public class Schema implements SchemaType {
 	public static class IsString implements SchemaType {
 		public boolean check(Expression argument) {
 			return argument instanceof StringLiteral;
+		}
+	}
+	
+	public static class IsIdentifier implements SchemaType {
+		public boolean check(Expression argument) {
+			return argument instanceof Identifier;
 		}
 	}
 	
