@@ -197,15 +197,60 @@ public class SourceTest {
 	
 	@Test
 	public void testMacroNesting() {
-		assertArrayEquals(b(0x3E, 0x11, 0x3E, 0x21), assemble(
+		assertArrayEquals(b(0x3E, 0x13, 0x3E, 0x23), assemble(
 			"test: MACRO arg",
 			"test: MACRO arg",
-			" ld a,20H + arg",
+			" ld a,20H + arg + value",
 			" ENDM",
-			" ld a,10H + arg",
+			" ld a,10H + arg + value",
 			" test arg",
+			"value: equ 2",
 			" ENDM",
 			" test 1H"
+		));
+	}
+	
+	@Test
+	public void testMacroTwiceWithLocalReferences() {
+		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x23), assemble(
+			"test: MACRO arg",
+			" ld a,10H + arg + value",
+			" test2 arg",
+			"value: equ 3",
+			" ENDM",
+			"test2: MACRO arg",
+			" ld a,20H + arg + value",
+			"value: equ 2",
+			" ENDM",
+			" test 1H"
+		));
+	}
+	
+	@Test
+	public void testMacroUnboundReference() {
+		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x24), assemble(
+			"test: MACRO arg",
+			" ld a,10H + arg + value",
+			" test2 arg",
+			"value: equ 3",
+			" ENDM",
+			"test2: MACRO arg",
+			" ld a,20H + arg + value",
+			" ENDM",
+			" test 1H"
+		));
+	}
+	
+	@Test
+	public void testMacroLabelDereference() {
+		assertArrayEquals(b(0x21, 0x03, 0x00, 0x21, 0x06, 0x00, 0x11, 0x06, 0x00), assemble(
+			"test: MACRO",
+			" ld hl,test2",
+			"test2:",
+			" ENDM",
+			" test",
+			"test3: test",
+			" ld de,test3.test2"
 		));
 	}
 	

@@ -1,6 +1,8 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.AssemblyException;
+import nl.grauw.glass.Line;
+import nl.grauw.glass.ParameterScope;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
@@ -54,11 +56,17 @@ public class Macro extends Directive {
 			scope.addInstruction(mnemonic, this);
 		}
 		
+		public Instruction createInstruction(Expression arguments, Scope scope) {
+			Scope parameterScope = new ParameterScope(scope, parameters, arguments);
+			Source copy = new Source(scope);
+			for (Line line : source.getLines())
+				copy.addLine(new Line(parameterScope, line));
+			return new Macro(copy);
+		}
+		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			Source copy = new Source(source);
-			copy.getScope().addParameters(parameters, arguments);
-			return new Macro(copy);
+			throw new AssemblyException("Not implemented.");
 		}
 		
 	}

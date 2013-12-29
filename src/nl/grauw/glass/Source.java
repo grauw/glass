@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Source {
 	
-	private final List<Line> lines = new ArrayList<Line>();
 	private final Scope scope;
+	private final List<Line> lines = new ArrayList<Line>();
 	
 	public Source() {
 		scope = new GlobalScope();
@@ -19,14 +19,12 @@ public class Source {
 		this.scope = scope;
 	}
 	
-	public Source(Source other) {
-		scope = new Scope(other.scope);
-		for (Line line : other.lines)
-			addLine(new Line(scope, line));
-	}
-	
 	public Scope getScope() {
 		return scope;
+	}
+	
+	public List<Line> getLines() {
+		return lines;
 	}
 	
 	public Line addLine(Line line) {
