@@ -55,7 +55,7 @@ public class Scope implements Context {
 	}
 	
 	public boolean hasLabel(String name) {
-		return variables.get(name) == null || parent != null && parent.hasLabel(name);
+		return variables.get(name) != null || parent != null && parent.hasLabel(name);
 	}
 	
 	public Expression getLabel(String name) {
