@@ -49,7 +49,7 @@ public class LineParser {
 		
 		public boolean isIdentifier(char character) {
 			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
-					character == '\'';
+					character == '$' || character == '\'';
 		}
 		
 		public boolean isIdentifierStart(char character) {
