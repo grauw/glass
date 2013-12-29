@@ -110,16 +110,20 @@ public class Scope implements Context {
 	}
 	
 	public Instruction createInstruction(String mnemonic, Expression arguments) {
+		return createInstruction(mnemonic, arguments, this);
+	}
+	
+	public Instruction createInstruction(String mnemonic, Expression arguments, Scope scope) {
 		List<InstructionFactory> factoryList = instructions.get(mnemonic);
 		if (factoryList != null) {
 			for (InstructionFactory factory : factoryList) {
-				Instruction instruction = factory.createInstruction(arguments);
+				Instruction instruction = factory.createInstruction(arguments, scope);
 				if (instruction != null)
 					return instruction;
 			}
 		}
 		if (parent != null)
-			return parent.createInstruction(mnemonic, arguments);
+			return parent.createInstruction(mnemonic, arguments, scope);
 		throw new AssemblyException("Unrecognized mnemonic.");
 	}
 	

@@ -7,6 +7,10 @@ public abstract class InstructionFactory {
 	
 	public abstract void register(Scope scope);
 	
+	public Instruction createInstruction(Expression arguments, Scope scope) {
+		return createInstruction(arguments);
+	}
+	
 	public abstract Instruction createInstruction(Expression arguments);
 	
 }
