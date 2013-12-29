@@ -12,12 +12,12 @@ public class LineParserTest {
 	
 	@Test
 	public void testCharacterLiteral() {
-		assertEquals('x', ((CharacterLiteral)parse("'x'")).getCharacter());
+		assertEquals('x', ((CharacterLiteral)parseExpression("'x'")).getCharacter());
 	}
 	
 	@Test
 	public void testCharacterLiteralEscape() {
-		assertEquals('"', ((CharacterLiteral)parse("'\\\"'")).getCharacter());
+		assertEquals('"', ((CharacterLiteral)parseExpression("'\\\"'")).getCharacter());
 	}
 	
 	@Test(expected=SyntaxError.class)
@@ -40,10 +40,14 @@ public class LineParserTest {
 		parse("'\\");
 	}
 	
-	public Expression parse(String text) {
+	public Line parse(String text) {
 		Line line = new Line(new Scope(), null, 0);
-		new LineParser().parse(" test " + text, line);
-		return line.getArguments();
+		new LineParser().parse(text, line);
+		return line;
+	}
+	
+	public Expression parseExpression(String text) {
+		return parse(" test " + text).getArguments();
 	}
 	
 }
