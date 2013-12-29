@@ -55,16 +55,30 @@ public class Scope implements Context {
 	}
 	
 	public boolean hasLabel(String name) {
-		return variables.get(name) != null || parent != null && parent.hasLabel(name);
+		return getLocalLabel(name) != null || parent != null && parent.hasLabel(name);
 	}
 	
 	public Expression getLabel(String name) {
-		Expression value = variables.get(name);
+		Expression value = getLocalLabel(name);
 		if (value != null)
 			return value;
 		if (parent != null)
 			return parent.getLabel(name);
 		throw new AssemblyException("Label not found: " + name);
+	}
+	
+	private Expression getLocalLabel(String name) {
+		Expression value = variables.get(name);
+		if (value != null)
+			return value;
+		
+		int index = name.length();
+		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
+			Expression result = variables.get(name.substring(0, index));
+			if (result instanceof ContextLiteral)
+				return ((Scope)((ContextLiteral)result).getContext()).getLocalLabel(name.substring(index + 1));
+		}
+		return null;
 	}
 	
 	public void addParameters(Expression parameters, Expression arguments) {
