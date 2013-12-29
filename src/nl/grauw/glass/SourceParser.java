@@ -102,30 +102,42 @@ public class SourceParser {
 		switch (line.getMnemonic()) {
 		case "include":
 		case "INCLUDE":
-			if (line.getArguments() instanceof Sequence)
-				throw new AssemblyException("Include only accepts 1 argument.");
-			Expression argument = line.getArguments();
-			if (!(argument instanceof StringLiteral))
-				throw new AssemblyException("A string literal is expected.");
-			String includeFile = ((StringLiteral)argument).getString();
-			parseInclude(new File(includeFile));
+			processInclude(line);
 			break;
 		case "equ":
 		case "EQU":
-			if (line.getLabel() == null)
-				throw new AssemblyException("Equ statement without label.");
-			source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
+			processEqu(line);
 			break;
 		case "macro":
 		case "MACRO":
-			if (line.getLabel() == null)
-				throw new AssemblyException("Macro without label.");
-			SourceParser parser = new SourceParser(source.getScope(), ENDM_TERMINATORS, includePaths);
-			Source macroSource = parser.parse(reader, sourceFile);
-			Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
-			factory.register(source.getScope());
+			processMacro(line, reader, sourceFile);
 			break;
 		}
+	}
+	
+	private void processInclude(Line line) {
+		if (line.getArguments() instanceof Sequence)
+			throw new AssemblyException("Include only accepts 1 argument.");
+		Expression argument = line.getArguments();
+		if (!(argument instanceof StringLiteral))
+			throw new AssemblyException("A string literal is expected.");
+		String includeFile = ((StringLiteral)argument).getString();
+		parseInclude(new File(includeFile));
+	}
+	
+	private void processEqu(Line line) {
+		if (line.getLabel() == null)
+			throw new AssemblyException("Equ statement without label.");
+		source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
+	}
+	
+	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {
+		if (line.getLabel() == null)
+			throw new AssemblyException("Macro without label.");
+		SourceParser parser = new SourceParser(source.getScope(), ENDM_TERMINATORS, includePaths);
+		Source macroSource = parser.parse(reader, sourceFile);
+		Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
+		factory.register(source.getScope());
 	}
 	
 }
