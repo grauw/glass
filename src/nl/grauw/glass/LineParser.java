@@ -458,12 +458,12 @@ public class LineParser {
 	private CommentReadState commentReadState = new CommentReadState();
 	private class CommentReadState extends State {
 		public State parse(char character) {
-			accumulator.append(character);
 			if (character == '\0') {
 				line.setComment(new Comment(accumulator.toString()));
 				accumulator.setLength(0);
 				return endState;
 			} else {
+				accumulator.append(character);
 				return commentReadState;
 			}
 		}
