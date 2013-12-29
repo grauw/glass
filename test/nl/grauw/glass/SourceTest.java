@@ -188,11 +188,11 @@ public class SourceTest {
 	public void testMacroNesting() {
 		assertArrayEquals(b(0x3E, 0x11, 0x3E, 0x21), assemble(
 			"test: MACRO arg",
-			"test2: MACRO arg",
+			"test: MACRO arg",
 			" ld a,20H + arg",
 			" ENDM",
 			" ld a,10H + arg",
-			" test2 arg",
+			" test arg",
 			" ENDM",
 			" test 1H"
 		));
