@@ -14,7 +14,6 @@ public class Line {
 	
 	private static final byte[] NO_BYTES = new byte[] {};
 	
-	private final Scope sourceScope;
 	private final Scope scope;
 	private final File sourceFile;
 	private final int lineNumber;
@@ -27,7 +26,6 @@ public class Line {
 	private Directive directive;
 	
 	public Line(Scope sourceScope, File sourceFile, int lineNumber) {
-		this.sourceScope = sourceScope;
 		this.scope = new Scope(sourceScope);
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
@@ -81,10 +79,6 @@ public class Line {
 		this.comment = comment;
 	}
 	
-	public Scope getSourceScope() {
-		return sourceScope;
-	}
-	
 	public Scope getScope() {
 		return scope;
 	}
@@ -107,7 +101,7 @@ public class Line {
 	
 	public int resolve(int address) {
 		if (mnemonic != null) {
-			instruction = sourceScope.createInstruction(mnemonic, arguments);
+			instruction = scope.createInstruction(mnemonic, arguments);
 			return instruction.resolve(scope, address);
 		} else {
 			scope.setAddress(address);
