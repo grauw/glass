@@ -14,10 +14,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.directives.Equ;
+import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 import nl.grauw.glass.expressions.StringLiteral;
-import nl.grauw.glass.instructions.Macro;
 
 public class SourceParser {
 	
@@ -136,9 +136,7 @@ public class SourceParser {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
 		SourceParser parser = new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths);
-		Source macroSource = parser.parse(reader, sourceFile);
-		Macro.Factory factory = new Macro.Factory(line.getLabel(), line.getArguments(), macroSource);
-		factory.register(line.getSourceScope());
+		line.setDirective(new Macro(parser.parse(reader, sourceFile)));
 	}
 	
 }
