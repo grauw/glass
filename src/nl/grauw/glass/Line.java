@@ -37,6 +37,7 @@ public class Line {
 		mnemonic = other.mnemonic;
 		arguments = other.arguments != null ? other.arguments.copy(scope) : null;
 		comment = other.comment;
+		directive = other.directive;
 	}
 	
 	public File getSourceFile() {
