@@ -4,10 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Source {
 	
-	private final ArrayList<Line> lines = new ArrayList<Line>();
+	private final List<Line> lines = new ArrayList<Line>();
 	private final Scope scope;
 	
 	public Source() {
