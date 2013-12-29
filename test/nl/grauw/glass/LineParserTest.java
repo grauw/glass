@@ -13,12 +13,12 @@ public class LineParserTest {
 	
 	@Test
 	public void testLabel() {
-		assertEquals("test_label1", parse("test_label1:").getLabel().getName());
+		assertEquals("test_label1", parse("test_label1:").getLabel());
 	}
 	
 	@Test
 	public void testLabelNoColon() {
-		assertEquals("test_label1", parse("test_label1").getLabel().getName());
+		assertEquals("test_label1", parse("test_label1").getLabel());
 	}
 	
 	@Test

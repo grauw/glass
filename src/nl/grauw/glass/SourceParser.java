@@ -128,7 +128,7 @@ public class SourceParser {
 	private void processEqu(Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Equ statement without label.");
-		source.getScope().redefineLabel(line.getLabel().getName(), line.getArguments());
+		source.getScope().redefineLabel(line.getLabel(), line.getArguments());
 	}
 	
 	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {
@@ -136,7 +136,7 @@ public class SourceParser {
 			throw new AssemblyException("Macro without label.");
 		SourceParser parser = new SourceParser(source.getScope(), ENDM_TERMINATORS, includePaths);
 		Source macroSource = parser.parse(reader, sourceFile);
-		Macro.Factory factory = new Macro.Factory(line.getLabel().getName(), line.getArguments(), macroSource);
+		Macro.Factory factory = new Macro.Factory(line.getLabel(), line.getArguments(), macroSource);
 		factory.register(source.getScope());
 	}
 	

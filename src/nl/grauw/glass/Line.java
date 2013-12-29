@@ -17,7 +17,7 @@ public class Line {
 	private final Scope innerScope;
 	private final File sourceFile;
 	private final int lineNumber;
-	private Label label;
+	private String label;
 	private String mnemonic;
 	private Expression arguments;
 	private String comment;
@@ -33,7 +33,7 @@ public class Line {
 	
 	public Line(Scope scope, Line other) {
 		this(scope, other.sourceFile, other.lineNumber);
-		label = other.label != null ? new Label(other.label, innerScope) : null;
+		label = other.label;
 		mnemonic = other.mnemonic;
 		arguments = other.arguments != null ? other.arguments.copy(innerScope) : null;
 		comment = other.comment;
@@ -47,13 +47,13 @@ public class Line {
 		return lineNumber;
 	}
 	
-	public Label getLabel() {
+	public String getLabel() {
 		return label;
 	}
 	
-	public void setLabel(Label label) {
+	public void setLabel(String label) {
 		this.label = label;
-		scope.addLabel(label.getName(), new ContextLiteral(innerScope));
+		scope.addLabel(label, new ContextLiteral(innerScope));
 	}
 	
 	public String getMnemonic() {

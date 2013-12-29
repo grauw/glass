@@ -83,7 +83,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				line.setLabel(new Label(accumulator.toString(), line.getInnerScope()));
+				line.setLabel(accumulator.toString());
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
