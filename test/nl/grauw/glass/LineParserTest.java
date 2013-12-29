@@ -5,10 +5,31 @@ import static org.junit.Assert.*;
 import nl.grauw.glass.LineParser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 
 import org.junit.Test;
 
 public class LineParserTest {
+	
+	@Test
+	public void testLabel() {
+		assertEquals("test_label1", parse("test_label1:").getLabel().getName());
+	}
+	
+	@Test
+	public void testMnemonic() {
+		assertEquals("exx", parse(" exx").getMnemonic());
+	}
+	
+	@Test
+	public void testArguments() {
+		assertTrue(parse(" cp 0H").getArguments() instanceof IntegerLiteral);
+	}
+	
+	@Test
+	public void testComment() {
+		assertEquals("test comment", parse(";test comment").getComment().toString());
+	}
 	
 	@Test
 	public void testCharacterLiteral() {
