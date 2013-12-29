@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.Sequence;
@@ -12,18 +13,32 @@ import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.InstructionFactory;
 
-public class Scope {
+public class Scope implements Context {
 	
 	private Map<String, List<InstructionFactory>> instructions = new HashMap<>();
 	
 	Scope parent;
 	Map<String, Expression> variables = new HashMap<>();
+	private int address = -1;
 	
 	public Scope() {
 	}
 	
 	public Scope(Scope parent) {
 		this.parent = parent;
+	}
+	
+	@Override
+	public int getAddress() {
+		if (address == -1)
+			throw new AssemblyException("Address not initialized.");
+		return address;
+	}
+	
+	public void setAddress(int address) {
+		if (address < 0 || address >= 0x10000)
+			throw new AssemblyException("Address out of range: " + Integer.toHexString(address) + "H");
+		this.address = address;
 	}
 	
 	public void addLabel(String name, Expression value) {

@@ -83,7 +83,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				line.setLabel(new Label(accumulator.toString(), line));
+				line.setLabel(new Label(accumulator.toString(), line.getInnerScope()));
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
@@ -157,7 +157,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Current(line));
+				expressionBuilder.addValueToken(new Current(line.getInnerScope()));
 				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
@@ -195,7 +195,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line.getInnerScope()));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}

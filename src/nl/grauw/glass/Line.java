@@ -4,38 +4,38 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.Org;
 
-public class Line implements Context {
+public class Line {
 	
 	private static final byte[] NO_BYTES = new byte[] {};
 	
 	private final Scope scope;
+	private final Scope innerScope;
 	private final File sourceFile;
 	private final int lineNumber;
 	private Label label;
 	private String mnemonic;
 	private Expression arguments;
 	private String comment;
-	private int address = -1;
 	
 	private Instruction instruction;
 	
 	public Line(Scope scope, File sourceFile, int lineNumber) {
 		this.scope = scope;
+		this.innerScope = new Scope(scope);
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
 	}
 	
 	public Line(Scope scope, Line other) {
 		this(scope, other.sourceFile, other.lineNumber);
-		label = other.label != null ? new Label(other.label, this) : null;
+		label = other.label != null ? new Label(other.label, innerScope) : null;
 		mnemonic = other.mnemonic;
-		arguments = other.arguments != null ? other.arguments.copy(this) : null;
+		arguments = other.arguments != null ? other.arguments.copy(innerScope) : null;
 		comment = other.comment;
 	}
 	
@@ -53,7 +53,7 @@ public class Line implements Context {
 	
 	public void setLabel(Label label) {
 		this.label = label;
-		scope.addLabel(label.getName(), new ContextLiteral(this));
+		scope.addLabel(label.getName(), new ContextLiteral(innerScope));
 	}
 	
 	public String getMnemonic() {
@@ -84,22 +84,8 @@ public class Line implements Context {
 		return scope;
 	}
 	
-	@Override
-	public Expression getLabel(String name) {
-		return scope.getLabel(name);
-	}
-	
-	@Override
-	public int getAddress() {
-		if (address == -1)
-			throw new AssemblyException("Address not initialized.");
-		return address;
-	}
-	
-	public void setAddress(int address) {
-		if (address < 0 || address >= 0x10000)
-			throw new AssemblyException("Address out of range: " + Integer.toHexString(address) + "H");
-		this.address = address;
+	public Scope getInnerScope() {
+		return innerScope;
 	}
 	
 	public Instruction getInstruction() {
@@ -109,15 +95,15 @@ public class Line implements Context {
 	public int resolve(int address) {
 		if (mnemonic != null)
 			instruction = scope.createInstruction(mnemonic, arguments);
-		this.address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
+		innerScope.setAddress(instruction instanceof Org ? ((Org)instruction).getAddress() : address);
 		if (instruction != null)
-			return instruction.resolve(this);
-		return this.address;
+			return instruction.resolve(innerScope);
+		return innerScope.getAddress();
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
-		if (address != this.address)
+		if (address != innerScope.getAddress())
 			throw new AssemblyException("Address changed between passes.");
 		
 		byte[] object = getBytes();
@@ -129,13 +115,13 @@ public class Line implements Context {
 	public int getSize() {
 		if (instruction == null)
 			return 0;
-		return instruction.getSize(this);
+		return instruction.getSize(innerScope);
 	}
 	
 	public byte[] getBytes() {
 		if (instruction == null)
 			return NO_BYTES;
-		return instruction.getBytes(this);
+		return instruction.getBytes(innerScope);
 	}
 	
 	public String toString() {
