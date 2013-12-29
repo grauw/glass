@@ -35,8 +35,8 @@ public class SourceParser {
 		this.includePaths.addAll(includePaths);
 	}
 	
-	public SourceParser(Scope parentScope, List<String> terminators, List<File> includePaths) {
-		this.source = new Source(parentScope);
+	public SourceParser(Scope scope, List<String> terminators, List<File> includePaths) {
+		this.source = new Source(scope);
 		this.terminators = terminators;
 		this.includePaths.add(null);
 		this.includePaths.addAll(includePaths);
@@ -134,10 +134,10 @@ public class SourceParser {
 	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
-		SourceParser parser = new SourceParser(source.getScope(), ENDM_TERMINATORS, includePaths);
+		SourceParser parser = new SourceParser(line.getInnerScope(), ENDM_TERMINATORS, includePaths);
 		Source macroSource = parser.parse(reader, sourceFile);
 		Macro.Factory factory = new Macro.Factory(line.getLabel(), line.getArguments(), macroSource);
-		factory.register(source.getScope());
+		factory.register(line.getScope());
 	}
 	
 }

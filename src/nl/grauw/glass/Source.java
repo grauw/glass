@@ -14,8 +14,8 @@ public class Source {
 		scope = new GlobalScope();
 	}
 	
-	public Source(Scope parentScope) {
-		scope = new Scope(parentScope);
+	public Source(Scope scope) {
+		this.scope = scope;
 	}
 	
 	public Source(Source other) {
