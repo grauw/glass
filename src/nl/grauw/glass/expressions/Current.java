@@ -1,11 +1,9 @@
 package nl.grauw.glass.expressions;
 
-public class Current extends Expression {
-	
-	private Context context;
+public class Current extends ContextLiteral {
 	
 	public Current(Context context) {
-		this.context = context;
+		super(context);
 	}
 	
 	@Override
@@ -13,22 +11,8 @@ public class Current extends Expression {
 		return new Current(context);
 	}
 	
-	@Override
-	public boolean isInteger() {
-		return true;
-	}
-	
-	@Override
-	public int getInteger() {
-		return context.getAddress();
-	}
-	
 	public String toString() {
 		return "$";
-	}
-	
-	public String toDebugString() {
-		return toString();
 	}
 	
 }
