@@ -127,8 +127,7 @@ public class SourceParser {
 	
 	private void processEqu(Line line) {
 		if (line.getLabel() == null)
-			throw new AssemblyException("Equ statement without label.");
-		source.getScope().redefineLabel(line.getLabel(), line.getArguments());
+			throw new AssemblyException("Equ directive without label.");
 	}
 	
 	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {

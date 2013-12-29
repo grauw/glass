@@ -172,6 +172,19 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroLabels() {
+		assertArrayEquals(b(0x00, 0x21, 0x04, 0x00, 0x21, 0x07, 0x00), assemble(
+			" nop",
+			"test: MACRO",
+			" ld hl,test2",
+			"test2:",
+			" ENDM",
+			" test",
+			" test"
+		));
+	}
+	
+	@Test
 	public void testMacroNesting() {
 		assertArrayEquals(b(0x3E, 0x11, 0x3E, 0x21), assemble(
 			"test: MACRO arg",

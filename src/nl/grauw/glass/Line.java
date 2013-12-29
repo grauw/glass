@@ -53,7 +53,10 @@ public class Line {
 	
 	public void setLabel(String label) {
 		this.label = label;
-		sourceScope.addLabel(label, new ContextLiteral(scope));
+	}
+	
+	public Expression getLabelValue() {
+		return "equ".equals(mnemonic) || "EQU".equals(mnemonic) ? arguments : new ContextLiteral(scope);
 	}
 	
 	public String getMnemonic() {

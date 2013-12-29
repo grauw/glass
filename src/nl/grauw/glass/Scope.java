@@ -54,10 +54,6 @@ public class Scope implements Context {
 		variables.put(name, value);
 	}
 	
-	public void redefineLabel(String name, Expression value) {
-		variables.put(name, value);
-	}
-	
 	public boolean hasLabel(String name) {
 		return variables.get(name) == null || parent != null && parent.hasLabel(name);
 	}
