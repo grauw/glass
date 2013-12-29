@@ -93,9 +93,8 @@ public class Line {
 	}
 	
 	public int resolve(int address) {
-		if (mnemonic != null)
+		if (mnemonic != null) {
 			instruction = scope.createInstruction(mnemonic, arguments);
-		if (instruction != null) {
 			return instruction.resolve(innerScope, address);
 		} else {
 			innerScope.setAddress(address);
