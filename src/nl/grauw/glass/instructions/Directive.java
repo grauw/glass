@@ -1,16 +1,16 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.expressions.Context;
+import nl.grauw.glass.Scope;
 
 public class Directive extends Instruction {
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return 0;
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		return new byte[] {};
 	}
 	

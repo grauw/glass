@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 
@@ -16,12 +15,12 @@ public class Res extends Instruction {
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return indexifyIndirect(argument2.getRegister(), 2);
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		int value = argument1.getInteger();
 		if (value < 0 || value > 7)
 			throw new ArgumentException();

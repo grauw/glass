@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 
 public class Jr extends Instruction {
@@ -13,12 +12,12 @@ public class Jr extends Instruction {
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return 2;
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		int offset = argument.getAddress() - (context.getAddress() + 2);
 		if (offset < -128 || offset > 127)
 			throw new ArgumentException("Jump offset out of range: " + offset);

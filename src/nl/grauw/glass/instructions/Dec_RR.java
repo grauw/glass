@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
@@ -17,12 +16,12 @@ public class Dec_RR extends Instruction {
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return indexifyDirect(argument.getRegister(), 1);
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		Register register = argument.getRegister();
 		return indexifyDirect(register, (byte)(0x0B | register.get16BitCode() << 4));
 	}

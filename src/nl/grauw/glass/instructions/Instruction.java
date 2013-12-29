@@ -1,6 +1,6 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.expressions.Context;
+import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
@@ -13,13 +13,13 @@ public abstract class Instruction {
 	public static Schema ARGUMENTS_A_R = new Schema(Schema.DIRECT_A, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	public static Schema ARGUMENTS_N_R = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	
-	public int resolve(Context context) {
+	public int resolve(Scope context) {
 		return context.getAddress() + getSize(context);
 	}
 	
-	public abstract int getSize(Context context);
+	public abstract int getSize(Scope context);
 	
-	public abstract byte[] getBytes(Context context);
+	public abstract byte[] getBytes(Scope context);
 	
 	public int indexifyDirect(Register register, int size) {
 		return register.isIndex() ? size + 1 : size;

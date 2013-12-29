@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 
 public class Im extends Instruction {
@@ -13,12 +12,12 @@ public class Im extends Instruction {
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return 2;
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		int value = argument.getInteger();
 		if (value == 0) {
 			return new byte[] { (byte)0xED, (byte)0x46 };

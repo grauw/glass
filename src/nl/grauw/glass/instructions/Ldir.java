@@ -1,18 +1,17 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 
 public class Ldir extends Instruction {
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return 2;
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		return new byte[] { (byte)0xED, (byte)0xB0 };
 	}
 	

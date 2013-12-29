@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
@@ -10,12 +9,12 @@ public class Ex_AF extends Instruction {
 	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_AF, Schema.DIRECT_AF_);
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return 1;
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		return new byte[] { (byte)0x08 };
 	}
 	

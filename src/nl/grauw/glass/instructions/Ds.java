@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import java.util.Arrays;
 
 import nl.grauw.glass.Scope;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -22,12 +21,12 @@ public class Ds extends Instruction {
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		return size.getInteger();
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		byte[] bytes = new byte[size.getInteger()];
 		Arrays.fill(bytes, (byte)value.getInteger());
 		return bytes;

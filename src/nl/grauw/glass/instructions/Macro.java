@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
-import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 
@@ -16,17 +15,17 @@ public class Macro extends Directive {
 	}
 	
 	@Override
-	public int resolve(Context context) {
+	public int resolve(Scope context) {
 		return source.resolve(context.getAddress());
 	}
 	
 	@Override
-	public int getSize(Context context) {
+	public int getSize(Scope context) {
 		throw new AssemblyException("Not implemented.");
 	}
 	
 	@Override
-	public byte[] getBytes(Context context) {
+	public byte[] getBytes(Scope context) {
 		return source.generateObjectCode(context.getAddress());
 	}
 	
