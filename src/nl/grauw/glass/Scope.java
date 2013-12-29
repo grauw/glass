@@ -31,6 +31,10 @@ public class Scope implements Context {
 		this.parent = parent;
 	}
 	
+	public Scope getParent() {
+		return parent;
+	}
+	
 	@Override
 	public int getAddress() {
 		if (address == -1)
