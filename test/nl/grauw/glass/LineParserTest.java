@@ -17,18 +17,53 @@ public class LineParserTest {
 	}
 	
 	@Test
+	public void testLabelNoColon() {
+		assertEquals("test_label1", parse("test_label1").getLabel().getName());
+	}
+	
+	@Test
 	public void testMnemonic() {
 		assertEquals("exx", parse(" exx").getMnemonic());
 	}
 	
 	@Test
 	public void testArguments() {
-		assertTrue(parse(" cp 0H").getArguments() instanceof IntegerLiteral);
+		assertTrue(parse("\tcp 0H").getArguments() instanceof IntegerLiteral);
 	}
 	
 	@Test
 	public void testComment() {
 		assertEquals("test comment", parse(";test comment").getComment());
+	}
+	
+	@Test
+	public void testParser1() {
+		assertEquals(";test comment", parse(" ;test comment").toString());
+	}
+	
+	@Test
+	public void testParser2() {
+		assertEquals("test_label1: ;test", parse("test_label1:;test").toString());
+	}
+	
+	@Test
+	public void testParser3() {
+		assertEquals("test_label1: ;test", parse("test_label1;test").toString());
+	}
+	
+	@Test
+	public void testParser4() {
+		assertEquals("test_label1: exx ;test", parse("test_label1:exx;test").toString());
+	}
+	
+	@Test
+	public void testParser5() {
+		assertEquals("test_label1: push af ;test", parse("test_label1: push af ;test").toString());
+	}
+	
+	@Test
+	public void testParser6() {
+		assertEquals("test_label1: ex af, af' ;test", parse("test_label1: ex af,af';test").toString());
 	}
 	
 	@Test
