@@ -17,32 +17,32 @@ public class Schema implements SchemaType {
 		return arguments == null;
 	}
 	
-	public static SchemaType ANY = new Any();
-	public static SchemaType DIRECT = new Direct();
-	public static SchemaType INDIRECT = new Indirect();
-	public static SchemaType INTEGER = new Integer();
-	public static SchemaType STRING = new String();
+	public static SchemaType ANY = new IsAny();
+	public static SchemaType DIRECT = new IsDirect();
+	public static SchemaType INDIRECT = new IsIndirect();
+	public static SchemaType INTEGER = new IsInteger();
+	public static SchemaType STRING = new IsString();
 	public static SchemaType DIRECT_N = new And(DIRECT, INTEGER);
-	public static SchemaType DIRECT_R = new And(DIRECT, new Register8Bit());
-	public static SchemaType DIRECT_A = new And(DIRECT, new Reg(Register.A));
-	public static SchemaType DIRECT_IR = new And(DIRECT, new Reg(Register.I, Register.R));
-	public static SchemaType DIRECT_RR = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP));
-	public static SchemaType DIRECT_RR_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY));
-	public static SchemaType DIRECT_RR_AF_INDEX = new And(DIRECT, new Reg(Register.BC, Register.DE, Register.HL, Register.AF, Register.IX, Register.IY));
-	public static SchemaType DIRECT_DE = new And(DIRECT, new Reg(Register.DE));
-	public static SchemaType DIRECT_HL = new And(DIRECT, new Reg(Register.HL));
-	public static SchemaType DIRECT_HL_IX_IY = new And(DIRECT, new Reg(Register.HL, Register.IX, Register.IY));
-	public static SchemaType DIRECT_SP = new And(DIRECT, new Reg(Register.SP));
-	public static SchemaType DIRECT_AF = new And(DIRECT, new Reg(Register.AF));
-	public static SchemaType DIRECT_AF_ = new And(DIRECT, new Reg(Register.AF_));
+	public static SchemaType DIRECT_R = new And(DIRECT, new IsRegister8Bit());
+	public static SchemaType DIRECT_A = new And(DIRECT, new IsRegister(Register.A));
+	public static SchemaType DIRECT_IR = new And(DIRECT, new IsRegister(Register.I, Register.R));
+	public static SchemaType DIRECT_RR = new And(DIRECT, new IsRegister(Register.BC, Register.DE, Register.HL, Register.SP));
+	public static SchemaType DIRECT_RR_INDEX = new And(DIRECT, new IsRegister(Register.BC, Register.DE, Register.HL, Register.SP, Register.IX, Register.IY));
+	public static SchemaType DIRECT_RR_AF_INDEX = new And(DIRECT, new IsRegister(Register.BC, Register.DE, Register.HL, Register.AF, Register.IX, Register.IY));
+	public static SchemaType DIRECT_DE = new And(DIRECT, new IsRegister(Register.DE));
+	public static SchemaType DIRECT_HL = new And(DIRECT, new IsRegister(Register.HL));
+	public static SchemaType DIRECT_HL_IX_IY = new And(DIRECT, new IsRegister(Register.HL, Register.IX, Register.IY));
+	public static SchemaType DIRECT_SP = new And(DIRECT, new IsRegister(Register.SP));
+	public static SchemaType DIRECT_AF = new And(DIRECT, new IsRegister(Register.AF));
+	public static SchemaType DIRECT_AF_ = new And(DIRECT, new IsRegister(Register.AF_));
 	public static SchemaType INDIRECT_N = new And(INDIRECT, INTEGER);
-	public static SchemaType INDIRECT_C = new And(INDIRECT, new Reg(Register.C));
-	public static SchemaType INDIRECT_BC_DE = new And(INDIRECT, new Reg(Register.BC, Register.DE));
-	public static SchemaType INDIRECT_HL_IX_IY = new And(INDIRECT, new Reg(Register.HL, Register.IX, Register.IY));
-	public static SchemaType INDIRECT_SP = new And(INDIRECT, new Reg(Register.SP));
-	public static SchemaType DIRECT_R_INDIRECT_HL_IX_IY = new DirectRIndirectHLIXIY();
+	public static SchemaType INDIRECT_C = new And(INDIRECT, new IsRegister(Register.C));
+	public static SchemaType INDIRECT_BC_DE = new And(INDIRECT, new IsRegister(Register.BC, Register.DE));
+	public static SchemaType INDIRECT_HL_IX_IY = new And(INDIRECT, new IsRegister(Register.HL, Register.IX, Register.IY));
+	public static SchemaType INDIRECT_SP = new And(INDIRECT, new IsRegister(Register.SP));
+	public static SchemaType DIRECT_R_INDIRECT_HL_IX_IY = new IsDirectRIndirectHLIXIY();
 	
-	public static class Any implements SchemaType {
+	public static class IsAny implements SchemaType {
 		public boolean check(Expression argument) {
 			return true;
 		}
@@ -61,33 +61,33 @@ public class Schema implements SchemaType {
 		}
 	}
 	
-	public static class Direct implements SchemaType {
+	public static class IsDirect implements SchemaType {
 		public boolean check(Expression argument) {
 			return !(argument instanceof Group);
 		}
 	}
 	
-	public static class Indirect implements SchemaType {
+	public static class IsIndirect implements SchemaType {
 		public boolean check(Expression argument) {
 			return argument instanceof Group;
 		}
 	}
 	
-	public static class Integer implements SchemaType {
+	public static class IsInteger implements SchemaType {
 		public boolean check(Expression argument) {
 			return argument.isInteger();
 		}
 	}
 	
-	public static class String implements SchemaType {
+	public static class IsString implements SchemaType {
 		public boolean check(Expression argument) {
 			return argument instanceof StringLiteral;
 		}
 	}
 	
-	public static class Reg implements SchemaType {
+	public static class IsRegister implements SchemaType {
 		private Register[] registers;
-		public Reg(Register... registers) {
+		public IsRegister(Register... registers) {
 			this.registers = registers;
 		}
 		public boolean check(Expression argument) {
@@ -101,7 +101,7 @@ public class Schema implements SchemaType {
 		}
 	}
 	
-	public static class Register8Bit implements SchemaType {
+	public static class IsRegister8Bit implements SchemaType {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
 				Register register = argument.getRegister();
@@ -111,7 +111,7 @@ public class Schema implements SchemaType {
 		}
 	}
 	
-	public static class DirectRIndirectHLIXIY implements SchemaType {
+	public static class IsDirectRIndirectHLIXIY implements SchemaType {
 		public boolean check(Expression argument) {
 			if (argument.isRegister()) {
 				Register register = argument.getRegister();
