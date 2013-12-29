@@ -8,7 +8,7 @@ public class Equ extends Directive {
 	
 	public static Schema ARGUMENTS = new Schema(Schema.ANY);
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

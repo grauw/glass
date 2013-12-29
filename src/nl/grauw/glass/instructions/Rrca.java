@@ -15,7 +15,7 @@ public class Rrca extends Instruction {
 		return new byte[] { (byte)0x0F };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

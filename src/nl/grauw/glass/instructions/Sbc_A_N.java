@@ -21,7 +21,7 @@ public class Sbc_A_N extends Instruction {
 		return new byte[] { (byte)0xDE, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

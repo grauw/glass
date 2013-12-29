@@ -29,7 +29,7 @@ public class Im extends Instruction {
 		throw new ArgumentException();
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

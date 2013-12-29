@@ -28,7 +28,7 @@ public class Dw extends Instruction {
 		return bytes;
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

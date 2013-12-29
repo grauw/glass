@@ -30,7 +30,7 @@ public class Macro extends Directive {
 		return source.generateObjectCode(context.getAddress());
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		private final String mnemonic;
 		private final Expression parameters;

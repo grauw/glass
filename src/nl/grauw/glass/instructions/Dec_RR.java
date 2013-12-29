@@ -26,7 +26,7 @@ public class Dec_RR extends Instruction {
 		return indexifyDirect(register, (byte)(0x0B | register.get16BitCode() << 4));
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

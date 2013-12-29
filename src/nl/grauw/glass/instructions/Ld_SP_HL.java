@@ -24,7 +24,7 @@ public class Ld_SP_HL extends Instruction {
 		return indexifyDirect(argument.getRegister(), (byte)0xF9);
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

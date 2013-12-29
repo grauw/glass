@@ -23,7 +23,7 @@ public class Rr extends Instruction {
 		return indexifyIndirect(register, (byte)0xCB, (byte)(0x18 + register.get8BitCode()));
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

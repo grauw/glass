@@ -15,7 +15,7 @@ public class Cpd extends Instruction {
 		return new byte[] { (byte)0xED, (byte)0xA9 };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

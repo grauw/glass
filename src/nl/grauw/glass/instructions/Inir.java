@@ -15,7 +15,7 @@ public class Inir extends Instruction {
 		return new byte[] { (byte)0xED, (byte)0xB2 };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

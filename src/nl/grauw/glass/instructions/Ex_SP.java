@@ -24,7 +24,7 @@ public class Ex_SP extends Instruction {
 		return indexifyDirect(argument.getRegister(), (byte)0xE3);
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

@@ -24,7 +24,7 @@ public class Ret_F extends Instruction {
 		return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

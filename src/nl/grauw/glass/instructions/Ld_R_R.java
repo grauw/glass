@@ -39,7 +39,7 @@ public class Ld_R_R extends Instruction {
 				(byte)(0x40 | register1.get8BitCode() << 3 | register2.get8BitCode()));
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

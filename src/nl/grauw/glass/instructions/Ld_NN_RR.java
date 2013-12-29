@@ -28,7 +28,7 @@ public class Ld_NN_RR extends Instruction {
 				(byte)address, (byte)(address >> 8) };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

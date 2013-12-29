@@ -24,7 +24,7 @@ public class In_N extends Instruction {
 		return new byte[] { (byte)0xDB, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

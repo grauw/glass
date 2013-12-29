@@ -21,7 +21,7 @@ public class Or_N extends Instruction {
 		return new byte[] { (byte)0xF6, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {

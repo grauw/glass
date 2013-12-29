@@ -24,7 +24,7 @@ public class Ld_A_BCDE extends Instruction {
 		return new byte[] { (byte)(0x0A | argument.getRegister().get16BitCode() << 4) };
 	}
 	
-	public static class Factory implements InstructionFactory {
+	public static class Factory extends InstructionFactory {
 		
 		@Override
 		public void register(Scope scope) {
