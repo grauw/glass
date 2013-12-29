@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import nl.grauw.glass.expressions.Context;
+import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.Sequence;
@@ -22,9 +23,11 @@ public class Scope implements Context {
 	private int address = -1;
 	
 	public Scope() {
+		addLabel("$", new ContextLiteral(this));
 	}
 	
 	public Scope(Scope parent) {
+		this();
 		this.parent = parent;
 	}
 	

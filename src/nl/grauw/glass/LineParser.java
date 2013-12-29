@@ -1,7 +1,6 @@
 package nl.grauw.glass;
 
 import nl.grauw.glass.expressions.CharacterLiteral;
-import nl.grauw.glass.expressions.Current;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -157,7 +156,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Current(line.getInnerScope()));
+				expressionBuilder.addValueToken(new Identifier("$", line.getInnerScope()));
 				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
