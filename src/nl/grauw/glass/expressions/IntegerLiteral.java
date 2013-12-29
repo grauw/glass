@@ -3,6 +3,7 @@ package nl.grauw.glass.expressions;
 public class IntegerLiteral extends Literal {
 	
 	public static final IntegerLiteral ZERO = new IntegerLiteral(0);
+	public static final IntegerLiteral ONE = new IntegerLiteral(1);
 	
 	private final int value;
 	
