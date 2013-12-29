@@ -185,6 +185,17 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroOuterScope() {
+		assertArrayEquals(b(0x3E, 0x11), assemble(
+			"test: MACRO arg",
+			" ld a,value + arg",
+			" ENDM",
+			" test 1H",
+			"value: equ 10H"
+		));
+	}
+	
+	@Test
 	public void testMacroNesting() {
 		assertArrayEquals(b(0x3E, 0x11, 0x3E, 0x21), assemble(
 			"test: MACRO arg",
@@ -195,17 +206,6 @@ public class SourceTest {
 			" test arg",
 			" ENDM",
 			" test 1H"
-		));
-	}
-	
-	@Test
-	public void testMacroOuterScope() {
-		assertArrayEquals(b(0x3E, 0x11), assemble(
-			"test: MACRO arg",
-			" ld a,value + arg",
-			" ENDM",
-			" test 1H",
-			"value: equ 10H"
 		));
 	}
 	
