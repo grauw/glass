@@ -134,10 +134,10 @@ public class SourceParser {
 	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
-		SourceParser parser = new SourceParser(line.getInnerScope(), ENDM_TERMINATORS, includePaths);
+		SourceParser parser = new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths);
 		Source macroSource = parser.parse(reader, sourceFile);
 		Macro.Factory factory = new Macro.Factory(line.getLabel(), line.getArguments(), macroSource);
-		factory.register(line.getScope());
+		factory.register(line.getSourceScope());
 	}
 	
 }

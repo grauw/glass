@@ -156,7 +156,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Identifier("$", line.getInnerScope()));
+				expressionBuilder.addValueToken(new Identifier("$", line.getScope()));
 				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
@@ -194,7 +194,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line.getInnerScope()));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line.getScope()));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}

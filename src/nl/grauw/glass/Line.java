@@ -13,8 +13,8 @@ public class Line {
 	
 	private static final byte[] NO_BYTES = new byte[] {};
 	
+	private final Scope sourceScope;
 	private final Scope scope;
-	private final Scope innerScope;
 	private final File sourceFile;
 	private final int lineNumber;
 	private String label;
@@ -24,18 +24,18 @@ public class Line {
 	
 	private Instruction instruction;
 	
-	public Line(Scope scope, File sourceFile, int lineNumber) {
-		this.scope = scope;
-		this.innerScope = new Scope(scope);
+	public Line(Scope sourceScope, File sourceFile, int lineNumber) {
+		this.sourceScope = sourceScope;
+		this.scope = new Scope(sourceScope);
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
 	}
 	
-	public Line(Scope scope, Line other) {
-		this(scope, other.sourceFile, other.lineNumber);
+	public Line(Scope sourceScope, Line other) {
+		this(sourceScope, other.sourceFile, other.lineNumber);
 		label = other.label;
 		mnemonic = other.mnemonic;
-		arguments = other.arguments != null ? other.arguments.copy(innerScope) : null;
+		arguments = other.arguments != null ? other.arguments.copy(scope) : null;
 		comment = other.comment;
 	}
 	
@@ -53,7 +53,7 @@ public class Line {
 	
 	public void setLabel(String label) {
 		this.label = label;
-		scope.addLabel(label, new ContextLiteral(innerScope));
+		sourceScope.addLabel(label, new ContextLiteral(scope));
 	}
 	
 	public String getMnemonic() {
@@ -80,12 +80,12 @@ public class Line {
 		this.comment = comment;
 	}
 	
-	public Scope getScope() {
-		return scope;
+	public Scope getSourceScope() {
+		return sourceScope;
 	}
 	
-	public Scope getInnerScope() {
-		return innerScope;
+	public Scope getScope() {
+		return scope;
 	}
 	
 	public Instruction getInstruction() {
@@ -94,17 +94,17 @@ public class Line {
 	
 	public int resolve(int address) {
 		if (mnemonic != null) {
-			instruction = scope.createInstruction(mnemonic, arguments);
-			return instruction.resolve(innerScope, address);
+			instruction = sourceScope.createInstruction(mnemonic, arguments);
+			return instruction.resolve(scope, address);
 		} else {
-			innerScope.setAddress(address);
+			scope.setAddress(address);
 			return address;
 		}
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
-		if (address != innerScope.getAddress())
+		if (address != scope.getAddress())
 			throw new AssemblyException("Address changed between passes.");
 		
 		byte[] object = getBytes();
@@ -116,13 +116,13 @@ public class Line {
 	public int getSize() {
 		if (instruction == null)
 			return 0;
-		return instruction.getSize(innerScope);
+		return instruction.getSize(scope);
 	}
 	
 	public byte[] getBytes() {
 		if (instruction == null)
 			return NO_BYTES;
-		return instruction.getBytes(innerScope);
+		return instruction.getBytes(scope);
 	}
 	
 	public String toString() {
