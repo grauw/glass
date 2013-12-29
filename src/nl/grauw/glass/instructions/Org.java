@@ -18,6 +18,11 @@ public class Org extends Directive {
 		return argument.getAddress();
 	}
 	
+	@Override
+	public int resolve(Scope context, int address) {
+		return super.resolve(context, getAddress());
+	}
+	
 	public static class Factory implements InstructionFactory {
 		
 		@Override

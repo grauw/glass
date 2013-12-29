@@ -15,8 +15,9 @@ public class Macro extends Directive {
 	}
 	
 	@Override
-	public int resolve(Scope context) {
-		return source.resolve(context.getAddress());
+	public int resolve(Scope context, int address) {
+		context.setAddress(address);
+		return source.resolve(address);
 	}
 	
 	@Override

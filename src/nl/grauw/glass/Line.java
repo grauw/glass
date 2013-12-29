@@ -95,10 +95,12 @@ public class Line {
 	public int resolve(int address) {
 		if (mnemonic != null)
 			instruction = scope.createInstruction(mnemonic, arguments);
-		innerScope.setAddress(instruction instanceof Org ? ((Org)instruction).getAddress() : address);
-		if (instruction != null)
-			return instruction.resolve(innerScope);
-		return innerScope.getAddress();
+		if (instruction != null) {
+			return instruction.resolve(innerScope, address);
+		} else {
+			innerScope.setAddress(address);
+			return address;
+		}
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
