@@ -30,8 +30,7 @@ public class Source {
 	
 	public Line addLine(Line line) {
 		lines.add(line);
-		if (line.getLabel() != null)
-			scope.addLabel(line.getLabel(), line.getLabelValue());
+		line.register(scope);
 		return line;
 	}
 	

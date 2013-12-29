@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.grauw.glass.directives.Equ;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 import nl.grauw.glass.expressions.StringLiteral;
@@ -128,6 +129,7 @@ public class SourceParser {
 	private void processEqu(Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Equ directive without label.");
+		line.setDirective(new Equ());
 	}
 	
 	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {

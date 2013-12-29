@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Instruction;
@@ -23,6 +24,7 @@ public class Line {
 	private String comment;
 	
 	private Instruction instruction;
+	private Directive directive;
 	
 	public Line(Scope sourceScope, File sourceFile, int lineNumber) {
 		this.sourceScope = sourceScope;
@@ -53,10 +55,6 @@ public class Line {
 	
 	public void setLabel(String label) {
 		this.label = label;
-	}
-	
-	public Expression getLabelValue() {
-		return "equ".equals(mnemonic) || "EQU".equals(mnemonic) ? arguments : new ContextLiteral(scope);
 	}
 	
 	public String getMnemonic() {
@@ -93,6 +91,18 @@ public class Line {
 	
 	public Instruction getInstruction() {
 		return instruction;
+	}
+	
+	public void setDirective(Directive directive) {
+		this.directive = directive;
+	}
+	
+	public void register(Scope sourceScope) {
+		if (directive != null) {
+			directive.register(sourceScope, this);
+		} else if (label != null) {
+			sourceScope.addLabel(label, new ContextLiteral(scope));
+		}
 	}
 	
 	public int resolve(int address) {
