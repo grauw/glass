@@ -97,9 +97,7 @@ public class LineParserTest {
 	}
 	
 	public Line parse(String text) {
-		Line line = new Line(new Scope(), null, 0);
-		new LineParser().parse(text, line);
-		return line;
+		return new LineParser().parse(text, new Scope(), null, 0);
 	}
 	
 	public Expression parseExpression(String text) {

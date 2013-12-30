@@ -29,7 +29,7 @@ public class MacroInstruction extends Instruction {
 		Scope parameterScope = new ParameterScope(scope, parameters, arguments);
 		Source copy = new Source(scope);
 		for (Line line : source.getLines())
-			copy.addLine(new Line(parameterScope, line));
+			copy.addLine(new Line(new Scope(parameterScope), line));
 		return new MacroInstructionInstance(copy);
 	}
 	

@@ -14,28 +14,29 @@ public class Line {
 	private static final byte[] NO_BYTES = new byte[] {};
 	
 	private final Scope scope;
+	private final String label;
+	private final String mnemonic;
+	private final Expression arguments;
+	private final String comment;
 	private final File sourceFile;
 	private final int lineNumber;
-	private String label;
-	private String mnemonic;
-	private Expression arguments;
-	private String comment;
 	
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
-	public Line(Scope sourceScope, File sourceFile, int lineNumber) {
-		this.scope = new Scope(sourceScope);
+	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, File sourceFile, int lineNumber) {
+		this.scope = scope;
+		this.label = label;
+		this.mnemonic = mnemonic;
+		this.arguments = arguments;
+		this.comment = comment;
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
 	}
 	
-	public Line(Scope sourceScope, Line other) {
-		this(sourceScope, other.sourceFile, other.lineNumber);
-		label = other.label;
-		mnemonic = other.mnemonic;
-		arguments = other.arguments != null ? other.arguments.copy(scope) : null;
-		comment = other.comment;
+	public Line(Scope scope, Line other) {
+		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
+				other.comment, other.sourceFile, other.lineNumber);
 		directive = other.directive;
 	}
 	
@@ -51,32 +52,16 @@ public class Line {
 		return label;
 	}
 	
-	public void setLabel(String label) {
-		this.label = label;
-	}
-	
 	public String getMnemonic() {
 		return mnemonic;
-	}
-	
-	public void setMnemonic(String mnemonic) {
-		this.mnemonic = mnemonic;
 	}
 	
 	public Expression getArguments() {
 		return arguments;
 	}
 	
-	public void setArguments(Expression arguments) {
-		this.arguments = arguments;
-	}
-	
 	public String getComment() {
 		return comment;
-	}
-	
-	public void setComment(String comment) {
-		this.comment = comment;
 	}
 	
 	public Scope getScope() {

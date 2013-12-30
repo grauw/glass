@@ -81,8 +81,7 @@ public class ExpressionBuilderTest {
 	}
 	
 	public String parse(String text) {
-		Line line = new Line(new Scope(), null, 0);
-		new LineParser().parse(" test " + text, line);
+		Line line = new LineParser().parse(" test " + text, new Scope(), null, 0);
 		return line.getArguments().toDebugString();
 	}
 	

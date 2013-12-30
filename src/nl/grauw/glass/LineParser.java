@@ -1,6 +1,9 @@
 package nl.grauw.glass;
 
+import java.io.File;
+
 import nl.grauw.glass.expressions.CharacterLiteral;
+import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -9,13 +12,22 @@ import nl.grauw.glass.expressions.ExpressionBuilder.Operator;
 
 public class LineParser {
 	
-	private Line line;
+	private Scope scope;
+	private String label;
+	private String mnemonic;
+	private Expression arguments;
+	private String comment;
+	
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	
-	public Line parse(String text, Line line) {
-		this.line = line;
+	public Line parse(String text, Scope scope, File sourceFile, int lineNumber) {
+		this.scope = scope;
+		label = null;
+		mnemonic = null;
+		arguments = null;
+		comment = null;
 		state = labelStartState;
 		
 		int column = 0;
@@ -32,11 +44,11 @@ public class LineParser {
 			if (state != endState)
 				throw new AssemblyException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(AssemblyException e) {
-			e.setContext(line.getSourceFile(), line.getLineNumber(), text, column);
+			e.setContext(sourceFile, lineNumber, text, column);
 			throw e;
 		}
 		
-		return line;
+		return new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber);
 	}
 	
 	private abstract class State {
@@ -82,7 +94,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				line.setLabel(accumulator.toString());
+				label = accumulator.toString();
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
@@ -120,7 +132,7 @@ public class LineParser {
 				accumulator.append(character);
 				return statementReadState;
 			} else {
-				line.setMnemonic(accumulator.toString());
+				mnemonic = accumulator.toString();
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
 					return argumentStartState;
@@ -156,7 +168,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Identifier("$", line.getScope()));
+				expressionBuilder.addValueToken(new Identifier("$", scope));
 				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
@@ -194,7 +206,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentIdentifierState;
 			} else {
-				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), line.getScope()));
+				expressionBuilder.addValueToken(new Identifier(accumulator.toString(), scope));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}
@@ -375,10 +387,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				line.setArguments(expressionBuilder.getExpression());
+				arguments = expressionBuilder.getExpression();
 				return commentReadState;
 			} else if (character == '\0') {
-				line.setArguments(expressionBuilder.getExpression());
+				arguments = expressionBuilder.getExpression();
 				return endState;
 			}
 			throw new SyntaxError();
@@ -458,7 +470,7 @@ public class LineParser {
 	private class CommentReadState extends State {
 		public State parse(char character) {
 			if (character == '\0') {
-				line.setComment(accumulator.toString());
+				comment = accumulator.toString();
 				accumulator.setLength(0);
 				return endState;
 			} else {

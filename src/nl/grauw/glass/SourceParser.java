@@ -80,8 +80,7 @@ public class SourceParser {
 			String lineText;
 			while ((lineText = reader.readLine()) != null) {
 				try {
-					Line line = new Line(source.getScope(), sourceFile, reader.getLineNumber());
-					lineParser.parse(lineText, line);
+					Line line = lineParser.parse(lineText, new Scope(source.getScope()), sourceFile, reader.getLineNumber());
 					if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
 						return source;
 					line.setDirective(getDirective(line, reader, sourceFile));
