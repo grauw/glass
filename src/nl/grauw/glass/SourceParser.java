@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Equ;
+import nl.grauw.glass.directives.Include;
+import nl.grauw.glass.directives.Instruction;
 import nl.grauw.glass.directives.Macro;
+import nl.grauw.glass.directives.Repeat;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 import nl.grauw.glass.expressions.StringLiteral;
@@ -81,7 +85,7 @@ public class SourceParser {
 					lineParser.parse(lineText, line);
 					if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
 						return source;
-					processDirective(line, reader, sourceFile);
+					line.setDirective(getDirective(line, reader, sourceFile));
 					source.addLine(line);
 				} catch (AssemblyException e) {
 					e.setContext(sourceFile, reader.getLineNumber(), lineText);
@@ -96,27 +100,26 @@ public class SourceParser {
 		return source;
 	}
 	
-	public void processDirective(Line line, LineNumberReader reader, File sourceFile) {
+	public Directive getDirective(Line line, LineNumberReader reader, File sourceFile) {
 		if (line.getMnemonic() == null)
-			return;
+			return new Instruction();
 		
 		switch (line.getMnemonic()) {
-		case "include":
-		case "INCLUDE":
-			processInclude(line);
-			break;
 		case "equ":
 		case "EQU":
-			processEqu(line);
-			break;
+			return new Equ();
+		case "include":
+		case "INCLUDE":
+			return getIncludeDirective(line);
 		case "macro":
 		case "MACRO":
-			processMacro(line, reader, sourceFile);
-			break;
+			return getMacroDirective(line, reader, sourceFile);
+		default:
+			return new Instruction();
 		}
 	}
 	
-	private void processInclude(Line line) {
+	private Directive getIncludeDirective(Line line) {
 		if (line.getArguments() instanceof Sequence)
 			throw new AssemblyException("Include only accepts 1 argument.");
 		Expression argument = line.getArguments();
@@ -124,19 +127,12 @@ public class SourceParser {
 			throw new AssemblyException("A string literal is expected.");
 		String includeFile = ((StringLiteral)argument).getString();
 		parseInclude(new File(includeFile));
+		return new Include();
 	}
 	
-	private void processEqu(Line line) {
-		if (line.getLabel() == null)
-			throw new AssemblyException("Equ directive without label.");
-		line.setDirective(new Equ());
-	}
-	
-	private void processMacro(Line line, LineNumberReader reader, File sourceFile) {
-		if (line.getLabel() == null)
-			throw new AssemblyException("Macro without label.");
+	private Directive getMacroDirective(Line line, LineNumberReader reader, File sourceFile) {
 		SourceParser parser = new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths);
-		line.setDirective(new Macro(parser.parse(reader, sourceFile)));
+		return new Macro(parser.parse(reader, sourceFile));
 	}
 	
 }

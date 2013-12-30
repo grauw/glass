@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import nl.grauw.glass.directives.Directive;
-import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.Org;
@@ -93,11 +92,7 @@ public class Line {
 	}
 	
 	public void register(Scope sourceScope) {
-		if (directive != null) {
-			directive.register(sourceScope, this);
-		} else if (label != null) {
-			sourceScope.addLabel(label, new ContextLiteral(scope));
-		}
+		directive.register(sourceScope, this);
 	}
 	
 	public int resolve(int address) {
