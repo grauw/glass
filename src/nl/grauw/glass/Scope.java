@@ -6,7 +6,6 @@ import java.util.Map;
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.InstructionFactory;
 
 public class Scope implements Context {
@@ -86,20 +85,12 @@ public class Scope implements Context {
 		instructions.put(mnemonic, factory);
 	}
 	
-	public Instruction createInstruction(String mnemonic, Expression arguments) {
-		return createInstruction(mnemonic, arguments, this);
-	}
-	
-	public Instruction createInstruction(String mnemonic, Expression arguments, Scope scope) {
+	public InstructionFactory getInstruction(String mnemonic) {
 		InstructionFactory factory = instructions.get(mnemonic);
-		if (factory != null) {
-			Instruction instruction = factory.createInstruction(arguments, scope);
-			if (instruction != null)
-				return instruction;
-			throw new AssemblyException("Unrecognized mnemonic.");
-		}
+		if (factory != null)
+			return factory;
 		if (parent != null)
-			return parent.createInstruction(mnemonic, arguments, scope);
+			return parent.getInstruction(mnemonic);
 		throw new AssemblyException("Unrecognized mnemonic.");
 	}
 	
