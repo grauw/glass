@@ -113,7 +113,7 @@ public class SourceParser {
 			return getIncludeDirective(line);
 		case "macro":
 		case "MACRO":
-			return getMacroDirective(line, reader, sourceFile);
+			return new Macro(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
 		default:
 			return new Instruction();
 		}
@@ -130,9 +130,8 @@ public class SourceParser {
 		return new Include();
 	}
 	
-	private Directive getMacroDirective(Line line, LineNumberReader reader, File sourceFile) {
-		SourceParser parser = new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths);
-		return new Macro(parser.parse(reader, sourceFile));
+	private Source parseBlock(Line line, List<String> terminators, LineNumberReader reader, File sourceFile) {
+		return new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths).parse(reader, sourceFile);
 	}
 	
 }
