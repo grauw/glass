@@ -83,10 +83,6 @@ public class Line {
 		return scope;
 	}
 	
-	public InstructionObject getInstruction() {
-		return instructionObject;
-	}
-	
 	public void setDirective(Directive directive) {
 		this.directive = directive;
 	}
