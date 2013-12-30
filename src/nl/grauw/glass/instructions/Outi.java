@@ -16,7 +16,7 @@ public class Outi extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Outi_.ARGUMENTS.check(arguments))
 			return new Outi_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Outi_ extends Instruction {

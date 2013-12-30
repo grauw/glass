@@ -16,7 +16,7 @@ public class Include extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Include_S.ARGUMENTS.check(arguments))
 			return new Include_S();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Include_S extends Directive {

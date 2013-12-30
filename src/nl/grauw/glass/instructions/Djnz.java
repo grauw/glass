@@ -16,7 +16,7 @@ public class Djnz extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Djnz_N.ARGUMENTS.check(arguments))
 			return new Djnz_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Djnz_N extends Instruction {

@@ -16,7 +16,7 @@ public class Reti extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Reti_.ARGUMENTS.check(arguments))
 			return new Reti_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Reti_ extends Instruction {

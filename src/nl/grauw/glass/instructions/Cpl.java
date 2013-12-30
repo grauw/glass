@@ -16,7 +16,7 @@ public class Cpl extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Cpl_.ARGUMENTS.check(arguments))
 			return new Cpl_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Cpl_ extends Instruction {

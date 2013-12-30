@@ -16,7 +16,7 @@ public class Ei extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ei_.ARGUMENTS.check(arguments))
 			return new Ei_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ei_ extends Instruction {

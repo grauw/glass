@@ -6,7 +6,6 @@ import java.io.OutputStream;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.Org.Org_N;
 
@@ -99,8 +98,6 @@ public class Line {
 	public int resolve(int address) {
 		if (mnemonic != null) {
 			instruction = scope.getInstruction(mnemonic).createInstruction(arguments, scope);
-			if (instruction == null)
-				throw new ArgumentException();
 			return instruction.resolve(scope, address);
 		} else {
 			scope.setAddress(address);

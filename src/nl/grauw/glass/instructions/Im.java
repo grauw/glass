@@ -16,7 +16,7 @@ public class Im extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Im_N.ARGUMENTS.check(arguments))
 			return new Im_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Im_N extends Instruction {

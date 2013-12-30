@@ -16,7 +16,7 @@ public class Ldi extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ldi_.ARGUMENTS.check(arguments))
 			return new Ldi_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ldi_ extends Instruction {

@@ -21,7 +21,7 @@ public class Ds extends InstructionFactory {
 			return new Ds_N_N(arguments.getElement(0), IntegerLiteral.ZERO);
 		if (Ds_N_N.ARGUMENTS_N_N.check(arguments))
 			return new Ds_N_N(arguments.getElement(0), arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ds_N_N extends Instruction {

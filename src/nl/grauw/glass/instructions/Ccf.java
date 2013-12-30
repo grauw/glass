@@ -16,7 +16,7 @@ public class Ccf extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ccf_.ARGUMENTS.check(arguments))
 			return new Ccf_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ccf_ extends Instruction {

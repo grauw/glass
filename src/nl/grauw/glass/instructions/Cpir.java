@@ -16,7 +16,7 @@ public class Cpir extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Cpir_.ARGUMENTS.check(arguments))
 			return new Cpir_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Cpir_ extends Instruction {

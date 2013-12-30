@@ -16,7 +16,7 @@ public class Otdr extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Otdr_.ARGUMENTS.check(arguments))
 			return new Otdr_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Otdr_ extends Instruction {

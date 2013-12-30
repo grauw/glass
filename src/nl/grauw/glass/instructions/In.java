@@ -21,7 +21,7 @@ public class In extends InstructionFactory {
 			return new In_N_C(Register.HL);
 		if (In_N_N.ARGUMENTS.check(arguments))
 			return new In_N_N(arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class In_N_C extends Instruction {

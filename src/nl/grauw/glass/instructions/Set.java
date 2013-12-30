@@ -17,7 +17,7 @@ public class Set extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Set_N_R.ARGUMENTS.check(arguments))
 			return new Set_N_R(arguments.getElement(0), arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Set_N_R extends Instruction {

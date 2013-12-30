@@ -16,7 +16,7 @@ public class Neg extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Neg_.ARGUMENTS.check(arguments))
 			return new Neg_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Neg_ extends Instruction {

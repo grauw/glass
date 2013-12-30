@@ -16,7 +16,7 @@ public class Ini extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ini_.ARGUMENTS.check(arguments))
 			return new Ini_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ini_ extends Instruction {

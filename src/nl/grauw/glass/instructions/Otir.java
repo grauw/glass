@@ -16,7 +16,7 @@ public class Otir extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Otir_.ARGUMENTS.check(arguments))
 			return new Otir_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Otir_ extends Instruction {

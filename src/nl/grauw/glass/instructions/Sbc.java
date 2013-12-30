@@ -21,7 +21,7 @@ public class Sbc extends InstructionFactory {
 			return new Sbc_A_N(arguments.getElement(1));
 		if (Sbc_HL_RR.ARGUMENTS.check(arguments))
 			return new Sbc_HL_RR(arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Sbc_A_R extends Instruction {

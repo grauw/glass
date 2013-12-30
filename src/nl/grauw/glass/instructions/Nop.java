@@ -16,7 +16,7 @@ public class Nop extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Nop_.ARGUMENTS.check(arguments))
 			return new Nop_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Nop_ extends Instruction {

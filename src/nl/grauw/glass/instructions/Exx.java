@@ -16,7 +16,7 @@ public class Exx extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Exx_.ARGUMENTS.check(arguments))
 			return new Exx_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Exx_ extends Instruction {

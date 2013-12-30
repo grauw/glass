@@ -16,7 +16,7 @@ public class Ldir extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ldir_.ARGUMENTS.check(arguments))
 			return new Ldir_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ldir_ extends Instruction {

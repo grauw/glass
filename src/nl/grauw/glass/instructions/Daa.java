@@ -16,7 +16,7 @@ public class Daa extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Daa_.ARGUMENTS.check(arguments))
 			return new Daa_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Daa_ extends Instruction {

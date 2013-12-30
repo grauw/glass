@@ -18,7 +18,7 @@ public class Call extends InstructionFactory {
 			return new Call_F_N(arguments.getElement(0), arguments.getElement(1));
 		if (Call_N.ARGUMENTS.check(arguments))
 			return new Call_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Call_N extends Instruction {

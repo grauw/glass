@@ -16,7 +16,7 @@ public class Rst extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Rst_N.ARGUMENTS.check(arguments))
 			return new Rst_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Rst_N extends Instruction {

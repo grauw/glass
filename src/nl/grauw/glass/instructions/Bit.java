@@ -17,7 +17,7 @@ public class Bit extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Bit_N_R.ARGUMENTS.check(arguments))
 			return new Bit_N_R(arguments.getElement(0), arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Bit_N_R extends Instruction {

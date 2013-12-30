@@ -19,7 +19,7 @@ public class Dec extends InstructionFactory {
 			return new Dec_R(arguments.getElement(0));
 		if (Dec_RR.ARGUMENTS.check(arguments))
 			return new Dec_RR(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Dec_R extends Instruction {

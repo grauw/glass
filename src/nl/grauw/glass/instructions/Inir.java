@@ -16,7 +16,7 @@ public class Inir extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Inir_.ARGUMENTS.check(arguments))
 			return new Inir_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Inir_ extends Instruction {

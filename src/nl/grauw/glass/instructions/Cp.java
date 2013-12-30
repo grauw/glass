@@ -19,7 +19,7 @@ public class Cp extends InstructionFactory {
 			return new Cp_R(arguments);
 		if (Cp_N.ARGUMENTS.check(arguments))
 			return new Cp_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Cp_R extends Instruction {

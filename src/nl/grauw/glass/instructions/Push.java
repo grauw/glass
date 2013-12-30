@@ -17,7 +17,7 @@ public class Push extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Push_RR.ARGUMENTS.check(arguments))
 			return new Push_RR(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Push_RR extends Instruction {

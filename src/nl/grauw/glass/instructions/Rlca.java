@@ -16,7 +16,7 @@ public class Rlca extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Rlca_.ARGUMENTS.check(arguments))
 			return new Rlca_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Rlca_ extends Instruction {

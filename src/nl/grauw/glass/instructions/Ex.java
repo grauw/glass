@@ -20,7 +20,7 @@ public class Ex extends InstructionFactory {
 			return new Ex_DE_HL();
 		if (Ex_SP.ARGUMENTS.check(arguments))
 			return new Ex_SP(arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ex_AF extends Instruction {

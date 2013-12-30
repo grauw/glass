@@ -19,7 +19,7 @@ public class And extends InstructionFactory {
 			return new And_R(arguments);
 		if (And_N.ARGUMENTS.check(arguments))
 			return new And_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class And_R extends Instruction {

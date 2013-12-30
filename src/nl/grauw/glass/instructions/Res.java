@@ -17,7 +17,7 @@ public class Res extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Res_N_R.ARGUMENTS.check(arguments))
 			return new Res_N_R(arguments.getElement(0), arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Res_N_R extends Instruction {

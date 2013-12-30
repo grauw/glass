@@ -16,7 +16,7 @@ public class Lddr extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Lddr_.ARGUMENTS.check(arguments))
 			return new Lddr_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Lddr_ extends Instruction {

@@ -16,7 +16,7 @@ public class Retn extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Retn_.ARGUMENTS.check(arguments))
 			return new Retn_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Retn_ extends Instruction {

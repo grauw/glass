@@ -19,7 +19,7 @@ public class Or extends InstructionFactory {
 			return new Or_R(arguments);
 		if (Or_N.ARGUMENTS.check(arguments))
 			return new Or_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Or_R extends Instruction {

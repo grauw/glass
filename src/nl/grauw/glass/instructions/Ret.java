@@ -18,7 +18,7 @@ public class Ret extends InstructionFactory {
 			return new Ret_();
 		if (Ret_F.ARGUMENTS.check(arguments))
 			return new Ret_F(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ret_ extends Instruction {

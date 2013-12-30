@@ -18,7 +18,7 @@ public class Out extends InstructionFactory {
 			return new Out_C_N(arguments.getElement(1));
 		if (Out_N_N.ARGUMENTS.check(arguments))
 			return new Out_N_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Out_C_N extends Instruction {

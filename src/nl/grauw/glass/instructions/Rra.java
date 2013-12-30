@@ -16,7 +16,7 @@ public class Rra extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Rra_.ARGUMENTS.check(arguments))
 			return new Rra_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Rra_ extends Instruction {

@@ -16,7 +16,7 @@ public class Halt extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Halt_.ARGUMENTS.check(arguments))
 			return new Halt_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Halt_ extends Instruction {

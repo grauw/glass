@@ -16,7 +16,7 @@ public class Cpi extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Cpi_.ARGUMENTS.check(arguments))
 			return new Cpi_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Cpi_ extends Instruction {

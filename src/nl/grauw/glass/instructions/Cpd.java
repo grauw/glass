@@ -16,7 +16,7 @@ public class Cpd extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Cpd_.ARGUMENTS.check(arguments))
 			return new Cpd_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Cpd_ extends Instruction {

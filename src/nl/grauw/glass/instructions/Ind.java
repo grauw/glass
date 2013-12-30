@@ -16,7 +16,7 @@ public class Ind extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Ind_.ARGUMENTS.check(arguments))
 			return new Ind_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Ind_ extends Instruction {

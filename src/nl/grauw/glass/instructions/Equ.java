@@ -16,7 +16,7 @@ public class Equ extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Equ_N.ARGUMENTS.check(arguments))
 			return new Equ_N();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Equ_N extends Directive {

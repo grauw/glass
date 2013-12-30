@@ -21,7 +21,7 @@ public class Adc extends InstructionFactory {
 			return new Adc_A_N(arguments.getElement(1));
 		if (Adc_HL_RR.ARGUMENTS.check(arguments))
 			return new Adc_HL_RR(arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Adc_A_R extends Instruction {

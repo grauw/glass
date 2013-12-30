@@ -17,7 +17,7 @@ public class Db extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (arguments != null)
 			return new Db_N(arguments.getList());
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Db_N extends Instruction {

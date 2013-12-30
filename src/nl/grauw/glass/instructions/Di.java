@@ -16,7 +16,7 @@ public class Di extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Di_.ARGUMENTS.check(arguments))
 			return new Di_();
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Di_ extends Instruction {

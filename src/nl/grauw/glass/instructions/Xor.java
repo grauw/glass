@@ -19,7 +19,7 @@ public class Xor extends InstructionFactory {
 			return new Xor_R(arguments);
 		if (Xor_N.ARGUMENTS.check(arguments))
 			return new Xor_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Xor_R extends Instruction {

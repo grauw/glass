@@ -19,7 +19,7 @@ public class Inc extends InstructionFactory {
 			return new Inc_R(arguments.getElement(0));
 		if (Inc_RR.ARGUMENTS.check(arguments))
 			return new Inc_RR(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Inc_R extends Instruction {

@@ -17,7 +17,7 @@ public class Dw extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (arguments != null)
 			return new Dw_N(arguments.getList());
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Dw_N extends Instruction {

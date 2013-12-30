@@ -19,7 +19,7 @@ public class Sub extends InstructionFactory {
 			return new Sub_R(arguments);
 		if (Sub_N.ARGUMENTS.check(arguments))
 			return new Sub_N(arguments);
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Sub_R extends Instruction {

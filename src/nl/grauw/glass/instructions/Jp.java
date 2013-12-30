@@ -20,7 +20,7 @@ public class Jp extends InstructionFactory {
 			return new Jp_HL(arguments.getElement(0));
 		if (Jp_N.ARGUMENTS.check(arguments))
 			return new Jp_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Jp_N extends Instruction {

@@ -18,7 +18,7 @@ public class Jr extends InstructionFactory {
 			return new Jr_F_N(arguments.getElement(0), arguments.getElement(1));
 		if (Jr_N.ARGUMENTS.check(arguments))
 			return new Jr_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Jr_N extends Instruction {

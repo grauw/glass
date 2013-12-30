@@ -21,7 +21,7 @@ public class Add extends InstructionFactory {
 			return new Add_A_N(arguments.getElement(1));
 		if (Add_HL_RR.ARGUMENTS.check(arguments))
 			return new Add_HL_RR(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Add_A_R extends Instruction {

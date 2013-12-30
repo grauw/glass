@@ -16,7 +16,7 @@ public class Mulub extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Mulub_R_R.ARGUMENTS.check(arguments))
 			return new Mulub_R_R(arguments.getElement(1));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Mulub_R_R extends Instruction {

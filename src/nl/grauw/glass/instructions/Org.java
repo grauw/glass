@@ -16,7 +16,7 @@ public class Org extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Org_N.ARGUMENTS.check(arguments))
 			return new Org_N(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Org_N extends Directive {

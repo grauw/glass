@@ -17,7 +17,7 @@ public class Pop extends InstructionFactory {
 	public Instruction createInstruction(Expression arguments) {
 		if (Pop_RR.ARGUMENTS.check(arguments))
 			return new Pop_RR(arguments.getElement(0));
-		return null;
+		throw new ArgumentException();
 	}
 	
 	public static class Pop_RR extends Instruction {
