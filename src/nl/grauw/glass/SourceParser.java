@@ -18,7 +18,6 @@ import nl.grauw.glass.directives.Equ;
 import nl.grauw.glass.directives.Include;
 import nl.grauw.glass.directives.Instruction;
 import nl.grauw.glass.directives.Macro;
-import nl.grauw.glass.directives.Repeat;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 import nl.grauw.glass.expressions.StringLiteral;
