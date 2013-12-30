@@ -25,21 +25,4 @@ public class Ld_NN_A extends Instruction {
 		return new byte[] { (byte)0x3A, (byte)address, (byte)(address >> 8) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_NN_A.ARGUMENTS.check(arguments))
-				return new Ld_NN_A(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

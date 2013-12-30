@@ -24,21 +24,4 @@ public class And_N extends Instruction {
 		return new byte[] { (byte)0xE6, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("and", this);
-			scope.addInstruction("AND", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (And_N.ARGUMENTS.check(arguments))
-				return new And_N(arguments);
-			return null;
-		}
-		
-	}
-	
 }

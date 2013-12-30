@@ -26,21 +26,4 @@ public class Dec_RR extends Instruction {
 		return indexifyDirect(register, (byte)(0x0B | register.get16BitCode() << 4));
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("dec", this);
-			scope.addInstruction("DEC", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Dec_RR.ARGUMENTS.check(arguments))
-				return new Dec_RR(arguments.getElement(0));
-			return null;
-		}
-		
-	}
-	
 }

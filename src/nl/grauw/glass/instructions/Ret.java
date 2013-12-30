@@ -30,6 +30,8 @@ public class Ret extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Ret.ARGUMENTS.check(arguments))
 				return new Ret();
+			if (Ret_F.ARGUMENTS.check(arguments))
+				return new Ret_F(arguments.getElement(0));
 			return null;
 		}
 		

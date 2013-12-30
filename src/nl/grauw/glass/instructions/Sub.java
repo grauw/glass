@@ -38,6 +38,8 @@ public class Sub extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Sub.ARGUMENTS.check(arguments))
 				return new Sub(arguments);
+			if (Sub_N.ARGUMENTS.check(arguments))
+				return new Sub_N(arguments);
 			return null;
 		}
 		

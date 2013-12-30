@@ -36,6 +36,8 @@ public class Out_C extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Out_C.ARGUMENTS.check(arguments))
 				return new Out_C(arguments.getElement(1));
+			if (Out_N.ARGUMENTS.check(arguments))
+				return new Out_N(arguments.getElement(0));
 			return null;
 		}
 		

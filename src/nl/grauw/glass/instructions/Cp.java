@@ -38,6 +38,8 @@ public class Cp extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Cp.ARGUMENTS.check(arguments))
 				return new Cp(arguments);
+			if (Cp_N.ARGUMENTS.check(arguments))
+				return new Cp_N(arguments);
 			return null;
 		}
 		

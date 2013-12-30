@@ -25,21 +25,4 @@ public class Jp_HL extends Instruction {
 		return indexifyDirect(argument.getRegister(), (byte)0xE9);
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("jp", this);
-			scope.addInstruction("JP", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Jp_HL.ARGUMENTS.check(arguments) || ARGUMENTS_ALT.check(arguments))
-				return new Jp_HL(arguments.getElement(0));
-			return null;
-		}
-		
-	}
-	
 }

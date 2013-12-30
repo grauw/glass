@@ -38,6 +38,8 @@ public class Dec extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Dec.ARGUMENTS.check(arguments))
 				return new Dec(arguments.getElement(0));
+			if (Dec_RR.ARGUMENTS.check(arguments))
+				return new Dec_RR(arguments.getElement(0));
 			return null;
 		}
 		

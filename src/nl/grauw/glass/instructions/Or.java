@@ -38,6 +38,8 @@ public class Or extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Or.ARGUMENTS.check(arguments))
 				return new Or(arguments);
+			if (Or_N.ARGUMENTS.check(arguments))
+				return new Or_N(arguments);
 			return null;
 		}
 		

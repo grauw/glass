@@ -40,6 +40,8 @@ public class In_C extends Instruction {
 				return new In_C(arguments.getElement(0));
 			if (In_C.ARGUMENTS_NO_R.check(arguments))
 				return new In_C(Register.HL);
+			if (In_N.ARGUMENTS.check(arguments))
+				return new In_N(arguments.getElement(1));
 			return null;
 		}
 		

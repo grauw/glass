@@ -28,21 +28,4 @@ public class Ld_R_N extends Instruction {
 		return indexifyIndirect(register, (byte)(0x06 | register.get8BitCode() << 3), (byte)argument2.getInteger());
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_R_N.ARGUMENTS.check(arguments))
-				return new Ld_R_N(arguments.getElement(0), arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

@@ -35,6 +35,8 @@ public class Call extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
+			if (Call_F.ARGUMENTS.check(arguments))
+				return new Call_F(arguments.getElement(0), arguments.getElement(1));
 			if (Call.ARGUMENTS.check(arguments))
 				return new Call(arguments.getElement(0));
 			return null;

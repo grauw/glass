@@ -27,21 +27,4 @@ public class Call_F extends Instruction {
 		return new byte[] { (byte)(0xC4 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("call", this);
-			scope.addInstruction("CALL", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Call_F.ARGUMENTS.check(arguments))
-				return new Call_F(arguments.getElement(0), arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

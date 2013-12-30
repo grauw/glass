@@ -27,21 +27,4 @@ public class Ld_A_IR extends Instruction {
 		return new byte[] { (byte)0xED, (byte)0x5F };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_A_IR.ARGUMENTS.check(arguments))
-				return new Ld_A_IR(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

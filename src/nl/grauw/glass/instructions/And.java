@@ -38,6 +38,8 @@ public class And extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (And.ARGUMENTS.check(arguments))
 				return new And(arguments);
+			if (And_N.ARGUMENTS.check(arguments))
+				return new And_N(arguments);
 			return null;
 		}
 		

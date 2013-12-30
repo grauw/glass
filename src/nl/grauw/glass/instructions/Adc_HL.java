@@ -24,21 +24,4 @@ public class Adc_HL extends Instruction {
 		return new byte[] { (byte)0xED, (byte)(0x4A | argument.getRegister().get16BitCode() << 4) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("adc", this);
-			scope.addInstruction("ADC", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Adc_HL.ARGUMENTS.check(arguments))
-				return new Adc_HL(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

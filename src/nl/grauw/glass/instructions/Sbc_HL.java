@@ -24,21 +24,4 @@ public class Sbc_HL extends Instruction {
 		return new byte[] { (byte)0xED, (byte)(0x42 | argument.getRegister().get16BitCode() << 4) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("sbc", this);
-			scope.addInstruction("SBC", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Sbc_HL.ARGUMENTS.check(arguments))
-				return new Sbc_HL(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

@@ -38,6 +38,10 @@ public class Sbc_A extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Sbc_A.ARGUMENTS.check(arguments))
 				return new Sbc_A(arguments.getElement(1));
+			if (Sbc_A_N.ARGUMENTS.check(arguments))
+				return new Sbc_A_N(arguments.getElement(1));
+			if (Sbc_HL.ARGUMENTS.check(arguments))
+				return new Sbc_HL(arguments.getElement(1));
 			return null;
 		}
 		

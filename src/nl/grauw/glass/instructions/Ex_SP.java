@@ -24,21 +24,4 @@ public class Ex_SP extends Instruction {
 		return indexifyDirect(argument.getRegister(), (byte)0xE3);
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ex", this);
-			scope.addInstruction("EX", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ex_SP.ARGUMENTS.check(arguments))
-				return new Ex_SP(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

@@ -24,21 +24,4 @@ public class Ret_F extends Instruction {
 		return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ret", this);
-			scope.addInstruction("RET", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ret_F.ARGUMENTS.check(arguments))
-				return new Ret_F(arguments.getElement(0));
-			return null;
-		}
-		
-	}
-	
 }

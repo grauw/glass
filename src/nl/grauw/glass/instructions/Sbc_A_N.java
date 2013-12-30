@@ -24,21 +24,4 @@ public class Sbc_A_N extends Instruction {
 		return new byte[] { (byte)0xDE, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("sbc", this);
-			scope.addInstruction("SBC", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Sbc_A_N.ARGUMENTS.check(arguments))
-				return new Sbc_A_N(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

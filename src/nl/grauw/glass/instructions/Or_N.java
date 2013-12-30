@@ -24,21 +24,4 @@ public class Or_N extends Instruction {
 		return new byte[] { (byte)0xF6, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("or", this);
-			scope.addInstruction("OR", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Or_N.ARGUMENTS.check(arguments))
-				return new Or_N(arguments);
-			return null;
-		}
-		
-	}
-	
 }

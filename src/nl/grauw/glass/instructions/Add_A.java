@@ -38,6 +38,10 @@ public class Add_A extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Add_A.ARGUMENTS.check(arguments))
 				return new Add_A(arguments.getElement(1));
+			if (Add_A_N.ARGUMENTS.check(arguments))
+				return new Add_A_N(arguments.getElement(1));
+			if (Add_HL.ARGUMENTS.check(arguments))
+				return new Add_HL(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 			return null;
 		}
 		

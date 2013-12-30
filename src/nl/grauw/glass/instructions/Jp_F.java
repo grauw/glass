@@ -27,21 +27,4 @@ public class Jp_F extends Instruction {
 		return new byte[] { (byte)(0xC2 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("jp", this);
-			scope.addInstruction("JP", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Jp_F.ARGUMENTS.check(arguments))
-				return new Jp_F(arguments.getElement(0), arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

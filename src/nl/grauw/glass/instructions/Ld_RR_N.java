@@ -29,21 +29,4 @@ public class Ld_RR_N extends Instruction {
 				(byte)argument2.getInteger(), (byte)(argument2.getInteger() >> 8));
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_RR_N.ARGUMENTS.check(arguments))
-				return new Ld_RR_N(arguments.getElement(0), arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

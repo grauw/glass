@@ -1,8 +1,6 @@
 package nl.grauw.glass;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import nl.grauw.glass.expressions.Context;
@@ -13,7 +11,7 @@ import nl.grauw.glass.instructions.InstructionFactory;
 
 public class Scope implements Context {
 	
-	private Map<String, List<InstructionFactory>> instructions = new HashMap<>();
+	private Map<String, InstructionFactory> instructions = new HashMap<>();
 	
 	Scope parent;
 	Map<String, Expression> variables = new HashMap<>();
@@ -83,12 +81,9 @@ public class Scope implements Context {
 	public void addInstruction(String mnemonic, InstructionFactory factory) {
 		if (mnemonic == null || factory == null)
 			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
-		List<InstructionFactory> factoryList = instructions.get(mnemonic);
-		if (factoryList == null) {
-			factoryList = new ArrayList<InstructionFactory>();
-			instructions.put(mnemonic, factoryList);
-		}
-		factoryList.add(factory);
+		if (instructions.containsKey(mnemonic))
+			throw new AssemblyException("Instruction already registered.");
+		instructions.put(mnemonic, factory);
 	}
 	
 	public Instruction createInstruction(String mnemonic, Expression arguments) {
@@ -96,13 +91,12 @@ public class Scope implements Context {
 	}
 	
 	public Instruction createInstruction(String mnemonic, Expression arguments, Scope scope) {
-		List<InstructionFactory> factoryList = instructions.get(mnemonic);
-		if (factoryList != null) {
-			for (InstructionFactory factory : factoryList) {
-				Instruction instruction = factory.createInstruction(arguments, scope);
-				if (instruction != null)
-					return instruction;
-			}
+		InstructionFactory factory = instructions.get(mnemonic);
+		if (factory != null) {
+			Instruction instruction = factory.createInstruction(arguments, scope);
+			if (instruction != null)
+				return instruction;
+			throw new AssemblyException("Unrecognized mnemonic.");
 		}
 		if (parent != null)
 			return parent.createInstruction(mnemonic, arguments, scope);

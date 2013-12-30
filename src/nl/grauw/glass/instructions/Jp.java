@@ -35,6 +35,10 @@ public class Jp extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
+			if (Jp_F.ARGUMENTS.check(arguments))
+				return new Jp_F(arguments.getElement(0), arguments.getElement(1));
+			if (Jp_HL.ARGUMENTS.check(arguments) || Jp_HL.ARGUMENTS_ALT.check(arguments))
+				return new Jp_HL(arguments.getElement(0));
 			if (Jp.ARGUMENTS.check(arguments))
 				return new Jp(arguments.getElement(0));
 			return null;

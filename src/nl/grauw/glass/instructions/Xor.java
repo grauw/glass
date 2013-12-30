@@ -38,6 +38,8 @@ public class Xor extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Xor.ARGUMENTS.check(arguments))
 				return new Xor(arguments);
+			if (Xor_N.ARGUMENTS.check(arguments))
+				return new Xor_N(arguments);
 			return null;
 		}
 		

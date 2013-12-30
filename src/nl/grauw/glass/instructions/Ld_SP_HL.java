@@ -24,21 +24,4 @@ public class Ld_SP_HL extends Instruction {
 		return indexifyDirect(argument.getRegister(), (byte)0xF9);
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_SP_HL.ARGUMENTS.check(arguments))
-				return new Ld_SP_HL(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

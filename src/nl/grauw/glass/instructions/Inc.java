@@ -38,6 +38,8 @@ public class Inc extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Inc.ARGUMENTS.check(arguments))
 				return new Inc(arguments.getElement(0));
+			if (Inc_RR.ARGUMENTS.check(arguments))
+				return new Inc_RR(arguments.getElement(0));
 			return null;
 		}
 		

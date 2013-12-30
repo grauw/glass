@@ -37,6 +37,8 @@ public class Jr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
+			if (Jr_F.ARGUMENTS.check(arguments))
+				return new Jr_F(arguments.getElement(0), arguments.getElement(1));
 			if (Jr.ARGUMENTS.check(arguments))
 				return new Jr(arguments.getElement(0));
 			return null;

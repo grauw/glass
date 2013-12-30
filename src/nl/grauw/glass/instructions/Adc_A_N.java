@@ -24,21 +24,4 @@ public class Adc_A_N extends Instruction {
 		return new byte[] { (byte)0xCE, (byte)argument.getInteger() };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("adc", this);
-			scope.addInstruction("ADC", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Adc_A_N.ARGUMENTS.check(arguments))
-				return new Adc_A_N(arguments.getElement(1));
-			return null;
-		}
-		
-	}
-	
 }

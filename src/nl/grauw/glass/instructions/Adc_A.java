@@ -38,6 +38,10 @@ public class Adc_A extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Adc_A.ARGUMENTS.check(arguments))
 				return new Adc_A(arguments.getElement(1));
+			if (Adc_A_N.ARGUMENTS.check(arguments))
+				return new Adc_A_N(arguments.getElement(1));
+			if (Adc_HL.ARGUMENTS.check(arguments))
+				return new Adc_HL(arguments.getElement(1));
 			return null;
 		}
 		

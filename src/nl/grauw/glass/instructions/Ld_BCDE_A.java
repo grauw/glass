@@ -24,21 +24,4 @@ public class Ld_BCDE_A extends Instruction {
 		return new byte[] { (byte)(0x02 | argument.getRegister().get16BitCode() << 4) };
 	}
 	
-	public static class Factory extends InstructionFactory {
-		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("ld", this);
-			scope.addInstruction("LD", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Ld_BCDE_A.ARGUMENTS.check(arguments))
-				return new Ld_BCDE_A(arguments.getElement(0));
-			return null;
-		}
-		
-	}
-	
 }

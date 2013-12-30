@@ -51,6 +51,32 @@ public class Ld_R_R extends Instruction {
 		public Instruction createInstruction(Expression arguments) {
 			if (Ld_R_R.ARGUMENTS.check(arguments))
 				return new Ld_R_R(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
+			if (Ld_A_BCDE.ARGUMENTS.check(arguments))
+				return new Ld_A_BCDE(arguments.getElement(1));
+			if (Ld_BCDE_A.ARGUMENTS.check(arguments))
+				return new Ld_BCDE_A(arguments.getElement(0));
+			if (Ld_SP_HL.ARGUMENTS.check(arguments))
+				return new Ld_SP_HL(arguments.getElement(1));
+			if (Ld_A_IR.ARGUMENTS.check(arguments))
+				return new Ld_A_IR(arguments.getElement(1));
+			if (Ld_IR_A.ARGUMENTS.check(arguments))
+				return new Ld_IR_A(arguments.getElement(0));
+			if (Ld_R_N.ARGUMENTS.check(arguments))
+				return new Ld_R_N(arguments.getElement(0), arguments.getElement(1));
+			if (Ld_RR_N.ARGUMENTS.check(arguments))
+				return new Ld_RR_N(arguments.getElement(0), arguments.getElement(1));
+			if (Ld_A_NN.ARGUMENTS.check(arguments))
+				return new Ld_A_NN(arguments.getElement(0));
+			if (Ld_HL_NN.ARGUMENTS.check(arguments))
+				return new Ld_HL_NN(arguments.getElement(0), arguments.getElement(1));
+			if (Ld_RR_NN.ARGUMENTS.check(arguments))
+				return new Ld_RR_NN(arguments.getElement(0), arguments.getElement(1));
+			if (Ld_NN_A.ARGUMENTS.check(arguments))
+				return new Ld_NN_A(arguments.getElement(1));
+			if (Ld_NN_HL.ARGUMENTS.check(arguments))
+				return new Ld_NN_HL(arguments.getElement(0), arguments.getElement(1));
+			if (Ld_NN_RR.ARGUMENTS.check(arguments))
+				return new Ld_NN_RR(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}
 		
