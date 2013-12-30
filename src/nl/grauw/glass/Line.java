@@ -6,12 +6,12 @@ import java.io.OutputStream;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.InstructionObject;
+import nl.grauw.glass.instructions.Empty;
 import nl.grauw.glass.instructions.Org.Org_N;
 
 public class Line {
-	
-	private static final byte[] NO_BYTES = new byte[] {};
 	
 	private final Scope scope;
 	private final String label;
@@ -77,13 +77,9 @@ public class Line {
 	}
 	
 	public int resolve(int address) {
-		if (mnemonic != null) {
-			instructionObject = scope.getInstruction(mnemonic).createObject(arguments, scope);
-			return instructionObject.resolve(scope, address);
-		} else {
-			scope.setAddress(address);
-			return address;
-		}
+		Instruction instruction = mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
+		instructionObject = instruction.createObject(arguments, scope);
+		return instructionObject.resolve(scope, address);
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
@@ -98,14 +94,10 @@ public class Line {
 	}
 	
 	public int getSize() {
-		if (instructionObject == null)
-			return 0;
 		return instructionObject.getSize(scope);
 	}
 	
 	public byte[] getBytes() {
-		if (instructionObject == null)
-			return NO_BYTES;
 		return instructionObject.getBytes(scope);
 	}
 	
