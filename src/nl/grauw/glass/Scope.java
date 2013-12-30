@@ -46,7 +46,9 @@ public class Scope implements Context {
 	}
 	
 	public void addLabel(String name, Expression value) {
-		if (variables.get(name) != null)
+		if (name == null || value == null)
+			throw new AssemblyException("Label name and value must not be null.");
+		if (variables.containsKey(name))
 			throw new AssemblyException("Can not redefine label.");
 		variables.put(name, value);
 	}
@@ -79,6 +81,8 @@ public class Scope implements Context {
 	}
 	
 	public void addInstruction(String mnemonic, InstructionFactory factory) {
+		if (mnemonic == null || factory == null)
+			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
 		List<InstructionFactory> factoryList = instructions.get(mnemonic);
 		if (factoryList == null) {
 			factoryList = new ArrayList<InstructionFactory>();
