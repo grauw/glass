@@ -5,10 +5,10 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class And extends InstructionFactory {
+public class And extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (And_R.ARGUMENTS.check(arguments))
 			return new And_R(arguments);
 		if (And_N.ARGUMENTS.check(arguments))
@@ -16,7 +16,7 @@ public class And extends InstructionFactory {
 		throw new ArgumentException();
 	}
 	
-	public static class And_R extends Instruction {
+	public static class And_R extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 		
@@ -39,7 +39,7 @@ public class And extends InstructionFactory {
 		
 	}
 	
-	public static class And_N extends Instruction {
+	public static class And_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		

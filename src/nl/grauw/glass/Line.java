@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.Instruction;
+import nl.grauw.glass.instructions.InstructionObject;
 import nl.grauw.glass.instructions.Org.Org_N;
 
 public class Line {
@@ -21,7 +21,7 @@ public class Line {
 	private Expression arguments;
 	private String comment;
 	
-	private Instruction instruction;
+	private InstructionObject instructionObject;
 	private Directive directive;
 	
 	public Line(Scope sourceScope, File sourceFile, int lineNumber) {
@@ -83,8 +83,8 @@ public class Line {
 		return scope;
 	}
 	
-	public Instruction getInstruction() {
-		return instruction;
+	public InstructionObject getInstruction() {
+		return instructionObject;
 	}
 	
 	public void setDirective(Directive directive) {
@@ -97,8 +97,8 @@ public class Line {
 	
 	public int resolve(int address) {
 		if (mnemonic != null) {
-			instruction = scope.getInstruction(mnemonic).createInstruction(arguments, scope);
-			return instruction.resolve(scope, address);
+			instructionObject = scope.getInstruction(mnemonic).createObject(arguments, scope);
+			return instructionObject.resolve(scope, address);
 		} else {
 			scope.setAddress(address);
 			return address;
@@ -106,7 +106,7 @@ public class Line {
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
-		address = instruction instanceof Org_N ? ((Org_N)instruction).getAddress() : address;
+		address = instructionObject instanceof Org_N ? ((Org_N)instructionObject).getAddress() : address;
 		if (address != scope.getAddress())
 			throw new AssemblyException("Address changed between passes.");
 		
@@ -117,15 +117,15 @@ public class Line {
 	}
 	
 	public int getSize() {
-		if (instruction == null)
+		if (instructionObject == null)
 			return 0;
-		return instruction.getSize(scope);
+		return instructionObject.getSize(scope);
 	}
 	
 	public byte[] getBytes() {
-		if (instruction == null)
+		if (instructionObject == null)
 			return NO_BYTES;
-		return instruction.getBytes(scope);
+		return instructionObject.getBytes(scope);
 	}
 	
 	public String toString() {

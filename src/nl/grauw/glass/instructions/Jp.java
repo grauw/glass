@@ -4,10 +4,10 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Jp extends InstructionFactory {
+public class Jp extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Jp_F_N.ARGUMENTS.check(arguments))
 			return new Jp_F_N(arguments.getElement(0), arguments.getElement(1));
 		if (Jp_HL.ARGUMENTS.check(arguments) || Jp_HL.ARGUMENTS_ALT.check(arguments))
@@ -17,7 +17,7 @@ public class Jp extends InstructionFactory {
 		throw new ArgumentException();
 	}
 	
-	public static class Jp_N extends Instruction {
+	public static class Jp_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		
@@ -40,7 +40,7 @@ public class Jp extends InstructionFactory {
 		
 	}
 	
-	public static class Jp_F_N extends Instruction {
+	public static class Jp_F_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(new Schema.IsFlag(), Schema.DIRECT_N);
 		
@@ -65,7 +65,7 @@ public class Jp extends InstructionFactory {
 		
 	}
 	
-	public static class Jp_HL extends Instruction {
+	public static class Jp_HL extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_HL_IX_IY);
 		public static Schema ARGUMENTS_ALT = new Schema(Schema.DIRECT_HL_IX_IY);

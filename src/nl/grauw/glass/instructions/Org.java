@@ -4,10 +4,10 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Org extends InstructionFactory {
+public class Org extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Org_N.ARGUMENTS.check(arguments))
 			return new Org_N(arguments.getElement(0));
 		throw new ArgumentException();

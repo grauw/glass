@@ -5,16 +5,16 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Push extends InstructionFactory {
+public class Push extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Push_RR.ARGUMENTS.check(arguments))
 			return new Push_RR(arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
-	public static class Push_RR extends Instruction {
+	public static class Push_RR extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_AF_INDEX);
 		

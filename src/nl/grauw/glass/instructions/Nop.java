@@ -4,16 +4,16 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Nop extends InstructionFactory {
+public class Nop extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Nop_.ARGUMENTS.check(arguments))
 			return new Nop_();
 		throw new ArgumentException();
 	}
 	
-	public static class Nop_ extends Instruction {
+	public static class Nop_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
 		

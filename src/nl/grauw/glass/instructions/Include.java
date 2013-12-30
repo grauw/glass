@@ -3,10 +3,10 @@ package nl.grauw.glass.instructions;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Include extends InstructionFactory {
+public class Include extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Include_S.ARGUMENTS.check(arguments))
 			return new Include_S();
 		throw new ArgumentException();

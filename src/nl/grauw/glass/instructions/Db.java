@@ -5,16 +5,16 @@ import java.util.List;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 
-public class Db extends InstructionFactory {
+public class Db extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (arguments != null)
 			return new Db_N(arguments.getList());
 		throw new ArgumentException();
 	}
 	
-	public static class Db_N extends Instruction {
+	public static class Db_N extends InstructionObject {
 		
 		private List<Expression> arguments;
 		

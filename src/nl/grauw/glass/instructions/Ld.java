@@ -5,10 +5,10 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Ld extends InstructionFactory {
+public class Ld extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Ld_R_R.ARGUMENTS.check(arguments))
 			return new Ld_R_R(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 		if (Ld_A_BCDE.ARGUMENTS.check(arguments))
@@ -40,7 +40,7 @@ public class Ld extends InstructionFactory {
 		throw new ArgumentException();
 	}
 	
-	public static class Ld_R_R extends Instruction {
+	public static class Ld_R_R extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 		
@@ -76,7 +76,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_A_BCDE extends Instruction {
+	public static class Ld_A_BCDE extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_A, Schema.INDIRECT_BC_DE);
 		
@@ -98,7 +98,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_BCDE_A extends Instruction {
+	public static class Ld_BCDE_A extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_BC_DE, Schema.DIRECT_A);
 		
@@ -120,7 +120,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_SP_HL extends Instruction {
+	public static class Ld_SP_HL extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_SP, Schema.DIRECT_HL_IX_IY);
 		
@@ -142,7 +142,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_A_IR extends Instruction {
+	public static class Ld_A_IR extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_A, Schema.DIRECT_IR);
 		
@@ -166,7 +166,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_IR_A extends Instruction {
+	public static class Ld_IR_A extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_IR, Schema.DIRECT_A);
 		
@@ -190,7 +190,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_R_N extends Instruction {
+	public static class Ld_R_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY, Schema.DIRECT_N);
 		
@@ -215,7 +215,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_RR_N extends Instruction {
+	public static class Ld_RR_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_INDEX, Schema.DIRECT_N);
 		
@@ -241,7 +241,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_A_NN extends Instruction {
+	public static class Ld_A_NN extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_N, Schema.DIRECT_A);
 		
@@ -264,7 +264,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_HL_NN extends Instruction {
+	public static class Ld_HL_NN extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_HL_IX_IY, Schema.INDIRECT_N);
 		
@@ -289,7 +289,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_RR_NN extends Instruction {
+	public static class Ld_RR_NN extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR, Schema.INDIRECT_N);
 		
@@ -315,7 +315,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_NN_A extends Instruction {
+	public static class Ld_NN_A extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_A, Schema.INDIRECT_N);
 		
@@ -338,7 +338,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_NN_HL extends Instruction {
+	public static class Ld_NN_HL extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_N, Schema.DIRECT_HL_IX_IY);
 		
@@ -363,7 +363,7 @@ public class Ld extends InstructionFactory {
 		
 	}
 	
-	public static class Ld_NN_RR extends Instruction {
+	public static class Ld_NN_RR extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INDIRECT_N, Schema.DIRECT_RR);
 		

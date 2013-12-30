@@ -8,7 +8,7 @@ import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 
-public class MacroInstruction extends InstructionFactory {
+public class MacroInstruction extends Instruction {
 	
 	private final Expression parameters;
 	private final Source source;
@@ -25,7 +25,7 @@ public class MacroInstruction extends InstructionFactory {
 		}
 	}
 	
-	public Instruction createInstruction(Expression arguments, Scope scope) {
+	public InstructionObject createObject(Expression arguments, Scope scope) {
 		Scope parameterScope = new ParameterScope(scope, parameters, arguments);
 		Source copy = new Source(scope);
 		for (Line line : source.getLines())
@@ -34,7 +34,7 @@ public class MacroInstruction extends InstructionFactory {
 	}
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		throw new AssemblyException("Not implemented.");
 	}
 	

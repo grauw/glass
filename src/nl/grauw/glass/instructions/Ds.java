@@ -7,10 +7,10 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
-public class Ds extends InstructionFactory {
+public class Ds extends Instruction {
 	
 	@Override
-	public Instruction createInstruction(Expression arguments) {
+	public InstructionObject createObject(Expression arguments) {
 		if (Ds_N_N.ARGUMENTS_N.check(arguments))
 			return new Ds_N_N(arguments.getElement(0), IntegerLiteral.ZERO);
 		if (Ds_N_N.ARGUMENTS_N_N.check(arguments))
@@ -18,7 +18,7 @@ public class Ds extends InstructionFactory {
 		throw new ArgumentException();
 	}
 	
-	public static class Ds_N_N extends Instruction {
+	public static class Ds_N_N extends InstructionObject {
 		
 		public static Schema ARGUMENTS_N = new Schema(Schema.INTEGER);
 		public static Schema ARGUMENTS_N_N = new Schema(Schema.INTEGER, Schema.INTEGER);

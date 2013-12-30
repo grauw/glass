@@ -2,7 +2,7 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 
-public class Directive extends Instruction {
+public class Directive extends InstructionObject {
 	
 	@Override
 	public int getSize(Scope context) {
