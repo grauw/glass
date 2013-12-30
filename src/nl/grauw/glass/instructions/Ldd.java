@@ -2,8 +2,11 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.Schema;
 
 public class Ldd extends Instruction {
+	
+	public static Schema ARGUMENTS = new Schema();
 	
 	@Override
 	public int getSize(Scope context) {
@@ -25,7 +28,7 @@ public class Ldd extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_NONE.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Ldd();
 			return null;
 		}

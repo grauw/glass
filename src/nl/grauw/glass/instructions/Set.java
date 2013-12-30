@@ -3,8 +3,11 @@ package nl.grauw.glass.instructions;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
+import nl.grauw.glass.expressions.Schema;
 
 public class Set extends Instruction {
+	
+	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N, Schema.DIRECT_R_INDIRECT_HL_IX_IY);
 	
 	private Expression argument1;
 	private Expression argument2;
@@ -38,7 +41,7 @@ public class Set extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_N_R.check(arguments))
+			if (ARGUMENTS.check(arguments))
 				return new Set(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}
