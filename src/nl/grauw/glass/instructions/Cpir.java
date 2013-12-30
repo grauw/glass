@@ -28,7 +28,7 @@ public class Cpir extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cpir.ARGUMENTS.check(arguments))
 				return new Cpir();
 			return null;
 		}

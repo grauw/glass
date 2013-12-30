@@ -40,7 +40,7 @@ public class Add_HL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Add_HL.ARGUMENTS.check(arguments))
 				return new Add_HL(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 			return null;
 		}

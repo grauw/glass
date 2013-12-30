@@ -36,7 +36,7 @@ public class Rl extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Rl.ARGUMENTS.check(arguments))
 				return new Rl(arguments.getElement(0));
 			return null;
 		}

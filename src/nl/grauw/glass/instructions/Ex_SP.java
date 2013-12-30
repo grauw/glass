@@ -34,7 +34,7 @@ public class Ex_SP extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ex_SP.ARGUMENTS.check(arguments))
 				return new Ex_SP(arguments.getElement(1));
 			return null;
 		}

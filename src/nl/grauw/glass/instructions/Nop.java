@@ -28,7 +28,7 @@ public class Nop extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Nop.ARGUMENTS.check(arguments))
 				return new Nop();
 			return null;
 		}

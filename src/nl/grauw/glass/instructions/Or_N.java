@@ -34,7 +34,7 @@ public class Or_N extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Or_N.ARGUMENTS.check(arguments))
 				return new Or_N(arguments);
 			return null;
 		}

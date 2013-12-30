@@ -36,7 +36,7 @@ public class And extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (And.ARGUMENTS.check(arguments))
 				return new And(arguments);
 			return null;
 		}

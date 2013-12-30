@@ -37,7 +37,7 @@ public class Rst extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Rst.ARGUMENTS.check(arguments))
 				return new Rst(arguments.getElement(0));
 			return null;
 		}

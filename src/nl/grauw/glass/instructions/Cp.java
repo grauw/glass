@@ -36,7 +36,7 @@ public class Cp extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cp.ARGUMENTS.check(arguments))
 				return new Cp(arguments);
 			return null;
 		}

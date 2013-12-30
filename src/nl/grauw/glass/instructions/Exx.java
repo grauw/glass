@@ -28,7 +28,7 @@ public class Exx extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Exx.ARGUMENTS.check(arguments))
 				return new Exx();
 			return null;
 		}

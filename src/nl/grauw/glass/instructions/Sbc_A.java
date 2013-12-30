@@ -36,7 +36,7 @@ public class Sbc_A extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Sbc_A.ARGUMENTS.check(arguments))
 				return new Sbc_A(arguments.getElement(1));
 			return null;
 		}

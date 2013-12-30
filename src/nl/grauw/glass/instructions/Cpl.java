@@ -28,7 +28,7 @@ public class Cpl extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cpl.ARGUMENTS.check(arguments))
 				return new Cpl();
 			return null;
 		}

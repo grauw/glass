@@ -28,7 +28,7 @@ public class Lddr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Lddr.ARGUMENTS.check(arguments))
 				return new Lddr();
 			return null;
 		}

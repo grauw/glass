@@ -28,7 +28,7 @@ public class Ei extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ei.ARGUMENTS.check(arguments))
 				return new Ei();
 			return null;
 		}

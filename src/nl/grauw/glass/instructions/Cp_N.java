@@ -34,7 +34,7 @@ public class Cp_N extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cp_N.ARGUMENTS.check(arguments))
 				return new Cp_N(arguments);
 			return null;
 		}

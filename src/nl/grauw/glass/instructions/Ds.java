@@ -42,9 +42,9 @@ public class Ds extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS_N.check(arguments))
+			if (Ds.ARGUMENTS_N.check(arguments))
 				return new Ds(arguments.getElement(0), IntegerLiteral.ZERO);
-			if (ARGUMENTS_N_N.check(arguments))
+			if (Ds.ARGUMENTS_N_N.check(arguments))
 				return new Ds(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

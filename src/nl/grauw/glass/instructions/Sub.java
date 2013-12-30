@@ -36,7 +36,7 @@ public class Sub extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Sub.ARGUMENTS.check(arguments))
 				return new Sub(arguments);
 			return null;
 		}

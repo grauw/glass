@@ -28,7 +28,7 @@ public class Otir extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Otir.ARGUMENTS.check(arguments))
 				return new Otir();
 			return null;
 		}

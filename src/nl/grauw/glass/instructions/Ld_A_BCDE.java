@@ -34,7 +34,7 @@ public class Ld_A_BCDE extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ld_A_BCDE.ARGUMENTS.check(arguments))
 				return new Ld_A_BCDE(arguments.getElement(1));
 			return null;
 		}

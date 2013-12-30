@@ -41,7 +41,7 @@ public class Bit extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Bit.ARGUMENTS.check(arguments))
 				return new Bit(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

@@ -37,7 +37,7 @@ public class Jp_F extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Jp_F.ARGUMENTS.check(arguments))
 				return new Jp_F(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

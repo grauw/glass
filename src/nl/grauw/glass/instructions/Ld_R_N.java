@@ -38,7 +38,7 @@ public class Ld_R_N extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ld_R_N.ARGUMENTS.check(arguments))
 				return new Ld_R_N(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

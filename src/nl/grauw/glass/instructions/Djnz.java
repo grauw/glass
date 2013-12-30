@@ -37,7 +37,7 @@ public class Djnz extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Djnz.ARGUMENTS.check(arguments))
 				return new Djnz(arguments);
 			return null;
 		}

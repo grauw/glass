@@ -28,7 +28,7 @@ public class Di extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Di.ARGUMENTS.check(arguments))
 				return new Di();
 			return null;
 		}

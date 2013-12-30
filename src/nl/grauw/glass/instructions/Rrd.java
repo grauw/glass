@@ -28,7 +28,7 @@ public class Rrd extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Rrd.ARGUMENTS.check(arguments))
 				return new Rrd();
 			return null;
 		}

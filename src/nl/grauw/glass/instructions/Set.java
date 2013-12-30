@@ -41,7 +41,7 @@ public class Set extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Set.ARGUMENTS.check(arguments))
 				return new Set(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

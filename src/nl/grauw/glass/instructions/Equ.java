@@ -18,7 +18,7 @@ public class Equ extends Directive {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Equ.ARGUMENTS.check(arguments))
 				return new Equ();
 			return null;
 		}

@@ -28,7 +28,7 @@ public class Ini extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ini.ARGUMENTS.check(arguments))
 				return new Ini();
 			return null;
 		}

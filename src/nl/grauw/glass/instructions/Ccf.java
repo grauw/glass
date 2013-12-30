@@ -28,7 +28,7 @@ public class Ccf extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ccf.ARGUMENTS.check(arguments))
 				return new Ccf();
 			return null;
 		}

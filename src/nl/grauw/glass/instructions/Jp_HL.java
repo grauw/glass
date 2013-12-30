@@ -35,7 +35,7 @@ public class Jp_HL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments) || ARGUMENTS_ALT.check(arguments))
+			if (Jp_HL.ARGUMENTS.check(arguments) || ARGUMENTS_ALT.check(arguments))
 				return new Jp_HL(arguments.getElement(0));
 			return null;
 		}

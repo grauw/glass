@@ -34,7 +34,7 @@ public class Ret_F extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ret_F.ARGUMENTS.check(arguments))
 				return new Ret_F(arguments.getElement(0));
 			return null;
 		}

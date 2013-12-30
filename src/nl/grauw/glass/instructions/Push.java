@@ -36,7 +36,7 @@ public class Push extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Push.ARGUMENTS.check(arguments))
 				return new Push(arguments.getElement(0));
 			return null;
 		}

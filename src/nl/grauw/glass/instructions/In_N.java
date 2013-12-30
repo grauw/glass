@@ -34,7 +34,7 @@ public class In_N extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (In_N.ARGUMENTS.check(arguments))
 				return new In_N(arguments.getElement(1));
 			return null;
 		}

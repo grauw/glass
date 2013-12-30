@@ -37,7 +37,7 @@ public class Call_F extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Call_F.ARGUMENTS.check(arguments))
 				return new Call_F(arguments.getElement(0), arguments.getElement(1));
 			return null;
 		}

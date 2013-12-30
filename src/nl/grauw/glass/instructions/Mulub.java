@@ -34,7 +34,7 @@ public class Mulub extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Mulub.ARGUMENTS.check(arguments))
 				return new Mulub(arguments.getElement(1));
 			return null;
 		}

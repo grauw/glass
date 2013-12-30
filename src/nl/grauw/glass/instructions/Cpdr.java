@@ -28,7 +28,7 @@ public class Cpdr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cpdr.ARGUMENTS.check(arguments))
 				return new Cpdr();
 			return null;
 		}

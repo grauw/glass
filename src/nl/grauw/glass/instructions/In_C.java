@@ -36,9 +36,9 @@ public class In_C extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (In_C.ARGUMENTS.check(arguments))
 				return new In_C(arguments.getElement(0));
-			if (ARGUMENTS_NO_R.check(arguments))
+			if (In_C.ARGUMENTS_NO_R.check(arguments))
 				return new In_C(Register.HL);
 			return null;
 		}

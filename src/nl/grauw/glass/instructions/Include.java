@@ -18,7 +18,7 @@ public class Include extends Directive {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Include.ARGUMENTS.check(arguments))
 				return new Include();
 			return null;
 		}

@@ -36,7 +36,7 @@ public class Xor extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Xor.ARGUMENTS.check(arguments))
 				return new Xor(arguments);
 			return null;
 		}

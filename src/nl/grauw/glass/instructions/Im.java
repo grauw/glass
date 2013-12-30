@@ -42,7 +42,7 @@ public class Im extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Im.ARGUMENTS.check(arguments))
 				return new Im(arguments.getElement(0));
 			return null;
 		}

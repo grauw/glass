@@ -28,7 +28,7 @@ public class Otdr extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Otdr.ARGUMENTS.check(arguments))
 				return new Otdr();
 			return null;
 		}

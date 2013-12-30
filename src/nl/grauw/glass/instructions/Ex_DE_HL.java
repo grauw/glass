@@ -28,7 +28,7 @@ public class Ex_DE_HL extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Ex_DE_HL.ARGUMENTS.check(arguments))
 				return new Ex_DE_HL();
 			return null;
 		}

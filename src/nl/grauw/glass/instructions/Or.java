@@ -36,7 +36,7 @@ public class Or extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Or.ARGUMENTS.check(arguments))
 				return new Or(arguments);
 			return null;
 		}

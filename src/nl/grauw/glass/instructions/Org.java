@@ -33,7 +33,7 @@ public class Org extends Directive {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Org.ARGUMENTS.check(arguments))
 				return new Org(arguments.getElement(0));
 			return null;
 		}

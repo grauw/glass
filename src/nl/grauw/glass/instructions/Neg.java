@@ -28,7 +28,7 @@ public class Neg extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Neg.ARGUMENTS.check(arguments))
 				return new Neg();
 			return null;
 		}

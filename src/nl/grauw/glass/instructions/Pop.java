@@ -36,7 +36,7 @@ public class Pop extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Pop.ARGUMENTS.check(arguments))
 				return new Pop(arguments.getElement(0));
 			return null;
 		}

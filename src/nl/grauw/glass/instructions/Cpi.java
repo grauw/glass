@@ -28,7 +28,7 @@ public class Cpi extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Cpi.ARGUMENTS.check(arguments))
 				return new Cpi();
 			return null;
 		}

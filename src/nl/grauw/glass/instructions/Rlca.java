@@ -28,7 +28,7 @@ public class Rlca extends Instruction {
 		
 		@Override
 		public Instruction createInstruction(Expression arguments) {
-			if (ARGUMENTS.check(arguments))
+			if (Rlca.ARGUMENTS.check(arguments))
 				return new Rlca();
 			return null;
 		}
