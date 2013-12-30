@@ -6,7 +6,6 @@ import java.io.OutputStream;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.InstructionObject;
 import nl.grauw.glass.instructions.Org.Org_N;
 
