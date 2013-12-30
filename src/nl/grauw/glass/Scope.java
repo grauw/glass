@@ -77,12 +77,13 @@ public class Scope implements Context {
 		return null;
 	}
 	
-	public void addInstruction(String mnemonic, InstructionFactory factory) {
+	public InstructionFactory addInstruction(String mnemonic, InstructionFactory factory) {
 		if (mnemonic == null || factory == null)
 			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
 		if (instructions.containsKey(mnemonic))
 			throw new AssemblyException("Instruction already registered.");
 		instructions.put(mnemonic, factory);
+		return factory;
 	}
 	
 	public InstructionFactory getInstruction(String mnemonic) {

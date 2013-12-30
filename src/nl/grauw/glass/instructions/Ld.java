@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Ld extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("ld", this);
-		scope.addInstruction("LD", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Ld_R_R.ARGUMENTS.check(arguments))
 			return new Ld_R_R(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());

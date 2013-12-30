@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Halt extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("halt", this);
-		scope.addInstruction("HALT", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Halt_.ARGUMENTS.check(arguments))
 			return new Halt_();

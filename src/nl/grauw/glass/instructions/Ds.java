@@ -10,12 +10,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Ds extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("ds", this);
-		scope.addInstruction("DS", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Ds_N_N.ARGUMENTS_N.check(arguments))
 			return new Ds_N_N(arguments.getElement(0), IntegerLiteral.ZERO);

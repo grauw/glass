@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Expression;
 public class Db extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("db", this);
-		scope.addInstruction("DB", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (arguments != null)
 			return new Db_N(arguments.getList());

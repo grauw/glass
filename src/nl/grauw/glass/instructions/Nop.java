@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Nop extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("nop", this);
-		scope.addInstruction("NOP", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Nop_.ARGUMENTS.check(arguments))
 			return new Nop_();

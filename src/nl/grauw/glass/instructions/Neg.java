@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Neg extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("neg", this);
-		scope.addInstruction("NEG", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Neg_.ARGUMENTS.check(arguments))
 			return new Neg_();

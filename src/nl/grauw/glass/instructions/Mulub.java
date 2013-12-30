@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Mulub extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("mulub", this);
-		scope.addInstruction("MULUB", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Mulub_R_R.ARGUMENTS.check(arguments))
 			return new Mulub_R_R(arguments.getElement(1));

@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Or extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("or", this);
-		scope.addInstruction("OR", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Or_R.ARGUMENTS.check(arguments))
 			return new Or_R(arguments);

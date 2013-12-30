@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Otir extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("otir", this);
-		scope.addInstruction("OTIR", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Otir_.ARGUMENTS.check(arguments))
 			return new Otir_();

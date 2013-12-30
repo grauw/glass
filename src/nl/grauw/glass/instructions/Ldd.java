@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Ldd extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("ldd", this);
-		scope.addInstruction("LDD", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Ldd_.ARGUMENTS.check(arguments))
 			return new Ldd_();

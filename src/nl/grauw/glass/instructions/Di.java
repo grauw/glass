@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Di extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("di", this);
-		scope.addInstruction("DI", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Di_.ARGUMENTS.check(arguments))
 			return new Di_();

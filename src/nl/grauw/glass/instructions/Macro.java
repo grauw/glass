@@ -10,12 +10,10 @@ import nl.grauw.glass.expressions.Identifier;
 
 public class Macro extends InstructionFactory {
 	
-	private final String mnemonic;
 	private final Expression parameters;
 	private final Source source;
 	
-	public Macro(String mnemonic, Expression parameters, Source source) {
-		this.mnemonic = mnemonic;
+	public Macro(Expression parameters, Source source) {
 		this.parameters = parameters;
 		this.source = source;
 		
@@ -25,11 +23,6 @@ public class Macro extends InstructionFactory {
 				throw new ArgumentException("Parameter must be an identifier.");
 			parameter = parameters.getElement(i);
 		}
-	}
-	
-	@Override
-	public void register(Scope scope) {
-		scope.addInstruction(mnemonic, this);
 	}
 	
 	public Instruction createInstruction(Expression arguments, Scope scope) {

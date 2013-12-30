@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Pop extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("pop", this);
-		scope.addInstruction("POP", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Pop_RR.ARGUMENTS.check(arguments))
 			return new Pop_RR(arguments.getElement(0));

@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Bit extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("bit", this);
-		scope.addInstruction("BIT", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Bit_N_R.ARGUMENTS.check(arguments))
 			return new Bit_N_R(arguments.getElement(0), arguments.getElement(1));

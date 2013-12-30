@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Scf extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("scf", this);
-		scope.addInstruction("SCF", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Scf_.ARGUMENTS.check(arguments))
 			return new Scf_();

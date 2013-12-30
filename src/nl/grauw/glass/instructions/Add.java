@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Add extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("add", this);
-		scope.addInstruction("ADD", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Add_A_R.ARGUMENTS.check(arguments))
 			return new Add_A_R(arguments.getElement(1));

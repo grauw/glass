@@ -7,12 +7,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Cpi extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("cpi", this);
-		scope.addInstruction("CPI", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Cpi_.ARGUMENTS.check(arguments))
 			return new Cpi_();

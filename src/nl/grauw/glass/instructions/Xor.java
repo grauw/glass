@@ -8,12 +8,6 @@ import nl.grauw.glass.expressions.Schema;
 public class Xor extends InstructionFactory {
 	
 	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("xor", this);
-		scope.addInstruction("XOR", this);
-	}
-	
-	@Override
 	public Instruction createInstruction(Expression arguments) {
 		if (Xor_R.ARGUMENTS.check(arguments))
 			return new Xor_R(arguments);

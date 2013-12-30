@@ -1,16 +1,9 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
 public class Equ extends InstructionFactory {
-	
-	@Override
-	public void register(Scope scope) {
-		scope.addInstruction("equ", this);
-		scope.addInstruction("EQU", this);
-	}
 	
 	@Override
 	public Instruction createInstruction(Expression arguments) {
