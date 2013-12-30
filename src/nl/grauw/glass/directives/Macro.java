@@ -17,7 +17,7 @@ public class Macro extends Directive {
 	public void register(Scope scope, Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
-		scope.addInstruction(line.getLabel(), new nl.grauw.glass.instructions.Macro(line.getArguments(), source));
+		scope.addInstruction(line.getLabel(), new nl.grauw.glass.instructions.MacroInstruction(line.getArguments(), source));
 		super.register(scope, line);
 	}
 	
