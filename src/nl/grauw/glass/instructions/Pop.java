@@ -5,40 +5,40 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Pop extends Instruction {
+public class Pop extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_AF_INDEX);
-	
-	Expression argument;
-	
-	public Pop(Expression argument) {
-		this.argument = argument;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("pop", this);
+		scope.addInstruction("POP", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return indexifyDirect(argument.getRegister(), 1);
+	public Instruction createInstruction(Expression arguments) {
+		if (Pop_RR.ARGUMENTS.check(arguments))
+			return new Pop_RR(arguments.getElement(0));
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		Register register = argument.getRegister();
-		return indexifyDirect(register, (byte)(0xC1 | register.get16BitCode() << 4));
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Pop_RR extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("pop", this);
-			scope.addInstruction("POP", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_AF_INDEX);
+		
+		Expression argument;
+		
+		public Pop_RR(Expression argument) {
+			this.argument = argument;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Pop.ARGUMENTS.check(arguments))
-				return new Pop(arguments.getElement(0));
-			return null;
+		public int getSize(Scope context) {
+			return indexifyDirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyDirect(register, (byte)(0xC1 | register.get16BitCode() << 4));
 		}
 		
 	}

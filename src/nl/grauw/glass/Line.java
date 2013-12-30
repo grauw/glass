@@ -7,7 +7,7 @@ import java.io.OutputStream;
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Instruction;
-import nl.grauw.glass.instructions.Org;
+import nl.grauw.glass.instructions.Org.Org_N;
 
 public class Line {
 	
@@ -106,7 +106,7 @@ public class Line {
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
-		address = instruction instanceof Org ? ((Org)instruction).getAddress() : address;
+		address = instruction instanceof Org_N ? ((Org_N)instruction).getAddress() : address;
 		if (address != scope.getAddress())
 			throw new AssemblyException("Address changed between passes.");
 		

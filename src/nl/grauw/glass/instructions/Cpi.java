@@ -4,33 +4,33 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Cpi extends Instruction {
-	
-	public static Schema ARGUMENTS = new Schema();
+public class Cpi extends InstructionFactory {
 	
 	@Override
-	public int getSize(Scope context) {
-		return 2;
+	public void register(Scope scope) {
+		scope.addInstruction("cpi", this);
+		scope.addInstruction("CPI", this);
 	}
 	
 	@Override
-	public byte[] getBytes(Scope context) {
-		return new byte[] { (byte)0xED, (byte)0xA1 };
+	public Instruction createInstruction(Expression arguments) {
+		if (Cpi_.ARGUMENTS.check(arguments))
+			return new Cpi_();
+		return null;
 	}
 	
-	public static class Factory extends InstructionFactory {
+	public static class Cpi_ extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("cpi", this);
-			scope.addInstruction("CPI", this);
+		public int getSize(Scope context) {
+			return 2;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Cpi.ARGUMENTS.check(arguments))
-				return new Cpi();
-			return null;
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xED, (byte)0xA1 };
 		}
 		
 	}

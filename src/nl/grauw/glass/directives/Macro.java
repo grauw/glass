@@ -4,7 +4,6 @@ import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
-import nl.grauw.glass.instructions.Macro.Factory;
 
 public class Macro extends Directive {
 	
@@ -18,7 +17,7 @@ public class Macro extends Directive {
 	public void register(Scope scope, Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
-		new Factory(line.getLabel(), line.getArguments(), source).register(scope);
+		new nl.grauw.glass.instructions.Macro(line.getLabel(), line.getArguments(), source).register(scope);
 		super.register(scope, line);
 	}
 	

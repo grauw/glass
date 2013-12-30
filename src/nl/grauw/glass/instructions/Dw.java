@@ -5,42 +5,42 @@ import java.util.List;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 
-public class Dw extends Instruction {
+public class Dw extends InstructionFactory {
 	
-	private List<Expression> arguments;
-	
-	public Dw(List<Expression> arguments) {
-		this.arguments = arguments;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("dw", this);
+		scope.addInstruction("DW", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return arguments.size() * 2;
+	public Instruction createInstruction(Expression arguments) {
+		if (arguments != null)
+			return new Dw_N(arguments.getList());
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		byte[] bytes = new byte[arguments.size() * 2];
-		for (int i = 0, length = arguments.size(); i < length; i++) {
-			bytes[i * 2] = (byte)arguments.get(i).getInteger();
-			bytes[i * 2 + 1] = (byte)(arguments.get(i).getInteger() >> 8);
-		}
-		return bytes;
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Dw_N extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("dw", this);
-			scope.addInstruction("DW", this);
+		private List<Expression> arguments;
+		
+		public Dw_N(List<Expression> arguments) {
+			this.arguments = arguments;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (arguments != null)
-				return new Dw(arguments.getList());
-			return null;
+		public int getSize(Scope context) {
+			return arguments.size() * 2;
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			byte[] bytes = new byte[arguments.size() * 2];
+			for (int i = 0, length = arguments.size(); i < length; i++) {
+				bytes[i * 2] = (byte)arguments.get(i).getInteger();
+				bytes[i * 2 + 1] = (byte)(arguments.get(i).getInteger() >> 8);
+			}
+			return bytes;
 		}
 		
 	}

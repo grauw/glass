@@ -5,42 +5,64 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Or extends Instruction {
+public class Or extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
-	
-	private Expression argument;
-	
-	public Or(Expression arguments) {
-		this.argument = arguments;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("or", this);
+		scope.addInstruction("OR", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return indexifyIndirect(argument.getRegister(), 1);
+	public Instruction createInstruction(Expression arguments) {
+		if (Or_R.ARGUMENTS.check(arguments))
+			return new Or_R(arguments);
+		if (Or_N.ARGUMENTS.check(arguments))
+			return new Or_N(arguments);
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		Register register = argument.getRegister();
-		return indexifyIndirect(register, (byte)(0xB0 | register.get8BitCode()));
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Or_R extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("or", this);
-			scope.addInstruction("OR", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
+		
+		private Expression argument;
+		
+		public Or_R(Expression arguments) {
+			this.argument = arguments;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Or.ARGUMENTS.check(arguments))
-				return new Or(arguments);
-			if (Or_N.ARGUMENTS.check(arguments))
-				return new Or_N(arguments);
-			return null;
+		public int getSize(Scope context) {
+			return indexifyIndirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyIndirect(register, (byte)(0xB0 | register.get8BitCode()));
+		}
+		
+	}
+	
+	public static class Or_N extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
+		
+		private Expression argument;
+		
+		public Or_N(Expression arguments) {
+			this.argument = arguments;
+		}
+		
+		@Override
+		public int getSize(Scope context) {
+			return 2;
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xF6, (byte)argument.getInteger() };
 		}
 		
 	}

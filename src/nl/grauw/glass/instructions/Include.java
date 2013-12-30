@@ -4,24 +4,24 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Include extends Directive {
+public class Include extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.STRING);
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("include", this);
+		scope.addInstruction("INCLUDE", this);
+	}
 	
-	public static class Factory extends InstructionFactory {
+	@Override
+	public Instruction createInstruction(Expression arguments) {
+		if (Include_S.ARGUMENTS.check(arguments))
+			return new Include_S();
+		return null;
+	}
+	
+	public static class Include_S extends Directive {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("include", this);
-			scope.addInstruction("INCLUDE", this);
-		}
-		
-		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Include.ARGUMENTS.check(arguments))
-				return new Include();
-			return null;
-		}
+		public static Schema ARGUMENTS = new Schema(Schema.STRING);
 		
 	}
 	

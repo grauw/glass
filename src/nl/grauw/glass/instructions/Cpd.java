@@ -4,33 +4,33 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Cpd extends Instruction {
-	
-	public static Schema ARGUMENTS = new Schema();
+public class Cpd extends InstructionFactory {
 	
 	@Override
-	public int getSize(Scope context) {
-		return 2;
+	public void register(Scope scope) {
+		scope.addInstruction("cpd", this);
+		scope.addInstruction("CPD", this);
 	}
 	
 	@Override
-	public byte[] getBytes(Scope context) {
-		return new byte[] { (byte)0xED, (byte)0xA9 };
+	public Instruction createInstruction(Expression arguments) {
+		if (Cpd_.ARGUMENTS.check(arguments))
+			return new Cpd_();
+		return null;
 	}
 	
-	public static class Factory extends InstructionFactory {
+	public static class Cpd_ extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("cpd", this);
-			scope.addInstruction("CPD", this);
+		public int getSize(Scope context) {
+			return 2;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Cpd.ARGUMENTS.check(arguments))
-				return new Cpd();
-			return null;
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xED, (byte)0xA9 };
 		}
 		
 	}

@@ -5,42 +5,64 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Sub extends Instruction {
+public class Sub extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
-	
-	private Expression argument;
-	
-	public Sub(Expression arguments) {
-		this.argument = arguments;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("sub", this);
+		scope.addInstruction("SUB", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return indexifyIndirect(argument.getRegister(), 1);
+	public Instruction createInstruction(Expression arguments) {
+		if (Sub_R.ARGUMENTS.check(arguments))
+			return new Sub_R(arguments);
+		if (Sub_N.ARGUMENTS.check(arguments))
+			return new Sub_N(arguments);
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		Register register = argument.getRegister();
-		return indexifyIndirect(register, (byte)(0x90 | register.get8BitCode()));
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Sub_R extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("sub", this);
-			scope.addInstruction("SUB", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
+		
+		private Expression argument;
+		
+		public Sub_R(Expression arguments) {
+			this.argument = arguments;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Sub.ARGUMENTS.check(arguments))
-				return new Sub(arguments);
-			if (Sub_N.ARGUMENTS.check(arguments))
-				return new Sub_N(arguments);
-			return null;
+		public int getSize(Scope context) {
+			return indexifyIndirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyIndirect(register, (byte)(0x90 | register.get8BitCode()));
+		}
+		
+	}
+	
+	public static class Sub_N extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
+		
+		private Expression argument;
+		
+		public Sub_N(Expression arguments) {
+			this.argument = arguments;
+		}
+		
+		@Override
+		public int getSize(Scope context) {
+			return 2;
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xD6, (byte)argument.getInteger() };
 		}
 		
 	}

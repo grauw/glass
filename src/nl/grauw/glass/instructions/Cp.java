@@ -5,42 +5,64 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Cp extends Instruction {
+public class Cp extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
-	
-	private Expression argument;
-	
-	public Cp(Expression arguments) {
-		this.argument = arguments;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("cp", this);
+		scope.addInstruction("CP", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return indexifyIndirect(argument.getRegister(), 1);
+	public Instruction createInstruction(Expression arguments) {
+		if (Cp_R.ARGUMENTS.check(arguments))
+			return new Cp_R(arguments);
+		if (Cp_N.ARGUMENTS.check(arguments))
+			return new Cp_N(arguments);
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		Register register = argument.getRegister();
-		return indexifyIndirect(register, (byte)(0xB8 | register.get8BitCode()));
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Cp_R extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("cp", this);
-			scope.addInstruction("CP", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
+		
+		private Expression argument;
+		
+		public Cp_R(Expression arguments) {
+			this.argument = arguments;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Cp.ARGUMENTS.check(arguments))
-				return new Cp(arguments);
-			if (Cp_N.ARGUMENTS.check(arguments))
-				return new Cp_N(arguments);
-			return null;
+		public int getSize(Scope context) {
+			return indexifyIndirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyIndirect(register, (byte)(0xB8 | register.get8BitCode()));
+		}
+		
+	}
+	
+	public static class Cp_N extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
+		
+		private Expression argument;
+		
+		public Cp_N(Expression arguments) {
+			this.argument = arguments;
+		}
+		
+		@Override
+		public int getSize(Scope context) {
+			return 2;
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xFE, (byte)argument.getInteger() };
 		}
 		
 	}

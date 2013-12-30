@@ -5,42 +5,65 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Inc extends Instruction {
+public class Inc extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
-	
-	private Expression argument;
-	
-	public Inc(Expression arguments) {
-		this.argument = arguments;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("inc", this);
+		scope.addInstruction("INC", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return indexifyIndirect(argument.getRegister(), 1);
+	public Instruction createInstruction(Expression arguments) {
+		if (Inc_R.ARGUMENTS.check(arguments))
+			return new Inc_R(arguments.getElement(0));
+		if (Inc_RR.ARGUMENTS.check(arguments))
+			return new Inc_RR(arguments.getElement(0));
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		Register register = argument.getRegister();
-		return indexifyIndirect(register, (byte)(0x04 | register.get8BitCode() << 3));
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Inc_R extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("inc", this);
-			scope.addInstruction("INC", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_R_INDIRECT_HL_IX_IY);
+		
+		private Expression argument;
+		
+		public Inc_R(Expression arguments) {
+			this.argument = arguments;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Inc.ARGUMENTS.check(arguments))
-				return new Inc(arguments.getElement(0));
-			if (Inc_RR.ARGUMENTS.check(arguments))
-				return new Inc_RR(arguments.getElement(0));
-			return null;
+		public int getSize(Scope context) {
+			return indexifyIndirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyIndirect(register, (byte)(0x04 | register.get8BitCode() << 3));
+		}
+		
+	}
+	
+	public static class Inc_RR extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_RR_INDEX);
+		
+		private Expression argument;
+		
+		public Inc_RR(Expression arguments) {
+			this.argument = arguments;
+		}
+		
+		@Override
+		public int getSize(Scope context) {
+			return indexifyDirect(argument.getRegister(), 1);
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			Register register = argument.getRegister();
+			return indexifyDirect(register, (byte)(0x03 | register.get16BitCode() << 4));
 		}
 		
 	}

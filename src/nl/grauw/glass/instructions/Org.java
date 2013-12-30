@@ -4,38 +4,38 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Org extends Directive {
+public class Org extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.INTEGER);
-	
-	private Expression argument;
-	
-	public Org(Expression argument) {
-		this.argument = argument;
-	}
-	
-	public int getAddress() {
-		return argument.getAddress();
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("org", this);
+		scope.addInstruction("ORG", this);
 	}
 	
 	@Override
-	public int resolve(Scope context, int address) {
-		return super.resolve(context, getAddress());
+	public Instruction createInstruction(Expression arguments) {
+		if (Org_N.ARGUMENTS.check(arguments))
+			return new Org_N(arguments.getElement(0));
+		return null;
 	}
 	
-	public static class Factory extends InstructionFactory {
+	public static class Org_N extends Directive {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("org", this);
-			scope.addInstruction("ORG", this);
+		public static Schema ARGUMENTS = new Schema(Schema.INTEGER);
+		
+		private Expression argument;
+		
+		public Org_N(Expression argument) {
+			this.argument = argument;
+		}
+		
+		public int getAddress() {
+			return argument.getAddress();
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Org.ARGUMENTS.check(arguments))
-				return new Org(arguments.getElement(0));
-			return null;
+		public int resolve(Scope context, int address) {
+			return super.resolve(context, getAddress());
 		}
 		
 	}

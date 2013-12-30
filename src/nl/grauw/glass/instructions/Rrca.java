@@ -4,33 +4,33 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Rrca extends Instruction {
-	
-	public static Schema ARGUMENTS = new Schema();
+public class Rrca extends InstructionFactory {
 	
 	@Override
-	public int getSize(Scope context) {
-		return 1;
+	public void register(Scope scope) {
+		scope.addInstruction("rrca", this);
+		scope.addInstruction("RRCA", this);
 	}
 	
 	@Override
-	public byte[] getBytes(Scope context) {
-		return new byte[] { (byte)0x0F };
+	public Instruction createInstruction(Expression arguments) {
+		if (Rrca_.ARGUMENTS.check(arguments))
+			return new Rrca_();
+		return null;
 	}
 	
-	public static class Factory extends InstructionFactory {
+	public static class Rrca_ extends Instruction {
+		
+		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("rrca", this);
-			scope.addInstruction("RRCA", this);
+		public int getSize(Scope context) {
+			return 1;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Rrca.ARGUMENTS.check(arguments))
-				return new Rrca();
-			return null;
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0x0F };
 		}
 		
 	}

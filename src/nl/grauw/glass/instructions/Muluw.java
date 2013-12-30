@@ -4,39 +4,39 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Muluw extends Instruction {
+public class Muluw extends InstructionFactory {
 	
-	public static Schema ARGUMENTS = new Schema(Schema.DIRECT_HL, Schema.DIRECT_RR);
-	
-	private Expression argument;
-	
-	public Muluw(Expression argument) {
-		this.argument = argument;
+	@Override
+	public void register(Scope scope) {
+		scope.addInstruction("muluw", this);
+		scope.addInstruction("MULUW", this);
 	}
 	
 	@Override
-	public int getSize(Scope context) {
-		return 2;
+	public Instruction createInstruction(Expression arguments) {
+		if (Muluw_RR_RR.ARGUMENTS.check(arguments))
+			return new Muluw_RR_RR(arguments.getElement(1));
+		return null;
 	}
 	
-	@Override
-	public byte[] getBytes(Scope context) {
-		return new byte[] { (byte)0xED, (byte)(0xC3 | argument.getRegister().get16BitCode() << 4) };
-	}
-	
-	public static class Factory extends InstructionFactory {
+	public static class Muluw_RR_RR extends Instruction {
 		
-		@Override
-		public void register(Scope scope) {
-			scope.addInstruction("muluw", this);
-			scope.addInstruction("MULUW", this);
+		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_HL, Schema.DIRECT_RR);
+		
+		private Expression argument;
+		
+		public Muluw_RR_RR(Expression argument) {
+			this.argument = argument;
 		}
 		
 		@Override
-		public Instruction createInstruction(Expression arguments) {
-			if (Muluw.ARGUMENTS.check(arguments))
-				return new Muluw(arguments.getElement(1));
-			return null;
+		public int getSize(Scope context) {
+			return 2;
+		}
+		
+		@Override
+		public byte[] getBytes(Scope context) {
+			return new byte[] { (byte)0xED, (byte)(0xC3 | argument.getRegister().get16BitCode() << 4) };
 		}
 		
 	}
