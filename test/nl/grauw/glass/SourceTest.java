@@ -254,6 +254,74 @@ public class SourceTest {
 		));
 	}
 	
+	@Test
+	public void testRept() {
+		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
+			" REPT 3",
+			" nop",
+			" rst 38H",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testReptIndirect() {
+		assertArrayEquals(b(0x00, 0x00, 0x00, 0x00), assemble(
+			" REPT count",
+			" nop",
+			" ENDM",
+			"count: equ 4"
+		));
+	}
+	
+	@Test
+	public void testReptParameter() {
+		assertArrayEquals(b(0x3E, 0x00, 0x3E, 0x01, 0x3E, 0x02), assemble(
+			" REPT 3, ?value",
+			" ld a,?value",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testReptParameterStart() {
+		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x11, 0x3E, 0x12), assemble(
+			" REPT 3, ?value, 10H",
+			" ld a,?value",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testReptParameterStartStep() {
+		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x13, 0x3E, 0x16), assemble(
+			" REPT 3, ?value, 10H, 3",
+			" ld a,?value",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testReptWithLabel() {
+		assertArrayEquals(b(0x00, 0x00, 0x00, 0x21, 0x02, 0x00), assemble(
+			"test: REPT 3",
+			"test: nop",
+			" ENDM",
+			" ld hl,test.2.test"
+		));
+	}
+	
+	@Test
+	public void testReptNested() {
+		assertArrayEquals(b(0x00, 0x01, 0x02, 0x10, 0x11, 0x12), assemble(
+			" REPT 2, ?value, 0, 10H",
+			" REPT 3, ?value2",
+			" db ?value + ?value2",
+			" ENDM",
+			" ENDM"
+		));
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
