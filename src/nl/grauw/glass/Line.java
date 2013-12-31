@@ -3,6 +3,7 @@ package nl.grauw.glass;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
@@ -76,9 +77,16 @@ public class Line {
 		directive.register(sourceScope, this);
 	}
 	
+	public Instruction getInstruction() {
+		return mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
+	}
+	
+	public List<Line> expand() {
+		return getInstruction().expand(this);
+	}
+	
 	public int resolve(int address) {
-		Instruction instruction = mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
-		instructionObject = instruction.createObject(arguments, scope);
+		instructionObject = getInstruction().createObject(arguments, scope);
 		return instructionObject.resolve(scope, address);
 	}
 	

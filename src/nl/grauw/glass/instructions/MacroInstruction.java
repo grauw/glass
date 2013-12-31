@@ -1,5 +1,8 @@
 package nl.grauw.glass.instructions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.ParameterScope;
@@ -25,43 +28,21 @@ public class MacroInstruction extends Instruction {
 		}
 	}
 	
-	public InstructionObject createObject(Expression arguments, Scope scope) {
-		Scope parameterScope = new ParameterScope(scope, parameters, arguments);
-		Source copy = new Source(scope);
-		for (Line line : source.getLines())
-			copy.addLine(new Line(new Scope(parameterScope), line));
-		return new MacroInstructionInstance(copy);
+	@Override
+	public List<Line> expand(Line line) {
+		Scope parameterScope = new ParameterScope(line.getScope(), parameters, line.getArguments());
+		List<Line> lines = new ArrayList<Line>();
+		List<Line> lineCopies = source.getLineCopies(parameterScope);
+		for (Line lineCopy : lineCopies)
+			lineCopy.register(line.getScope());
+		for (Line lineCopy : lineCopies)
+			lines.addAll(lineCopy.expand());
+		return lines;
 	}
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
 		throw new AssemblyException("Not implemented.");
-	}
-	
-	public static class MacroInstructionInstance extends Directive {
-		
-		private final Source source;
-		
-		public MacroInstructionInstance(Source source) {
-			this.source = source;
-		}
-		
-		@Override
-		public int resolve(Scope context, int address) {
-			context.setAddress(address);
-			return source.resolve(address);
-		}
-		
-		@Override
-		public int getSize(Scope context) {
-			throw new AssemblyException("Not implemented.");
-		}
-		
-		@Override
-		public byte[] getBytes(Scope context) {
-			return source.generateObjectCode(context.getAddress());
-		}
-		
 	}
 	
 }

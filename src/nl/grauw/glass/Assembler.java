@@ -40,6 +40,7 @@ public class Assembler {
 	
 	public Assembler(File sourcePath, File objectPath, List<File> includePaths) {
 		source = new SourceParser(includePaths).parse(sourcePath);
+		source.expand();
 		source.resolve();
 	}
 	

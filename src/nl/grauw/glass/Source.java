@@ -9,7 +9,7 @@ import java.util.List;
 public class Source {
 	
 	private final Scope scope;
-	private final List<Line> lines = new ArrayList<Line>();
+	private List<Line> lines = new ArrayList<Line>();
 	
 	public Source() {
 		scope = new GlobalScope();
@@ -27,6 +27,13 @@ public class Source {
 		return lines;
 	}
 	
+	public List<Line> getLineCopies(Scope newParent) {
+		List<Line> lineCopies = new ArrayList<>();
+		for (Line line : lines)
+			lineCopies.add(new Line(new Scope(newParent), line));
+		return lineCopies;
+	}
+	
 	public Line addLine(Line line) {
 		lines.add(line);
 		line.register(scope);
@@ -34,8 +41,16 @@ public class Source {
 	}
 	
 	public void assemble(OutputStream output) throws IOException {
+		expand();
 		resolve();
 		generateObjectCode(output);
+	}
+	
+	public void expand() {
+		List<Line> newLines = new ArrayList<>();
+		for (Line line : lines)
+			newLines.addAll(line.expand());
+		lines = newLines;
 	}
 	
 	public int resolve() {

@@ -242,15 +242,15 @@ public class SourceTest {
 	}
 	
 	@Test
-	public void testMacroLabelDereference() {
-		assertArrayEquals(b(0x21, 0x03, 0x00, 0x21, 0x06, 0x00, 0x11, 0x06, 0x00), assemble(
+	public void testMacroLabelsDereference() {
+		assertArrayEquals(b(0x11, 0x09, 0x00, 0x21, 0x06, 0x00, 0x21, 0x09, 0x00), assemble(
+			" ld de,test.z.test2",
 			"test: MACRO",
 			" ld hl,test2",
 			"test2:",
 			" ENDM",
 			" test",
-			"test3: test",
-			" ld de,test3.test2"
+			"test.z: test"
 		));
 	}
 	
