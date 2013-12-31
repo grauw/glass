@@ -22,6 +22,7 @@ public class Line {
 	private final File sourceFile;
 	private final int lineNumber;
 	
+	private Instruction instruction;
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
@@ -38,6 +39,7 @@ public class Line {
 	public Line(Scope scope, Line other) {
 		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
 				other.comment, other.sourceFile, other.lineNumber);
+		instruction = other.instruction;
 		directive = other.directive;
 	}
 	
@@ -73,12 +75,18 @@ public class Line {
 		this.directive = directive;
 	}
 	
-	public void register(Scope sourceScope) {
-		directive.register(sourceScope, this);
+	public void setInstruction(Instruction instruction) {
+		this.instruction = instruction;
 	}
 	
 	public Instruction getInstruction() {
-		return mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
+		if (instruction == null)
+			instruction = mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
+		return instruction;
+	}
+	
+	public void register(Scope sourceScope) {
+		directive.register(sourceScope, this);
 	}
 	
 	public List<Line> expand() {
