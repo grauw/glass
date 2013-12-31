@@ -322,6 +322,22 @@ public class SourceTest {
 		));
 	}
 	
+	@Test
+	public void testReptEmpty() {
+		assertArrayEquals(b(), assemble(
+			" REPT 3",
+			" ENDM"
+		));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testReptNoCount() {
+		assemble(
+			" REPT",
+			" ENDM"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

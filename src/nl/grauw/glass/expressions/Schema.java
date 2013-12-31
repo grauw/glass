@@ -9,8 +9,9 @@ public class Schema implements SchemaType {
 	}
 	
 	public boolean check(Expression arguments) {
-		for (int i = 0; arguments != null && i < types.length; i++) {
-			if (!types[i].check(arguments instanceof Sequence ? ((Sequence)arguments).getValue() : arguments))
+		for (int i = 0; i < types.length; i++) {
+			Expression argument = arguments instanceof Sequence ? ((Sequence)arguments).getValue() : arguments;
+			if (argument == null || !types[i].check(argument))
 				return false;
 			arguments = arguments instanceof Sequence ? ((Sequence)arguments).getTail() : null;
 		}
