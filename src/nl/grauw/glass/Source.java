@@ -48,8 +48,14 @@ public class Source {
 	
 	public void expand() {
 		List<Line> newLines = new ArrayList<>();
-		for (Line line : lines)
-			newLines.addAll(line.expand());
+		for (Line line : lines) {
+			try {
+				newLines.addAll(line.expand());
+			} catch (AssemblyException e) {
+				e.setContext(line);
+				throw e;
+			}
+		}
 		lines = newLines;
 	}
 	
