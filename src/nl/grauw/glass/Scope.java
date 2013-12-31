@@ -5,6 +5,7 @@ import java.util.Map;
 
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
+import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Instruction;
 
@@ -32,7 +33,7 @@ public class Scope implements Context {
 	@Override
 	public int getAddress() {
 		if (address == -1)
-			throw new AssemblyException("Address not initialized.");
+			throw new EvaluationException("Address not initialized.");
 		return address;
 	}
 	
