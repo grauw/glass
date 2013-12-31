@@ -1,9 +1,11 @@
 package nl.grauw.glass;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class Assembler {
 	
@@ -40,8 +42,20 @@ public class Assembler {
 	
 	public Assembler(File sourcePath, File objectPath, List<File> includePaths) {
 		source = new SourceParser(includePaths).parse(sourcePath);
-		source.expand();
-		source.resolve();
+		
+		try {
+			OutputStream output = objectPath != null ?
+					new FileOutputStream(objectPath) : new NullOutputStream();
+			source.assemble(output);
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+	}
+	
+	public static class NullOutputStream extends OutputStream {
+		public void write(int b) throws IOException {}
+		public void write(byte[] b) throws IOException {}
+		public void write(byte[] b, int off, int len) throws IOException {}
 	}
 	
 }
