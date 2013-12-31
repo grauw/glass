@@ -82,23 +82,38 @@ public class Line {
 	}
 	
 	public List<Line> expand() {
-		return getInstruction().expand(this);
+		try {
+			return getInstruction().expand(this);
+		} catch (AssemblyException e) {
+			e.setContext(this);
+			throw e;
+		}
 	}
 	
 	public int resolve(int address) {
-		instructionObject = getInstruction().createObject(arguments, scope);
-		return instructionObject.resolve(scope, address);
+		try {
+			instructionObject = getInstruction().createObject(arguments, scope);
+			return instructionObject.resolve(scope, address);
+		} catch (AssemblyException e) {
+			e.setContext(this);
+			throw e;
+		}
 	}
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
-		address = instructionObject instanceof Org_N ? ((Org_N)instructionObject).getAddress() : address;
-		if (address != scope.getAddress())
-			throw new AssemblyException("Address changed between passes.");
-		
-		byte[] object = getBytes();
-		output.write(object, 0, object.length);
-		
-		return address + object.length;
+		try {
+			address = instructionObject instanceof Org_N ? ((Org_N)instructionObject).getAddress() : address;
+			if (address != scope.getAddress())
+				throw new AssemblyException("Address changed between passes.");
+			
+			byte[] object = getBytes();
+			output.write(object, 0, object.length);
+			
+			return address + object.length;
+		} catch (AssemblyException e) {
+			e.setContext(this);
+			throw e;
+		}
 	}
 	
 	public int getSize() {

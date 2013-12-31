@@ -48,14 +48,8 @@ public class Source {
 	
 	public void expand() {
 		List<Line> newLines = new ArrayList<>();
-		for (Line line : lines) {
-			try {
-				newLines.addAll(line.expand());
-			} catch (AssemblyException e) {
-				e.setContext(line);
-				throw e;
-			}
-		}
+		for (Line line : lines)
+			newLines.addAll(line.expand());
 		lines = newLines;
 	}
 	
@@ -64,14 +58,8 @@ public class Source {
 	}
 	
 	public int resolve(int address) {
-		for (Line line : lines) {
-			try {
-				address = line.resolve(address);
-			} catch (AssemblyException e) {
-				e.setContext(line);
-				throw e;
-			}
-		}
+		for (Line line : lines)
+			address = line.resolve(address);
 		return address;
 	}
 	
@@ -80,14 +68,8 @@ public class Source {
 	}
 	
 	public void generateObjectCode(int address, OutputStream output) throws IOException {
-		for (Line line : lines) {
-			try {
-				address = line.generateObjectCode(address, output);
-			} catch (AssemblyException e) {
-				e.setContext(line);
-				throw e;
-			}
-		}
+		for (Line line : lines)
+			address = line.generateObjectCode(address, output);
 	}
 	
 	public byte[] generateObjectCode(int address) {
