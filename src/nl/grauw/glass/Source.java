@@ -36,14 +36,19 @@ public class Source {
 	
 	public Line addLine(Line line) {
 		lines.add(line);
-		line.register(scope);
 		return line;
 	}
 	
 	public void assemble(OutputStream output) throws IOException {
+		register();
 		expand();
 		resolve();
 		generateObjectCode(output);
+	}
+	
+	public void register() {
+		for (Line line : lines)
+			line.register(scope);
 	}
 	
 	public void expand() {
