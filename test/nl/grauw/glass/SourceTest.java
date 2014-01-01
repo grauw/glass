@@ -303,10 +303,10 @@ public class SourceTest {
 	
 	@Test
 	public void testReptWithLabel() {
-		assertArrayEquals(b(0x00, 0x00, 0x00, 0x21, 0x02, 0x00), assemble(
+		assertArrayEquals(b(0x00, 0x00, 0x00, 0x21, 0x03, 0x00), assemble(
 			"test: REPT 3",
-			"test: nop",
-			" ENDM",
+			" nop",
+			"test: ENDM",
 			" ld hl,test.2.test"
 		));
 	}
