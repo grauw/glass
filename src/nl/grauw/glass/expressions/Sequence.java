@@ -36,6 +36,7 @@ public class Sequence extends BinaryOperator {
 		}
 	}
 	
+	@Override
 	public Expression getElement(int index) {
 		return index == 0 ? term1 : term2.getElement(index - 1);
 	}
