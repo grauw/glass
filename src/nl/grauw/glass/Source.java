@@ -76,9 +76,10 @@ public class Source {
 		generateObjectCode(0, output);
 	}
 	
-	public void generateObjectCode(int address, OutputStream output) throws IOException {
+	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		for (Line line : lines)
 			address = line.generateObjectCode(address, output);
+		return address;
 	}
 	
 	public byte[] generateObjectCode(int address) {

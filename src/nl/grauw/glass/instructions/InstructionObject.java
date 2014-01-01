@@ -1,5 +1,9 @@
 package nl.grauw.glass.instructions;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
+import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Register;
 
@@ -11,6 +15,16 @@ public abstract class InstructionObject {
 	}
 	
 	public abstract int getSize(Scope context);
+	
+	public int generateObjectCode(Scope context, int address, OutputStream output) throws IOException {
+		if (address != context.getAddress())
+			throw new AssemblyException("Address changed between passes.");
+		
+		byte[] object = getBytes(context);
+		output.write(object, 0, object.length);
+		
+		return address + object.length;
+	}
 	
 	public abstract byte[] getBytes(Scope context);
 	
