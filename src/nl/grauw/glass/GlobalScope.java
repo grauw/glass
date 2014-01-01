@@ -1,6 +1,7 @@
 package nl.grauw.glass;
 
 import nl.grauw.glass.instructions.*;
+import nl.grauw.glass.instructions.Error;
 
 public class GlobalScope extends Scope {
 	
@@ -89,6 +90,7 @@ public class GlobalScope extends Scope {
 		addInstruction("end", addInstruction("END", new End()));
 		addInstruction("endif", addInstruction("ENDIF", new Endif()));
 		addInstruction("else", addInstruction("ELSE", new Else()));
+		addInstruction("error", addInstruction("ERROR", new Error()));
 	}
 	
 }
