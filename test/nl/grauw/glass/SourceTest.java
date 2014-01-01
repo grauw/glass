@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import nl.grauw.glass.Scope.LabelNotFoundException;
 import nl.grauw.glass.instructions.ArgumentException;
+import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
 import org.junit.Test;
 
@@ -497,6 +498,26 @@ public class SourceTest {
 			"test: equ 10H",
 			" ENDIF"
 		);
+	}
+	
+	@Test(expected=ErrorDirectiveException.class)
+	public void testError() {
+		assemble(
+			" ERROR"
+		);
+	}
+	
+	@Test
+	public void testErrorWithMessage() {
+		try {
+			assemble(
+				" ERROR \"Test\""
+			);
+		} catch (ErrorDirectiveException e) {
+			assertEquals("Test", e.getPlainMessage());
+		} catch (Throwable e) {
+			fail();
+		}
 	}
 	
 	public byte[] assemble(String... sourceLines) {
