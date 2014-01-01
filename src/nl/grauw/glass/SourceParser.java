@@ -23,7 +23,6 @@ import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.directives.Rept;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
-import nl.grauw.glass.expressions.StringLiteral;
 
 public class SourceParser {
 	
