@@ -27,6 +27,10 @@ public class Source {
 		return lines;
 	}
 	
+	public Line getLastLine() {
+		return lines.size() > 0 ? lines.get(lines.size() - 1) : null;
+	}
+	
 	public List<Line> getLineCopies(Scope newParent) {
 		List<Line> lineCopies = new ArrayList<>();
 		for (Line line : lines)
