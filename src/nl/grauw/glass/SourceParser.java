@@ -137,7 +137,7 @@ public class SourceParser {
 	}
 	
 	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, File sourceFile) {
-		return new SourceParser(scope, ENDM_TERMINATORS, includePaths).parse(reader, sourceFile);
+		return new SourceParser(scope, terminators, includePaths).parse(reader, sourceFile);
 	}
 	
 }
