@@ -58,11 +58,7 @@ public class Rept extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		return new ReptObject();
-	}
-	
-	public static class ReptObject extends Directive {
-		
+		return Empty.EmptyObject.INSTANCE;
 	}
 	
 }

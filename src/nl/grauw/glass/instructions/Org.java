@@ -13,7 +13,7 @@ public class Org extends Instruction {
 		throw new ArgumentException();
 	}
 	
-	public static class Org_N extends Directive {
+	public static class Org_N extends Empty.EmptyObject {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.INTEGER);
 		

@@ -40,11 +40,7 @@ public class MacroInstruction extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		return new MacroInstructionObject();
-	}
-	
-	public static class MacroInstructionObject extends Directive {
-		
+		return Empty.EmptyObject.INSTANCE;
 	}
 	
 }

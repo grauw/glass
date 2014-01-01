@@ -39,11 +39,7 @@ public class Irp extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		return new IrpObject();
-	}
-	
-	public static class IrpObject extends Directive {
-		
+		return Empty.EmptyObject.INSTANCE;
 	}
 	
 }

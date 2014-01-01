@@ -5,17 +5,13 @@ import nl.grauw.glass.expressions.Schema;
 
 public class Include extends Instruction {
 	
+	public static Schema ARGUMENTS = new Schema(Schema.STRING);
+	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		if (Include_S.ARGUMENTS.check(arguments))
-			return new Include_S();
+		if (ARGUMENTS.check(arguments))
+			return Empty.EmptyObject.INSTANCE;
 		throw new ArgumentException();
-	}
-	
-	public static class Include_S extends Directive {
-		
-		public static Schema ARGUMENTS = new Schema(Schema.STRING);
-		
 	}
 	
 }
