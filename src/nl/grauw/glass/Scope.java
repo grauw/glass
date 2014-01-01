@@ -18,7 +18,7 @@ public class Scope implements Context {
 	private int address = -1;
 	
 	public Scope() {
-		addLabel("$", new ContextLiteral(this));
+		addLabel("$", this);
 	}
 	
 	public Scope(Scope parent) {
@@ -49,6 +49,10 @@ public class Scope implements Context {
 		if (variables.containsKey(name))
 			throw new AssemblyException("Can not redefine label.");
 		variables.put(name, value);
+	}
+	
+	public void addLabel(String name, Scope context) {
+		addLabel(name, new ContextLiteral(context));
 	}
 	
 	public boolean hasLabel(String name) {

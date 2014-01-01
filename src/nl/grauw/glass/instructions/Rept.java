@@ -8,7 +8,6 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.ParameterScope;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
-import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -53,7 +52,7 @@ public class Rept extends Instruction {
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lines.addAll(lineCopy.expand());
-			line.getScope().addLabel(Integer.toString(i), new ContextLiteral(parameterScope));
+			line.getScope().addLabel(Integer.toString(i), parameterScope);
 		}
 		return lines;
 	}
