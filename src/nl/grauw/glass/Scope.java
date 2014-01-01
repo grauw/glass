@@ -2,6 +2,7 @@ package nl.grauw.glass;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
@@ -106,6 +107,32 @@ public class Scope implements Context {
 		public LabelNotFoundException(String name) {
 			super("Label not found: " + name);
 		}
+	}
+	
+	public String serializeLabels() {
+		return serializeLabels("");
+	}
+	
+	public String serializeLabels(String labelPrefix) {
+		StringBuilder builder = new StringBuilder();
+		TreeMap<String, Expression> sortedMap = new TreeMap<>(variables);
+		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
+			if (entry.getValue() instanceof ContextLiteral && !"$".equals(entry.getKey())) {
+				String label = labelPrefix + entry.getKey();
+				try {
+					builder.append(label + ": equ " + entry.getValue().getHexValue() + "\n");
+				} catch (EvaluationException e) {
+					// ignore
+				}
+				Scope context = (Scope)((ContextLiteral)entry.getValue()).getContext();
+				builder.append(context.serializeLabels(label + "."));
+			}
+		}
+		return builder.toString();
+	}
+	
+	public String toString() {
+		return serializeLabels();
 	}
 	
 }
