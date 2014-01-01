@@ -11,10 +11,6 @@ public class IntegerLiteral extends Literal {
 		this.value = value;
 	}
 	
-	public int getValue() {
-		return value;
-	}
-	
 	@Override
 	public Expression copy(Context context) {
 		return this;
@@ -27,7 +23,7 @@ public class IntegerLiteral extends Literal {
 	
 	@Override
 	public int getInteger() {
-		return getValue();
+		return value;
 	}
 	
 	public String toString() {
