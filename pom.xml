@@ -60,6 +60,33 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<version>1.9.0</version>
+				<configuration>
+					<header>src/main/app-resources/header.txt</header>
+					<strictCheck>true</strictCheck>
+					<mapping>
+						<java>SLASHSTAR_STYLE</java>
+					</mapping>
+					<excludes>
+						<exclude>NOTICE</exclude>
+						<exclude>LICENSE</exclude>
+						<exclude>**/.hg*</exclude>
+						<exclude>**/*.md</exclude>
+						<exclude>src/main/resources/**/*</exclude>
+						<exclude>src/main/app-resources/**/*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 	
