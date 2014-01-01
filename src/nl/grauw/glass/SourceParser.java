@@ -138,10 +138,9 @@ public class SourceParser {
 		if (line.getArguments() instanceof Sequence)
 			throw new AssemblyException("Include only accepts 1 argument.");
 		Expression argument = line.getArguments();
-		if (!(argument instanceof StringLiteral))
+		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		String includeFile = ((StringLiteral)argument).getString();
-		parseInclude(new File(includeFile));
+		parseInclude(new File(argument.getString()));
 		return new Include();
 	}
 	

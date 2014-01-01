@@ -10,10 +10,6 @@ public class StringLiteral extends Literal {
 		this.string = string;
 	}
 	
-	public String getString() {
-		return string;
-	}
-	
 	@Override
 	public Expression copy(Context context) {
 		return this;
@@ -29,6 +25,15 @@ public class StringLiteral extends Literal {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);
+	}
+	
+	@Override
+	public boolean isString() {
+		return true;
+	}
+	
+	public String getString() {
+		return string;
 	}
 	
 	@Override

@@ -28,6 +28,16 @@ public class Group extends Expression {
 	}
 	
 	@Override
+	public boolean isString() {
+		return term.isString();
+	}
+	
+	@Override
+	public String getString() {
+		return term.getString();
+	}
+	
+	@Override
 	public boolean isRegister() {
 		return term.isRegister();
 	}

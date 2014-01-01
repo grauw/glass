@@ -13,6 +13,14 @@ public abstract class Expression {
 	
 	public abstract int getInteger();
 	
+	public boolean isString() {
+		return false;
+	}
+	
+	public String getString() {
+		throw new EvaluationException("Not a string.");
+	}
+	
 	public boolean isRegister() {
 		return false;
 	}

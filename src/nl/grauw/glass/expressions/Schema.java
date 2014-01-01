@@ -82,7 +82,7 @@ public class Schema implements SchemaType {
 	
 	public static class IsString implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument instanceof StringLiteral;
+			return argument.isString();
 		}
 	}
 	
