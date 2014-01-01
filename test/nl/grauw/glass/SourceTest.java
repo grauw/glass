@@ -421,6 +421,84 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testIf() {
+		assertArrayEquals(b(0x00), assemble(
+			" IF 1",
+			" nop",
+			" ENDIF"
+		));
+	}
+	
+	@Test
+	public void testIfThen() {
+		assertArrayEquals(b(0x00), assemble(
+			" IF 1 = 1",
+			" nop",
+			" ELSE",
+			" rst 38H",
+			" ENDIF"
+		));
+	}
+	
+	@Test
+	public void testIfThenElse() {
+		assertArrayEquals(b(0xFF), assemble(
+			" IF 0 > 1",
+			" nop",
+			" ELSE",
+			" rst 38H",
+			" ENDIF"
+		));
+	}
+	
+	@Test
+	public void testIfInsideRept() {
+		assertArrayEquals(b(0xFF, 0x00, 0xFF), assemble(
+			" IRP ?test, 00H, 10H, 11H",
+			" IF ?test = 10H",
+			" nop",
+			" ELSE",
+			" rst 38H",
+			" ENDIF",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testIfWithEqu() {
+		assertArrayEquals(b(0xC3, 0x10, 0x00), assemble(
+			" IF 1",
+			"test: equ 10H",
+			" ELSE",
+			"test: equ 20H",
+			" ENDIF",
+			" jp test"
+		));
+	}
+	
+	@Test
+	public void testIfWithLabel() {
+		assertArrayEquals(b(0x22, 0x22, 0xC3, 0x02, 0x00), assemble(
+			" IF 0",
+			" db 11H",
+			"test: ELSE",
+			" dw 2222H",
+			"test: ENDIF",
+			" jp test"
+		));
+	}
+	
+	@Test(expected=LabelNotFoundException.class)
+	public void testIfWithEquForward() {
+		assemble(
+			" jp test",
+			" IF 1",
+			"test: equ 10H",
+			" ENDIF"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

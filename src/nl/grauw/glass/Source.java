@@ -19,6 +19,12 @@ public class Source {
 		this.scope = scope;
 	}
 	
+	public Source(Scope scope, Source other) {
+		this(scope);
+		for (Line line : other.lines)
+			addLine(new Line(new Scope(scope), line));
+	}
+	
 	public Scope getScope() {
 		return scope;
 	}

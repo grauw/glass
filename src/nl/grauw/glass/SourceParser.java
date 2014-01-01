@@ -15,6 +15,7 @@ import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Equ;
+import nl.grauw.glass.directives.If;
 import nl.grauw.glass.directives.Include;
 import nl.grauw.glass.directives.Instruction;
 import nl.grauw.glass.directives.Irp;
@@ -28,6 +29,8 @@ public class SourceParser {
 	
 	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
 	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
+	public static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
+	public static final List<String> ENDIF_TERMINATORS = Arrays.asList(new String[] { "endif", "ENDIF" });
 	
 	private final Source source;
 	private final List<String> terminators;
@@ -120,6 +123,12 @@ public class SourceParser {
 		case "irp":
 		case "IRP":
 			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+		case "if":
+		case "IF":
+			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, reader, sourceFile);
+			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
+					parseBlock(source.getScope(), ENDIF_TERMINATORS, reader, sourceFile) : null;
+			return new If(thenBlock, elseBlock);
 		default:
 			return new Instruction();
 		}
