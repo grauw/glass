@@ -28,8 +28,12 @@ public class ContextLiteral extends Literal {
 	}
 	
 	public String toString() {
-		String string = Integer.toHexString(getInteger()).toUpperCase();
-		return (string.charAt(0) >= 'A' && string.charAt(0) <= 'F' ? "0" : "") + string + "H";
+		try {
+			String string = Integer.toHexString(getInteger()).toUpperCase();
+			return (string.charAt(0) >= 'A' && string.charAt(0) <= 'F' ? "0" : "") + string + "H";
+		} catch (EvaluationException e) {
+			return "<" + e.getMessage() + ">";
+		}
 	}
 	
 	public String toDebugString() {
