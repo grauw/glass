@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import nl.grauw.glass.GlobalScope;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.LineParser;
+import nl.grauw.glass.Scope;
 
 import org.junit.Test;
 
@@ -903,7 +904,7 @@ public class InstructionTest {
 	}
 	
 	public byte[] parse(String string) {
-		Line line = new LineParser().parse(" " + string, new GlobalScope(), null, 0);
+		Line line = new LineParser().parse(" " + string, new Scope(new GlobalScope()), null, 0);
 		line.resolve(0x4321);
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());
