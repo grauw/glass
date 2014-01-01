@@ -17,6 +17,7 @@ import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Equ;
 import nl.grauw.glass.directives.Include;
 import nl.grauw.glass.directives.Instruction;
+import nl.grauw.glass.directives.Irp;
 import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.directives.Rept;
 import nl.grauw.glass.expressions.Expression;
@@ -116,6 +117,9 @@ public class SourceParser {
 		case "rept":
 		case "REPT":
 			return new Rept(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
+		case "irp":
+		case "IRP":
+			return new Irp(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
 		default:
 			return new Instruction();
 		}

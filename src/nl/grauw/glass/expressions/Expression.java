@@ -46,8 +46,16 @@ public abstract class Expression {
 		list.add(this);
 	}
 	
+	public Expression getElement() {
+		return getElement(0);
+	}
+	
 	public Expression getElement(int index) {
 		return index == 0 ? this : null;
+	}
+	
+	public Expression getNext() {
+		return null;
 	}
 	
 }

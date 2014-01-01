@@ -43,6 +43,11 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	@Override
+	public Expression getNext() {
+		return term2;
+	}
+	
+	@Override
 	public String getSymbol() {
 		return ",";
 	}

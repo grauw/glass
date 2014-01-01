@@ -323,7 +323,7 @@ public class SourceTest {
 	}
 	
 	@Test
-	public void testReptEmpty() {
+	public void testReptNoBody() {
 		assertArrayEquals(b(), assemble(
 			" REPT 3",
 			" ENDM"
@@ -336,6 +336,52 @@ public class SourceTest {
 			" REPT",
 			" ENDM"
 		);
+	}
+	
+	@Test
+	public void testIrp() {
+		assertArrayEquals(b(0x3E, 0x10, 0xFF, 0x3E, 0x20, 0xFF, 0x3E, 0x30, 0xFF), assemble(
+			" IRP ?value, 10H, 20H, 30H",
+			" ld a,?value",
+			" rst 38H",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testIrpNoValues() {
+		assertArrayEquals(b(), assemble(
+			" IRP ?value",
+			" ld a,?value",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testIrpNoBody() {
+		assertArrayEquals(b(), assemble(
+			" IRP ?value, 1, 2, 3",
+			" ENDM"
+		));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testIrpNoIdentifier() {
+		assertArrayEquals(b(), assemble(
+			" IRP",
+			" nop",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testIrpWithLabel() {
+		assertArrayEquals(b(0x10, 0x20, 0x30, 0x21, 0x02, 0x00), assemble(
+			"test: IRP ?value, 10H, 20H, 30H",
+			"test: db ?value",
+			" ENDM",
+			" ld hl,test.2.test"
+		));
 	}
 	
 	public byte[] assemble(String... sourceLines) {
