@@ -58,4 +58,8 @@ public class AssemblyException extends RuntimeException {
 		return message;
 	}
 	
+	public String getPlainMessage() {
+		return super.getMessage();
+	}
+	
 }
