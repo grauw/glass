@@ -113,13 +113,13 @@ public class SourceParser {
 			return getIncludeDirective(line);
 		case "macro":
 		case "MACRO":
-			return new Macro(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
+			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
 		case "rept":
 		case "REPT":
-			return new Rept(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
+			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
 		case "irp":
 		case "IRP":
-			return new Irp(parseBlock(line, ENDM_TERMINATORS, reader, sourceFile));
+			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
 		default:
 			return new Instruction();
 		}
@@ -136,8 +136,8 @@ public class SourceParser {
 		return new Include();
 	}
 	
-	private Source parseBlock(Line line, List<String> terminators, LineNumberReader reader, File sourceFile) {
-		return new SourceParser(line.getScope(), ENDM_TERMINATORS, includePaths).parse(reader, sourceFile);
+	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, File sourceFile) {
+		return new SourceParser(scope, ENDM_TERMINATORS, includePaths).parse(reader, sourceFile);
 	}
 	
 }
