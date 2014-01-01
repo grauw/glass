@@ -1,9 +1,7 @@
 package nl.grauw.glass.instructions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.ParameterScope;
 import nl.grauw.glass.Scope;
@@ -24,7 +22,7 @@ public class Irp extends Instruction {
 		if (arguments == null || !Schema.IDENTIFIER.check(arguments.getElement()))
 			throw new ArgumentException();
 		
-		List<Line> lines = new ArrayList<Line>();
+		List<Line> lines = super.expand(line);
 		Expression parameter = arguments.getElement();
 		for (int i = 0; (arguments = arguments.getNext()) != null; i++) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter, arguments.getElement());
@@ -41,7 +39,11 @@ public class Irp extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		throw new AssemblyException("Not implemented.");
+		return new IrpObject();
+	}
+	
+	public static class IrpObject extends Directive {
+		
 	}
 	
 }

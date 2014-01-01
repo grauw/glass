@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
+import nl.grauw.glass.Scope.LabelNotFoundException;
 import nl.grauw.glass.instructions.ArgumentException;
 
 import org.junit.Test;
@@ -254,6 +255,18 @@ public class SourceTest {
 		));
 	}
 	
+	@Test(expected=LabelNotFoundException.class)
+	public void testMacroDefinitionDereference() {
+		assemble(
+			" ld de,test.test2",
+			"test: MACRO",
+			" ld hl,test2",
+			"test2:",
+			" ENDM",
+			"test.z: test"
+		);
+	}
+	
 	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
@@ -309,6 +322,18 @@ public class SourceTest {
 			"test: ENDM",
 			" ld hl,test.2.test"
 		));
+	}
+	
+	@Test(expected=LabelNotFoundException.class)
+	public void testReptWithLabelNoIndex() {
+		assemble(
+			" nop",
+			"test: REPT 2",
+			" nop",
+			"test: nop",
+			" ENDM",
+			" ld hl,test.test"
+		);
 	}
 	
 	@Test
@@ -382,6 +407,18 @@ public class SourceTest {
 			" ENDM",
 			" ld hl,test.2.test"
 		));
+	}
+	
+	@Test(expected=LabelNotFoundException.class)
+	public void testIrpWithLabelNoIndex() {
+		assemble(
+			" nop",
+			"test: IRP ?value, 10H, 20H, 30H",
+			" nop",
+			"test: nop",
+			" ENDM",
+			" ld hl,test.test"
+		);
 	}
 	
 	public byte[] assemble(String... sourceLines) {

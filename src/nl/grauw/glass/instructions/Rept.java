@@ -1,9 +1,7 @@
 package nl.grauw.glass.instructions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.ParameterScope;
 import nl.grauw.glass.Scope;
@@ -43,7 +41,8 @@ public class Rept extends Instruction {
 	public List<Line> expand(Line line, int count, Expression parameter, int start, int step) {
 		if (count < 0)
 			throw new ArgumentException("Repetition count must be 0 or greater.");
-		List<Line> lines = new ArrayList<Line>();
+		
+		List<Line> lines = super.expand(line);
 		for (int i = 0, counter = start; i < count; i++, counter += step) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter,
 					parameter != null ? new IntegerLiteral(counter) : null);
@@ -59,7 +58,11 @@ public class Rept extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		throw new AssemblyException("Not implemented.");
+		return new ReptObject();
+	}
+	
+	public static class ReptObject extends Directive {
+		
 	}
 	
 }

@@ -65,7 +65,7 @@ public class Scope implements Context {
 			return value;
 		if (parent != null)
 			return parent.getLabel(name);
-		throw new AssemblyException("Label not found: " + name);
+		throw new LabelNotFoundException(name);
 	}
 	
 	private Expression getLocalLabel(String name) {
@@ -98,6 +98,14 @@ public class Scope implements Context {
 		if (parent != null)
 			return parent.getInstruction(mnemonic);
 		throw new AssemblyException("Unrecognized mnemonic.");
+	}
+	
+	public static class LabelNotFoundException extends AssemblyException {
+		private static final long serialVersionUID = 1L;
+		
+		public LabelNotFoundException(String name) {
+			super("Label not found: " + name);
+		}
 	}
 	
 }

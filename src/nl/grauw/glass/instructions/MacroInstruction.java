@@ -1,9 +1,7 @@
 package nl.grauw.glass.instructions;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.ParameterScope;
 import nl.grauw.glass.Scope;
@@ -31,7 +29,7 @@ public class MacroInstruction extends Instruction {
 	@Override
 	public List<Line> expand(Line line) {
 		Scope parameterScope = new ParameterScope(line.getScope(), parameters, line.getArguments());
-		List<Line> lines = new ArrayList<Line>();
+		List<Line> lines = super.expand(line);
 		List<Line> lineCopies = source.getLineCopies(parameterScope);
 		for (Line lineCopy : lineCopies)
 			lineCopy.register(line.getScope());
@@ -42,7 +40,11 @@ public class MacroInstruction extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		throw new AssemblyException("Not implemented.");
+		return new MacroInstructionObject();
+	}
+	
+	public static class MacroInstructionObject extends Directive {
+		
 	}
 	
 }
