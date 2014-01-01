@@ -6,13 +6,13 @@ Copyright © 2013, Laurens Holst
 Project information
 -------------------
 
+Glass is a cross-platform assembler for the Z80 processor, written in Java 7.
+
 Author: Laurens Holst  
 Contact: <laurens.nospam@grauw.nl>  
 Site: <http://www.grauw.nl/projects/glass/>  
 Source: <https://bitbucket.org/grauw/glass>  
 License: Apache License, Version 2.0
-
-Glass is a cross-platform assembler for the Z80 processor, written in Java 7.
 
 Glass is Apache 2.0 licensed, which means that you are free to use the software
 and source code in any way you wish as long as attribution is given to the
