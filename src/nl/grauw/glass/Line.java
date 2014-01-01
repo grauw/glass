@@ -7,10 +7,10 @@ import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.instructions.Empty;
 import nl.grauw.glass.instructions.Instruction;
 import nl.grauw.glass.instructions.InstructionObject;
-import nl.grauw.glass.instructions.Empty;
-import nl.grauw.glass.instructions.Org.Org_N;
+import nl.grauw.glass.instructions.Org;
 
 public class Line {
 	
@@ -110,7 +110,7 @@ public class Line {
 	
 	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		try {
-			address = instructionObject instanceof Org_N ? ((Org_N)instructionObject).getAddress() : address;
+			address = instruction instanceof Org ? scope.getAddress() : address;
 			if (address != scope.getAddress())
 				throw new AssemblyException("Address changed between passes.");
 			
