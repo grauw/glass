@@ -91,6 +91,7 @@ public class GlobalScope extends Scope {
 		addInstruction("endif", addInstruction("ENDIF", new Endif()));
 		addInstruction("else", addInstruction("ELSE", new Else()));
 		addInstruction("error", addInstruction("ERROR", new Error()));
+		addInstruction("warning", addInstruction("WARNING", new Warning()));
 	}
 	
 }
