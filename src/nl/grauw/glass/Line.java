@@ -38,7 +38,6 @@ public class Line {
 	public Line(Scope scope, Line other) {
 		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
 				other.comment, other.sourceFile, other.lineNumber);
-		instruction = other.instruction;
 		directive = other.directive;
 	}
 	
