@@ -3,6 +3,39 @@ Glass Z80 assembler
 
 Copyright © 2013, Laurens Holst
 
+Project information
+-------------------
+
+Author: Laurens Holst  
+Contact: <laurens.nospam@grauw.nl>  
+Site: <http://www.grauw.nl/projects/glass/>  
+Source: <https://bitbucket.org/grauw/glass>  
+License: Apache License, Version 2.0
+
+Glass is a cross-platform assembler for the Z80 processor, written in Java 7.
+
+Glass is Apache 2.0 licensed, which means that you are free to use the software
+and source code in any way you wish as long as attribution is given to the
+original project and its author(s). For details, please consult the LICENSE
+file. To submit contributions, please contact the author.
+
+Usage
+-----
+
+To run Glass from the command line, use the following command.
+
+    java -jar glass.jar [OPTION] SOURCE [OBJECT] [SYMBOL]
+
+Source specifies the source file, object the output file, and symbol a text file
+which will hold a list of symbols (labels) and their addresses in the output.
+
+Supported options:
+
+    -I include_path
+
+Note that [Java 7](http://java.com/getjava) must be installed to run Glass.
+To check your Java version, invoke the `java -version` command.
+
 Syntax
 ------
 
