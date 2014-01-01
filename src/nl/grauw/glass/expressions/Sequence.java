@@ -30,12 +30,10 @@ public class Sequence extends BinaryOperator {
 	protected void addToList(List<Expression> list) {
 		term1.addToList(list);
 		Expression tail = term2;
-		while (tail instanceof Sequence) {
-			Sequence sequence = (Sequence)tail;
-			sequence.getValue().addToList(list);
-			tail = sequence.getTail();
+		while (tail != null) {
+			tail.getElement().addToList(list);
+			tail = tail.getNext();
 		}
-		tail.addToList(list);
 	}
 	
 	public Expression getElement(int index) {
