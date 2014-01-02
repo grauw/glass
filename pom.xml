@@ -38,6 +38,16 @@
 	</properties>
 	
 	<build>
+		<resources>
+			<resource>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>LICENSE</include>
+					<include>NOTICE</include>
+					<include>README.md</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
