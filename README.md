@@ -105,7 +105,7 @@ Directives
     
         INCLUDE "math.asm"
     
-  * Macro: `macro` / `endm`
+  * Macro: `macro`, `endm`
     
     Defines a macro instruction, composed of all the instructions that follow
     until the `endm` directive is encountered. The definition’s arguments
@@ -119,7 +119,7 @@ Directives
     
     All labels defined in a macro block are local.
     
-  * Repetition: `rept` / `endm`
+  * Repetition: `rept`, `endm`
     
     Repeats a section of code a number of times. The end of the section is
     marked with the `endm` directive. The first argument is mandatory and
@@ -136,7 +136,7 @@ Directives
     
     All labels defined in a repeat block are local.
     
-  * Indefinite repetition: `irp` / `endm`
+  * Indefinite repetition: `irp`, `endm`
     
     Repeats a section of code for each of the arguments specified. The end of
     the section is marked with the `endm` directive. The first argument is
