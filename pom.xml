@@ -4,7 +4,7 @@
 	
 	<groupId>nl.grauw</groupId>
 	<artifactId>glass</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.1</version>
 	<packaging>jar</packaging>
 	
 	<name>Glass Z80 assembler</name>
