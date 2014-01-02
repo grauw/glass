@@ -38,6 +38,7 @@ public class GlobalScope extends Scope {
 		addInstruction("cpl", addInstruction("CPL", new Cpl()));
 		addInstruction("daa", addInstruction("DAA", new Daa()));
 		addInstruction("db", addInstruction("DB", new Db()));
+		addInstruction("dd", addInstruction("DD", new Dd()));
 		addInstruction("dec", addInstruction("DEC", new Dec()));
 		addInstruction("di", addInstruction("DI", new Di()));
 		addInstruction("djnz", addInstruction("DJNZ", new Djnz()));

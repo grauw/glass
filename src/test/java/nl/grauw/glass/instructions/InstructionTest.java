@@ -210,6 +210,12 @@ public class InstructionTest {
 	}
 	
 	@Test
+	public void testDd() {
+		assertArrayEquals(b(0xFF, 0xFF, 0xFF, 0xFF), parse("dd -1"));
+		assertArrayEquals(b(0x44, 0x33, 0x22, 0x11, 0x88, 0x77, 0x66, 0x55), parse("dd 11223344H, 55667788H"));
+	}
+	
+	@Test
 	public void testDec() {
 		assertArrayEquals(b(0x05), parse("dec b"));
 		assertArrayEquals(b(0x0D), parse("dec c"));
