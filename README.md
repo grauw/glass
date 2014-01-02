@@ -19,6 +19,9 @@ and source code in any way you wish as long as attribution is given to the
 original project and its author(s). For details, please consult the LICENSE
 file. To submit contributions, please contact the author.
 
+Bug reports and feature requests go
+(here)[https://bitbucket.org/grauw/glass/issues].
+
 Usage
 -----
 
