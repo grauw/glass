@@ -33,7 +33,7 @@ public class Macro extends Directive {
 	public void register(Scope scope, Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
-		scope.addInstruction(line.getLabel(), new MacroInstruction(line.getArguments(), source));
+		scope.addInstruction(line.getLabel(), new MacroInstruction(line.getArguments(), new Source(line.getScope(), source)));
 	}
 	
 }

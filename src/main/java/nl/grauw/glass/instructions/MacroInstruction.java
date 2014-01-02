@@ -43,11 +43,13 @@ public class MacroInstruction extends Instruction {
 	
 	@Override
 	public List<Line> expand(Line line) {
-		Scope parameterScope = new ParameterScope(line.getScope(), parameters, line.getArguments());
+		Scope parameterScope = new ParameterScope(source.getScope(), parameters, line.getArguments());
 		List<Line> lines = super.expand(line);
 		List<Line> lineCopies = source.getLineCopies(parameterScope);
-		for (Line lineCopy : lineCopies)
+		for (Line lineCopy : lineCopies) {
+			lineCopy.register(parameterScope);
 			lineCopy.register(line.getScope());
+		}
 		for (Line lineCopy : lineCopies)
 			lines.addAll(lineCopy.expand());
 		return lines;

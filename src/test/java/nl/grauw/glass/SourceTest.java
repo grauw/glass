@@ -244,6 +244,22 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroClosure() {
+		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x25), assemble(
+			"test: MACRO arg",
+			" ld a,10H + arg + value",
+			" test2 arg",
+			"value: equ 3",
+			" ENDM",
+			"test2: MACRO arg",
+			" ld a,20H + arg + value",
+			" ENDM",
+			"value: equ 4",
+			" test 1H"
+		));
+	}
+	
+	@Test(expected=SymbolNotFoundException.class)
 	public void testMacroUnboundReference() {
 		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x24), assemble(
 			"test: MACRO arg",
