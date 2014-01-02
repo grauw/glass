@@ -33,7 +33,7 @@ public class Assembler {
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
-			System.out.println("Usage: java -jar glass.jar SOURCE [OBJECT] [SYMBOL]");
+			System.out.println("Usage: java -jar glass.jar [OPTION] SOURCE [OBJECT] [SYMBOL]");
 			System.exit(1);
 		}
 		
