@@ -68,7 +68,6 @@ public class SourceParser {
 	}
 	
 	public Source parse(File sourceFile) {
-		System.out.println("Reading file: " + sourceFile);
 		try {
 			parse(new FileInputStream(sourceFile), sourceFile);
 		} catch (FileNotFoundException e) {
