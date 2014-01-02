@@ -33,7 +33,7 @@ public class ParameterScope extends Scope {
 			if (!(parameter instanceof Identifier))
 				throw new ArgumentException("Parameter must be an identifier.");
 			
-			addLabel(((Identifier)parameter).getName(), argument);
+			addSymbol(((Identifier)parameter).getName(), argument);
 			
 			parameters = parameter.getNext();
 			arguments = argument.getNext();

@@ -35,7 +35,7 @@ public class Identifier extends Expression {
 	}
 	
 	public Expression resolve() {
-		return context.getLabel(name);
+		return context.getSymbol(name);
 	}
 	
 	@Override

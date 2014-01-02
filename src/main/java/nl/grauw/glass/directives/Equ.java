@@ -25,7 +25,7 @@ public class Equ extends Directive {
 	public void register(Scope scope, Line line) {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Equ without label.");
-		scope.addLabel(line.getLabel(), line.getArguments());
+		scope.addSymbol(line.getLabel(), line.getArguments());
 	}
 	
 }

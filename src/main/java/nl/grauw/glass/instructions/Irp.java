@@ -47,7 +47,7 @@ public class Irp extends Instruction {
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lines.addAll(lineCopy.expand());
-			line.getScope().addLabel(Integer.toString(i), parameterScope);
+			line.getScope().addSymbol(Integer.toString(i), parameterScope);
 		}
 		return lines;
 	}

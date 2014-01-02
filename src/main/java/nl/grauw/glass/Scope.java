@@ -34,7 +34,7 @@ public class Scope implements Context {
 	private int address = -1;
 	
 	public Scope() {
-		addLabel("$", this);
+		addSymbol("$", this);
 	}
 	
 	public Scope(Scope parent) {
@@ -61,32 +61,32 @@ public class Scope implements Context {
 		this.address = address;
 	}
 	
-	public void addLabel(String name, Expression value) {
+	public void addSymbol(String name, Expression value) {
 		if (name == null || value == null)
-			throw new AssemblyException("Label name and value must not be null.");
+			throw new AssemblyException("Symbol name and value must not be null.");
 		if (variables.containsKey(name))
-			throw new AssemblyException("Can not redefine label.");
+			throw new AssemblyException("Can not redefine symbol.");
 		variables.put(name, value);
 	}
 	
-	public void addLabel(String name, Scope context) {
-		addLabel(name, new ContextLiteral(context));
+	public void addSymbol(String name, Scope context) {
+		addSymbol(name, new ContextLiteral(context));
 	}
 	
-	public boolean hasLabel(String name) {
-		return getLocalLabel(name) != null || parent != null && parent.hasLabel(name);
+	public boolean hasSymbol(String name) {
+		return getLocalSymbol(name) != null || parent != null && parent.hasSymbol(name);
 	}
 	
-	public Expression getLabel(String name) {
-		Expression value = getLocalLabel(name);
+	public Expression getSymbol(String name) {
+		Expression value = getLocalSymbol(name);
 		if (value != null)
 			return value;
 		if (parent != null)
-			return parent.getLabel(name);
-		throw new LabelNotFoundException(name);
+			return parent.getSymbol(name);
+		throw new SymbolNotFoundException(name);
 	}
 	
-	private Expression getLocalLabel(String name) {
+	private Expression getLocalSymbol(String name) {
 		Expression value = variables.get(name);
 		if (value != null)
 			return value;
@@ -95,7 +95,7 @@ public class Scope implements Context {
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
 			Expression result = variables.get(name.substring(0, index));
 			if (result instanceof ContextLiteral)
-				return ((Scope)((ContextLiteral)result).getContext()).getLocalLabel(name.substring(index + 1));
+				return ((Scope)((ContextLiteral)result).getContext()).getLocalSymbol(name.substring(index + 1));
 		}
 		return null;
 	}
@@ -118,38 +118,38 @@ public class Scope implements Context {
 		throw new AssemblyException("Unrecognized mnemonic.");
 	}
 	
-	public static class LabelNotFoundException extends AssemblyException {
+	public static class SymbolNotFoundException extends AssemblyException {
 		private static final long serialVersionUID = 1L;
 		
-		public LabelNotFoundException(String name) {
-			super("Label not found: " + name);
+		public SymbolNotFoundException(String name) {
+			super("Symbol not found: " + name);
 		}
 	}
 	
-	public String serializeLabels() {
-		return serializeLabels("");
+	public String serializeSymbols() {
+		return serializeSymbols("");
 	}
 	
-	public String serializeLabels(String labelPrefix) {
+	public String serializeSymbols(String namePrefix) {
 		StringBuilder builder = new StringBuilder();
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(variables);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
 			if (entry.getValue() instanceof ContextLiteral && !"$".equals(entry.getKey())) {
-				String label = labelPrefix + entry.getKey();
+				String name = namePrefix + entry.getKey();
 				try {
-					builder.append(label + ": equ " + entry.getValue().getHexValue() + "\n");
+					builder.append(name + ": equ " + entry.getValue().getHexValue() + "\n");
 				} catch (EvaluationException e) {
 					// ignore
 				}
 				Scope context = (Scope)((ContextLiteral)entry.getValue()).getContext();
-				builder.append(context.serializeLabels(label + "."));
+				builder.append(context.serializeSymbols(name + "."));
 			}
 		}
 		return builder.toString();
 	}
 	
 	public String toString() {
-		return serializeLabels();
+		return serializeSymbols();
 	}
 	
 }

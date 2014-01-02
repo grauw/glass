@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-import nl.grauw.glass.Scope.LabelNotFoundException;
+import nl.grauw.glass.Scope.SymbolNotFoundException;
 import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
@@ -271,7 +271,7 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=LabelNotFoundException.class)
+	@Test(expected=SymbolNotFoundException.class)
 	public void testMacroDefinitionDereference() {
 		assemble(
 			" ld de,test.test2",
@@ -340,7 +340,7 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=LabelNotFoundException.class)
+	@Test(expected=SymbolNotFoundException.class)
 	public void testReptWithLabelNoIndex() {
 		assemble(
 			" nop",
@@ -425,7 +425,7 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=LabelNotFoundException.class)
+	@Test(expected=SymbolNotFoundException.class)
 	public void testIrpWithLabelNoIndex() {
 		assemble(
 			" nop",
@@ -505,7 +505,7 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=LabelNotFoundException.class)
+	@Test(expected=SymbolNotFoundException.class)
 	public void testIfWithEquForward() {
 		assemble(
 			" jp test",

@@ -22,7 +22,7 @@ public abstract class Directive {
 	
 	public void register(Scope scope, Line line) {
 		if (line.getLabel() != null)
-			scope.addLabel(line.getLabel(), line.getScope());
+			scope.addSymbol(line.getLabel(), line.getScope());
 	}
 	
 }

@@ -67,7 +67,7 @@ public class Assembler {
 			
 			if (symbolPath != null) {
 				try (PrintStream symbolOutput = new PrintStream(symbolPath)) {
-					symbolOutput.print(source.getScope().serializeLabels());
+					symbolOutput.print(source.getScope().serializeSymbols());
 				}
 			}
 		} catch (IOException e) {
