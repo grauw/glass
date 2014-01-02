@@ -55,12 +55,15 @@ public class Assembler {
 			}
 		}
 		
-		instance = new Assembler(sourcePath, objectPath, symbolPath, includePaths);
+		instance = new Assembler(sourcePath, includePaths);
+		instance.assemble(objectPath, symbolPath);
 	}
 	
-	public Assembler(File sourcePath, File objectPath, File symbolPath, List<File> includePaths) {
+	public Assembler(File sourcePath, List<File> includePaths) {
 		source = new SourceParser(includePaths).parse(sourcePath);
-		
+	}
+	
+	public void assemble(File objectPath, File symbolPath) {
 		try (OutputStream output = objectPath != null ? new FileOutputStream(objectPath) : new NullOutputStream()) {
 			source.assemble(output);
 			
