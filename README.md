@@ -27,7 +27,7 @@ To run Glass from the command line, use the following command.
     java -jar glass.jar [OPTION] SOURCE [OBJECT] [SYMBOL]
 
 Source specifies the source file, object the output file, and symbol a text file
-which will hold a list of symbols (labels) and their addresses in the output.
+which will hold a list of symbols and their addresses in the output.
 
 Supported options:
 
@@ -86,11 +86,99 @@ Directives
 ----------
 
   * Origin: `org`
+    
+    Changes the address location counter and sets a new origin for subsequent
+    statements.
+    
+        org 0100H
+    
   * Assign constant: `equ`
+    
+    Assigns a constant value to a symbol.
+    
+        JIFFY: equ 0FC9EH
+    
   * Include: `include`
+    
+    Includes another source file. The current working directory is searched, as
+    well as any include paths specified on the command line.
+    
+        INCLUDE "math.asm"
+    
   * Macro: `macro` / `endm`
+    
+    Defines a macro instruction, composed of all the instructions that follow
+    until the `endm` directive is encountered. The definition’s arguments
+    specify the parameters which are passed when the macro is invoked.
+    
+        ALIGN: MACRO ?boundary
+               ds ?boundary - 1 - ($ + ?boundary - 1) % ?boundary
+               ENDM
+               
+               ALIGN 100H
+    
+    All labels defined in a macro block are local.
+    
   * Repetition: `rept` / `endm`
+    
+    Repeats a section of code a number of times. The end of the section is
+    marked with the `endm` directive. The first argument is mandatory and
+    specifies the number of repeats. The second argument specifies a counter
+    parameter, the third the initial value for the counter (default: 0), and the
+    fourth argument specifies the counter increment (default: 1).
+    
+        REPT 10, ?counter, 0, 2
+        ld bc,(table + ?counter)
+        REPT 3
+        add hl,bc
+        ENDR
+        ENDM
+    
+    All labels defined in a repeat block are local.
+    
   * Indefinite repetition: `irp` / `endm`
+    
+    Repeats a section of code for each of the arguments specified. The end of
+    the section is marked with the `endm` directive. The first argument is
+    mandatory and specifies the parameter the current repetition’s value is
+    passed to. The remaining arguments are passed one by one as the section is
+    repeated.
+    
+        IRP ?value, 1, 2, 4, 8, 16, 32, 64, 128
+        or ?value
+        ENDM
+    
+    All labels defined in a indefinite repeat block are local.
+    
+  * Condition: `if`, `else`, `endif`
+    
+    Conditionally assembles a section of code, or an optional alternative
+    section. The end of the section is either marked with `endif`, or with
+    `else` in which case an alternative will follow up to the `endif`. The
+    argument is evaluated as an integer, and if the result is nonzero (true) the
+    first section is assembled, and if the result is zero (false) the
+    alternative is assembled if one is provided.
+    
+        PAD: MACRO ?address
+             IF $ > ?address
+                 ERROR "Padding address exceeded."
+             ELSE
+                 ds ?address - $
+             ENDIF
+             ENDM
+    
+  * Error: `error`
+    
+    Generates an error and aborts the compilation. Optionally a message can be
+    specified.
+    
+        ERROR "Limit exceeded."
+    
+  * Warning: `warning`
+    
+    Generates a warning. Optionally a message can be specified.
+    
+        ERROR "Limit exceeded."
 
 Literals
 --------
