@@ -178,7 +178,7 @@ Directives
     
     Generates a warning. Optionally a message can be specified.
     
-        ERROR "Limit exceeded."
+        WARNING "Nearly out of space."
 
 Literals
 --------
