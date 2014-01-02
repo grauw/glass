@@ -56,7 +56,6 @@ public class Assembler {
 		}
 		
 		instance = new Assembler(sourcePath, objectPath, symbolPath, includePaths);
-		System.out.print(instance.source);
 	}
 	
 	public Assembler(File sourcePath, File objectPath, File symbolPath, List<File> includePaths) {
