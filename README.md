@@ -150,6 +150,25 @@ Directives
     
     All labels defined in a indefinite repeat block are local.
     
+  * Procedure: `proc`, `endp`
+    
+    Defines a section of code as a procedure. Currently mostly serves to
+    establish a local scope.
+    
+        shiftl: PROC
+                ld b,1
+        loop:   add a,a
+                djnz loop
+                ret
+                ENDP
+                
+                call shiftl
+                ld b,5
+                call shiftl.loop
+                ret
+    
+    All labels defined in a procedure block are local.
+    
   * Condition: `if`, `else`, `endif`
     
     Conditionally assembles a section of code, or an optional alternative
