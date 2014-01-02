@@ -56,22 +56,26 @@ public class Assembler {
 		}
 		
 		instance = new Assembler(sourcePath, includePaths);
-		instance.assemble(objectPath, symbolPath);
+		instance.writeObject(objectPath);
+		if (symbolPath != null)
+			instance.writeSymbols(symbolPath);
 	}
 	
 	public Assembler(File sourcePath, List<File> includePaths) {
 		source = new SourceParser(includePaths).parse(sourcePath);
 	}
 	
-	public void assemble(File objectPath, File symbolPath) {
+	public void writeObject(File objectPath) {
 		try (OutputStream output = objectPath != null ? new FileOutputStream(objectPath) : new NullOutputStream()) {
 			source.assemble(output);
-			
-			if (symbolPath != null) {
-				try (PrintStream symbolOutput = new PrintStream(symbolPath)) {
-					symbolOutput.print(source.getScope().serializeSymbols());
-				}
-			}
+		} catch (IOException e) {
+			new RuntimeException(e);
+		}
+	}
+	
+	public void writeSymbols(File symbolPath) {
+		try (PrintStream symbolOutput = new PrintStream(symbolPath)) {
+			symbolOutput.print(source.getScope().serializeSymbols());
 		} catch (IOException e) {
 			new RuntimeException(e);
 		}
