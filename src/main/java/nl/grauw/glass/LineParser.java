@@ -334,28 +334,35 @@ public class LineParser {
 			} else {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
-					int value = Integer.parseInt(string, 16);
+					int value = parseInt(string, 16);
 					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentOperatorState;
 				} else if (character == 'O' || character == 'o') {
-					int value = Integer.parseInt(string, 8);
+					int value = parseInt(string, 8);
 					expressionBuilder.addValueToken(new IntegerLiteral(value));
 					accumulator.setLength(0);
 					return argumentOperatorState;
 				} else {
 					if (string.endsWith("B") || string.endsWith("b")) {
-						int value = Integer.parseInt(string.substring(0, string.length() - 1), 2);
+						int value = parseInt(string.substring(0, string.length() - 1), 2);
 						expressionBuilder.addValueToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					} else {
-						int value = Integer.parseInt(string);
+						int value = parseInt(string, 10);
 						expressionBuilder.addValueToken(new IntegerLiteral(value));
 						accumulator.setLength(0);
 					}
 					return argumentOperatorState.parse(character);
 				}
 			}
+		}
+		
+		private int parseInt(String string, int radix) {
+			long value = Long.parseLong(string, radix);
+			if (value > 0xFFFFFFFFL)
+				throw new SyntaxError();
+			return (int)value;
 		}
 	}
 	
