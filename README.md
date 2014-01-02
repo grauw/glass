@@ -20,7 +20,7 @@ original project and its author(s). For details, please consult the LICENSE
 file. To submit contributions, please contact the author.
 
 Bug reports and feature requests go
-(here)[https://bitbucket.org/grauw/glass/issues].
+[here](https://bitbucket.org/grauw/glass/issues).
 
 Usage
 -----
