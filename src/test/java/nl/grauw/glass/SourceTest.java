@@ -454,6 +454,21 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testProc() {
+		assertArrayEquals(b(0x21, 0x0A, 0x00, 0xC3, 0x06, 0x00, 0xFF, 0xC3, 0x0A, 0x00, 0xFF), assemble(
+			" ld hl,test2.test",
+			"test1: PROC",
+			" jp test",
+			"test: rst 38H",
+			" ENDP",
+			"test2: PROC",
+			" jp test",
+			"test: rst 38H",
+			" ENDP"
+		));
+	}
+	
+	@Test
 	public void testIf() {
 		assertArrayEquals(b(0x00), assemble(
 			" IF 1",
