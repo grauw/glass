@@ -20,6 +20,7 @@ import static org.junit.Assert.*;
 import nl.grauw.glass.LineParser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.Flag;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
 import org.junit.Test;
@@ -109,6 +110,30 @@ public class LineParserTest {
 	@Test(expected=SyntaxError.class)
 	public void testCharacterLiteralUnclosedEscape() {
 		parse("'\\");
+	}
+	
+	@Test
+	public void testFlag() {
+		assertEquals(Flag.NZ, parseExpression("nz").getFlag());
+		assertEquals(Flag.Z,  parseExpression("z").getFlag());
+		assertEquals(Flag.NC, parseExpression("nc").getFlag());
+		assertEquals(Flag.C,  parseExpression("c").getFlag());
+		assertEquals(Flag.PO, parseExpression("po").getFlag());
+		assertEquals(Flag.PE, parseExpression("pe").getFlag());
+		assertEquals(Flag.P,  parseExpression("p").getFlag());
+		assertEquals(Flag.M,  parseExpression("m").getFlag());
+	}
+	
+	@Test
+	public void testFlagNegative() {
+		assertEquals(Flag.Z,  parseExpression("!nz").getFlag());
+		assertEquals(Flag.NZ, parseExpression("!z").getFlag());
+		assertEquals(Flag.C,  parseExpression("!nc").getFlag());
+		assertEquals(Flag.NC, parseExpression("!c").getFlag());
+		assertEquals(Flag.PE, parseExpression("!po").getFlag());
+		assertEquals(Flag.PO, parseExpression("!pe").getFlag());
+		assertEquals(Flag.M,  parseExpression("!p").getFlag());
+		assertEquals(Flag.P,  parseExpression("!m").getFlag());
 	}
 	
 	public Line parse(String text) {
