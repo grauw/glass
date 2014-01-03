@@ -125,7 +125,7 @@ public class LineParserTest {
 	}
 	
 	@Test
-	public void testFlagNegative() {
+	public void testFlagNegate() {
 		assertEquals(Flag.Z,  parseExpression("!nz").getFlag());
 		assertEquals(Flag.NZ, parseExpression("!z").getFlag());
 		assertEquals(Flag.C,  parseExpression("!nc").getFlag());
