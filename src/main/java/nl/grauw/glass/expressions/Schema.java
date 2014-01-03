@@ -79,13 +79,13 @@ public class Schema implements SchemaType {
 	
 	public static class IsDirect implements SchemaType {
 		public boolean check(Expression argument) {
-			return !(argument instanceof Group);
+			return !argument.isGroup();
 		}
 	}
 	
 	public static class IsIndirect implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument instanceof Group;
+			return argument.isGroup();
 		}
 	}
 	

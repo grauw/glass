@@ -76,6 +76,11 @@ public class Identifier extends Expression {
 		return flag != null ? flag : resolve().getFlag();
 	}
 	
+	@Override
+	public boolean isGroup() {
+		return exists() && resolve().isGroup();
+	}
+	
 	public String toString() {
 		return name;
 	}

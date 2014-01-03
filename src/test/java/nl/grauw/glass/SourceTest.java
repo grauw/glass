@@ -90,6 +90,14 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testEquIndirectRegister() {
+		assertArrayEquals(b(0x7E), assemble(
+			" ld a,label",
+			"label: equ (hl)"
+		));
+	}
+	
+	@Test
 	public void testOrg() {
 		assertArrayEquals(b(0xC3, 0x32, 0x40, 0x00, 0x18, 0xFD), assemble(
 			" jp label",

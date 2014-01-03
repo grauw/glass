@@ -52,6 +52,10 @@ public abstract class Expression {
 		throw new EvaluationException("Not a flag.");
 	}
 	
+	public boolean isGroup() {
+		return false;
+	}
+	
 	public int getAddress() {
 		int address = getInteger();
 		if (address < 0 || address >= 0x10000)

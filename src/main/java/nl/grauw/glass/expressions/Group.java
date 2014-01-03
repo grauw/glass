@@ -72,6 +72,11 @@ public class Group extends Expression {
 		return term.getFlag();
 	}
 	
+	@Override
+	public boolean isGroup() {
+		return true;
+	}
+	
 	public String toString() {
 		return "(" + term + ")";
 	}
