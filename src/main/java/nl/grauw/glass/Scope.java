@@ -65,7 +65,7 @@ public class Scope implements Context {
 		if (name == null || value == null)
 			throw new AssemblyException("Symbol name and value must not be null.");
 		if (variables.containsKey(name))
-			throw new AssemblyException("Can not redefine symbol.");
+			throw new AssemblyException("Can not redefine symbol: " + name);
 		variables.put(name, value);
 	}
 	

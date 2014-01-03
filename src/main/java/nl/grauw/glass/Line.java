@@ -99,7 +99,12 @@ public class Line {
 	}
 	
 	public void register(Scope sourceScope) {
-		directive.register(sourceScope, this);
+		try {
+			directive.register(sourceScope, this);
+		} catch (AssemblyException e) {
+			e.setContext(this);
+			throw e;
+		}
 	}
 	
 	public List<Line> expand() {
