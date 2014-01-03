@@ -82,6 +82,14 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testEquRegister() {
+		assertArrayEquals(b(0x78), assemble(
+			" ld a,label",
+			"label: equ b"
+		));
+	}
+	
+	@Test
 	public void testOrg() {
 		assertArrayEquals(b(0xC3, 0x32, 0x40, 0x00, 0x18, 0xFD), assemble(
 			" jp label",
@@ -418,6 +426,15 @@ public class SourceTest {
 	public void testIrpNoBody() {
 		assertArrayEquals(b(), assemble(
 			" IRP ?value, 1, 2, 3",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testIrpRegisters() {
+		assertArrayEquals(b(0xC5, 0xD5, 0xE5, 0xF5), assemble(
+			" IRP ?register, bc, de, hl, af",
+			" push ?register",
 			" ENDM"
 		));
 	}

@@ -34,6 +34,10 @@ public class Identifier extends Expression {
 		return new Identifier(name, context);
 	}
 	
+	public boolean exists() {
+		return context.hasSymbol(name);
+	}
+	
 	public Expression resolve() {
 		return context.getSymbol(name);
 	}
@@ -50,32 +54,26 @@ public class Identifier extends Expression {
 	
 	@Override
 	public boolean isRegister() {
-		return Register.getByName(name) != null;
-//		return Register.getByName(name) != null || resolve().isRegister();
+		Register register = Register.getByName(name);
+		return register != null || exists() && resolve().isRegister();
 	}
 	
 	@Override
 	public Register getRegister() {
 		Register register = Register.getByName(name);
-		if (register != null)
-			return register;
-		throw new EvaluationException("Currently not supported.");
-//		return register != null ? register : resolve().getRegister();
+		return register != null ? register : resolve().getRegister();
 	}
 	
 	@Override
 	public boolean isFlag() {
-		return Flag.getByName(name) != null;
-//		return Flag.getByName(name) != null || resolve().isFlag();
+		Flag flag = Flag.getByName(name);
+		return flag != null || exists() && resolve().isFlag();
 	}
 	
 	@Override
 	public Flag getFlag() {
 		Flag flag = Flag.getByName(name);
-		if (flag != null)
-			return flag;
-		throw new EvaluationException("Currently not supported.");
-//		return flag != null ? flag : resolve().getFlag();
+		return flag != null ? flag : resolve().getFlag();
 	}
 	
 	public String toString() {
