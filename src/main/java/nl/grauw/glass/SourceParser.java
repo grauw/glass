@@ -24,7 +24,6 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,21 +49,19 @@ public class SourceParser {
 	
 	private final Source source;
 	private final List<String> terminators;
-	private final List<File> includePaths = new ArrayList<File>();
+	private final List<File> includePaths;
 	private final LineParser lineParser = new LineParser();
 	
 	public SourceParser(List<File> includePaths) {
 		this.source = new Source();
 		this.terminators = END_TERMINATORS;
-		this.includePaths.add(null);
-		this.includePaths.addAll(includePaths);
+		this.includePaths = includePaths;
 	}
 	
 	public SourceParser(Scope scope, List<String> terminators, List<File> includePaths) {
 		this.source = new Source(scope);
 		this.terminators = terminators;
-		this.includePaths.add(null);
-		this.includePaths.addAll(includePaths);
+		this.includePaths = includePaths;
 	}
 	
 	public Source parse(File sourceFile) {
@@ -76,13 +73,18 @@ public class SourceParser {
 		return source;
 	}
 	
+	private Source parseInclude(File sourceFile, File basePath) {
+		File fullPath = new File(basePath.getParent(), sourceFile.getPath());
+		if (fullPath.exists())
+			return parse(fullPath);
+		return parseInclude(sourceFile);
+	}
+	
 	private Source parseInclude(File sourceFile) {
 		for (File includePath : includePaths) {
 			File fullPath = new File(includePath, sourceFile.getPath());
-			if (fullPath.exists()) {
-				parse(fullPath);
-				return source;
-			}
+			if (fullPath.exists())
+				return parse(fullPath);
 		}
 		throw new AssemblyException("Include file not found: " + sourceFile);
 	}
@@ -128,7 +130,7 @@ public class SourceParser {
 			return new Equ();
 		case "include":
 		case "INCLUDE":
-			return getIncludeDirective(line);
+			return getIncludeDirective(line, sourceFile);
 		case "macro":
 		case "MACRO":
 			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
@@ -152,13 +154,13 @@ public class SourceParser {
 		}
 	}
 	
-	private Directive getIncludeDirective(Line line) {
+	private Directive getIncludeDirective(Line line, File sourceFile) {
 		if (line.getArguments() instanceof Sequence)
 			throw new AssemblyException("Include only accepts 1 argument.");
 		Expression argument = line.getArguments();
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		parseInclude(new File(argument.getString()));
+		parseInclude(new File(argument.getString()), sourceFile);
 		return new Include();
 	}
 	
