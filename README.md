@@ -8,11 +8,11 @@ Project information
 
 Glass is a cross-platform assembler for the Z80 processor, written in Java 7.
 
-Downloads available
-[here](https://bitbucket.org/grauw/glass/downloads).
+Downloads [available here](https://bitbucket.org/grauw/glass/downloads).
+([changes](https://bitbucket.org/grauw/glass/src/tip/CHANGES.md))
 
-Bug reports and feature requests go
-[here](https://bitbucket.org/grauw/glass/issues).
+Bug reports and feature requests
+[go here](https://bitbucket.org/grauw/glass/issues).
 
 Author: Laurens Holst  
 Contact: <laurens.nospam@grauw.nl>  
