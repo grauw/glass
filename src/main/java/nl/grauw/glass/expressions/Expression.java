@@ -24,9 +24,13 @@ public abstract class Expression {
 	
 	public abstract Expression copy(Context context);
 	
-	public abstract boolean isInteger();
+	public boolean isInteger() {
+		return false;
+	}
 	
-	public abstract int getInteger();
+	public int getInteger() {
+		throw new EvaluationException("Not an integer.");
+	}
 	
 	public boolean isString() {
 		return false;

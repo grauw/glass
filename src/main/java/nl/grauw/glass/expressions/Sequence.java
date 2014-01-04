@@ -37,11 +37,6 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	@Override
-	public int getInteger() {
-		throw new EvaluationException("Can not evaluate sequence to integer.");
-	}
-	
-	@Override
 	protected void addToList(List<Expression> list) {
 		term1.addToList(list);
 		Expression tail = term2;

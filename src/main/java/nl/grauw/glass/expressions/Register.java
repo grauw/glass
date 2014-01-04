@@ -110,16 +110,6 @@ public class Register extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger() {
-		return false;
-	}
-	
-	@Override
-	public int getInteger() {
-		throw new EvaluationException("Can not evaluate register to integer.");
-	}
-	
-	@Override
 	public boolean isRegister() {
 		return true;
 	}

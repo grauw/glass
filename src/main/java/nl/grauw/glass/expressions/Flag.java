@@ -44,16 +44,6 @@ public class Flag extends Literal {
 	}
 	
 	@Override
-	public boolean isInteger() {
-		return false;
-	}
-	
-	@Override
-	public int getInteger() {
-		throw new EvaluationException("Can not evaluate flag to integer.");
-	}
-	
-	@Override
 	public boolean isFlag() {
 		return true;
 	}
