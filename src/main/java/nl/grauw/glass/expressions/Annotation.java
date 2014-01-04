@@ -25,8 +25,8 @@ public class Annotation extends BinaryOperator {
 			throw new ExpressionError("Annotation left hand side must be an identifier: " + annotation);
 	}
 	
-	public Expression getAnnotation() {
-		return term1;
+	public Identifier getAnnotation() {
+		return (Identifier)term1;
 	}
 	
 	public Expression getAnnotee() {

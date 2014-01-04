@@ -89,6 +89,16 @@ public class Schema implements SchemaType {
 		}
 	}
 	
+	public static class IsAnnotation implements SchemaType {
+		private final SchemaType rhsType;
+		public IsAnnotation(SchemaType rhsType) {
+			this.rhsType = rhsType;
+		}
+		public boolean check(Expression argument) {
+			return rhsType.check(argument.getAnnotee());
+		}
+	}
+	
 	public static class IsInteger implements SchemaType {
 		public boolean check(Expression argument) {
 			return argument.isInteger();
