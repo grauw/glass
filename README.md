@@ -77,15 +77,43 @@ Standard z80 instruction syntax is used:
 
 Parentheses are used to indicate indirection.
 
-In addition to the documented Z80 instructions, the variations using the
-undocumented `ixh`, `ixl`, `iyh` and `iyl` index registers are supported, as
-well as the semi-documented `in (c)` and the R800 `mulub` / `muluw`
-instructions.
-
-For register jumps, `jp (hl)` etc., the parentheses are optional.
-
-For a complete description of the Z80 instruction set, see the official Zilog
-documentation: <http://www.zilog.com/docs/z80/um0080.pdf>
+  * Z80 instructions: `adc`, `add`, `and`, `bit`, `call`, `ccf`, `cp`, `cpd`,
+    `cpdr`, `cpi`, `cpir`, `cpl`, `daa`, `dec`, `di`, `djnz`, `ei`, `ex`, `exx`,
+    `halt`, `im`, `in`, `inc`, `ind`, `indr`, `ini`, `inir`, `jp`, `jr`, `ld`,
+    `ldd`, `lddr`, `ldi`, `ldir`, `neg`, `nop`, `or`, `otdr`, `otir`, `out`,
+    `outd`, `outi`, `pop`, `push`, `res`, `ret`, `reti`, `retn`, `rl`, `rla`,
+    `rlc`, `rlca`, `rld`, `rr`, `rra`, `rrc`, `rrca`, `rrd`, `rst`, `sbc`,
+    `scf`, `set`, `sla`, `sra`, `srl`, `sub`, `xor`
+    
+    For a complete description of the Z80 instruction set, see the official
+    Zilog documentation: <http://www.zilog.com/docs/z80/um0080.pdf>
+    
+    In addition to the documented Z80 instructions, the variations using the
+    undocumented `ixh`, `ixl`, `iyh` and `iyl` index registers are supported, as
+    well as the semi-documented `in (c)`.
+    
+    For register jumps, `jp (hl)` etc., the parentheses are optional.
+    
+  * R800 instructions: `mulub`, `muluw`
+    
+    R800 multiplication instructions.
+    
+  * Define byte: `db`
+    
+    Defines a byte or a sequence of bytes.
+    
+  * Define word: `dw`
+    
+    Defines a word or a sequence of words.
+    
+  * Define double word: `dd`
+    
+    Defines a double word or a sequence of double words.
+    
+  * Define space: `ds`
+    
+    Defines space for a number of bytes. The first argument indicates the number
+    of bytes, the optional second argument specifies the fill value (default 0).
 
 Directives
 ----------
