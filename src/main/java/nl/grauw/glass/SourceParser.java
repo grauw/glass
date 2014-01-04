@@ -61,8 +61,8 @@ public class SourceParser {
 		this.includePaths = includePaths;
 	}
 	
-	public SourceParser(Scope scope, List<String> terminators, List<File> includePaths) {
-		this.source = new Source(scope);
+	public SourceParser(Source source, List<String> terminators, List<File> includePaths) {
+		this.source = source;
 		this.terminators = terminators;
 		this.includePaths = includePaths;
 	}
@@ -169,12 +169,13 @@ public class SourceParser {
 		Expression argument = line.getArguments();
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		parseInclude(new File(argument.getString()), sourceFile);
+		SourceParser parser = new SourceParser(source, END_TERMINATORS, includePaths);
+		parser.parseInclude(new File(argument.getString()), sourceFile);
 		return new Include();
 	}
 	
 	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, File sourceFile) {
-		return new SourceParser(scope, terminators, includePaths).parse(reader, sourceFile);
+		return new SourceParser(new Source(scope), terminators, includePaths).parse(reader, sourceFile);
 	}
 	
 }
