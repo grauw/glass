@@ -27,19 +27,18 @@ import nl.grauw.glass.instructions.Instruction;
 
 public class Scope implements Context {
 	
-	private Map<String, Instruction> instructions = new HashMap<>();
-	
-	Scope parent;
-	Map<String, Expression> variables = new HashMap<>();
+	private final Scope parent;
+	private final Map<String, Expression> variables = new HashMap<>();
+	private final Map<String, Instruction> instructions = new HashMap<>();
 	private int address = -1;
 	
 	public Scope() {
-		addSymbol("$", this);
+		this(null);
 	}
 	
 	public Scope(Scope parent) {
-		this();
 		this.parent = parent;
+		addSymbol("$", this);
 	}
 	
 	public Scope getParent() {
