@@ -621,6 +621,54 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testSection() {
+		assertArrayEquals(b(0x00, 0x21, 0x07, 0x00, 0x21, 0x04, 0x00, 0x86, 0x86, 0x00, 0x11, 0x07, 0x00), assemble(
+			" nop",
+			"ROM: ds 8H, 86H",
+			" nop",
+			" SECTION ROM",
+			" ld hl,label",
+			" ld hl,$",
+			"label: ENDS",
+			" ld de,label"
+		));
+	}
+	
+	@Test
+	public void testSectionVirtual() {
+		assertArrayEquals(b(0x00, 0x00, 0x11, 0x07, 0x00), assemble(
+			" nop",
+			"RAM: ds VIRTUAL 8H",
+			" nop",
+			" SECTION RAM",
+			" ld hl,label",
+			" ld hl,$",
+			"label: ENDS",
+			" ld de,label"
+		));
+	}
+	
+	@Test
+	public void testSectionFitsSpace() {
+		assemble(
+			"ROM: ds 3H",
+			" SECTION ROM",
+			" ld hl,$",
+			" ENDS"
+		);
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testSectionExceedsSpace() {
+		assemble(
+			"ROM: ds 2H",
+			" SECTION ROM",
+			" ld hl,$",
+			" ENDS"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

@@ -28,6 +28,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
+import nl.grauw.glass.directives.Ds;
 import nl.grauw.glass.directives.Equ;
 import nl.grauw.glass.directives.If;
 import nl.grauw.glass.directives.Include;
@@ -36,6 +37,7 @@ import nl.grauw.glass.directives.Irp;
 import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.directives.Proc;
 import nl.grauw.glass.directives.Rept;
+import nl.grauw.glass.directives.Section;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 
@@ -44,6 +46,7 @@ public class SourceParser {
 	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
 	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
 	public static final List<String> ENDP_TERMINATORS = Arrays.asList(new String[] { "endp", "ENDP" });
+	public static final List<String> ENDS_TERMINATORS = Arrays.asList(new String[] { "ends", "ENDS" });
 	public static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
 	public static final List<String> ENDIF_TERMINATORS = Arrays.asList(new String[] { "endif", "ENDIF" });
 	
@@ -149,6 +152,12 @@ public class SourceParser {
 			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
 					parseBlock(source.getScope(), ENDIF_TERMINATORS, reader, sourceFile) : null;
 			return new If(thenBlock, elseBlock);
+		case "section":
+		case "SECTION":
+			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, reader, sourceFile));
+		case "ds":
+		case "DS":
+			return new Ds();
 		default:
 			return new Instruction();
 		}

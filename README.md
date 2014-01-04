@@ -236,6 +236,29 @@ Directives
     Generates a warning. Optionally a message can be specified.
     
         WARNING "Nearly out of space."
+    
+  * Section: `section`
+    
+    Defines a section of code or data that will be assembled inside the space of
+    a ds statement. This allows you to have nonadjacent code or data sections
+    and group them into separate regions, such as ROM and RAM pages. The
+    mandatory argument references the DS statement that is the target of the
+    section.
+    
+            org 4000H
+        ROM_PAGE1: ds 4000H
+        ROM_PAGE2: ds 4000H
+        RAM: ds VIRTUAL 3000H
+        
+            SECTION ROM_PAGE1
+        SetValue:
+            ld (value),a
+            ret
+        
+            SECTION RAM
+        value: db 0
+            ENDS
+            ENDS
 
 Literals
 --------
