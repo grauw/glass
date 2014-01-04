@@ -51,8 +51,7 @@ public class Org extends Instruction {
 		}
 		
 		@Override
-		public int generateObjectCode(Scope context, int address, OutputStream output) throws IOException {
-			return getAddress();
+		public void generateObjectCode(Scope context, OutputStream output) throws IOException {
 		}
 		
 	}

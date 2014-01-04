@@ -94,19 +94,14 @@ public class Source {
 	}
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
-		generateObjectCode(0, output);
-	}
-	
-	public int generateObjectCode(int address, OutputStream output) throws IOException {
 		for (Line line : lines)
-			address = line.generateObjectCode(address, output);
-		return address;
+			line.generateObjectCode(output);
 	}
 	
-	public byte[] generateObjectCode(int address) {
+	public byte[] generateObjectCode() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		try {
-			generateObjectCode(address, bytes);
+			generateObjectCode(bytes);
 		} catch (IOException e) {
 			throw new AssemblyException(e);
 		}

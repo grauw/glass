@@ -73,13 +73,11 @@ public class If extends Instruction {
 		}
 		
 		@Override
-		public int generateObjectCode(Scope context, int address, OutputStream output) throws IOException {
+		public void generateObjectCode(Scope context, OutputStream output) throws IOException {
 			if (argument.getInteger() != 0) {
-				return thenSource.generateObjectCode(address, output);
+				thenSource.generateObjectCode(output);
 			} else if (elseSource != null) {
-				return elseSource.generateObjectCode(address, output);
-			} else {
-				return address;
+				elseSource.generateObjectCode(output);
 			}
 		}
 		

@@ -126,9 +126,9 @@ public class Line {
 		}
 	}
 	
-	public int generateObjectCode(int address, OutputStream output) throws IOException {
+	public void generateObjectCode(OutputStream output) throws IOException {
 		try {
-			return instructionObject.generateObjectCode(scope, address, output);
+			instructionObject.generateObjectCode(scope, output);
 		} catch (AssemblyException e) {
 			e.setContext(this);
 			throw e;
