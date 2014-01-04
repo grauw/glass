@@ -414,8 +414,10 @@ public class LineParser {
 			} else if (character == '\0') {
 				arguments = expressionBuilder.getExpression();
 				return endState;
+			} else {
+				expressionBuilder.addOperatorToken(Operator.ANNOTATION);
+				return argumentValueState.parse(character);
 			}
-			throw new SyntaxError();
 		}
 	}
 	
@@ -457,8 +459,11 @@ public class LineParser {
 			if (character == '=') {
 				expressionBuilder.addOperatorToken(Operator.NOT_EQUALS);
 				return argumentValueState;
+			} else {
+				expressionBuilder.addOperatorToken(Operator.ANNOTATION);
+				expressionBuilder.addOperatorToken(Operator.NOT);
+				return argumentValueState.parse(character);
 			}
-			throw new SyntaxError();
 		}
 	}
 	

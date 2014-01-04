@@ -591,6 +591,13 @@ public class SourceTest {
 		}
 	}
 	
+	@Test(expected=ArgumentException.class)
+	public void testAnnotationNotSupported() {
+		assemble(
+			" or A 0"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

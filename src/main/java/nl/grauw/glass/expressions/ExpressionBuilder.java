@@ -101,6 +101,7 @@ public class ExpressionBuilder {
 		LOGICAL_OR(Precedence.LOGICAL_OR, true),
 		GROUP_OPEN(Precedence.GROUPING, true),
 		GROUP_CLOSE(Precedence.NONE, true),
+		ANNOTATION(Precedence.ANNOTATION, false),
 		SEQUENCE(Precedence.SEQUENCE, false),
 		SENTINEL(Precedence.NONE, true);
 		
@@ -184,6 +185,8 @@ public class ExpressionBuilder {
 				return new LogicalAnd(operand1, operand2);
 			case LOGICAL_OR:
 				return new LogicalOr(operand1, operand2);
+			case ANNOTATION:
+				return new Annotation(operand1, operand2);
 			case SEQUENCE:
 				return new Sequence(operand1, operand2);
 			default:
@@ -205,7 +208,7 @@ public class ExpressionBuilder {
 		OR,
 		LOGICAL_AND,
 		LOGICAL_OR,
-		ASSIGNMENT,
+		ANNOTATION,
 		SEQUENCE,
 		NONE
 	}

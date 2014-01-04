@@ -95,6 +95,66 @@ public class ExpressionBuilderTest {
 		assertEquals("{a, {{({10H + 15H}) * ({5H - 2H})} + 4H}}", parse("a, (10H + 15H) * (5H - 2H) + 4H"));
 	}
 	
+	@Test
+	public void testAnnotation() {
+		assertEquals("{a 1H}", parse("a 1H"));
+	}
+	
+	@Test
+	public void testAnnotationTwice() {
+		assertEquals("{a {b 1H}}", parse("a b 1H"));
+	}
+	
+	@Test
+	public void testAnnotationGroup() {
+		assertEquals("{a (1H)}", parse("a (1H)"));
+	}
+	
+	@Test
+	public void testAnnotationNot() {
+		assertEquals("{a !1H}", parse("a !1H"));
+	}
+	
+	@Test
+	public void testAnnotationComplement() {
+		assertEquals("{a ~1H}", parse("a ~1H"));
+	}
+	
+	@Test
+	public void testAnnotationSubtract() {
+		assertEquals("{a {1H - 2H}}", parse("a 1H - 2H"));
+	}
+	
+	@Test
+	public void testAnnotationLogicalOr() {
+		assertEquals("{a {1H || 2H}}", parse("a 1H || 2H"));
+	}
+	
+	@Test
+	public void testAnnotationSequence() {
+		assertEquals("{{a 1H}, {b 2H}}", parse("a 1H, b 2H"));
+	}
+	
+	@Test
+	public void testAnnotationInGroup() {
+		assertEquals("{a {1H || ({b 2H})}}", parse("a 1H || (b 2H)"));
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testAnnotationInTheMiddle() {
+		parse("a 1H || b 2H");
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testAnnotationNotAnIdentifier() {
+		parse("0 1H");
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testAnnotationNotAnIdentifier2() {
+		parse("a 0 1H");
+	}
+	
 	public String parse(String text) {
 		Line line = new LineParser().parse(" test " + text, new Scope(), null, 0);
 		return line.getArguments().toDebugString();

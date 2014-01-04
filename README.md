@@ -292,6 +292,7 @@ Operators
   * Bitwise or: `a | b`
   * Logical and: `a && b`
   * Logical or: `a || b`
+  * Annotation: `a b`
   * Sequence: `a, b`
 
 Logical operators use integers to represent true / false values. 0 means false,
@@ -313,4 +314,5 @@ Operator precedence:
   * `|`
   * `&&`
   * `||`
+  * ` `
   * `,`
