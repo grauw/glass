@@ -114,6 +114,11 @@ Parentheses are used to indicate indirection.
     
     Defines space for a number of bytes. The first argument indicates the number
     of bytes, the optional second argument specifies the fill value (default 0).
+    
+    The first argument can be annotated with `virtual` (or `VIRTUAL`), in which
+    case the address counter will be incremented accordingly, but no object is
+    actually generated in the output. If the virtual annotation is given, you
+    can not specify a fill value.
 
 Directives
 ----------

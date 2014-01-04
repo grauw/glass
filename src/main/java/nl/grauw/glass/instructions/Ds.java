@@ -19,6 +19,7 @@ import java.util.Arrays;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
@@ -27,23 +28,29 @@ public class Ds extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments) {
 		if (Ds_N_N.ARGUMENTS_N.check(arguments))
-			return new Ds_N_N(arguments.getElement(0), IntegerLiteral.ZERO);
+			return new Ds_N_N(arguments.getElement(0).getAnnotation(),
+					arguments.getElement(0).getAnnotee(), IntegerLiteral.ZERO);
 		if (Ds_N_N.ARGUMENTS_N_N.check(arguments))
-			return new Ds_N_N(arguments.getElement(0), arguments.getElement(1));
+			return new Ds_N_N(null, arguments.getElement(0), arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
 	public static class Ds_N_N extends InstructionObject {
 		
-		public static Schema ARGUMENTS_N = new Schema(Schema.INTEGER);
+		public static Schema ARGUMENTS_N = new Schema(new Schema.IsAnnotation(Schema.INTEGER));
 		public static Schema ARGUMENTS_N_N = new Schema(Schema.INTEGER, Schema.INTEGER);
 		
-		private Expression size;
-		private Expression value;
+		private final boolean virtual;
+		private final Expression size;
+		private final Expression value;
 		
-		public Ds_N_N(Expression size, Expression value) {
+		public Ds_N_N(Identifier annotation, Expression size, Expression value) {
+			this.virtual = annotation != null && ("virtual".equals(annotation.getName()) || "VIRTUAL".equals(annotation.getName()));
 			this.size = size;
 			this.value = value;
+			
+			if (annotation != null && !virtual)
+				throw new ArgumentException("Unsupported annotation: " + annotation.getName());
 		}
 		
 		@Override
@@ -53,6 +60,8 @@ public class Ds extends Instruction {
 		
 		@Override
 		public byte[] getBytes(Scope context) {
+			if (virtual)
+				return new byte[] {};
 			byte[] bytes = new byte[size.getInteger()];
 			Arrays.fill(bytes, (byte)value.getInteger());
 			return bytes;

@@ -598,6 +598,29 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testDsVirtual() {
+		assertArrayEquals(b(0x3E, 0x86, 0x21, 0x12, 0x00), assemble(
+			" ld a,86H",
+			" ds VIRTUAL 10H",
+			" ld hl,$"
+		));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testDsVirtualWithFill() {
+		assemble(
+			" ds VIRTUAL 10H, 0"
+		);
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testDsUnknownAnnotation() {
+		assemble(
+			" ds UNKNOWN 10H"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
