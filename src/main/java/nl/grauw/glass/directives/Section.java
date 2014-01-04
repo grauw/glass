@@ -18,16 +18,8 @@ package nl.grauw.glass.directives;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
-import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.expressions.Identifier;
-import nl.grauw.glass.expressions.Schema;
-import nl.grauw.glass.expressions.SectionContextLiteral;
-import nl.grauw.glass.instructions.ArgumentException;
-import nl.grauw.glass.instructions.Ds;
 
 public class Section extends Directive {
-	
-	public static Schema ARGUMENTS = new Schema(Schema.IDENTIFIER);
 	
 	private final Source source;
 	
@@ -37,18 +29,7 @@ public class Section extends Directive {
 	
 	@Override
 	public void register(Scope scope, Line line) {
-		if (!ARGUMENTS.check(line.getArguments()))
-			throw new ArgumentException();
-		
-		Expression argument = ((Identifier)line.getArguments()).resolve();
-		if (!(argument instanceof SectionContextLiteral))
-			throw new ArgumentException("Argument does not reference a section context.");
-		
 		nl.grauw.glass.instructions.Section section = new nl.grauw.glass.instructions.Section(source);
-		
-		Ds sectionContext = ((SectionContextLiteral)argument).getSectionContext();
-		sectionContext.addSection(section);
-		
 		line.setInstruction(section);
 		
 		source.register();
