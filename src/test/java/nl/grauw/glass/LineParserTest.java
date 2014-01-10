@@ -38,6 +38,17 @@ public class LineParserTest {
 	}
 	
 	@Test
+	public void testLabelIndented() {
+		assertEquals("test_label", parse(" test_label:").getLabel());
+	}
+	
+	@Test
+	public void testLabelIndentedWithMnemonic() {
+		assertEquals("test_label", parse(" test_label:exx").getLabel());
+		assertEquals("exx", parse(" test_label:exx").getMnemonic());
+	}
+	
+	@Test
 	public void testMnemonic() {
 		assertEquals("exx", parse(" exx").getMnemonic());
 	}

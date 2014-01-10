@@ -146,6 +146,10 @@ public class LineParser {
 			if (isIdentifier(character)) {
 				accumulator.append(character);
 				return statementReadState;
+			} if (character == ':' && label == null) {
+				label = accumulator.toString();
+				accumulator.setLength(0);
+				return statementStartState;
 			} else {
 				mnemonic = accumulator.toString();
 				accumulator.setLength(0);
