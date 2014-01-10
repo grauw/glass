@@ -61,12 +61,19 @@ public class Rept extends Instruction {
 		for (int i = 0, counter = start; i < count; i++, counter += step) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter,
 					parameter != null ? new IntegerLiteral(counter) : null);
+			
+			// set up the number symbol
+			line.getScope().addSymbol(Integer.toString(i), parameterScope);
+			Line rept = new Line(parameterScope, line);
+			rept.setInstruction(Empty.INSTANCE);
+			lines.add(rept);  // so that the parameterScope address gets initialised
+			
+			// copy & expand content
 			List<Line> lineCopies = source.getLineCopies(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lines.addAll(lineCopy.expand());
-			line.getScope().addSymbol(Integer.toString(i), parameterScope);
 		}
 		return lines;
 	}

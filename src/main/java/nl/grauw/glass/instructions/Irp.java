@@ -42,12 +42,18 @@ public class Irp extends Instruction {
 		for (int i = 0; (arguments = arguments.getNext()) != null; i++) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter, arguments.getElement());
 			
+			// set up the number symbol
+			line.getScope().addSymbol(Integer.toString(i), parameterScope);
+			Line rept = new Line(parameterScope, line);
+			rept.setInstruction(Empty.INSTANCE);
+			lines.add(rept);  // so that the parameterScope address gets initialised
+			
+			// copy & expand content
 			List<Line> lineCopies = source.getLineCopies(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
 				lines.addAll(lineCopy.expand());
-			line.getScope().addSymbol(Integer.toString(i), parameterScope);
 		}
 		return lines;
 	}
