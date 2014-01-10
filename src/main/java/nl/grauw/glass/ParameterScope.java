@@ -35,8 +35,8 @@ public class ParameterScope extends Scope {
 			
 			addSymbol(((Identifier)parameter).getName(), argument);
 			
-			parameters = parameter.getNext();
-			arguments = argument.getNext();
+			parameters = parameters.getNext();
+			arguments = arguments.getNext();
 		}
 		if (arguments != null)
 			throw new ArgumentException("Too many arguments.");

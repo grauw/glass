@@ -171,6 +171,17 @@ public class SourceTest {
 		));
 	}
 	
+	@Test
+	public void testMacroArgumentsTwo() {
+		assertArrayEquals(b(0x3E, 0x30, 0x3E, 0x77), assemble(
+			"test: MACRO arg1, arg2",
+			" ld a,arg1 + arg2",
+			" ENDM",
+			" test 10H, 20H",
+			" test 33H, 44H"
+		));
+	}
+	
 	@Test(expected=ArgumentException.class)
 	public void testMacroTooManyArguments() {
 		assemble(
