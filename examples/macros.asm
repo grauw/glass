@@ -31,3 +31,10 @@ PAD: MACRO ?address
 ALIGN: MACRO ?boundary
 	ds ?boundary - 1 - ($ + ?boundary - 1) % ?boundary
 	ENDM
+
+;
+; Pads to ensure a section of the given size does not cross a 100H boundary.
+;
+ALIGN_FIT8: MACRO ?size
+	ds (($ + ?size - 1) >> 8) != ($ >> 8) && (100H - ($ & 0FFH)) || 0
+	ENDM
