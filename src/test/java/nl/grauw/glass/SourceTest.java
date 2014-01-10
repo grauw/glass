@@ -375,11 +375,11 @@ public class SourceTest {
 	
 	@Test
 	public void testReptWithLabel() {
-		assertArrayEquals(b(0x00, 0x00, 0x00, 0x21, 0x03, 0x00), assemble(
+		assertArrayEquals(b(0x21, 0x06, 0x00, 0x00, 0x00, 0x00), assemble(
+			" ld hl,test.2.test",
 			"test: REPT 3",
 			" nop",
-			"test: ENDM",
-			" ld hl,test.2.test"
+			"test: ENDM"
 		));
 	}
 	
@@ -469,11 +469,11 @@ public class SourceTest {
 	
 	@Test
 	public void testIrpWithLabel() {
-		assertArrayEquals(b(0x10, 0x20, 0x30, 0x21, 0x02, 0x00), assemble(
+		assertArrayEquals(b(0x21, 0x05, 0x00, 0x10, 0x20, 0x30), assemble(
+			" ld hl,test.2.test",
 			"test: IRP ?value, 10H, 20H, 30H",
 			"test: db ?value",
-			" ENDM",
-			" ld hl,test.2.test"
+			" ENDM"
 		));
 	}
 	
