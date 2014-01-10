@@ -34,6 +34,9 @@ public class Macro extends Directive {
 		if (line.getLabel() == null)
 			throw new AssemblyException("Macro without label.");
 		scope.addInstruction(line.getLabel(), new MacroInstruction(line.getArguments(), new Source(line.getScope(), source)));
+		line.setInstruction(new nl.grauw.glass.instructions.Macro(source));
+		source.register();
+		super.register(scope, line);
 	}
 	
 }

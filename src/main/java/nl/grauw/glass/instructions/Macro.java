@@ -15,13 +15,54 @@
  */
 package nl.grauw.glass.instructions;
 
+import java.util.List;
+
+import nl.grauw.glass.AssemblyException;
+import nl.grauw.glass.Line;
+import nl.grauw.glass.Scope;
+import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 
 public class Macro extends Instruction {
 	
+	private final Source source;
+	
+	public Macro(Source source) {
+		this.source = source;
+	}
+	
+	@Override
+	public List<Line> expand(Line line) {
+		if (line.getArguments() == null)
+			source.expand();
+		return super.expand(line);
+	}
+	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		return Empty.EmptyObject.INSTANCE;
+		return new MacroObject(arguments);
+	}
+	
+	public class MacroObject extends Empty.EmptyObject {
+		
+		private final Expression arguments;
+		
+		public MacroObject(Expression arguments) {
+			this.arguments = arguments;
+		}
+		
+		@Override
+		public int resolve(Scope context, int address) {
+			if (arguments == null) {
+				try {
+					source.resolve(0);
+				} catch (AssemblyException e) {
+					// ignore
+				}
+			}
+			return super.resolve(context, address);
+		}
+		
 	}
 	
 }

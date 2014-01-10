@@ -314,16 +314,16 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=SymbolNotFoundException.class)
+	@Test
 	public void testMacroDefinitionDereference() {
-		assemble(
+		assertArrayEquals(b(0x11, 0x03, 0x00, 0x21, 0x06, 0x00), assemble(
 			" ld de,test.test2",
 			"test: MACRO",
 			" ld hl,test2",
 			"test2:",
 			" ENDM",
 			"test.z: test"
-		);
+		));
 	}
 	
 	@Test

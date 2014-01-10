@@ -101,7 +101,6 @@ public class GlobalScope extends Scope {
 		addInstruction("include", addInstruction("INCLUDE", new Include()));
 		addInstruction("equ", addInstruction("EQU", new Equ()));
 		addInstruction("org", addInstruction("ORG", new Org()));
-		addInstruction("macro", addInstruction("MACRO", new Macro()));
 		addInstruction("endm", addInstruction("ENDM", new Endm()));
 		addInstruction("endp", addInstruction("ENDP", new Endp()));
 		addInstruction("ends", addInstruction("ENDS", new Ends()));
