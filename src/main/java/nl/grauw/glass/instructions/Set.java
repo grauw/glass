@@ -25,7 +25,7 @@ public class Set extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Set_N_R.ARGUMENTS.check(arguments))
-			return new Set_N_R(arguments.getElement(0), arguments.getElement(1));
+			return new Set_N_R(context, arguments.getElement(0), arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -36,7 +36,8 @@ public class Set extends Instruction {
 		private Expression argument1;
 		private Expression argument2;
 		
-		public Set_N_R(Expression argument1, Expression argument2) {
+		public Set_N_R(Scope context, Expression argument1, Expression argument2) {
+			super(context);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}

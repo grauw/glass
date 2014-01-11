@@ -24,13 +24,17 @@ public class Rlca extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Rlca_.ARGUMENTS.check(arguments))
-			return new Rlca_();
+			return new Rlca_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Rlca_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Rlca_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

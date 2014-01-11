@@ -43,10 +43,10 @@ public class Ds extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS_N.check(arguments))
-			return new Ds_N_N(arguments.getElement(0).getAnnotation(),
+			return new Ds_N_N(context, arguments.getElement(0).getAnnotation(),
 					arguments.getElement(0).getAnnotee(), IntegerLiteral.ZERO);
 		if (ARGUMENTS_N_N.check(arguments))
-			return new Ds_N_N(null, arguments.getElement(0), arguments.getElement(1));
+			return new Ds_N_N(context, null, arguments.getElement(0), arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -56,7 +56,8 @@ public class Ds extends Instruction {
 		private final Expression size;
 		private final Expression value;
 		
-		public Ds_N_N(Identifier annotation, Expression size, Expression value) {
+		public Ds_N_N(Scope context, Identifier annotation, Expression size, Expression value) {
+			super(context);
 			this.virtual = annotation != null && ("virtual".equals(annotation.getName()) || "VIRTUAL".equals(annotation.getName()));
 			this.size = size;
 			this.value = value;

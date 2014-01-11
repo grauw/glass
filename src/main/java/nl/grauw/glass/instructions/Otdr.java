@@ -24,13 +24,18 @@ public class Otdr extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Otdr_.ARGUMENTS.check(arguments))
-			return new Otdr_();
+			return new Otdr_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Otdr_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Otdr_(Scope context) {
+			super(context);
+			// TODO Auto-generated constructor stub
+		}
 		
 		@Override
 		public int getSize() {

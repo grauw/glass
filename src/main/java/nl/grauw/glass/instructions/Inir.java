@@ -24,13 +24,17 @@ public class Inir extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Inir_.ARGUMENTS.check(arguments))
-			return new Inir_();
+			return new Inir_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Inir_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Inir_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

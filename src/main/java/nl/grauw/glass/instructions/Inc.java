@@ -25,9 +25,9 @@ public class Inc extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Inc_R.ARGUMENTS.check(arguments))
-			return new Inc_R(arguments.getElement(0));
+			return new Inc_R(context, arguments.getElement(0));
 		if (Inc_RR.ARGUMENTS.check(arguments))
-			return new Inc_RR(arguments.getElement(0));
+			return new Inc_RR(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Inc extends Instruction {
 		
 		private Expression argument;
 		
-		public Inc_R(Expression arguments) {
+		public Inc_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Inc extends Instruction {
 		
 		private Expression argument;
 		
-		public Inc_RR(Expression arguments) {
+		public Inc_RR(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

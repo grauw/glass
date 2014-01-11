@@ -24,7 +24,7 @@ public class Muluw extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Muluw_RR_RR.ARGUMENTS.check(arguments))
-			return new Muluw_RR_RR(arguments.getElement(1));
+			return new Muluw_RR_RR(context, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -34,7 +34,8 @@ public class Muluw extends Instruction {
 		
 		private Expression argument;
 		
-		public Muluw_RR_RR(Expression argument) {
+		public Muluw_RR_RR(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

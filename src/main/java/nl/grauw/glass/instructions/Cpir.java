@@ -24,13 +24,17 @@ public class Cpir extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Cpir_.ARGUMENTS.check(arguments))
-			return new Cpir_();
+			return new Cpir_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Cpir_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Cpir_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

@@ -28,7 +28,7 @@ public class Error extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS.check(arguments) || ARGUMENTS_S.check(arguments))
-			return new Error_(arguments);
+			return new Error_(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -36,7 +36,8 @@ public class Error extends Instruction {
 		
 		private final Expression argument;
 		
-		public Error_(Expression argument) {
+		public Error_(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

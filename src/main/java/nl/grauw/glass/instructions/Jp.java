@@ -24,11 +24,11 @@ public class Jp extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Jp_F_N.ARGUMENTS.check(arguments))
-			return new Jp_F_N(arguments.getElement(0), arguments.getElement(1));
+			return new Jp_F_N(context, arguments.getElement(0), arguments.getElement(1));
 		if (Jp_HL.ARGUMENTS.check(arguments) || Jp_HL.ARGUMENTS_ALT.check(arguments))
-			return new Jp_HL(arguments.getElement(0));
+			return new Jp_HL(context, arguments.getElement(0));
 		if (Jp_N.ARGUMENTS.check(arguments))
-			return new Jp_N(arguments.getElement(0));
+			return new Jp_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -38,7 +38,8 @@ public class Jp extends Instruction {
 		
 		private Expression argument;
 		
-		public Jp_N(Expression argument) {
+		public Jp_N(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		
@@ -62,7 +63,8 @@ public class Jp extends Instruction {
 		private Expression argument1;
 		private Expression argument2;
 		
-		public Jp_F_N(Expression argument1, Expression argument2) {
+		public Jp_F_N(Scope context, Expression argument1, Expression argument2) {
+			super(context);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -87,7 +89,8 @@ public class Jp extends Instruction {
 		
 		private Expression argument;
 		
-		public Jp_HL(Expression argument) {
+		public Jp_HL(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

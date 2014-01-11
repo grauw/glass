@@ -24,13 +24,16 @@ public class Empty extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
-		return EmptyObject.INSTANCE;
+		return new EmptyObject(context);
 	}
 	
 	public static class EmptyObject extends InstructionObject {
 		
-		public static final EmptyObject INSTANCE = new EmptyObject();
 		private static final byte[] NO_BYTES = new byte[] {};
+		
+		public EmptyObject(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

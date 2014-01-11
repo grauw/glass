@@ -24,9 +24,9 @@ public class Call extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Call_F_N.ARGUMENTS.check(arguments))
-			return new Call_F_N(arguments.getElement(0), arguments.getElement(1));
+			return new Call_F_N(context, arguments.getElement(0), arguments.getElement(1));
 		if (Call_N.ARGUMENTS.check(arguments))
-			return new Call_N(arguments.getElement(0));
+			return new Call_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -36,7 +36,8 @@ public class Call extends Instruction {
 		
 		private Expression argument;
 		
-		public Call_N(Expression argument) {
+		public Call_N(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		
@@ -60,7 +61,8 @@ public class Call extends Instruction {
 		private Expression argument1;
 		private Expression argument2;
 		
-		public Call_F_N(Expression argument1, Expression argument2) {
+		public Call_F_N(Scope context, Expression argument1, Expression argument2) {
+			super(context);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}

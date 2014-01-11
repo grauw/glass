@@ -24,7 +24,7 @@ public class Im extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Im_N.ARGUMENTS.check(arguments))
-			return new Im_N(arguments.getElement(0));
+			return new Im_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -34,7 +34,8 @@ public class Im extends Instruction {
 		
 		private Expression argument;
 		
-		public Im_N(Expression argument) {
+		public Im_N(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

@@ -25,7 +25,7 @@ public class Sra extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Sra_R.ARGUMENTS.check(arguments))
-			return new Sra_R(arguments.getElement(0));
+			return new Sra_R(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -35,7 +35,8 @@ public class Sra extends Instruction {
 		
 		private Expression argument;
 		
-		public Sra_R(Expression argument) {
+		public Sra_R(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

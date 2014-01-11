@@ -24,13 +24,17 @@ public class Cpdr extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Cpdr_.ARGUMENTS.check(arguments))
-			return new Cpdr_();
+			return new Cpdr_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Cpdr_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Cpdr_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

@@ -24,9 +24,9 @@ public class Out extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Out_C_N.ARGUMENTS.check(arguments))
-			return new Out_C_N(arguments.getElement(1));
+			return new Out_C_N(context, arguments.getElement(1));
 		if (Out_N_N.ARGUMENTS.check(arguments))
-			return new Out_N_N(arguments.getElement(0));
+			return new Out_N_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -36,7 +36,8 @@ public class Out extends Instruction {
 		
 		private Expression argument;
 		
-		public Out_C_N(Expression arguments) {
+		public Out_C_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -58,7 +59,8 @@ public class Out extends Instruction {
 		
 		private Expression argument;
 		
-		public Out_N_N(Expression arguments) {
+		public Out_N_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

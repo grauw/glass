@@ -25,9 +25,9 @@ public class And extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (And_R.ARGUMENTS.check(arguments))
-			return new And_R(arguments);
+			return new And_R(context, arguments);
 		if (And_N.ARGUMENTS.check(arguments))
-			return new And_N(arguments);
+			return new And_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class And extends Instruction {
 		
 		private Expression argument;
 		
-		public And_R(Expression arguments) {
+		public And_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class And extends Instruction {
 		
 		private Expression argument;
 		
-		public And_N(Expression arguments) {
+		public And_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

@@ -24,13 +24,17 @@ public class Otir extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Otir_.ARGUMENTS.check(arguments))
-			return new Otir_();
+			return new Otir_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Otir_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Otir_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

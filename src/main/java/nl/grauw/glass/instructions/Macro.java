@@ -58,10 +58,14 @@ public class Macro extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
-		return new MacroObject();
+		return new MacroObject(context);
 	}
 	
 	public class MacroObject extends Empty.EmptyObject {
+		
+		public MacroObject(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int resolve(Scope context, int address) {

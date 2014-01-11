@@ -24,7 +24,7 @@ public class Mulub extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Mulub_R_R.ARGUMENTS.check(arguments))
-			return new Mulub_R_R(arguments.getElement(1));
+			return new Mulub_R_R(context, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -34,7 +34,8 @@ public class Mulub extends Instruction {
 		
 		private Expression argument;
 		
-		public Mulub_R_R(Expression argument) {
+		public Mulub_R_R(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

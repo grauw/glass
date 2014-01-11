@@ -25,7 +25,7 @@ public class Rlc extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Rlc_R.ARGUMENTS.check(arguments))
-			return new Rlc_R(arguments.getElement(0));
+			return new Rlc_R(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -35,7 +35,8 @@ public class Rlc extends Instruction {
 		
 		private Expression argument;
 		
-		public Rlc_R(Expression argument) {
+		public Rlc_R(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

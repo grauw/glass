@@ -25,9 +25,9 @@ public class Cp extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Cp_R.ARGUMENTS.check(arguments))
-			return new Cp_R(arguments);
+			return new Cp_R(context, arguments);
 		if (Cp_N.ARGUMENTS.check(arguments))
-			return new Cp_N(arguments);
+			return new Cp_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Cp extends Instruction {
 		
 		private Expression argument;
 		
-		public Cp_R(Expression arguments) {
+		public Cp_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Cp extends Instruction {
 		
 		private Expression argument;
 		
-		public Cp_N(Expression arguments) {
+		public Cp_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

@@ -25,7 +25,7 @@ public class Push extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Push_RR.ARGUMENTS.check(arguments))
-			return new Push_RR(arguments.getElement(0));
+			return new Push_RR(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -35,7 +35,8 @@ public class Push extends Instruction {
 		
 		Expression argument;
 		
-		public Push_RR(Expression argument) {
+		public Push_RR(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

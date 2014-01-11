@@ -25,11 +25,11 @@ public class In extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (In_N_C.ARGUMENTS.check(arguments))
-			return new In_N_C(arguments.getElement(0));
+			return new In_N_C(context, arguments.getElement(0));
 		if (In_N_C.ARGUMENTS_NO_R.check(arguments))
-			return new In_N_C(Register.HL);
+			return new In_N_C(context, Register.HL);
 		if (In_N_N.ARGUMENTS.check(arguments))
-			return new In_N_N(arguments.getElement(1));
+			return new In_N_N(context, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -40,7 +40,8 @@ public class In extends Instruction {
 		
 		private Expression argument;
 		
-		public In_N_C(Expression arguments) {
+		public In_N_C(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -62,7 +63,8 @@ public class In extends Instruction {
 		
 		private Expression argument;
 		
-		public In_N_N(Expression arguments) {
+		public In_N_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

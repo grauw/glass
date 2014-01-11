@@ -25,11 +25,11 @@ public class Add extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Add_A_R.ARGUMENTS.check(arguments))
-			return new Add_A_R(arguments.getElement(1));
+			return new Add_A_R(context, arguments.getElement(1));
 		if (Add_A_N.ARGUMENTS.check(arguments))
-			return new Add_A_N(arguments.getElement(1));
+			return new Add_A_N(context, arguments.getElement(1));
 		if (Add_HL_RR.ARGUMENTS.check(arguments))
-			return new Add_HL_RR(arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
+			return new Add_HL_RR(context, arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 		throw new ArgumentException();
 	}
 	
@@ -39,7 +39,8 @@ public class Add extends Instruction {
 		
 		private Expression argument;
 		
-		public Add_A_R(Expression arguments) {
+		public Add_A_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -62,7 +63,8 @@ public class Add extends Instruction {
 		
 		private Expression argument;
 		
-		public Add_A_N(Expression arguments) {
+		public Add_A_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -85,7 +87,8 @@ public class Add extends Instruction {
 		private Register register1;
 		private Register register2;
 		
-		public Add_HL_RR(Register register1, Register register2) {
+		public Add_HL_RR(Scope context, Register register1, Register register2) {
+			super(context);
 			this.register1 = register1;
 			this.register2 = register2;
 			

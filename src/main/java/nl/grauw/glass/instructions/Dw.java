@@ -25,7 +25,7 @@ public class Dw extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (arguments != null)
-			return new Dw_N(arguments.getList());
+			return new Dw_N(context, arguments.getList());
 		throw new ArgumentException();
 	}
 	
@@ -33,7 +33,8 @@ public class Dw extends Instruction {
 		
 		private List<Expression> arguments;
 		
-		public Dw_N(List<Expression> arguments) {
+		public Dw_N(Scope context, List<Expression> arguments) {
+			super(context);
 			this.arguments = arguments;
 		}
 		

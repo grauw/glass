@@ -24,13 +24,17 @@ public class Halt extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Halt_.ARGUMENTS.check(arguments))
-			return new Halt_();
+			return new Halt_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Halt_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Halt_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

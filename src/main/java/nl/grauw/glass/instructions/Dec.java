@@ -25,9 +25,9 @@ public class Dec extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Dec_R.ARGUMENTS.check(arguments))
-			return new Dec_R(arguments.getElement(0));
+			return new Dec_R(context, arguments.getElement(0));
 		if (Dec_RR.ARGUMENTS.check(arguments))
-			return new Dec_RR(arguments.getElement(0));
+			return new Dec_RR(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Dec extends Instruction {
 		
 		private Expression argument;
 		
-		public Dec_R(Expression arguments) {
+		public Dec_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Dec extends Instruction {
 		
 		private Expression argument;
 		
-		public Dec_RR(Expression arguments) {
+		public Dec_RR(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

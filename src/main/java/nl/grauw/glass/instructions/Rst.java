@@ -24,7 +24,7 @@ public class Rst extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Rst_N.ARGUMENTS.check(arguments))
-			return new Rst_N(arguments.getElement(0));
+			return new Rst_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -34,7 +34,8 @@ public class Rst extends Instruction {
 		
 		private Expression argument;
 		
-		public Rst_N(Expression argument) {
+		public Rst_N(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

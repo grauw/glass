@@ -25,11 +25,11 @@ public class Adc extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Adc_A_R.ARGUMENTS.check(arguments))
-			return new Adc_A_R(arguments.getElement(1));
+			return new Adc_A_R(context, arguments.getElement(1));
 		if (Adc_A_N.ARGUMENTS.check(arguments))
-			return new Adc_A_N(arguments.getElement(1));
+			return new Adc_A_N(context, arguments.getElement(1));
 		if (Adc_HL_RR.ARGUMENTS.check(arguments))
-			return new Adc_HL_RR(arguments.getElement(1));
+			return new Adc_HL_RR(context, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -39,7 +39,8 @@ public class Adc extends Instruction {
 		
 		private Expression argument;
 		
-		public Adc_A_R(Expression arguments) {
+		public Adc_A_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -62,7 +63,8 @@ public class Adc extends Instruction {
 		
 		private Expression argument;
 		
-		public Adc_A_N(Expression arguments) {
+		public Adc_A_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -84,7 +86,8 @@ public class Adc extends Instruction {
 		
 		private Expression argument;
 		
-		public Adc_HL_RR(Expression argument) {
+		public Adc_HL_RR(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

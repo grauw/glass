@@ -24,13 +24,17 @@ public class Daa extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Daa_.ARGUMENTS.check(arguments))
-			return new Daa_();
+			return new Daa_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Daa_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Daa_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

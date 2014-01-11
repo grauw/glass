@@ -25,9 +25,9 @@ public class Sub extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Sub_R.ARGUMENTS.check(arguments))
-			return new Sub_R(arguments);
+			return new Sub_R(context, arguments);
 		if (Sub_N.ARGUMENTS.check(arguments))
-			return new Sub_N(arguments);
+			return new Sub_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Sub extends Instruction {
 		
 		private Expression argument;
 		
-		public Sub_R(Expression arguments) {
+		public Sub_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Sub extends Instruction {
 		
 		private Expression argument;
 		
-		public Sub_N(Expression arguments) {
+		public Sub_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

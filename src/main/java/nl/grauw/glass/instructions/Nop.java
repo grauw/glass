@@ -24,13 +24,17 @@ public class Nop extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Nop_.ARGUMENTS.check(arguments))
-			return new Nop_();
+			return new Nop_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Nop_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Nop_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

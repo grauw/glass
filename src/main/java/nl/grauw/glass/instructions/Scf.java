@@ -24,13 +24,17 @@ public class Scf extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Scf_.ARGUMENTS.check(arguments))
-			return new Scf_();
+			return new Scf_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Scf_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Scf_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

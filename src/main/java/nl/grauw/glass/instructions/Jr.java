@@ -34,11 +34,10 @@ public class Jr extends Instruction {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		
-		private final Scope context;
 		private Expression argument;
 		
 		public Jr_N(Scope context, Expression argument) {
-			this.context = context;
+			super(context);
 			this.argument = argument;
 		}
 		
@@ -66,6 +65,7 @@ public class Jr extends Instruction {
 		private Expression argument2;
 		
 		public Jr_F_N(Scope context, Expression argument1, Expression argument2) {
+			super(context);
 			this.context = context;
 			this.argument1 = argument1;
 			this.argument2 = argument2;

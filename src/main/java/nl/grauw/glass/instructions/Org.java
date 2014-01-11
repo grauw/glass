@@ -27,7 +27,7 @@ public class Org extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Org_N.ARGUMENTS.check(arguments))
-			return new Org_N(arguments.getElement(0));
+			return new Org_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Org extends Instruction {
 		
 		private Expression argument;
 		
-		public Org_N(Expression argument) {
+		public Org_N(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

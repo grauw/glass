@@ -23,6 +23,12 @@ import nl.grauw.glass.expressions.Register;
 
 public abstract class InstructionObject {
 	
+	protected final Scope context;
+	
+	public InstructionObject(Scope context) {
+		this.context = context;
+	}
+	
 	public int resolve(Scope context, int address) {
 		context.setAddress(address);
 		return address + getSize();

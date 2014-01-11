@@ -24,13 +24,17 @@ public class Retn extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Retn_.ARGUMENTS.check(arguments))
-			return new Retn_();
+			return new Retn_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Retn_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Retn_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

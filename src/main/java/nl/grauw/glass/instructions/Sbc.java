@@ -25,11 +25,11 @@ public class Sbc extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Sbc_A_R.ARGUMENTS.check(arguments))
-			return new Sbc_A_R(arguments.getElement(1));
+			return new Sbc_A_R(context, arguments.getElement(1));
 		if (Sbc_A_N.ARGUMENTS.check(arguments))
-			return new Sbc_A_N(arguments.getElement(1));
+			return new Sbc_A_N(context, arguments.getElement(1));
 		if (Sbc_HL_RR.ARGUMENTS.check(arguments))
-			return new Sbc_HL_RR(arguments.getElement(1));
+			return new Sbc_HL_RR(context, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 	
@@ -39,7 +39,8 @@ public class Sbc extends Instruction {
 		
 		private Expression argument;
 		
-		public Sbc_A_R(Expression arguments) {
+		public Sbc_A_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -62,7 +63,8 @@ public class Sbc extends Instruction {
 		
 		private Expression argument;
 		
-		public Sbc_A_N(Expression arguments) {
+		public Sbc_A_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -84,7 +86,8 @@ public class Sbc extends Instruction {
 		
 		private Expression argument;
 		
-		public Sbc_HL_RR(Expression argument) {
+		public Sbc_HL_RR(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

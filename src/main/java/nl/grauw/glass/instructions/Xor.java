@@ -25,9 +25,9 @@ public class Xor extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Xor_R.ARGUMENTS.check(arguments))
-			return new Xor_R(arguments);
+			return new Xor_R(context, arguments);
 		if (Xor_N.ARGUMENTS.check(arguments))
-			return new Xor_N(arguments);
+			return new Xor_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Xor extends Instruction {
 		
 		private Expression argument;
 		
-		public Xor_R(Expression arguments) {
+		public Xor_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Xor extends Instruction {
 		
 		private Expression argument;
 		
-		public Xor_N(Expression arguments) {
+		public Xor_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

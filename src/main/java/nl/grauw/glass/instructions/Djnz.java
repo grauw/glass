@@ -32,11 +32,10 @@ public class Djnz extends Instruction {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		
-		private final Scope context;
 		private Expression argument;
 		
 		public Djnz_N(Scope context, Expression arguments) {
-			this.context = context;
+			super(context);
 			this.argument = arguments;
 		}
 		

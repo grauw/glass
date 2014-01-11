@@ -25,7 +25,7 @@ public class Rrc extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Rrc_R.ARGUMENTS.check(arguments))
-			return new Rrc_R(arguments.getElement(0));
+			return new Rrc_R(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -35,7 +35,8 @@ public class Rrc extends Instruction {
 		
 		private Expression argument;
 		
-		public Rrc_R(Expression argument) {
+		public Rrc_R(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

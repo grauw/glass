@@ -39,7 +39,7 @@ public class If extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS.check(arguments))
-			return new IfObject(arguments);
+			return new IfObject(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -47,7 +47,8 @@ public class If extends Instruction {
 		
 		private final Expression argument;
 		
-		public IfObject(Expression argument) {
+		public IfObject(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

@@ -24,13 +24,17 @@ public class Reti extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Reti_.ARGUMENTS.check(arguments))
-			return new Reti_();
+			return new Reti_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Reti_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Reti_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

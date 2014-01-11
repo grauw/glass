@@ -25,7 +25,7 @@ public class Db extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (arguments != null)
-			return new Db_N(arguments.getList());
+			return new Db_N(context, arguments.getList());
 		throw new ArgumentException();
 	}
 	
@@ -33,7 +33,8 @@ public class Db extends Instruction {
 		
 		private List<Expression> arguments;
 		
-		public Db_N(List<Expression> arguments) {
+		public Db_N(Scope context, List<Expression> arguments) {
+			super(context);
 			this.arguments = arguments;
 		}
 		

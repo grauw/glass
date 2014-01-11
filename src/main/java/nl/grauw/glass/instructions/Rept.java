@@ -80,7 +80,7 @@ public class Rept extends Instruction {
 	
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
-		return Empty.EmptyObject.INSTANCE;
+		return new Empty.EmptyObject(context);
 	}
 	
 }

@@ -24,13 +24,17 @@ public class Neg extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Neg_.ARGUMENTS.check(arguments))
-			return new Neg_();
+			return new Neg_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Neg_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Neg_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

@@ -25,9 +25,9 @@ public class Or extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Or_R.ARGUMENTS.check(arguments))
-			return new Or_R(arguments);
+			return new Or_R(context, arguments);
 		if (Or_N.ARGUMENTS.check(arguments))
-			return new Or_N(arguments);
+			return new Or_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -37,7 +37,8 @@ public class Or extends Instruction {
 		
 		private Expression argument;
 		
-		public Or_R(Expression arguments) {
+		public Or_R(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		
@@ -60,7 +61,8 @@ public class Or extends Instruction {
 		
 		private Expression argument;
 		
-		public Or_N(Expression arguments) {
+		public Or_N(Scope context, Expression arguments) {
+			super(context);
 			this.argument = arguments;
 		}
 		

@@ -24,13 +24,17 @@ public class Ldi extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Ldi_.ARGUMENTS.check(arguments))
-			return new Ldi_();
+			return new Ldi_(context);
 		throw new ArgumentException();
 	}
 	
 	public static class Ldi_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Ldi_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {

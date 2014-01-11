@@ -27,7 +27,7 @@ public class Warning extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS.check(arguments) || ARGUMENTS_S.check(arguments))
-			return new Warning_(arguments);
+			return new Warning_(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -35,7 +35,8 @@ public class Warning extends Instruction {
 		
 		private final Expression argument;
 		
-		public Warning_(Expression argument) {
+		public Warning_(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		

@@ -24,15 +24,19 @@ public class Ret extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Ret_.ARGUMENTS.check(arguments))
-			return new Ret_();
+			return new Ret_(context);
 		if (Ret_F.ARGUMENTS.check(arguments))
-			return new Ret_F(arguments.getElement(0));
+			return new Ret_F(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
 	public static class Ret_ extends InstructionObject {
 		
 		public static Schema ARGUMENTS = new Schema();
+		
+		public Ret_(Scope context) {
+			super(context);
+		}
 		
 		@Override
 		public int getSize() {
@@ -52,7 +56,8 @@ public class Ret extends Instruction {
 		
 		private Expression argument;
 		
-		public Ret_F(Expression argument) {
+		public Ret_F(Scope context, Expression argument) {
+			super(context);
 			this.argument = argument;
 		}
 		
