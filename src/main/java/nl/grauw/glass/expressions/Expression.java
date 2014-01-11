@@ -80,7 +80,7 @@ public abstract class Expression {
 		addToList(list);
 		return list;
 	}
-
+	
 	protected void addToList(List<Expression> list) {
 		list.add(this);
 	}
