@@ -36,7 +36,10 @@ public class Modulo extends BinaryOperator {
 	
 	@Override
 	public int getInteger() {
-		return term1.getInteger() % term2.getInteger();
+		int divisor = term2.getInteger();
+		if (divisor == 0)
+			throw new EvaluationException("Division by zero.");
+		return term1.getInteger() % divisor;
 	}
 	
 	@Override
