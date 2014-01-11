@@ -67,11 +67,11 @@ public class Ds extends Instruction {
 		}
 		
 		@Override
-		public int resolve(Scope context, int address) {
+		public int resolve(int address) {
 			int innerAddress = address;
 			for (Section section : sections)
 				innerAddress = section.getSource().resolve(innerAddress);
-			return super.resolve(context, address);
+			return super.resolve(address);
 		}
 		
 		@Override

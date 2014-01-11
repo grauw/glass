@@ -119,7 +119,7 @@ public class Line {
 	public int resolve(int address) {
 		try {
 			instructionObject = getInstruction().createObject(arguments, scope);
-			return instructionObject.resolve(scope, address);
+			return instructionObject.resolve(address);
 		} catch (AssemblyException e) {
 			e.addContext(this);
 			throw e;

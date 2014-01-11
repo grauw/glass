@@ -47,8 +47,8 @@ public class Org extends Instruction {
 		}
 		
 		@Override
-		public int resolve(Scope context, int address) {
-			return super.resolve(context, getAddress());
+		public int resolve(int address) {
+			return super.resolve(getAddress());
 		}
 		
 		@Override

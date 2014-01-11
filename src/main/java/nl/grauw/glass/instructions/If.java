@@ -53,7 +53,7 @@ public class If extends Instruction {
 		}
 		
 		@Override
-		public int resolve(Scope context, int address) {
+		public int resolve(int address) {
 			context.setAddress(address);
 			if (argument.getInteger() != 0) {
 				thenSource.register();

@@ -29,7 +29,7 @@ public abstract class InstructionObject {
 		this.context = context;
 	}
 	
-	public int resolve(Scope context, int address) {
+	public int resolve(int address) {
 		context.setAddress(address);
 		return address + getSize();
 	}

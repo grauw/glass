@@ -68,13 +68,13 @@ public class Macro extends Instruction {
 		}
 		
 		@Override
-		public int resolve(Scope context, int address) {
+		public int resolve(int address) {
 			try {
 				source.resolve(0);
 			} catch (AssemblyException e) {
 				// ignore
 			}
-			return super.resolve(context, address);
+			return super.resolve(address);
 		}
 		
 	}
