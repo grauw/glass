@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Otir extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Otir_.ARGUMENTS.check(arguments))
 			return new Otir_(context);
 		throw new ArgumentException();

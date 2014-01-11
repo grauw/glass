@@ -26,7 +26,7 @@ public class Error extends Instruction {
 	public static Schema ARGUMENTS_S = new Schema(Schema.STRING);
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS.check(arguments) || ARGUMENTS_S.check(arguments))
 			return new Error_(context, arguments);
 		throw new ArgumentException();

@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Pop extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Pop_RR.ARGUMENTS.check(arguments))
 			return new Pop_RR(context, arguments.getElement(0));
 		throw new ArgumentException();

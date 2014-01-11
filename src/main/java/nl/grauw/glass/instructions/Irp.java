@@ -59,7 +59,7 @@ public class Irp extends Instruction {
 	}
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		return new Empty.EmptyObject(context);
 	}
 	

@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Xor extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Xor_R.ARGUMENTS.check(arguments))
 			return new Xor_R(context, arguments);
 		if (Xor_N.ARGUMENTS.check(arguments))

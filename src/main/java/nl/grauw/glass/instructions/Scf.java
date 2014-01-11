@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Scf extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Scf_.ARGUMENTS.check(arguments))
 			return new Scf_(context);
 		throw new ArgumentException();

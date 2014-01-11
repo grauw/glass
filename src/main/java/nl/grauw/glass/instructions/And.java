@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class And extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (And_R.ARGUMENTS.check(arguments))
 			return new And_R(context, arguments);
 		if (And_N.ARGUMENTS.check(arguments))

@@ -24,7 +24,7 @@ public class Include extends Instruction {
 	public static Schema ARGUMENTS = new Schema(Schema.STRING);
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
 			return new Empty.EmptyObject(context);
 		throw new ArgumentException();

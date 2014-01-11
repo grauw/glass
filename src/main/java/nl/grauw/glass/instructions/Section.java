@@ -56,7 +56,7 @@ public class Section extends Instruction {
 	}
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
 			return new Empty.EmptyObject(context);
 		throw new ArgumentException();

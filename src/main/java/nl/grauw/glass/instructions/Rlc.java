@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Rlc extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Rlc_R.ARGUMENTS.check(arguments))
 			return new Rlc_R(context, arguments.getElement(0));
 		throw new ArgumentException();

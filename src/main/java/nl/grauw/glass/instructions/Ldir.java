@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Ldir extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Ldir_.ARGUMENTS.check(arguments))
 			return new Ldir_(context);
 		throw new ArgumentException();

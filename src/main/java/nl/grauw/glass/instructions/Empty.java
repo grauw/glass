@@ -23,7 +23,7 @@ public class Empty extends Instruction {
 	public static final Empty INSTANCE = new Empty();
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		return new EmptyObject(context);
 	}
 	

@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Halt extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Halt_.ARGUMENTS.check(arguments))
 			return new Halt_(context);
 		throw new ArgumentException();

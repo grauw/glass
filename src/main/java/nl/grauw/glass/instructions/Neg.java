@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Neg extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Neg_.ARGUMENTS.check(arguments))
 			return new Neg_(context);
 		throw new ArgumentException();

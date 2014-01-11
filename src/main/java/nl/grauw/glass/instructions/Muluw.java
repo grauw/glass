@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Muluw extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments, Scope context) {
+	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (Muluw_RR_RR.ARGUMENTS.check(arguments))
 			return new Muluw_RR_RR(context, arguments.getElement(1));
 		throw new ArgumentException();

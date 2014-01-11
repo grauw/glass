@@ -30,6 +30,6 @@ public abstract class Instruction {
 		return lines;
 	}
 	
-	public abstract InstructionObject createObject(Expression arguments, Scope context);
+	public abstract InstructionObject createObject(Scope context, Expression arguments);
 	
 }
