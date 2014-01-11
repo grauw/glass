@@ -1,6 +1,18 @@
 What’s new in Glass
 ===================
 
+Glass 0.3 — 2014-01-11
+----------------------
+
+  * Macro definition symbols can now also be referenced. The contents are
+    assembled on address 0, effectively turning the inner symbols into offsets.
+  * The individual (indefinite) repeat blocks can now be referenced.
+  * Labels suffixed with a colon can now be indented.
+  * Errors now contain more location information.
+  * Section targets can now be reference before they are specified.
+  * Division by zero errors are now handled better.
+  * Fix bug when specifying macros with more than one argument.
+
 Glass 0.2 — 2014-01-04
 ----------------------
 
