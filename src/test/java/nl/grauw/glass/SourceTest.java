@@ -24,6 +24,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 
 import nl.grauw.glass.Scope.SymbolNotFoundException;
+import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
@@ -331,6 +332,30 @@ public class SourceTest {
 			" ld de,test.test2",
 			"test: MACRO arg",
 			" ld hl,arg",
+			"test2:",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testMacroDefinitionWithRegisterArgumentDereference() {
+		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg1, arg2",
+			" ld hl,arg1",
+			"test2:",
+			" ret arg2",
+			" ENDM"
+		));
+	}
+	
+	@Test(expected=EvaluationException.class)
+	public void testMacroDefinitionWithRegisterArgumentBeforeDereference() {
+		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg1, arg2",
+			" ld hl,arg1",
+			" ret arg2",
 			"test2:",
 			" ENDM"
 		));
