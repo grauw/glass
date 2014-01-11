@@ -66,7 +66,8 @@ Labels and other identifiers follow the following grammar:
     id_start_char = [a-z] | [A-Z] | _ | . | ? | @
     id_char = id_start_char | [0-9] | $ | '
 
-The colon after a label is optional.
+The colon after a label is optional. If a label has no colon, it can not have
+any leading white space, it must start at column 0.
 
 Instructions
 ------------
@@ -155,7 +156,11 @@ Directives
                
                ALIGN 100H
     
-    All labels defined in a macro block are local.
+    All symbols defined in a macro block are local. Symbols in macro instances
+    can be referenced by using the `.` operator. Symbols in macro definitions
+    can also be referenced; the contents are assembled on address 0, effectively
+    turning the inner symbols into offsets. This is useful for specifying
+    structures and indexing.
     
   * Repetition: `rept`, `endm`
     
@@ -172,7 +177,8 @@ Directives
         ENDR
         ENDM
     
-    All labels defined in a repeat block are local.
+    All symbols defined in a repeat block are local. If a repeat is labeled,
+    the inner repeat scopes can be accessed by index, e.g.: `mylist.0`.
     
   * Indefinite repetition: `irp`, `endm`
     
@@ -186,7 +192,8 @@ Directives
         or ?value
         ENDM
     
-    All labels defined in a indefinite repeat block are local.
+    All symbols defined in a indefinite repeat block are local. If a repeat is
+    labeled, the inner repeat scopes can be accessed by index, e.g.: `mylist.0`.
     
   * Procedure: `proc`, `endp`
     
@@ -205,7 +212,8 @@ Directives
                 ret
                 ENDP
     
-    All labels defined in a procedure block are local.
+    All symbols defined in a procedure block are local. Symbols in inner scopes
+    can be referenced by using the `.` operator.
     
   * Condition: `if`, `else`, `endif`
     
@@ -298,6 +306,7 @@ relative jump offsets are also checked to be in their allowed range.
 Operators
 ---------
 
+  * Member: `.`
   * Positive: `+a`
   * Negative: `-a`
   * Complement: `~a`
@@ -331,7 +340,8 @@ evaluated value, so they can also be used similar to a ternary operator.
 
 Operator precedence:
 
-  * Unary `+` `-` `~` `!`
+  * `.`
+  * unary `+` `-` `~` `!`
   * `*` `/` `%`
   * `+` `-`
   * `<<` `>>`
