@@ -104,14 +104,14 @@ public class SourceParser {
 		try {
 			String lineText;
 			while ((lineText = reader.readLine()) != null) {
+				Line line = lineParser.parse(lineText, new Scope(source.getScope()), sourceFile, reader.getLineNumber());
 				try {
-					Line line = lineParser.parse(lineText, new Scope(source.getScope()), sourceFile, reader.getLineNumber());
 					line.setDirective(getDirective(line, reader, sourceFile));
 					source.addLine(line);
 					if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
 						return source;
 				} catch (AssemblyException e) {
-					e.setContext(sourceFile, reader.getLineNumber(), lineText);
+					e.addContext(sourceFile, reader.getLineNumber(), lineText);
 					throw e;
 				}
 			}

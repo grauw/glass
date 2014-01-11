@@ -102,7 +102,7 @@ public class Line {
 		try {
 			directive.register(sourceScope, this);
 		} catch (AssemblyException e) {
-			e.setContext(this);
+			e.addContext(this);
 			throw e;
 		}
 	}
@@ -111,7 +111,7 @@ public class Line {
 		try {
 			return getInstruction().expand(this);
 		} catch (AssemblyException e) {
-			e.setContext(this);
+			e.addContext(this);
 			throw e;
 		}
 	}
@@ -121,7 +121,7 @@ public class Line {
 			instructionObject = getInstruction().createObject(arguments, scope);
 			return instructionObject.resolve(scope, address);
 		} catch (AssemblyException e) {
-			e.setContext(this);
+			e.addContext(this);
 			throw e;
 		}
 	}
@@ -130,7 +130,7 @@ public class Line {
 		try {
 			instructionObject.generateObjectCode(scope, output);
 		} catch (AssemblyException e) {
-			e.setContext(this);
+			e.addContext(this);
 			throw e;
 		}
 	}

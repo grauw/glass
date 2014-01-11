@@ -59,7 +59,7 @@ public class LineParser {
 			if (state != endState)
 				throw new AssemblyException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(AssemblyException e) {
-			e.setContext(sourceFile, lineNumber, text, column);
+			e.addContext(sourceFile, lineNumber, column, text);
 			throw e;
 		}
 		
