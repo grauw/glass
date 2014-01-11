@@ -64,6 +64,11 @@ public class Source {
 		return line;
 	}
 	
+	public List<Line> addLines(List<Line> lines) {
+		this.lines.addAll(lines);
+		return lines;
+	}
+	
 	public void assemble(OutputStream output) throws IOException {
 		register();
 		expand();

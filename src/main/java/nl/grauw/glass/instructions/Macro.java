@@ -22,43 +22,53 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.Identifier;
+import nl.grauw.glass.expressions.IntegerLiteral;
 
 public class Macro extends Instruction {
 	
 	private final Source source;
+	private final Scope parameterScope;
 	
 	public Macro(Source source) {
-		this.source = source;
+		this.source = new Source(source.getScope());
+		this.parameterScope = new Scope(source.getScope());
+		this.source.addLines(source.getLineCopies(parameterScope));
+		this.source.register();
 	}
 	
 	@Override
 	public List<Line> expand(Line line) {
-		if (line.getArguments() == null)
+		Expression parameters = line.getArguments();
+		while (parameters != null) {
+			Expression parameter = parameters.getElement();
+			if (!(parameter instanceof Identifier))
+				throw new ArgumentException("Parameter must be an identifier.");
+			parameterScope.addSymbol(((Identifier)parameter).getName(), IntegerLiteral.ZERO);
+			parameters = parameters.getNext();
+		}
+		
+		try {
 			source.expand();
+		} catch (AssemblyException e) {
+			// ignore
+		}
 		return super.expand(line);
 	}
 	
 	@Override
 	public InstructionObject createObject(Expression arguments) {
-		return new MacroObject(arguments);
+		return new MacroObject();
 	}
 	
 	public class MacroObject extends Empty.EmptyObject {
 		
-		private final Expression arguments;
-		
-		public MacroObject(Expression arguments) {
-			this.arguments = arguments;
-		}
-		
 		@Override
 		public int resolve(Scope context, int address) {
-			if (arguments == null) {
-				try {
-					source.resolve(0);
-				} catch (AssemblyException e) {
-					// ignore
-				}
+			try {
+				source.resolve(0);
+			} catch (AssemblyException e) {
+				// ignore
 			}
 			return super.resolve(context, address);
 		}

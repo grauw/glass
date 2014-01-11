@@ -326,6 +326,17 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroDefinitionWithArgumentsDereference() {
+		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg",
+			" ld hl,arg",
+			"test2:",
+			" ENDM"
+		));
+	}
+	
+	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
 			" REPT 3",
