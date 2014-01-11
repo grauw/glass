@@ -40,12 +40,12 @@ public class Pop extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyDirect(register, (byte)(0xC1 | register.get16BitCode() << 4));
 		}

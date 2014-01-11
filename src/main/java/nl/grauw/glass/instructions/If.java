@@ -68,12 +68,12 @@ public class If extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			throw new AssemblyException("Not implemented.");
 		}
 		
 		@Override
-		public void generateObjectCode(Scope context, OutputStream output) throws IOException {
+		public void generateObjectCode(OutputStream output) throws IOException {
 			if (argument.getInteger() != 0) {
 				thenSource.generateObjectCode(output);
 			} else if (elseSource != null) {
@@ -82,7 +82,7 @@ public class If extends Instruction {
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			throw new AssemblyException("Not implemented.");
 		}
 		

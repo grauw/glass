@@ -40,12 +40,12 @@ public class Warning extends Instruction {
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			if (argument == null)
 				System.out.println("Warning: A warning directive was encountered.");
 			else
 				System.out.println("Warning: " + argument.getString());
-			return super.getBytes(context);
+			return super.getBytes();
 		}
 		
 	}

@@ -42,12 +42,12 @@ public class Xor extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyIndirect(register, (byte)(0xA8 | register.get8BitCode()));
 		}
@@ -65,12 +65,12 @@ public class Xor extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xEE, (byte)argument.getInteger() };
 		}
 		

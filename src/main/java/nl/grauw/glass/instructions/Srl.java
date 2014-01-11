@@ -40,12 +40,12 @@ public class Srl extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument.getRegister(), 2);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyIndirect(register, (byte)0xCB, (byte)(0x38 + register.get8BitCode()));
 		}

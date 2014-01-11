@@ -38,12 +38,12 @@ public class Db extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return arguments.size();
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			byte[] bytes = new byte[arguments.size()];
 			for (int i = 0, length = arguments.size(); i < length; i++)
 				bytes[i] = (byte)arguments.get(i).getInteger();

@@ -79,12 +79,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(register1.isIndex() ? register1 : register2, 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return indexifyIndirect(register1.isIndex() ? register1 : register2,
 					(byte)(0x40 | register1.get8BitCode() << 3 | register2.get8BitCode()));
 		}
@@ -102,12 +102,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)(0x0A | argument.getRegister().get16BitCode() << 4) };
 		}
 		
@@ -124,12 +124,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)(0x02 | argument.getRegister().get16BitCode() << 4) };
 		}
 		
@@ -146,12 +146,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return indexifyDirect(argument.getRegister(), (byte)0xF9);
 		}
 		
@@ -168,12 +168,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			if (argument.getRegister() == Register.I)
 				return new byte[] { (byte)0xED, (byte)0x57 };
 			return new byte[] { (byte)0xED, (byte)0x5F };
@@ -192,12 +192,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			if (argument.getRegister() == Register.I)
 				return new byte[] { (byte)0xED, (byte)0x47 };
 			return new byte[] { (byte)0xED, (byte)0x4F };
@@ -218,12 +218,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument1.getRegister(), 2);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument1.getRegister();
 			return indexifyIndirect(register, (byte)(0x06 | register.get8BitCode() << 3), (byte)argument2.getInteger());
 		}
@@ -243,12 +243,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument1.getRegister(), 3);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument1.getRegister();
 			return indexifyDirect(register, (byte)(0x01 | register.get16BitCode() << 4),
 					(byte)argument2.getInteger(), (byte)(argument2.getInteger() >> 8));
@@ -267,12 +267,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 3;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument.getAddress();
 			return new byte[] { (byte)0x32, (byte)address, (byte)(address >> 8) };
 		}
@@ -292,12 +292,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument1.getRegister(), 3);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument2.getAddress();
 			return indexifyDirect(argument1.getRegister(), (byte)0x2A, (byte)address, (byte)(address >> 8));
 		}
@@ -317,12 +317,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 4;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument2.getAddress();
 			return new byte[] { (byte)0xED, (byte)(0x4B | argument1.getRegister().get16BitCode() << 4),
 					(byte)address, (byte)(address >> 8) };
@@ -341,12 +341,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 3;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument.getAddress();
 			return new byte[] { (byte)0x3A, (byte)address, (byte)(address >> 8) };
 		}
@@ -366,12 +366,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument2.getRegister(), 3);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument1.getAddress();
 			return indexifyDirect(argument2.getRegister(), (byte)0x22, (byte)address, (byte)(address >> 8));
 		}
@@ -391,12 +391,12 @@ public class Ld extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 4;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument1.getAddress();
 			return new byte[] { (byte)0xED, (byte)(0x43 | argument2.getRegister().get16BitCode() << 4),
 					(byte)address, (byte)(address >> 8) };

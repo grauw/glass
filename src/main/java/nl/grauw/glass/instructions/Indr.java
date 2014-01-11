@@ -33,12 +33,12 @@ public class Indr extends Instruction {
 		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xED, (byte)0xBA };
 		}
 		

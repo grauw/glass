@@ -42,12 +42,12 @@ public class Bit extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument2.getRegister(), 2);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int value = argument1.getInteger();
 			if (value < 0 || value > 7)
 				throw new ArgumentException();

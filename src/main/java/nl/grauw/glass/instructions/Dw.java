@@ -38,12 +38,12 @@ public class Dw extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return arguments.size() * 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			byte[] bytes = new byte[arguments.size() * 2];
 			for (int i = 0, length = arguments.size(); i < length; i++) {
 				bytes[i * 2] = (byte)arguments.get(i).getInteger();

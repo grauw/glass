@@ -35,12 +35,12 @@ public class Ret extends Instruction {
 		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xC9 };
 		}
 		
@@ -57,12 +57,12 @@ public class Ret extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
 		}
 		

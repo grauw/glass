@@ -44,12 +44,12 @@ public class Sbc extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyIndirect(register, (byte)(0x98 | register.get8BitCode()));
 		}
@@ -67,12 +67,12 @@ public class Sbc extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xDE, (byte)argument.getInteger() };
 		}
 		
@@ -89,12 +89,12 @@ public class Sbc extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xED, (byte)(0x42 | argument.getRegister().get16BitCode() << 4) };
 		}
 		

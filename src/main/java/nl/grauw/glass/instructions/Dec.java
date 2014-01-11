@@ -42,12 +42,12 @@ public class Dec extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyIndirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyIndirect(register, (byte)(0x05 | register.get8BitCode() << 3));
 		}
@@ -65,12 +65,12 @@ public class Dec extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			Register register = argument.getRegister();
 			return indexifyDirect(register, (byte)(0x0B | register.get16BitCode() << 4));
 		}

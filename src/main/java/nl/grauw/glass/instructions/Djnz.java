@@ -24,7 +24,7 @@ public class Djnz extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Djnz_N.ARGUMENTS.check(arguments))
-			return new Djnz_N(arguments);
+			return new Djnz_N(context, arguments);
 		throw new ArgumentException();
 	}
 	
@@ -32,19 +32,21 @@ public class Djnz extends Instruction {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		
+		private final Scope context;
 		private Expression argument;
 		
-		public Djnz_N(Expression arguments) {
+		public Djnz_N(Scope context, Expression arguments) {
+			this.context = context;
 			this.argument = arguments;
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int offset = argument.getAddress() - (context.getAddress() + 2);
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);

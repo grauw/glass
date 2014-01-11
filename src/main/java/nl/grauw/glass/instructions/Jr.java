@@ -24,9 +24,9 @@ public class Jr extends Instruction {
 	@Override
 	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Jr_F_N.ARGUMENTS.check(arguments))
-			return new Jr_F_N(arguments.getElement(0), arguments.getElement(1));
+			return new Jr_F_N(context, arguments.getElement(0), arguments.getElement(1));
 		if (Jr_N.ARGUMENTS.check(arguments))
-			return new Jr_N(arguments.getElement(0));
+			return new Jr_N(context, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 	
@@ -34,19 +34,21 @@ public class Jr extends Instruction {
 		
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_N);
 		
+		private final Scope context;
 		private Expression argument;
 		
-		public Jr_N(Expression argument) {
+		public Jr_N(Scope context, Expression argument) {
+			this.context = context;
 			this.argument = argument;
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int offset = argument.getAddress() - (context.getAddress() + 2);
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);
@@ -59,21 +61,23 @@ public class Jr extends Instruction {
 		
 		public static Schema ARGUMENTS = new Schema(new Schema.IsFlagZC(), Schema.DIRECT_N);
 		
+		private final Scope context;
 		private Expression argument1;
 		private Expression argument2;
 		
-		public Jr_F_N(Expression argument1, Expression argument2) {
+		public Jr_F_N(Scope context, Expression argument1, Expression argument2) {
+			this.context = context;
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int offset = argument2.getAddress() - (context.getAddress() + 2);
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);

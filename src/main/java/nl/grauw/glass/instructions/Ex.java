@@ -37,12 +37,12 @@ public class Ex extends Instruction {
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_AF, Schema.DIRECT_AF_);
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0x08 };
 		}
 		
@@ -53,12 +53,12 @@ public class Ex extends Instruction {
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_DE, Schema.DIRECT_HL);
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0xEB };
 		}
 		
@@ -75,12 +75,12 @@ public class Ex extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return indexifyDirect(argument.getRegister(), (byte)0xE3);
 		}
 		

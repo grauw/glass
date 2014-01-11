@@ -25,17 +25,17 @@ public abstract class InstructionObject {
 	
 	public int resolve(Scope context, int address) {
 		context.setAddress(address);
-		return address + getSize(context);
+		return address + getSize();
 	}
 	
-	public abstract int getSize(Scope context);
+	public abstract int getSize();
 	
-	public void generateObjectCode(Scope context, OutputStream output) throws IOException {
-		byte[] object = getBytes(context);
+	public void generateObjectCode(OutputStream output) throws IOException {
+		byte[] object = getBytes();
 		output.write(object, 0, object.length);
 	}
 	
-	public abstract byte[] getBytes(Scope context);
+	public abstract byte[] getBytes();
 	
 	public int indexifyDirect(Register register, int size) {
 		return register.isIndex() ? size + 1 : size;

@@ -128,7 +128,7 @@ public class Line {
 	
 	public void generateObjectCode(OutputStream output) throws IOException {
 		try {
-			instructionObject.generateObjectCode(scope, output);
+			instructionObject.generateObjectCode(output);
 		} catch (AssemblyException e) {
 			e.addContext(this);
 			throw e;
@@ -136,11 +136,11 @@ public class Line {
 	}
 	
 	public int getSize() {
-		return instructionObject.getSize(scope);
+		return instructionObject.getSize();
 	}
 	
 	public byte[] getBytes() {
-		return instructionObject.getBytes(scope);
+		return instructionObject.getBytes();
 	}
 	
 	public String toString() {

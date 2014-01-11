@@ -39,12 +39,12 @@ public class Im extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 2;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int value = argument.getInteger();
 			if (value == 0) {
 				return new byte[] { (byte)0xED, (byte)0x46 };

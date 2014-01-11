@@ -43,12 +43,12 @@ public class Jp extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 3;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument.getAddress();
 			return new byte[] { (byte)0xC3, (byte)address, (byte)(address >> 8) };
 		}
@@ -68,12 +68,12 @@ public class Jp extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 3;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int address = argument2.getAddress();
 			return new byte[] { (byte)(0xC2 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
 		}
@@ -92,12 +92,12 @@ public class Jp extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return indexifyDirect(argument.getRegister(), 1);
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return indexifyDirect(argument.getRegister(), (byte)0xE9);
 		}
 		

@@ -33,12 +33,12 @@ public class Nop extends Instruction {
 		public static Schema ARGUMENTS = new Schema();
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return new byte[] { (byte)0x00 };
 		}
 		

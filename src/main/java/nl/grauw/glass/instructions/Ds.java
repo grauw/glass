@@ -74,12 +74,12 @@ public class Ds extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return size.getInteger();
 		}
 		
 		@Override
-		public void generateObjectCode(Scope context, OutputStream output) throws IOException {
+		public void generateObjectCode(OutputStream output) throws IOException {
 			byte[] bytes = getSectionBytes();
 			if (bytes.length > size.getInteger())
 				throw new AssemblyException("Section size exceeds space.");
@@ -103,7 +103,7 @@ public class Ds extends Instruction {
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			if (virtual)
 				return new byte[] {};
 			byte[] bytes = new byte[size.getInteger()];

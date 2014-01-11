@@ -41,7 +41,7 @@ public class Error extends Instruction {
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			if (argument == null)
 				throw new ErrorDirectiveException();
 			throw new ErrorDirectiveException(argument.getString());

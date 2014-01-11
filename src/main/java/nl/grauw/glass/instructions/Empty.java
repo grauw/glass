@@ -33,12 +33,12 @@ public class Empty extends Instruction {
 		private static final byte[] NO_BYTES = new byte[] {};
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 0;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			return NO_BYTES;
 		}
 		

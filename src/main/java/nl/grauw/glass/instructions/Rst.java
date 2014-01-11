@@ -39,12 +39,12 @@ public class Rst extends Instruction {
 		}
 		
 		@Override
-		public int getSize(Scope context) {
+		public int getSize() {
 			return 1;
 		}
 		
 		@Override
-		public byte[] getBytes(Scope context) {
+		public byte[] getBytes() {
 			int value = argument.getInteger();
 			if (value < 0 || value > 0x38 || (value & 7) != 0)
 				throw new ArgumentException();
