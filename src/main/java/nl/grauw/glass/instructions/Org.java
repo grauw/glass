@@ -25,7 +25,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Org extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Org_N.ARGUMENTS.check(arguments))
 			return new Org_N(arguments.getElement(0));
 		throw new ArgumentException();

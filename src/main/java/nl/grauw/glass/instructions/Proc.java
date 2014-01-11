@@ -18,6 +18,7 @@ package nl.grauw.glass.instructions;
 import java.util.List;
 
 import nl.grauw.glass.Line;
+import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
@@ -47,7 +48,7 @@ public class Proc extends Instruction {
 	}
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		return Empty.EmptyObject.INSTANCE;
 	}
 	

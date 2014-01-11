@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Cp extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Cp_R.ARGUMENTS.check(arguments))
 			return new Cp_R(arguments);
 		if (Cp_N.ARGUMENTS.check(arguments))

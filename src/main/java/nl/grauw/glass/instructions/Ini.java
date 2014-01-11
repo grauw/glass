@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Ini extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Ini_.ARGUMENTS.check(arguments))
 			return new Ini_();
 		throw new ArgumentException();

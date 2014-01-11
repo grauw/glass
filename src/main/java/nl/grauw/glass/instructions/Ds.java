@@ -41,7 +41,7 @@ public class Ds extends Instruction {
 	}
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS_N.check(arguments))
 			return new Ds_N_N(arguments.getElement(0).getAnnotation(),
 					arguments.getElement(0).getAnnotee(), IntegerLiteral.ZERO);

@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Expression;
 public class Dw extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (arguments != null)
 			return new Dw_N(arguments.getList());
 		throw new ArgumentException();

@@ -37,7 +37,7 @@ public class If extends Instruction {
 	}
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (ARGUMENTS.check(arguments))
 			return new IfObject(arguments);
 		throw new ArgumentException();

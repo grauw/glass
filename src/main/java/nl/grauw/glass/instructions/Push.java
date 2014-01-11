@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Push extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Push_RR.ARGUMENTS.check(arguments))
 			return new Push_RR(arguments.getElement(0));
 		throw new ArgumentException();

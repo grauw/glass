@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Nop extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Nop_.ARGUMENTS.check(arguments))
 			return new Nop_();
 		throw new ArgumentException();

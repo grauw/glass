@@ -22,7 +22,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Cpd extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Cpd_.ARGUMENTS.check(arguments))
 			return new Cpd_();
 		throw new ArgumentException();

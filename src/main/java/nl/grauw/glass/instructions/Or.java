@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Or extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Or_R.ARGUMENTS.check(arguments))
 			return new Or_R(arguments);
 		if (Or_N.ARGUMENTS.check(arguments))

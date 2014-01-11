@@ -23,7 +23,7 @@ import nl.grauw.glass.expressions.Schema;
 public class Sbc extends Instruction {
 	
 	@Override
-	public InstructionObject createObject(Expression arguments) {
+	public InstructionObject createObject(Expression arguments, Scope context) {
 		if (Sbc_A_R.ARGUMENTS.check(arguments))
 			return new Sbc_A_R(arguments.getElement(1));
 		if (Sbc_A_N.ARGUMENTS.check(arguments))
