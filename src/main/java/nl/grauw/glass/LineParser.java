@@ -363,10 +363,14 @@ public class LineParser {
 		}
 		
 		private int parseInt(String string, int radix) {
-			long value = Long.parseLong(string, radix);
-			if (value > 0xFFFFFFFFL)
+			try {
+				long value = Long.parseLong(string, radix);
+				if (value > 0xFFFFFFFFL)
+					throw new SyntaxError();
+				return (int)value;
+			} catch (NumberFormatException e) {
 				throw new SyntaxError();
-			return (int)value;
+			}
 		}
 	}
 	
