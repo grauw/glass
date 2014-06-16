@@ -272,8 +272,8 @@ Literals
 --------
 
   * Decimal: `127`
-  * Hexadecimal: `0FC9EH`
-  * Binary: `10110001B`
+  * Hexadecimal: `0FC9EH` or `#FC9E`
+  * Binary: `10110001B` or `%10110001`
   * Octal: `377O`
   * Character: `'c'`
   * String: `"abc"`

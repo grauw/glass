@@ -124,6 +124,15 @@ public class LineParserTest {
 	}
 	
 	@Test
+	public void testNumber() {
+		assertEquals(127, parseExpression("127").getInteger());
+		assertEquals(4095, parseExpression("0FFFH").getInteger());
+		assertEquals(4095, parseExpression("#0FFF").getInteger());
+		assertEquals(171, parseExpression("10101011B").getInteger());
+		assertEquals(171, parseExpression("%10101011").getInteger());
+	}
+	
+	@Test
 	public void testFlag() {
 		assertEquals(Flag.NZ, parseExpression("nz").getFlag());
 		assertEquals(Flag.Z,  parseExpression("z").getFlag());

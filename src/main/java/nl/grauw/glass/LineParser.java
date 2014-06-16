@@ -192,6 +192,10 @@ public class LineParser {
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
 				return argumentNumberState;
+			} else if (character == '#') {
+				return argumentHexadecimalState;
+			} else if (character == '%') {
+				return argumentBinaryState;
 			} else if (character == '"') {
 				return argumentStringState;
 			} else if (character == '\'') {
@@ -361,15 +365,35 @@ public class LineParser {
 				}
 			}
 		}
-		
-		private int parseInt(String string, int radix) {
-			try {
-				long value = Long.parseLong(string, radix);
-				if (value > 0xFFFFFFFFL)
-					throw new SyntaxError();
-				return (int)value;
-			} catch (NumberFormatException e) {
-				throw new SyntaxError();
+	}
+	
+	private ArgumentHexadecimalState argumentHexadecimalState = new ArgumentHexadecimalState();
+	private class ArgumentHexadecimalState extends State {
+		public State parse(char character) {
+			if (character >= '0' && character <= '9' || character >= 'A' && character <= 'F' ||
+					character >= 'a' && character <= 'f') {
+				accumulator.append(character);
+				return argumentHexadecimalState;
+			} else {
+				int value = parseInt(accumulator.toString(), 16);
+				expressionBuilder.addValueToken(new IntegerLiteral(value));
+				accumulator.setLength(0);
+				return argumentOperatorState.parse(character);
+			}
+		}
+	}
+	
+	private ArgumentBinaryState argumentBinaryState = new ArgumentBinaryState();
+	private class ArgumentBinaryState extends State {
+		public State parse(char character) {
+			if (character >= '0' && character <= '1') {
+				accumulator.append(character);
+				return argumentBinaryState;
+			} else {
+				int value = parseInt(accumulator.toString(), 2);
+				expressionBuilder.addValueToken(new IntegerLiteral(value));
+				accumulator.setLength(0);
+				return argumentOperatorState.parse(character);
 			}
 		}
 	}
@@ -519,6 +543,17 @@ public class LineParser {
 	private class EndState extends State {
 		public State parse(char character) {
 			throw new AssemblyException("End state reached but not all characters consumed.");
+		}
+	}
+	
+	private static int parseInt(String string, int radix) {
+		try {
+			long value = Long.parseLong(string, radix);
+			if (value > 0xFFFFFFFFL)
+				throw new SyntaxError();
+			return (int)value;
+		} catch (NumberFormatException e) {
+			throw new SyntaxError();
 		}
 	}
 	
