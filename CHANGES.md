@@ -1,6 +1,12 @@
 What’s new in Glass
 ===================
 
+Glass 0.4 — 2014-06-16
+----------------------
+
+  * The `#` and `%` prefix can now be used for hexadecimal and binary numbers.
+  * A syntax error now occurs for number parsing errors.
+
 Glass 0.3 — 2014-01-11
 ----------------------
 
