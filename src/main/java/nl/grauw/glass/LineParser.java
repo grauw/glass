@@ -18,7 +18,6 @@ package nl.grauw.glass;
 import java.io.File;
 
 import nl.grauw.glass.expressions.CharacterLiteral;
-import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -28,10 +27,7 @@ import nl.grauw.glass.expressions.ExpressionBuilder.Operator;
 public class LineParser {
 	
 	private Scope scope;
-	private String label;
-	private String mnemonic;
-	private Expression arguments;
-	private String comment;
+	private LineBuilder lineBuilder = new LineBuilder();
 	
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
@@ -39,10 +35,6 @@ public class LineParser {
 	
 	public Line parse(String text, Scope scope, File sourceFile, int lineNumber) {
 		this.scope = scope;
-		label = null;
-		mnemonic = null;
-		arguments = null;
-		comment = null;
 		state = labelStartState;
 		
 		int column = 0;
@@ -63,7 +55,7 @@ public class LineParser {
 			throw e;
 		}
 		
-		return new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber);
+		return lineBuilder.getLine(scope, sourceFile, lineNumber);
 	}
 	
 	private abstract class State {
@@ -109,7 +101,7 @@ public class LineParser {
 				accumulator.append(character);
 				return labelReadState;
 			} else {
-				label = accumulator.toString();
+				lineBuilder.setLabel(accumulator.toString());
 				accumulator.setLength(0);
 				if (character == ':' || isWhitespace(character)) {
 					return statementStartState;
@@ -146,12 +138,12 @@ public class LineParser {
 			if (isIdentifier(character)) {
 				accumulator.append(character);
 				return statementReadState;
-			} if (character == ':' && label == null) {
-				label = accumulator.toString();
+			} if (character == ':') {
+				lineBuilder.setLabel(accumulator.toString());
 				accumulator.setLength(0);
 				return statementStartState;
 			} else {
-				mnemonic = accumulator.toString();
+				lineBuilder.setMnemonic(accumulator.toString());
 				accumulator.setLength(0);
 				if (isWhitespace(character)) {
 					return argumentStartState;
@@ -441,10 +433,10 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				arguments = expressionBuilder.getExpression();
+				lineBuilder.setArguments(expressionBuilder.getExpression());
 				return commentReadState;
 			} else if (character == '\0') {
-				arguments = expressionBuilder.getExpression();
+				lineBuilder.setArguments(expressionBuilder.getExpression());
 				return endState;
 			} else {
 				expressionBuilder.addOperatorToken(Operator.ANNOTATION);
@@ -529,7 +521,7 @@ public class LineParser {
 	private class CommentReadState extends State {
 		public State parse(char character) {
 			if (character == '\0') {
-				comment = accumulator.toString();
+				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
 				return endState;
 			} else {
