@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +39,7 @@ import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.directives.Proc;
 import nl.grauw.glass.directives.Rept;
 import nl.grauw.glass.directives.Section;
+import nl.grauw.glass.expressions.Annotation;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 
@@ -55,6 +57,8 @@ public class SourceParser {
 	private final List<File> includePaths;
 	private final LineParser lineParser = new LineParser();
 	
+	private static final List<File> sourceFiles = new ArrayList<File>();
+	
 	public SourceParser(List<File> includePaths) {
 		this.source = new Source();
 		this.terminators = END_TERMINATORS;
@@ -67,6 +71,16 @@ public class SourceParser {
 		this.includePaths = includePaths;
 	}
 	
+	public boolean hasLoadedSourceFile(File file) {
+		try {
+			for (int i = 0; i < sourceFiles.size(); i++)
+				if (file.getCanonicalPath().equals(sourceFiles.get(i).getCanonicalPath()))
+					return true;
+		} catch (IOException e) {
+		}
+		return false;
+	}
+	
 	public Source parse(File sourceFile) {
 		try {
 			parse(new FileInputStream(sourceFile), sourceFile);
@@ -76,18 +90,24 @@ public class SourceParser {
 		return source;
 	}
 	
-	private Source parseInclude(File sourceFile, File basePath) {
+	private Source parseInclude(File sourceFile, File basePath, boolean once) {
 		File fullPath = new File(basePath.getParent(), sourceFile.getPath());
-		if (fullPath.exists())
+		if (fullPath.exists()) {
+			if (once && hasLoadedSourceFile(fullPath))
+				return null;
 			return parse(fullPath);
-		return parseInclude(sourceFile);
+		}
+		return parseInclude(sourceFile, once);
 	}
 	
-	private Source parseInclude(File sourceFile) {
+	private Source parseInclude(File sourceFile, boolean once) {
 		for (File includePath : includePaths) {
 			File fullPath = new File(includePath, sourceFile.getPath());
-			if (fullPath.exists())
+			if (fullPath.exists()) {
+				if (once && hasLoadedSourceFile(fullPath))
+					return null;
 				return parse(fullPath);
+			}
 		}
 		throw new AssemblyException("Include file not found: " + sourceFile);
 	}
@@ -101,6 +121,7 @@ public class SourceParser {
 	}
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
+		sourceFiles.add(sourceFile);
 		try {
 			String lineText;
 			while ((lineText = reader.readLine()) != null) {
@@ -164,13 +185,21 @@ public class SourceParser {
 	}
 	
 	private Directive getIncludeDirective(Line line, File sourceFile) {
+		boolean once = false;
+		Expression argument = line.getArguments();
+		if (argument instanceof Annotation) {
+			String annotation = argument.getAnnotation().getName();
+			if ("once".equals(annotation) || "ONCE".equals(annotation)) {
+				argument = argument.getAnnotee();
+				once = true;
+			}
+		}
 		if (line.getArguments() instanceof Sequence)
 			throw new AssemblyException("Include only accepts 1 argument.");
-		Expression argument = line.getArguments();
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
 		SourceParser parser = new SourceParser(source, END_TERMINATORS, includePaths);
-		parser.parseInclude(new File(argument.getString()), sourceFile);
+		parser.parseInclude(new File(argument.getString()), sourceFile, once);
 		return new Include();
 	}
 	
