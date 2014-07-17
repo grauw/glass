@@ -144,6 +144,11 @@ Directives
     
         INCLUDE "math.asm"
     
+    Optionally you can specify a ONCE annotation to prevent a file from being
+    included more than once. However it is not recommended to use unless needed.
+    
+        INCLUDE ONCE "math.asm"
+    
   * Macro: `macro`, `endm`
     
     Defines a macro instruction, composed of all the instructions that follow
