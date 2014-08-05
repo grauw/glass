@@ -93,8 +93,8 @@ public class Scope implements Context {
 		int index = name.length();
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
 			Expression result = variables.get(name.substring(0, index));
-			if (result instanceof ContextLiteral)
-				return ((Scope)((ContextLiteral)result).getContext()).getLocalSymbol(name.substring(index + 1));
+			if (result != null && result.isContext())
+				return ((Scope)result.getContext()).getLocalSymbol(name.substring(index + 1));
 		}
 		return null;
 	}

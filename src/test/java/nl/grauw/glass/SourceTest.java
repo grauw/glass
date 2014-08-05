@@ -362,6 +362,35 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroContextArgumentDereference() {
+		assertArrayEquals(b(0x03), assemble(
+			"macro1: MACRO",
+			" ld hl,0",
+			"test:",
+			" ENDM",
+			"macro2: MACRO ?arg",
+			" db ?arg.test",
+			" ENDM",
+			" macro2 macro1"
+		));
+	}
+	
+	@Test
+	public void testMacroContextArgumentDereference2() {
+		assertArrayEquals(b(0x3E, 0x05, 0x21, 0x00, 0x00), assemble(
+			"macro1: MACRO",
+			" ld hl,0",
+			"test:",
+			" ENDM",
+			"macro2: MACRO ?arg",
+			" ld a,?arg.test",
+			" ENDM",
+			" macro2 (m1)",
+			"m1: macro1"
+		));
+	}
+	
+	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
 			" REPT 3",

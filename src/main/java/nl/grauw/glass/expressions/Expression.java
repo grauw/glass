@@ -68,6 +68,14 @@ public abstract class Expression {
 		return this;
 	}
 	
+	public boolean isContext() {
+		return false;
+	}
+	
+	public Context getContext() {
+		throw new EvaluationException("Not a context.");
+	}
+	
 	public int getAddress() {
 		int address = getInteger();
 		if (address < 0 || address >= 0x10000)

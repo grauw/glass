@@ -77,6 +77,16 @@ public class Group extends Expression {
 		return true;
 	}
 	
+	@Override
+	public boolean isContext() {
+		return term.isContext();
+	}
+	
+	@Override
+	public Context getContext() {
+		return term.getContext();
+	}
+	
 	public String toString() {
 		return "(" + term + ")";
 	}

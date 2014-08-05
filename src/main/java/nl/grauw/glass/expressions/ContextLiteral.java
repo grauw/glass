@@ -23,6 +23,12 @@ public class ContextLiteral extends Literal {
 		this.context = context;
 	}
 	
+	@Override
+	public boolean isContext() {
+		return true;
+	}
+	
+	@Override
 	public Context getContext() {
 		return context;
 	}

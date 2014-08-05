@@ -81,6 +81,16 @@ public class Identifier extends Expression {
 		return exists() && resolve().isGroup();
 	}
 	
+	@Override
+	public boolean isContext() {
+		return resolve().isContext();
+	}
+	
+	@Override
+	public Context getContext() {
+		return resolve().getContext();
+	}
+	
 	public String toString() {
 		return name;
 	}
