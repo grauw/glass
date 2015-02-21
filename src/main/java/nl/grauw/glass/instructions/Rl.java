@@ -48,7 +48,7 @@ public class Rl extends Instruction {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)0xCB, (byte)(0x10 + register.get8BitCode()));
+			return indexifyOnlyIndirect(register, (byte)0xCB, (byte)(0x10 + register.get8BitCode()));
 		}
 		
 	}

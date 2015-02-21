@@ -103,4 +103,15 @@ public abstract class InstructionObject {
 		return new byte[] { register.getIndexCode(), byte1, (byte)offset, byte2 };
 	}
 	
+	public byte[] indexifyOnlyIndirect(Register register, byte byte1, byte byte2) {
+		if (!register.isIndex())
+			return new byte[] { byte1, byte2 };
+		if (!register.isPair())
+			throw new ArgumentException();
+		int offset = register.getIndexOffset().getInteger();
+		if (offset < -128 || offset > 127)
+			throw new ArgumentException("Index offset out of range: " + offset);
+		return new byte[] { register.getIndexCode(), byte1, (byte)offset, byte2 };
+	}
+	
 }

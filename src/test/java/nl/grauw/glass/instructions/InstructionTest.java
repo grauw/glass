@@ -123,10 +123,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x55), parse("bit 2,l"));
 		assertArrayEquals(b(0xCB, 0x4E), parse("bit 1,(hl)"));
 		assertArrayEquals(b(0xCB, 0x47), parse("bit 0,a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x5C), parse("bit 3,ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x55), parse("bit 2,iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x5E), parse("bit 3,(ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x66), parse("bit 4,(iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testBit_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x5C), parse("bit 3,ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x55), parse("bit 2,iyl"));
 	}
 	
 	@Test
@@ -646,10 +650,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x95), parse("res 2,l"));
 		assertArrayEquals(b(0xCB, 0x8E), parse("res 1,(hl)"));
 		assertArrayEquals(b(0xCB, 0x87), parse("res 0,a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x9C), parse("res 3,ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x95), parse("res 2,iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x9E), parse("res 3,(ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0xA6), parse("res 4,(iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testRes_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x9C), parse("res 3,ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x95), parse("res 2,iyl"));
 	}
 	
 	@Test
@@ -689,10 +697,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x15), parse("rl l"));
 		assertArrayEquals(b(0xCB, 0x16), parse("rl (hl)"));
 		assertArrayEquals(b(0xCB, 0x17), parse("rl a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x14), parse("rl ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x15), parse("rl iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x16), parse("rl (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x16), parse("rl (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testRl_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x14), parse("rl ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x15), parse("rl iyl"));
 	}
 	
 	@Test
@@ -710,10 +722,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x05), parse("rlc l"));
 		assertArrayEquals(b(0xCB, 0x06), parse("rlc (hl)"));
 		assertArrayEquals(b(0xCB, 0x07), parse("rlc a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x04), parse("rlc ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x05), parse("rlc iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x06), parse("rlc (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x06), parse("rlc (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testRlc_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x04), parse("rlc ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x05), parse("rlc iyl"));
 	}
 	
 	@Test
@@ -736,10 +752,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x1D), parse("rr l"));
 		assertArrayEquals(b(0xCB, 0x1E), parse("rr (hl)"));
 		assertArrayEquals(b(0xCB, 0x1F), parse("rr a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x1C), parse("rr ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x1D), parse("rr iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x1E), parse("rr (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x1E), parse("rr (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testRr_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x1C), parse("rr ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x1D), parse("rr iyl"));
 	}
 	
 	@Test
@@ -757,10 +777,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x0D), parse("rrc l"));
 		assertArrayEquals(b(0xCB, 0x0E), parse("rrc (hl)"));
 		assertArrayEquals(b(0xCB, 0x0F), parse("rrc a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x0C), parse("rrc ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x0D), parse("rrc iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x0E), parse("rrc (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x0E), parse("rrc (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testRrc_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x0C), parse("rrc ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x0D), parse("rrc iyl"));
 	}
 	
 	@Test
@@ -829,10 +853,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0xD5), parse("set 2,l"));
 		assertArrayEquals(b(0xCB, 0xCE), parse("set 1,(hl)"));
 		assertArrayEquals(b(0xCB, 0xC7), parse("set 0,a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0xDC), parse("set 3,ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0xD5), parse("set 2,iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0xDE), parse("set 3,(ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0xE6), parse("set 4,(iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testSet_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0xDC), parse("set 3,ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0xD5), parse("set 2,iyl"));
 	}
 	
 	@Test
@@ -845,10 +873,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x25), parse("sla l"));
 		assertArrayEquals(b(0xCB, 0x26), parse("sla (hl)"));
 		assertArrayEquals(b(0xCB, 0x27), parse("sla a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x24), parse("sla ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x25), parse("sla iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x26), parse("sla (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x26), parse("sla (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testSla_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x24), parse("sla ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x25), parse("sla iyl"));
 	}
 	
 	@Test
@@ -861,10 +893,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x2D), parse("sra l"));
 		assertArrayEquals(b(0xCB, 0x2E), parse("sra (hl)"));
 		assertArrayEquals(b(0xCB, 0x2F), parse("sra a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x2C), parse("sra ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x2D), parse("sra iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x2E), parse("sra (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x2E), parse("sra (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testSra_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x2C), parse("sra ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x2D), parse("sra iyl"));
 	}
 	
 	@Test
@@ -877,10 +913,14 @@ public class InstructionTest {
 		assertArrayEquals(b(0xCB, 0x3D), parse("srl l"));
 		assertArrayEquals(b(0xCB, 0x3E), parse("srl (hl)"));
 		assertArrayEquals(b(0xCB, 0x3F), parse("srl a"));
-		assertArrayEquals(b(0xDD, 0xCB, 0x3C), parse("srl ixh"));
-		assertArrayEquals(b(0xFD, 0xCB, 0x3D), parse("srl iyl"));
 		assertArrayEquals(b(0xDD, 0xCB, 0x47, 0x3E), parse("srl (ix + 47H)"));
 		assertArrayEquals(b(0xFD, 0xCB, 0x86, 0x3E), parse("srl (iy - 7AH)"));
+	}
+	
+	@Test(expected=ArgumentException.class)
+	public void testSrl_Invalid() {
+		assertArrayEquals(b(0xDD, 0xCB, 0x3C), parse("srl ixh"));
+		assertArrayEquals(b(0xFD, 0xCB, 0x3D), parse("srl iyl"));
 	}
 	
 	@Test

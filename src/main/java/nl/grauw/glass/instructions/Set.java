@@ -53,7 +53,7 @@ public class Set extends Instruction {
 			if (value < 0 || value > 7)
 				throw new ArgumentException();
 			Register register = argument2.getRegister();
-			return indexifyIndirect(register, (byte)0xCB, (byte)(0xC0 | value << 3 | register.get8BitCode()));
+			return indexifyOnlyIndirect(register, (byte)0xCB, (byte)(0xC0 | value << 3 | register.get8BitCode()));
 		}
 		
 	}
