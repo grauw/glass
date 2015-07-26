@@ -78,11 +78,14 @@ public class AssemblyException extends RuntimeException {
 		
 		@Override
 		public String toString() {
-			String prefix = "[at " + file + ":" + line + (column != -1 ? "," + column : "") + "] ";
+			String prefix = "[at " + file + ":" + line + (column != -1 ? "," + column : "") + "]\n";
 			String context = prefix + text;
 			
-			if (column != -1)
-				context += "\n" + context.substring(0, column + prefix.length()).replaceAll("[^\t]", " ") + "^";
+			if (column >= 0) {
+				int start = Math.min(context.lastIndexOf('\n') + 1, context.length());
+				int end = Math.min(start + column, context.length());
+				context += "\n" + context.substring(start, end).replaceAll("[^\t]", " ") + "^";
+			}
 			
 			return context;
 		}
