@@ -32,7 +32,7 @@ public class Negative extends UnaryOperator {
 	}
 	
 	@Override
-	public String getSymbol() {
+	public String getLexeme() {
 		return "-";
 	}
 	

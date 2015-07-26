@@ -33,7 +33,7 @@ public class LogicalOr extends BinaryOperator {
 	}
 	
 	@Override
-	public String getSymbol() {
+	public String getLexeme() {
 		return "||";
 	}
 	

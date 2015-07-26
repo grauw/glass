@@ -32,7 +32,7 @@ public class Complement extends UnaryOperator {
 	}
 	
 	@Override
-	public String getSymbol() {
+	public String getLexeme() {
 		return "~";
 	}
 	

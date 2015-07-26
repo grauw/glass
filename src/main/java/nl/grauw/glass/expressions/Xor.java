@@ -32,7 +32,7 @@ public class Xor extends BinaryOperator {
 	}
 	
 	@Override
-	public String getSymbol() {
+	public String getLexeme() {
 		return "^";
 	}
 	

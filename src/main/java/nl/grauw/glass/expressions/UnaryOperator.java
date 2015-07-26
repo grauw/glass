@@ -19,7 +19,7 @@ public abstract class UnaryOperator extends Operator {
 	
 	protected final Expression term;
 	
-	public abstract String getSymbol();
+	public abstract String getLexeme();
 	
 	public UnaryOperator(Expression term) {
 		this.term = term;
@@ -35,11 +35,11 @@ public abstract class UnaryOperator extends Operator {
 	}
 	
 	public String toString() {
-		return getSymbol() + term;
+		return getLexeme() + term;
 	}
 	
 	public String toDebugString() {
-		return getSymbol() + term.toDebugString();
+		return getLexeme() + term.toDebugString();
 	}
 	
 }

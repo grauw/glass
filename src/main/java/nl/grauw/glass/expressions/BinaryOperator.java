@@ -20,7 +20,7 @@ public abstract class BinaryOperator extends Operator {
 	protected final Expression term1;
 	protected final Expression term2;
 	
-	public abstract String getSymbol();
+	public abstract String getLexeme();
 	
 	public BinaryOperator(Expression term1, Expression term2) {
 		this.term1 = term1;
@@ -41,11 +41,11 @@ public abstract class BinaryOperator extends Operator {
 	}
 	
 	public String toString() {
-		return "" + term1 + " " + getSymbol() + " " + term2;
+		return "" + term1 + " " + getLexeme() + " " + term2;
 	}
 	
 	public String toDebugString() {
-		return "{" + term1.toDebugString() + " " + getSymbol() + " " + term2.toDebugString() + "}";
+		return "{" + term1.toDebugString() + " " + getLexeme() + " " + term2.toDebugString() + "}";
 	}
 	
 }
