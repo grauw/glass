@@ -17,8 +17,8 @@ package nl.grauw.glass.expressions;
 
 public class Identifier extends Expression {
 	
-	private Context context;
 	private final String name;
+	private final Context context;
 	
 	public Identifier(String name, Context context) {
 		this.name = name;
