@@ -122,25 +122,23 @@ public class SourceParser {
 	
 	private Source parse(LineNumberReader reader, File sourceFile) {
 		sourceFiles.add(sourceFile);
-		try {
-			String lineText;
-			while ((lineText = reader.readLine()) != null) {
-				Line line = lineParser.parse(lineText, new Scope(source.getScope()), sourceFile, reader.getLineNumber());
-				try {
-					line.setDirective(getDirective(line, reader, sourceFile));
-					source.addLine(line);
-					if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
-						return source;
-				} catch (AssemblyException e) {
-					e.addContext(sourceFile, reader.getLineNumber(), lineText);
-					throw e;
-				}
+		while (true) {
+			Line line = lineParser.parse(reader, new Scope(source.getScope()), sourceFile);
+			if (line == null)
+				break;
+			
+			try {
+				line.setDirective(getDirective(line, reader, sourceFile));
+				source.addLine(line);
+				if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
+					return source;
+			} catch (AssemblyException e) {
+				e.addContext(line);
+				throw e;
 			}
-			if (terminators != END_TERMINATORS)
-				throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
-		} catch (IOException e) {
-			throw new AssemblyException(e);
 		}
+		if (terminators != END_TERMINATORS)
+			throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
 		return source;
 	}
 	

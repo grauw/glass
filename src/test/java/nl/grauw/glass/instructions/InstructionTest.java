@@ -17,6 +17,9 @@ package nl.grauw.glass.instructions;
 
 import static org.junit.Assert.*;
 
+import java.io.LineNumberReader;
+import java.io.StringReader;
+
 import nl.grauw.glass.GlobalScope;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.LineParser;
@@ -966,7 +969,8 @@ public class InstructionTest {
 	}
 	
 	public byte[] parse(String string) {
-		Line line = new LineParser().parse(" " + string, new Scope(new GlobalScope()), null, 0);
+		LineNumberReader reader = new LineNumberReader(new StringReader(" " + string));
+		Line line = new LineParser().parse(reader, new Scope(new GlobalScope()), null);
 		line.resolve(0x4321);
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());

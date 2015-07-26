@@ -16,6 +16,9 @@
 package nl.grauw.glass;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.util.ArrayList;
 
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.ExpressionBuilder;
@@ -33,29 +36,47 @@ public class LineParser {
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	
-	public Line parse(String text, Scope scope, File sourceFile, int lineNumber) {
+	public Line parse(LineNumberReader reader, Scope scope, File sourceFile) {
 		this.scope = scope;
 		state = labelStartState;
 		
+		final int firstLineNumber = reader.getLineNumber();
+		int lineNumber = firstLineNumber;
 		int column = 0;
+		ArrayList<String> sourceLines = new ArrayList<String>();
 		try {
-			for (int i = 0, length = text.length(); i < length; i++) {
-				column = i;
-				state = state.parse(text.charAt(i));
+			while (state != endState)
+			{
+				String sourceLine = reader.readLine();
+				if (sourceLine == null) {
+					if (sourceLines.size() > 0)
+						throw new AssemblyException("Unexpected end of file.");
+					return null;
+				}
+				sourceLines.add(sourceLine);
+				lineNumber = reader.getLineNumber();
+				column = 0;
+				
+				for (int i = 0, length = sourceLine.length(); i < length; i++) {
+					column = i;
+					state = state.parse(sourceLine.charAt(i));
+				}
+				column = sourceLine.length();
+				state = state.parse('\0');
 			}
-			column = text.length();
-			state = state.parse('\0');
 			
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
-			if (state != endState)
-				throw new AssemblyException("Invalid line end state: " + state.getClass().getSimpleName());
 		} catch(AssemblyException e) {
-			e.addContext(sourceFile, lineNumber, column, text);
+			e.addContext(sourceFile, lineNumber, column, String.join("\n", sourceLines));
 			throw e;
+		} catch (IOException e) {
+			throw new AssemblyException(e);
 		}
 		
-		return lineBuilder.getLine(scope, sourceFile, lineNumber);
+		lineBuilder.setSourceText(String.join("\n", sourceLines));
+		
+		return lineBuilder.getLine(scope, sourceFile, firstLineNumber);
 	}
 	
 	private abstract class State {

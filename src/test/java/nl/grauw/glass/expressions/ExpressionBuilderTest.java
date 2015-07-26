@@ -16,6 +16,10 @@
 package nl.grauw.glass.expressions;
 
 import static org.junit.Assert.*;
+
+import java.io.LineNumberReader;
+import java.io.StringReader;
+
 import nl.grauw.glass.Line;
 import nl.grauw.glass.LineParser;
 import nl.grauw.glass.Scope;
@@ -156,7 +160,8 @@ public class ExpressionBuilderTest {
 	}
 	
 	public String parse(String text) {
-		Line line = new LineParser().parse(" test " + text, new Scope(), null, 0);
+		LineNumberReader reader = new LineNumberReader(new StringReader(" test " + text));
+		Line line = new LineParser().parse(reader, new Scope(), null);
 		return line.getArguments().toDebugString();
 	}
 	

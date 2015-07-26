@@ -35,12 +35,13 @@ public class Line {
 	private final String comment;
 	private final File sourceFile;
 	private final int lineNumber;
+	private final String sourceText;
 	
 	private Instruction instruction;
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
-	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, File sourceFile, int lineNumber) {
+	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, File sourceFile, int lineNumber, String sourceText) {
 		this.scope = scope;
 		this.label = label;
 		this.mnemonic = mnemonic;
@@ -48,11 +49,12 @@ public class Line {
 		this.comment = comment;
 		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
+		this.sourceText = sourceText;
 	}
 	
 	public Line(Scope scope, Line other) {
 		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
-				other.comment, other.sourceFile, other.lineNumber);
+				other.comment, other.sourceFile, other.lineNumber, other.sourceText);
 		directive = other.directive;
 	}
 	
@@ -82,6 +84,10 @@ public class Line {
 	
 	public int getLineNumber() {
 		return lineNumber;
+	}
+	
+	public String getSourceText() {
+		return sourceText;
 	}
 	
 	public void setDirective(Directive directive) {

@@ -25,6 +25,7 @@ public class LineBuilder {
 	private String mnemonic;
 	private Expression arguments;
 	private String comment;
+	private String sourceText;
 	
 	public void setLabel(String label) {
 		if (this.label != null)
@@ -50,13 +51,20 @@ public class LineBuilder {
 		this.comment = comment;
 	}
 	
+	public void setSourceText(String sourceText) {
+		if (this.sourceText != null)
+			throw new AssemblyException("Source text already set.");
+		this.sourceText = sourceText;
+	}
+	
 	public Line getLine(Scope scope, File sourceFile, int lineNumber) {
-		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber);
+		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber, sourceText);
 		
 		label = null;
 		mnemonic = null;
 		arguments = null;
 		comment = null;
+		sourceText = null;
 		
 		return line;
 	}

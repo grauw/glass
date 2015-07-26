@@ -41,11 +41,7 @@ public class AssemblyException extends RuntimeException {
 	}
 	
 	public void addContext(Line line) {
-		addContext(line.getSourceFile(), line.getLineNumber(), line.toString());
-	}
-	
-	public void addContext(File file, int line, String text) {
-		addContext(file, line, -1, text);
+		addContext(line.getSourceFile(), line.getLineNumber(), -1, line.getSourceText());
 	}
 	
 	public void addContext(File file, int line, int column, String text) {
