@@ -46,9 +46,7 @@ public class LineBuilder {
 	}
 	
 	public void setComment(String comment) {
-		if (this.comment != null)
-			throw new AssemblyException("Comment already set.");
-		this.comment = comment;
+		this.comment = this.comment == null ? comment : this.comment + "\n" + comment;
 	}
 	
 	public void setSourceText(String sourceText) {

@@ -30,6 +30,7 @@ public class ExpressionBuilder {
 	
 	private Deque<Expression> operands = new ArrayDeque<Expression>();
 	private Deque<Operator> operators = new ArrayDeque<Operator>();
+	private int groupCount = 0;
 	
 	public ExpressionBuilder() {
 		operators.push(Operator.SENTINEL);
@@ -44,9 +45,11 @@ public class ExpressionBuilder {
 			operators.pop().evaluate(operands);
 		
 		if (operator == Operator.GROUP_OPEN) {
+			groupCount++;
 			operators.push(operator);
 			operators.push(Operator.SENTINEL);
 		} else if (operator == Operator.GROUP_CLOSE) {
+			groupCount--;
 			if (operators.pop() != Operator.SENTINEL)
 				throw new AssemblyException("Sentinel expected.");
 			if (operators.peek() != Operator.GROUP_OPEN)
@@ -54,6 +57,11 @@ public class ExpressionBuilder {
 		} else {
 			operators.push(operator);
 		}
+	}
+	
+	public boolean hasOpenedGroup()
+	{
+		return groupCount <= 0;
 	}
 	
 	public Expression getExpression() {

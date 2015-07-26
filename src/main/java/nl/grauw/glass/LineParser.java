@@ -230,6 +230,10 @@ public class LineParser {
 				return argumentValueState;
 			} else if (isWhitespace(character)) {
 				return argumentValueState;
+			} else if (character == ';') {
+				return commentReadThenArgumentState;
+			} else if (character == '\n') {
+				return argumentValueState;
 			}
 			throw new SyntaxError();
 		}
@@ -454,11 +458,19 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				lineBuilder.setArguments(expressionBuilder.getExpression());
-				return commentReadState;
+				if (expressionBuilder.hasOpenedGroup()) {
+					lineBuilder.setArguments(expressionBuilder.getExpression());
+					return commentReadState;
+				} else {
+					return commentReadThenOperatorState;
+				}
 			} else if (character == '\n') {
-				lineBuilder.setArguments(expressionBuilder.getExpression());
-				return endState;
+				if (expressionBuilder.hasOpenedGroup()) {
+					lineBuilder.setArguments(expressionBuilder.getExpression());
+					return endState;
+				} else {
+					return argumentOperatorState;
+				}
 			} else {
 				expressionBuilder.addOperatorToken(Operator.ANNOTATION);
 				return argumentValueState.parse(character);
@@ -545,6 +557,34 @@ public class LineParser {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
 				return endState;
+			} else {
+				accumulator.append(character);
+				return commentReadState;
+			}
+		}
+	}
+	
+	private CommentReadThenArgumentState commentReadThenArgumentState = new CommentReadThenArgumentState();
+	private class CommentReadThenArgumentState extends State {
+		public State parse(char character) {
+			if (character == '\n') {
+				lineBuilder.setComment(accumulator.toString());
+				accumulator.setLength(0);
+				return argumentValueState;
+			} else {
+				accumulator.append(character);
+				return commentReadState;
+			}
+		}
+	}
+	
+	private CommentReadThenOperatorState commentReadThenOperatorState = new CommentReadThenOperatorState();
+	private class CommentReadThenOperatorState extends State {
+		public State parse(char character) {
+			if (character == '\n') {
+				lineBuilder.setComment(accumulator.toString());
+				accumulator.setLength(0);
+				return argumentOperatorState;
 			} else {
 				accumulator.append(character);
 				return commentReadState;
