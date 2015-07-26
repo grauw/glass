@@ -62,7 +62,7 @@ public class LineParser {
 					state = state.parse(sourceLine.charAt(i));
 				}
 				column = sourceLine.length();
-				state = state.parse('\0');
+				state = state.parse('\n');
 			}
 			
 			if (accumulator.length() > 0)
@@ -108,7 +108,7 @@ public class LineParser {
 				return statementStartState;
 			} else if (character == ';') {
 				return commentReadState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -128,7 +128,7 @@ public class LineParser {
 					return statementStartState;
 				} else if (character == ';') {
 					return commentReadState;
-				} else if (character == '\0') {
+				} else if (character == '\n') {
 					return endState;
 				}
 			}
@@ -146,7 +146,7 @@ public class LineParser {
 				return statementStartState;
 			} else if (character == ';') {
 				return commentReadState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -170,7 +170,7 @@ public class LineParser {
 					return argumentStartState;
 				} else if (character == ';') {
 					return commentReadState;
-				} else if (character == '\0') {
+				} else if (character == '\n') {
 					return endState;
 				}
 			}
@@ -183,7 +183,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (character == ';') {
 				return commentReadState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				return endState;
 			} else if (isWhitespace(character)) {
 				return argumentStartState;
@@ -258,7 +258,7 @@ public class LineParser {
 				return argumentOperatorState;
 			} else if (character == '\\') {
 				return argumentStringEscapeState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				throw new SyntaxError();
 			} else {
 				accumulator.append(character);
@@ -300,7 +300,7 @@ public class LineParser {
 			} else if (character == '\\') {
 				accumulator.append('\\');
 				return argumentStringState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				throw new SyntaxError();
 			} else {
 				throw new SyntaxError();
@@ -313,7 +313,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (character == '\\') {
 				return argumentCharacterEscapeState;
-			} else if (character == '\'' || character == '\0') {
+			} else if (character == '\'' || character == '\n') {
 				throw new SyntaxError();
 			} else {
 				accumulator.append(character);
@@ -456,7 +456,7 @@ public class LineParser {
 			} else if (character == ';') {
 				lineBuilder.setArguments(expressionBuilder.getExpression());
 				return commentReadState;
-			} else if (character == '\0') {
+			} else if (character == '\n') {
 				lineBuilder.setArguments(expressionBuilder.getExpression());
 				return endState;
 			} else {
@@ -541,7 +541,7 @@ public class LineParser {
 	private CommentReadState commentReadState = new CommentReadState();
 	private class CommentReadState extends State {
 		public State parse(char character) {
-			if (character == '\0') {
+			if (character == '\n') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
 				return endState;
