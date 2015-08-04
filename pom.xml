@@ -14,8 +14,8 @@
 	
 	<licenses>
 		<license>
-			<name>Apache 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<name>Simplified BSD</name>
+			<url>https://bitbucket.org/grauw/glass/raw/default/LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>This is a free software license.</comments>
 		</license>
@@ -69,33 +69,6 @@
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<version>1.9.0</version>
-				<configuration>
-					<header>src/main/app-resources/header.txt</header>
-					<strictCheck>true</strictCheck>
-					<mapping>
-						<java>SLASHSTAR_STYLE</java>
-					</mapping>
-					<excludes>
-						<exclude>NOTICE</exclude>
-						<exclude>LICENSE</exclude>
-						<exclude>**/.hg*</exclude>
-						<exclude>**/*.md</exclude>
-						<exclude>src/main/resources/**/*</exclude>
-						<exclude>src/main/app-resources/**/*</exclude>
-					</excludes>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 		</plugins>
 	</build>

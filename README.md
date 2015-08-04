@@ -17,9 +17,9 @@ Bug reports and feature requests
 Author: Laurens Holst  
 Contact: <laurens.nospam@grauw.nl>  
 Site: <https://bitbucket.org/grauw/glass>  
-License: Apache License, Version 2.0
+License: Simplified BSD License
 
-Glass is Apache 2.0 licensed, which means that you are free to use the software
+Glass is BSD licensed, which means that you are free to use the software
 and source code in any way you wish as long as attribution is given to the
 original project and its author(s). For details, please consult the LICENSE
 file. To submit contributions, please contact the author.
