@@ -54,7 +54,7 @@ public class Assembler {
 		try (OutputStream output = objectPath != null ? new FileOutputStream(objectPath) : new NullOutputStream()) {
 			source.assemble(output);
 		} catch (IOException e) {
-			new RuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class Assembler {
 		try (PrintStream symbolOutput = new PrintStream(symbolPath)) {
 			symbolOutput.print(source.getScope().serializeSymbols());
 		} catch (IOException e) {
-			new RuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 	
