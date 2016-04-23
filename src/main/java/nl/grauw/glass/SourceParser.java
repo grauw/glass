@@ -32,6 +32,7 @@ public class SourceParser {
 	
 	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
 	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
+	public static final List<String> ENDR_TERMINATORS = Arrays.asList(new String[] { "endr", "ENDR", "endm", "ENDM" });
 	public static final List<String> ENDP_TERMINATORS = Arrays.asList(new String[] { "endp", "ENDP" });
 	public static final List<String> ENDS_TERMINATORS = Arrays.asList(new String[] { "ends", "ENDS" });
 	public static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
@@ -143,10 +144,10 @@ public class SourceParser {
 			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
 		case "rept":
 		case "REPT":
-			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+			return new Rept(parseBlock(line.getScope(), ENDR_TERMINATORS, reader, sourceFile));
 		case "irp":
 		case "IRP":
-			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+			return new Irp(parseBlock(line.getScope(), ENDR_TERMINATORS, reader, sourceFile));
 		case "proc":
 		case "PROC":
 			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, reader, sourceFile));

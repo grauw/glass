@@ -167,10 +167,10 @@ Directives
     turning the inner symbols into offsets. This is useful for specifying
     structures and indexing.
     
-  * Repetition: `rept`, `endm`
+  * Repetition: `rept`, `endr`
     
     Repeats a section of code a number of times. The end of the section is
-    marked with the `endm` directive. The first argument is mandatory and
+    marked with the `endr` directive. The first argument is mandatory and
     specifies the number of repeats. The second argument specifies a counter
     parameter, the third the initial value for the counter (default: 0), and the
     fourth argument specifies the counter increment (default: 1).
@@ -180,22 +180,22 @@ Directives
         REPT 3
         add hl,bc
         ENDR
-        ENDM
+        ENDR
     
     All symbols defined in a repeat block are local. If a repeat is labeled,
     the inner repeat scopes can be accessed by index, e.g.: `mylist.0`.
     
-  * Indefinite repetition: `irp`, `endm`
+  * Indefinite repetition: `irp`, `endr`
     
     Repeats a section of code for each of the arguments specified. The end of
-    the section is marked with the `endm` directive. The first argument is
+    the section is marked with the `endr` directive. The first argument is
     mandatory and specifies the parameter the current repetition’s value is
     passed to. The remaining arguments are passed one by one as the section is
     repeated.
     
         IRP ?value, 1, 2, 4, 8, 16, 32, 64, 128
         or ?value
-        ENDM
+        ENDR
     
     All symbols defined in a indefinite repeat block are local. If a repeat is
     labeled, the inner repeat scopes can be accessed by index, e.g.: `mylist.0`.
