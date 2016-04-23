@@ -323,7 +323,7 @@ public class SourceTest {
 	}
 	
 	@Test
-	public void testMacroDefinitionWithRegisterArgumentDereference() {
+	public void testMacroDefinitionWithNonIntegerArgumentDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
 			" ld de,test.test2",
 			"test: MACRO arg1, arg2",
@@ -335,7 +335,7 @@ public class SourceTest {
 	}
 	
 	@Test(expected=EvaluationException.class)
-	public void testMacroDefinitionWithRegisterArgumentBeforeDereference() {
+	public void testMacroDefinitionWithNonIntegerArgumentBeforeDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
 			" ld de,test.test2",
 			"test: MACRO arg1, arg2",
