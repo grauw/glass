@@ -347,6 +347,8 @@ any other value means true. They return -1 for true values.
 Logical and / or apply short-circuit evaluation and evaluate to the last
 evaluated value, so they can also be used similar to a ternary operator.
 
+Expressions can span multiple lines when they’re incomplete at the line ends.
+
 Operator precedence:
 
   * `.`
