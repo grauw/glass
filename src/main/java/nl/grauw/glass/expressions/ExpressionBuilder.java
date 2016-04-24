@@ -92,28 +92,28 @@ public class ExpressionBuilder {
 		public abstract Expression evaluate();
 	}
 	
-	public final Operator POSITIVE = new Operator(Precedence.UNARY, true) {
+	public final Operator POSITIVE = new Operator(Precedence.UNARY, false) {
 		@Override
 		public Expression evaluate() {
 			return new Positive(operands.pop());
 		};
 	};
 	
-	public final Operator NEGATIVE = new Operator(Precedence.UNARY, true) {
+	public final Operator NEGATIVE = new Operator(Precedence.UNARY, false) {
 		@Override
 		public Expression evaluate() {
 			return new Negative(operands.pop());
 		};
 	};
 	
-	public final Operator COMPLEMENT = new Operator(Precedence.UNARY, true) {
+	public final Operator COMPLEMENT = new Operator(Precedence.UNARY, false) {
 		@Override
 		public Expression evaluate() {
 			return new Complement(operands.pop());
 		};
 	};
 	
-	public final Operator NOT = new Operator(Precedence.UNARY, true) {
+	public final Operator NOT = new Operator(Precedence.UNARY, false) {
 		@Override
 		public Expression evaluate() {
 			return new Not(operands.pop());

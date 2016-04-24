@@ -19,8 +19,18 @@ public class ExpressionTest {
 	}
 	
 	@Test
+	public void testPositiveTwice() {
+		assertEquals(100, parse("++100").getInteger());
+	}
+	
+	@Test
 	public void testNegative() {
 		assertEquals(-100, parse("-100").getInteger());
+	}
+	
+	@Test
+	public void testNegativeTwice() {
+		assertEquals(100, parse("--100").getInteger());
 	}
 	
 	@Test
@@ -29,8 +39,18 @@ public class ExpressionTest {
 	}
 	
 	@Test
+	public void testComplementTwice() {
+		assertEquals(4, parse("~~4").getInteger());
+	}
+	
+	@Test
 	public void testNot() {
 		assertEquals(0, parse("!100").getInteger());
+	}
+	
+	@Test
+	public void testNotTwice() {
+		assertEquals(-1, parse("!!100").getInteger());
 	}
 	
 	@Test
