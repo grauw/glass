@@ -33,7 +33,8 @@ public class Org extends Instruction {
 		
 		@Override
 		public int resolve(int address) {
-			return super.resolve(getAddress());
+			super.resolve(address);
+			return getAddress();
 		}
 		
 		@Override

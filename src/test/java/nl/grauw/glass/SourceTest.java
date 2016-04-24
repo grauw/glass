@@ -96,7 +96,7 @@ public class SourceTest {
 	
 	@Test
 	public void testOrgLabel() {
-		assertArrayEquals(b(0xC3, 0x32, 0x40, 0x00), assemble(
+		assertArrayEquals(b(0xC3, 0x03, 0x00, 0x00), assemble(
 			" jp label",
 			"label: org 4032H",
 			" nop"
@@ -109,6 +109,16 @@ public class SourceTest {
 			" jp label",
 			"label:",
 			" org 4032H",
+			" nop"
+		));
+	}
+	
+	@Test
+	public void testOrgSelfAddress() {
+		assertArrayEquals(b(0xC3, 0x04, 0x01, 0x00), assemble(
+			" jp label",
+			" org $ + 101H",
+			"label:",
 			" nop"
 		));
 	}
