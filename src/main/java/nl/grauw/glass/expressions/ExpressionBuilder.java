@@ -26,7 +26,7 @@ public class ExpressionBuilder {
 	}
 	
 	public void addOperatorToken(Operator operator) {
-		while (!operators.peek().yieldsTo(operator) && operators.peek() != Operator.SENTINEL)
+		while (!operators.peek().yieldsTo(operator))
 			operators.pop().evaluate(operators, operands);
 		
 		if (operator == Operator.GROUP_OPEN) {
@@ -54,7 +54,7 @@ public class ExpressionBuilder {
 			throw new AssemblyException("Operands / operators is empty: " + this);
 		
 		// process remainder
-		while (operators.peek() != Operator.SENTINEL)
+		while (!operators.peek().yieldsTo(Operator.SENTINEL))
 			operators.pop().evaluate(operators, operands);
 		
 		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
@@ -98,7 +98,7 @@ public class ExpressionBuilder {
 		GROUP_CLOSE(Precedence.NONE, true),
 		ANNOTATION(Precedence.ANNOTATION, false),
 		SEQUENCE(Precedence.SEQUENCE, false),
-		SENTINEL(Precedence.NONE, true);
+		SENTINEL(Precedence.NONE, false);
 		
 		private Precedence precedence;
 		private boolean leftAssociative;
