@@ -8,6 +8,7 @@ import java.io.StringReader;
 import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.LineParser;
+import nl.grauw.glass.LineParser.SyntaxError;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
@@ -158,6 +159,16 @@ public class ExpressionBuilderTest {
 	@Test
 	public void testMultiline3() {
 		assertEquals("a", parse("a \n + 1H"));
+	}
+	
+	@Test(expected=SyntaxError.class)
+	public void testMultilineLabel() {
+		assertEquals(null, parse("a +\ntest: 1H"));
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testIncomplete() {
+		assertEquals(null, parse("a,"));
 	}
 	
 	public String parse(String text) {
