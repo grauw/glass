@@ -28,6 +28,16 @@ public class ExpressionTest {
 		assertEquals(2, parse("11 % 3").getInteger());
 	}
 	
+	@Test
+	public void testTernaryIfElseTrue() {
+		assertEquals(2, parse("1 ? 2 : 3").getInteger());
+	}
+	
+	@Test
+	public void testTernaryIfElseFalse() {
+		assertEquals(3, parse("0 ? 2 : 3").getInteger());
+	}
+	
 	@Test(expected=EvaluationException.class)
 	public void testModuloByZero() {
 		parse("1 % 0").getInteger();

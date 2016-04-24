@@ -27,7 +27,7 @@ public class ExpressionBuilder {
 	
 	public void addOperatorToken(Operator operator) {
 		while (!operators.peek().yieldsTo(operator) && operators.peek() != Operator.SENTINEL)
-			operators.pop().evaluate(operands);
+			operators.pop().evaluate(operators, operands);
 		
 		if (operator == Operator.GROUP_OPEN) {
 			groupCount++;
@@ -55,7 +55,7 @@ public class ExpressionBuilder {
 		
 		// process remainder
 		while (operators.peek() != Operator.SENTINEL)
-			operators.pop().evaluate(operands);
+			operators.pop().evaluate(operators, operands);
 		
 		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
 			throw new ExpressionError("Group close expected.");
@@ -92,6 +92,8 @@ public class ExpressionBuilder {
 		OR(Precedence.OR, true),
 		LOGICAL_AND(Precedence.LOGICAL_AND, true),
 		LOGICAL_OR(Precedence.LOGICAL_OR, true),
+		TERNARYIF(Precedence.TERNARYIFELSE, false),
+		TERNARYELSE(Precedence.TERNARYIFELSE, false),
 		GROUP_OPEN(Precedence.GROUPING, true),
 		GROUP_CLOSE(Precedence.NONE, true),
 		ANNOTATION(Precedence.ANNOTATION, false),
@@ -112,11 +114,22 @@ public class ExpressionBuilder {
 				return precedence.ordinal() >= other.precedence.ordinal();
 		}
 		
-		public void evaluate(Deque<Expression> operands) {
+		public void evaluate(Deque<Operator> operators, Deque<Expression> operands) {
 			Expression operandRight = operands.pop();
 			Expression result;
 			if (precedence == Precedence.UNARY || precedence == Precedence.GROUPING) {
 				result = evaluate(operandRight);
+			} else if (precedence == Precedence.TERNARYIFELSE) {
+				while (operators.peek() == TERNARYELSE) {
+					operators.pop().evaluate(operators, operands);
+				}
+				if (operators.peek() == TERNARYIF) {
+					operators.pop();
+					Expression operandMiddle = operands.pop();
+					result = evaluate(operands.pop(), operandMiddle, operandRight);
+				} else {
+					throw new ExpressionError("Ternary else (:) without if (?).");
+				}
 			} else {
 				result = evaluate(operands.pop(), operandRight);
 			}
@@ -186,6 +199,17 @@ public class ExpressionBuilder {
 				throw new ExpressionError("Not a binary operator: " + this);
 			}
 		}
+		
+		private Expression evaluate(Expression operand1, Expression operand2, Expression operand3) {
+			switch (this) {
+			case TERNARYELSE:
+				return new IfElse(operand1, operand2, operand3);
+			case TERNARYIF:
+				throw new ExpressionError("Ternary if (?) without else (:).");
+			default:
+				throw new ExpressionError("Not a ternary operator: " + this);
+			}
+		}
 	}
 	
 	private enum Precedence {
@@ -201,6 +225,7 @@ public class ExpressionBuilder {
 		OR,
 		LOGICAL_AND,
 		LOGICAL_OR,
+		TERNARYIFELSE,
 		ANNOTATION,
 		SEQUENCE,
 		NONE

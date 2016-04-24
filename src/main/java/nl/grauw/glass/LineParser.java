@@ -440,6 +440,12 @@ public class LineParser {
 				return argumentValueState;
 			} else if (character == '|') {
 				return argumentOrState;
+			} else if (character == '?') {
+				expressionBuilder.addOperatorToken(Operator.TERNARYIF);
+				return argumentValueState;
+			} else if (character == ':') {
+				expressionBuilder.addOperatorToken(Operator.TERNARYELSE);
+				return argumentValueState;
 			} else if (character == ',') {
 				expressionBuilder.addOperatorToken(Operator.SEQUENCE);
 				return argumentValueState;

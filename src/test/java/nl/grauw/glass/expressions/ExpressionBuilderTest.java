@@ -61,6 +61,62 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
+	public void testTernaryIfElse() {
+		assertEquals("{a ? 1H : 2H}", parse("a ? 1H : 2H"));
+	}
+	
+	@Test
+	public void testTernaryIfElseNested1() {
+		assertEquals("{a ? 1H : {b ? 2H : 3H}}", parse("a ? 1H : b ? 2H : 3H"));
+	}
+	
+	@Test
+	public void testTernaryIfElseNested2() {
+		assertEquals("{a ? {b ? 1H : 2H} : 3H}", parse("a ? b ? 1H : 2H : 3H"));
+	}
+	
+	@Test
+	public void testTernaryIfElseNested3() {
+		assertEquals("{a ? {b ? 1H : 2H} : 3H}", parse("a ? b ? 1H : 2H : 3H"));
+	}
+	
+	@Test
+	public void testTernaryIfElseNested4() {
+		assertEquals("{{ANN 1H}, {{ANN {a ? {b ? {2H + 3H} : {{c < d} ? 4H : {5H - 6H}}} : 7H}}, {e ? 8H : 9H}}}",
+				parse("ANN 1H, ANN a ? b ? 2H + 3H : c < d ? 4H : 5H - 6H : 7H, e ? 8H : 9H"));
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testTernaryIfWithoutElse() {
+		parse("a ? 1H");
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testTernaryElseWithoutIf() {
+		parse("a : b");
+	}
+	
+	@Test
+	public void testTernaryIfElseHigherPrecedence() {
+		assertEquals("{{a < 1H} ? {x + 1H} : {y + 2H}}", parse("a < 1H ? x + 1H : y + 2H"));
+	}
+	
+	@Test
+	public void testTernaryIfElseLowerPrecedence() {
+		assertEquals("{0H, {{a ? 1H : 2H}, 3H}}", parse("0H, a ? 1H : 2H, 3H"));
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testTernaryIfElseLowerPrecedenceNegative() {
+		parse("a ? 1H, 2H : 3H");
+	}
+	
+	@Test
+	public void testTernaryIfElseLowerPrecedenceGroup() {
+		assertEquals("{a ? ({1H, 2H}) : 3H}", parse("a ? (1H, 2H) : 3H"));
+	}
+	
+	@Test
 	public void testSequence() {
 		assertEquals("{a, 1H}", parse("a, 1H"));
 	}
@@ -160,7 +216,7 @@ public class ExpressionBuilderTest {
 		assertEquals("a", parse("a \n + 1H"));
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test(expected=ExpressionError.class)
 	public void testMultilineLabel() {
 		assertEquals(null, parse("a +\ntest: 1H"));
 	}
