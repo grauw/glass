@@ -44,7 +44,7 @@ public class ExpressionBuilder {
 		}
 	}
 	
-	public boolean hasOpenedGroup()
+	public boolean hasOpenGroup()
 	{
 		return groupCount > 0;
 	}
