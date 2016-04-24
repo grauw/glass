@@ -349,6 +349,7 @@ Operators
   * Bitwise or: `a | b`
   * Logical and: `a && b`
   * Logical or: `a || b`
+  * Ternary if: `a ? b : c`
   * Annotation: `a b`
   * Sequence: `a, b`
 
@@ -374,5 +375,6 @@ Operator precedence:
   * `|`
   * `&&`
   * `||`
+  * `?:`
   * ` `
   * `,`
