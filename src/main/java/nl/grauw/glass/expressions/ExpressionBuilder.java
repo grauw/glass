@@ -26,8 +26,7 @@ public class ExpressionBuilder {
 	}
 	
 	public void addOperatorToken(Operator operator) {
-		while (!operators.peek().yieldsTo(operator))
-			operators.pop().evaluate(operators, operands);
+		evaluateNotYieldingTo(operator);
 		
 		if (operator == Operator.GROUP_OPEN) {
 			groupCount++;
@@ -54,8 +53,7 @@ public class ExpressionBuilder {
 			throw new AssemblyException("Operands / operators is empty: " + this);
 		
 		// process remainder
-		while (!operators.peek().yieldsTo(Operator.SENTINEL))
-			operators.pop().evaluate(operators, operands);
+		evaluateNotYieldingTo(Operator.SENTINEL);
 		
 		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
 			throw new ExpressionError("Group close expected.");
@@ -63,6 +61,11 @@ public class ExpressionBuilder {
 			throw new AssemblyException("Not all operands / operators were processed: " + this);
 		
 		return operands.pop();
+	}
+	
+	private void evaluateNotYieldingTo(Operator operator) {
+		while (!operators.peek().yieldsTo(operator))
+			operators.pop().evaluate(operators, operands);
 	}
 	
 	public String toString() {
