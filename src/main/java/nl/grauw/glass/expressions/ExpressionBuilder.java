@@ -46,7 +46,7 @@ public class ExpressionBuilder {
 	
 	public boolean hasOpenedGroup()
 	{
-		return groupCount <= 0;
+		return groupCount > 0;
 	}
 	
 	public Expression getExpression() {

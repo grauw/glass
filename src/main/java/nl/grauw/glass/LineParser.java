@@ -443,14 +443,14 @@ public class LineParser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				if (expressionBuilder.hasOpenedGroup()) {
+				if (!expressionBuilder.hasOpenedGroup()) {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
 					return commentReadState;
 				} else {
 					return commentReadThenOperatorState;
 				}
 			} else if (character == '\n') {
-				if (expressionBuilder.hasOpenedGroup()) {
+				if (!expressionBuilder.hasOpenedGroup()) {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
 					return endState;
 				} else {
