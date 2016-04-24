@@ -194,6 +194,28 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testMacroDefaultArgument() {
+		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x20), assemble(
+			"test: MACRO arg = 10H",
+			" ld a,arg",
+			" ENDM",
+			" test",
+			" test 20H"
+		));
+	}
+	
+	@Test
+	public void testMacroDefaultFlagArgument() {
+		assertArrayEquals(b(0xC8, 0xC0), assemble(
+			"test: MACRO arg = z",
+			" ret arg",
+			" ENDM",
+			" test",
+			" test nz"
+		));
+	}
+	
 	@Test(expected=AssemblyException.class)
 	public void testMacroNoEnd() {
 		assemble(
@@ -323,6 +345,17 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroDefinitionWithDefaultArgumentsDereference() {
+		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg = 0",
+			" ld hl,arg",
+			"test2:",
+			" ENDM"
+		));
+	}
+	
+	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
 			" ld de,test.test2",
@@ -341,6 +374,17 @@ public class SourceTest {
 			"test: MACRO arg1, arg2",
 			" ld hl,arg1",
 			" ret arg2",
+			"test2:",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testMacroDefinitionWithDefaultFlagArgumentBeforeDereference() {
+		assertArrayEquals(b(0x11, 0x01, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg = z",
+			" ret arg",
 			"test2:",
 			" ENDM"
 		));

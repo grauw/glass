@@ -1,5 +1,6 @@
 package nl.grauw.glass;
 
+import nl.grauw.glass.expressions.Equals;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.instructions.ArgumentException;
@@ -10,10 +11,17 @@ public class ParameterScope extends Scope {
 		super(parent);
 		
 		while (parameters != null) {
-			if (arguments == null)
-				throw new ArgumentException("Not enough arguments.");
 			Expression parameter = parameters.getElement();
-			Expression argument = arguments.getElement();
+			Expression argument;
+			
+			if (parameter instanceof Equals) {
+				argument = arguments != null ? arguments.getElement() : ((Equals)parameter).getTerm2();
+				parameter = ((Equals)parameter).getTerm1();
+			} else {
+				if (arguments == null)
+					throw new ArgumentException("Not enough arguments.");
+				argument = arguments.getElement();
+			}
 			
 			if (!(parameter instanceof Identifier))
 				throw new ArgumentException("Parameter must be an identifier.");
@@ -21,7 +29,8 @@ public class ParameterScope extends Scope {
 			addSymbol(((Identifier)parameter).getName(), argument);
 			
 			parameters = parameters.getNext();
-			arguments = arguments.getNext();
+			if (arguments != null)
+				arguments = arguments.getNext();
 		}
 		if (arguments != null)
 			throw new ArgumentException("Too many arguments.");

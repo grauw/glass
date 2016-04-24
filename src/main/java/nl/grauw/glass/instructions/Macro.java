@@ -6,6 +6,7 @@ import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
+import nl.grauw.glass.expressions.Equals;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -27,9 +28,16 @@ public class Macro extends Instruction {
 		Expression parameters = line.getArguments();
 		while (parameters != null) {
 			Expression parameter = parameters.getElement();
-			if (!(parameter instanceof Identifier))
+			if (!(parameter instanceof Identifier) &&
+					!(parameter instanceof Equals && ((Equals)parameter).getTerm1() instanceof Identifier))
 				throw new ArgumentException("Parameter must be an identifier.");
-			parameterScope.addSymbol(((Identifier)parameter).getName(), IntegerLiteral.ZERO);
+			
+			if (parameter instanceof Equals) {
+				Equals equals = (Equals)parameter;
+				parameterScope.addSymbol(((Identifier)equals.getTerm1()).getName(), equals.getTerm2());
+			} else {
+				parameterScope.addSymbol(((Identifier)parameter).getName(), IntegerLiteral.ZERO);
+			}
 			parameters = parameters.getNext();
 		}
 		

@@ -167,6 +167,10 @@ Directives
     turning the inner symbols into offsets. This is useful for specifying
     structures and indexing.
     
+    Default values for macro arguments can be specified with `=`:
+    
+        ALIGN: MACRO ?boundary = 100H
+    
   * Repetition: `rept`, `endr`
     
     Repeats a section of code a number of times. The end of the section is
