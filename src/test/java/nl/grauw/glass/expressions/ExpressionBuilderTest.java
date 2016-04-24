@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.LineNumberReader;
 import java.io.StringReader;
 
-import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.LineParser;
 import nl.grauw.glass.LineParser.SyntaxError;
@@ -51,7 +50,7 @@ public class ExpressionBuilderTest {
 		assertEquals("{{10H + ({15H * ({5H - 2H})})} + 4H}", parse("10H + (15H * (5H - 2H)) + 4H"));
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test(expected=ExpressionError.class)
 	public void testGrouping3() {
 		parse("10H + (15H * (5H - 2H) + 4H");
 	}
@@ -166,7 +165,7 @@ public class ExpressionBuilderTest {
 		assertEquals(null, parse("a +\ntest: 1H"));
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test(expected=SyntaxError.class)
 	public void testIncomplete() {
 		assertEquals(null, parse("a,"));
 	}

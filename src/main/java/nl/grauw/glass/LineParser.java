@@ -34,8 +34,11 @@ public class LineParser {
 			{
 				String sourceLine = reader.readLine();
 				if (sourceLine == null) {
-					if (sourceLines.size() > 0)
+					state = state.parse('\0');
+					if (state != endState)
 						throw new AssemblyException("Unexpected end of file.");
+					if (sourceLines.size() > 0)
+						break;  // return null (parsing end) the next time
 					return null;
 				}
 				sourceLines.add(sourceLine);
@@ -93,7 +96,7 @@ public class LineParser {
 				return statementStartState;
 			} else if (character == ';') {
 				return commentReadState;
-			} else if (character == '\n') {
+			} else if (character == '\n' || character == '\0') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -113,7 +116,7 @@ public class LineParser {
 					return statementStartState;
 				} else if (character == ';') {
 					return commentReadState;
-				} else if (character == '\n') {
+				} else if (character == '\n' || character == '\0') {
 					return endState;
 				}
 			}
@@ -131,7 +134,7 @@ public class LineParser {
 				return statementStartState;
 			} else if (character == ';') {
 				return commentReadState;
-			} else if (character == '\n') {
+			} else if (character == '\n' || character == '\0') {
 				return endState;
 			}
 			throw new SyntaxError();
@@ -155,7 +158,7 @@ public class LineParser {
 					return argumentStartState;
 				} else if (character == ';') {
 					return commentReadState;
-				} else if (character == '\n') {
+				} else if (character == '\n' || character == '\0') {
 					return endState;
 				}
 			}
@@ -168,7 +171,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (character == ';') {
 				return commentReadState;
-			} else if (character == '\n') {
+			} else if (character == '\n' || character == '\0') {
 				return endState;
 			} else if (isWhitespace(character)) {
 				return argumentStartState;
@@ -247,7 +250,7 @@ public class LineParser {
 				return argumentOperatorState;
 			} else if (character == '\\') {
 				return argumentStringEscapeState;
-			} else if (character == '\n') {
+			} else if (character == '\n' || character == '\0') {
 				throw new SyntaxError();
 			} else {
 				accumulator.append(character);
@@ -289,7 +292,7 @@ public class LineParser {
 			} else if (character == '\\') {
 				accumulator.append('\\');
 				return argumentStringState;
-			} else if (character == '\n') {
+			} else if (character == '\n' || character == '\0') {
 				throw new SyntaxError();
 			} else {
 				throw new SyntaxError();
@@ -302,7 +305,7 @@ public class LineParser {
 		public State parse(char character) {
 			if (character == '\\') {
 				return argumentCharacterEscapeState;
-			} else if (character == '\'' || character == '\n') {
+			} else if (character == '\'' || character == '\n' || character == '\0') {
 				throw new SyntaxError();
 			} else {
 				accumulator.append(character);
@@ -449,8 +452,8 @@ public class LineParser {
 				} else {
 					return commentReadThenOperatorState;
 				}
-			} else if (character == '\n') {
-				if (!expressionBuilder.hasOpenGroup()) {
+			} else if (character == '\n' || character == '\0') {
+				if (!expressionBuilder.hasOpenGroup() || character == '\0') {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
 					return endState;
 				} else {
@@ -538,7 +541,7 @@ public class LineParser {
 	private CommentReadState commentReadState = new CommentReadState();
 	private class CommentReadState extends State {
 		public State parse(char character) {
-			if (character == '\n') {
+			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
 				return endState;
@@ -552,10 +555,14 @@ public class LineParser {
 	private CommentReadThenArgumentState commentReadThenArgumentState = new CommentReadThenArgumentState();
 	private class CommentReadThenArgumentState extends State {
 		public State parse(char character) {
-			if (character == '\n') {
+			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
-				return argumentValueState;
+				if (character == '\0') {
+					throw new SyntaxError();
+				} else {
+					return argumentValueState;
+				}
 			} else {
 				accumulator.append(character);
 				return commentReadState;
@@ -566,10 +573,15 @@ public class LineParser {
 	private CommentReadThenOperatorState commentReadThenOperatorState = new CommentReadThenOperatorState();
 	private class CommentReadThenOperatorState extends State {
 		public State parse(char character) {
-			if (character == '\n') {
+			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
-				return argumentOperatorState;
+				if (character == '\0') {
+					lineBuilder.setArguments(expressionBuilder.getExpression());
+					return endState;
+				} else {
+					return argumentOperatorState;
+				}
 			} else {
 				accumulator.append(character);
 				return commentReadState;
