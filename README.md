@@ -144,7 +144,7 @@ Directives
     
         INCLUDE "math.asm"
     
-    Optionally you can specify a ONCE annotation to prevent a file from being
+    Optionally you can specify a `once` annotation to prevent a file from being
     included more than once. However it is not recommended to use unless needed.
     
         INCLUDE ONCE "math.asm"
