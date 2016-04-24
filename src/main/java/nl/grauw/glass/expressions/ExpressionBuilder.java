@@ -18,7 +18,7 @@ public class ExpressionBuilder {
 	private int groupCount = 0;
 	
 	public ExpressionBuilder() {
-		operators.push(Operator.SENTINEL);
+		operators.push(SENTINEL);
 	}
 	
 	public void addValueToken(Expression value) {
@@ -28,15 +28,15 @@ public class ExpressionBuilder {
 	public void addOperatorToken(Operator operator) {
 		evaluateNotYieldingTo(operator);
 		
-		if (operator == Operator.GROUP_OPEN) {
+		if (operator == GROUP_OPEN) {
 			groupCount++;
 			operators.push(operator);
-			operators.push(Operator.SENTINEL);
-		} else if (operator == Operator.GROUP_CLOSE) {
+			operators.push(SENTINEL);
+		} else if (operator == GROUP_CLOSE) {
 			groupCount--;
-			if (operators.pop() != Operator.SENTINEL)
+			if (operators.pop() != SENTINEL)
 				throw new AssemblyException("Sentinel expected.");
-			if (operators.peek() != Operator.GROUP_OPEN)
+			if (operators.peek() != GROUP_OPEN)
 				throw new ExpressionError("Group open expected.");
 		} else {
 			operators.push(operator);
@@ -48,9 +48,9 @@ public class ExpressionBuilder {
 			throw new AssemblyException("Operands / operators is empty: " + this);
 		
 		// process remainder
-		evaluateNotYieldingTo(Operator.SENTINEL);
+		evaluateNotYieldingTo(SENTINEL);
 		
-		if (operators.size() > 1 && operators.peek() == Operator.SENTINEL)
+		if (operators.size() > 1 && operators.peek() == SENTINEL)
 			throw new ExpressionError("Group close expected.");
 		if (operands.size() > 1 || operators.size() != 1)
 			throw new AssemblyException("Not all operands / operators were processed: " + this);
@@ -60,7 +60,7 @@ public class ExpressionBuilder {
 	
 	private void evaluateNotYieldingTo(Operator operator) {
 		while (!operators.peek().yieldsTo(operator))
-			operators.pop().evaluate(operators, operands);
+			operands.push(operators.pop().evaluate());
 	}
 	
 	public boolean hasOpenGroup()
@@ -72,39 +72,11 @@ public class ExpressionBuilder {
 		return "" + operands + " / " + operators;
 	}
 	
-	public enum Operator {
-		POSITIVE(Precedence.UNARY, true),
-		NEGATIVE(Precedence.UNARY, true),
-		COMPLEMENT(Precedence.UNARY, true),
-		NOT(Precedence.UNARY, true),
-		MULTIPLY(Precedence.MULTIPLICATION, true),
-		DIVIDE(Precedence.MULTIPLICATION, true),
-		MODULO(Precedence.MULTIPLICATION, true),
-		ADD(Precedence.ADDITION, true),
-		SUBTRACT(Precedence.ADDITION, true),
-		SHIFT_LEFT(Precedence.SHIFT, true),
-		SHIFT_RIGHT(Precedence.SHIFT, true),
-		LESS_THAN(Precedence.COMPARISON, true),
-		LESS_OR_EQUALS(Precedence.COMPARISON, true),
-		GREATER_THAN(Precedence.COMPARISON, true),
-		GREATER_OR_EQUALS(Precedence.COMPARISON, true),
-		EQUALS(Precedence.EQUALITY, true),
-		NOT_EQUALS(Precedence.EQUALITY, true),
-		AND(Precedence.AND, true),
-		XOR(Precedence.XOR, true),
-		OR(Precedence.OR, true),
-		LOGICAL_AND(Precedence.LOGICAL_AND, true),
-		LOGICAL_OR(Precedence.LOGICAL_OR, true),
-		TERNARYIF(Precedence.TERNARYIFELSE, false),
-		TERNARYELSE(Precedence.TERNARYIFELSE, false),
-		GROUP_OPEN(Precedence.GROUPING, true),
-		GROUP_CLOSE(Precedence.NONE, true),
-		ANNOTATION(Precedence.ANNOTATION, false),
-		SEQUENCE(Precedence.SEQUENCE, false),
-		SENTINEL(Precedence.NONE, false);
+	private abstract class Operator {
 		
 		private Precedence precedence;
 		private boolean leftAssociative;
+		
 		private Operator(Precedence precedence, boolean leftAssociative) {
 			this.precedence = precedence;
 			this.leftAssociative = leftAssociative;
@@ -117,103 +89,241 @@ public class ExpressionBuilder {
 				return precedence.ordinal() >= other.precedence.ordinal();
 		}
 		
-		public void evaluate(Deque<Operator> operators, Deque<Expression> operands) {
-			Expression operandRight = operands.pop();
-			Expression result;
-			if (precedence == Precedence.UNARY || precedence == Precedence.GROUPING) {
-				result = evaluate(operandRight);
-			} else if (precedence == Precedence.TERNARYIFELSE) {
-				while (operators.peek() == TERNARYELSE) {
-					operators.pop().evaluate(operators, operands);
-				}
-				if (operators.peek() == TERNARYIF) {
-					operators.pop();
-					Expression operandMiddle = operands.pop();
-					result = evaluate(operands.pop(), operandMiddle, operandRight);
-				} else {
-					throw new ExpressionError("Ternary else (:) without if (?).");
-				}
-			} else {
-				result = evaluate(operands.pop(), operandRight);
-			}
-			operands.push(result);
-		}
-		
-		private Expression evaluate(Expression operand) {
-			switch (this) {
-			case POSITIVE:
-				return new Positive(operand);
-			case NEGATIVE:
-				return new Negative(operand);
-			case COMPLEMENT:
-				return new Complement(operand);
-			case NOT:
-				return new Not(operand);
-			case GROUP_OPEN:
-				return new Group(operand);
-			default:
-				throw new AssemblyException("Not an unary or group operator: " + this);
-			}
-		}
-		
-		private Expression evaluate(Expression operand1, Expression operand2) {
-			switch (this) {
-			case MULTIPLY:
-				return new Multiply(operand1, operand2);
-			case DIVIDE:
-				return new Divide(operand1, operand2);
-			case MODULO:
-				return new Modulo(operand1, operand2);
-			case ADD:
-				return new Add(operand1, operand2);
-			case SUBTRACT:
-				return new Subtract(operand1, operand2);
-			case SHIFT_LEFT:
-				return new ShiftLeft(operand1, operand2);
-			case SHIFT_RIGHT:
-				return new ShiftRight(operand1, operand2);
-			case LESS_THAN:
-				return new LessThan(operand1, operand2);
-			case LESS_OR_EQUALS:
-				return new LessOrEquals(operand1, operand2);
-			case GREATER_THAN:
-				return new GreaterThan(operand1, operand2);
-			case GREATER_OR_EQUALS:
-				return new GreaterOrEquals(operand1, operand2);
-			case EQUALS:
-				return new Equals(operand1, operand2);
-			case NOT_EQUALS:
-				return new NotEquals(operand1, operand2);
-			case AND:
-				return new And(operand1, operand2);
-			case XOR:
-				return new Xor(operand1, operand2);
-			case OR:
-				return new Or(operand1, operand2);
-			case LOGICAL_AND:
-				return new LogicalAnd(operand1, operand2);
-			case LOGICAL_OR:
-				return new LogicalOr(operand1, operand2);
-			case ANNOTATION:
-				return new Annotation(operand1, operand2);
-			case SEQUENCE:
-				return new Sequence(operand1, operand2);
-			default:
-				throw new ExpressionError("Not a binary operator: " + this);
-			}
-		}
-		
-		private Expression evaluate(Expression operand1, Expression operand2, Expression operand3) {
-			switch (this) {
-			case TERNARYELSE:
-				return new IfElse(operand1, operand2, operand3);
-			case TERNARYIF:
-				throw new ExpressionError("Ternary if (?) without else (:).");
-			default:
-				throw new ExpressionError("Not a ternary operator: " + this);
-			}
-		}
+		public abstract Expression evaluate();
 	}
+	
+	public final Operator POSITIVE = new Operator(Precedence.UNARY, true) {
+		@Override
+		public Expression evaluate() {
+			return new Positive(operands.pop());
+		};
+	};
+	
+	public final Operator NEGATIVE = new Operator(Precedence.UNARY, true) {
+		@Override
+		public Expression evaluate() {
+			return new Negative(operands.pop());
+		};
+	};
+	
+	public final Operator COMPLEMENT = new Operator(Precedence.UNARY, true) {
+		@Override
+		public Expression evaluate() {
+			return new Complement(operands.pop());
+		};
+	};
+	
+	public final Operator NOT = new Operator(Precedence.UNARY, true) {
+		@Override
+		public Expression evaluate() {
+			return new Not(operands.pop());
+		};
+	};
+	
+	public final Operator MULTIPLY = new Operator(Precedence.MULTIPLICATION, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Multiply(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator DIVIDE = new Operator(Precedence.MULTIPLICATION, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Divide(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator MODULO = new Operator(Precedence.MULTIPLICATION, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Modulo(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator ADD = new Operator(Precedence.ADDITION, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Add(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator SUBTRACT = new Operator(Precedence.ADDITION, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Subtract(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator SHIFT_LEFT = new Operator(Precedence.SHIFT, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new ShiftLeft(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator SHIFT_RIGHT = new Operator(Precedence.SHIFT, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new ShiftRight(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator LESS_THAN = new Operator(Precedence.COMPARISON, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new LessThan(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator LESS_OR_EQUALS = new Operator(Precedence.COMPARISON, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new LessOrEquals(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator GREATER_THAN = new Operator(Precedence.COMPARISON, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new GreaterThan(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator GREATER_OR_EQUALS = new Operator(Precedence.COMPARISON, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new GreaterOrEquals(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator EQUALS = new Operator(Precedence.EQUALITY, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Equals(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator NOT_EQUALS = new Operator(Precedence.EQUALITY, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new NotEquals(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator AND = new Operator(Precedence.AND, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new And(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator XOR = new Operator(Precedence.XOR, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Xor(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator OR = new Operator(Precedence.OR, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Or(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator LOGICAL_AND = new Operator(Precedence.LOGICAL_AND, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new LogicalAnd(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator LOGICAL_OR = new Operator(Precedence.LOGICAL_OR, true) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new LogicalOr(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator ANNOTATION = new Operator(Precedence.ANNOTATION, false) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Annotation(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator SEQUENCE = new Operator(Precedence.SEQUENCE, false) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Sequence(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator TERNARYIF = new Operator(Precedence.TERNARYIFELSE, false) {
+		@Override
+		public Expression evaluate() {
+			throw new ExpressionError("Ternary if (?) without else (:).");
+		};
+	};
+	
+	public final Operator TERNARYELSE = new Operator(Precedence.TERNARYIFELSE, false) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			while (operators.peek() == TERNARYELSE) {
+				operands.push(operators.pop().evaluate());
+			}
+			if (operators.peek() == TERNARYIF) {
+				operators.pop();
+				Expression operandMiddle = operands.pop();
+				return new IfElse(operands.pop(), operandMiddle, operandRight);
+			} else {
+				throw new ExpressionError("Ternary else (:) without if (?).");
+			}
+		};
+	};
+	
+	public final Operator GROUP_OPEN = new Operator(Precedence.GROUPING, true) {
+		@Override
+		public Expression evaluate() {
+			return new Group(operands.pop());
+		};
+	};
+	
+	public final Operator GROUP_CLOSE = new Operator(Precedence.NONE, true) {
+		@Override
+		public Expression evaluate() {
+			throw new AssemblyException("Can not evaluate group close.");
+		};
+	};
+	
+	public final Operator SENTINEL = new Operator(Precedence.NONE, false) {
+		@Override
+		public Expression evaluate() {
+			throw new AssemblyException("Can not evaluate sentinel.");
+		};
+	};
 	
 	private enum Precedence {
 		GROUPING,
