@@ -43,11 +43,6 @@ public class ExpressionBuilder {
 		}
 	}
 	
-	public boolean hasOpenGroup()
-	{
-		return groupCount > 0;
-	}
-	
 	public Expression getExpression() {
 		if (operands.isEmpty() || operators.isEmpty())
 			throw new AssemblyException("Operands / operators is empty: " + this);
@@ -66,6 +61,11 @@ public class ExpressionBuilder {
 	private void evaluateNotYieldingTo(Operator operator) {
 		while (!operators.peek().yieldsTo(operator))
 			operators.pop().evaluate(operators, operands);
+	}
+	
+	public boolean hasOpenGroup()
+	{
+		return groupCount > 0;
 	}
 	
 	public String toString() {
