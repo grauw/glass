@@ -149,6 +149,17 @@ Directives
     
         INCLUDE ONCE "math.asm"
     
+  * Include binary: `incbin`
+    
+    Includes binary data from a file. The current working directory is searched,
+    as well as any include paths specified on the command line.
+    
+        INCBIN "image.ge5"
+    
+    Optionally you can specify a start position and length:
+    
+        INCBIN "image.ge5",7,212*128
+    
   * Macro: `macro`, `endm`
     
     Defines a macro instruction, composed of all the instructions that follow

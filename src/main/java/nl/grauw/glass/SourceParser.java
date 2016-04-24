@@ -17,6 +17,7 @@ import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Ds;
 import nl.grauw.glass.directives.Equ;
 import nl.grauw.glass.directives.If;
+import nl.grauw.glass.directives.Incbin;
 import nl.grauw.glass.directives.Include;
 import nl.grauw.glass.directives.Instruction;
 import nl.grauw.glass.directives.Irp;
@@ -139,6 +140,9 @@ public class SourceParser {
 		case "include":
 		case "INCLUDE":
 			return getIncludeDirective(line, sourceFile);
+		case "incbin":
+		case "INCBIN":
+			return new Incbin(sourceFile, includePaths);
 		case "macro":
 		case "MACRO":
 			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
