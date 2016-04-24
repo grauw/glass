@@ -145,6 +145,21 @@ public class ExpressionBuilderTest {
 		parse("a 0 1H");
 	}
 	
+	@Test
+	public void testMultiline() {
+		assertEquals("{a + 1H}", parse("a +\n1H"));
+	}
+	
+	@Test
+	public void testMultiline2() {
+		assertEquals("{a, 1H}", parse("a, ;\n 1H"));
+	}
+	
+	@Test
+	public void testMultiline3() {
+		assertEquals("a", parse("a \n + 1H"));
+	}
+	
 	public String parse(String text) {
 		LineNumberReader reader = new LineNumberReader(new StringReader(" test " + text));
 		Line line = new LineParser().parse(reader, new Scope(), null);
