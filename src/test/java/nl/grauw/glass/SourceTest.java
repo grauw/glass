@@ -829,6 +829,34 @@ public class SourceTest {
 		);
 	}
 	
+	@Test(expected=AssemblyException.class)
+	public void testEndm() {
+		assemble(
+			" ENDM"
+		);
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testEndr() {
+		assemble(
+			" ENDR"
+		);
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testEndp() {
+		assemble(
+			" ENDP"
+		);
+	}
+	
+	@Test(expected=AssemblyException.class)
+	public void testEnds() {
+		assemble(
+			" ENDS"
+		);
+	}
+	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)

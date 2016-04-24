@@ -167,6 +167,17 @@ public class SourceParser {
 		case "ds":
 		case "DS":
 			return new Ds();
+		case "endm":
+		case "ENDM":
+		case "endr":
+		case "ENDR":
+		case "endp":
+		case "ENDP":
+		case "ends":
+		case "ENDS":
+			if (!terminators.contains(line.getMnemonic()))
+				throw new AssemblyException("Unexpected " + line.getMnemonic() + ".");
+			return new Instruction();
 		default:
 			return new Instruction();
 		}
