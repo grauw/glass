@@ -13,7 +13,7 @@ import nl.grauw.glass.instructions.Instruction;
 public class Scope implements Context {
 	
 	private final Scope parent;
-	private final Map<String, Expression> variables = new HashMap<>();
+	private final Map<String, Expression> symbols = new HashMap<>();
 	private final Map<String, Instruction> instructions = new HashMap<>();
 	private int address = -1;
 	
@@ -48,9 +48,9 @@ public class Scope implements Context {
 	public void addSymbol(String name, Expression value) {
 		if (name == null || value == null)
 			throw new AssemblyException("Symbol name and value must not be null.");
-		if (variables.containsKey(name))
+		if (symbols.containsKey(name))
 			throw new AssemblyException("Can not redefine symbol: " + name);
-		variables.put(name, value);
+		symbols.put(name, value);
 	}
 	
 	public void addSymbol(String name, Scope context) {
@@ -71,13 +71,13 @@ public class Scope implements Context {
 	}
 	
 	private Expression getLocalSymbol(String name) {
-		Expression value = variables.get(name);
+		Expression value = symbols.get(name);
 		if (value != null)
 			return value;
 		
 		int index = name.length();
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
-			Expression result = variables.get(name.substring(0, index));
+			Expression result = symbols.get(name.substring(0, index));
 			if (result != null && result.isContext())
 				return ((Scope)result.getContext()).getLocalSymbol(name.substring(index + 1));
 		}
@@ -116,7 +116,7 @@ public class Scope implements Context {
 	
 	public String serializeSymbols(String namePrefix) {
 		StringBuilder builder = new StringBuilder();
-		TreeMap<String, Expression> sortedMap = new TreeMap<>(variables);
+		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
 			if (entry.getValue() instanceof ContextLiteral && !"$".equals(entry.getKey())) {
 				String name = namePrefix + entry.getKey();
