@@ -7,6 +7,10 @@ public class Instruction extends Expression {
 	private final InstructionFactory instruction;
 	private final Context context;
 	
+	public Instruction(InstructionFactory instruction) {
+		this(instruction, null);
+	}
+	
 	public Instruction(InstructionFactory instruction, Context context) {
 		this.instruction = instruction;
 		this.context = context;
