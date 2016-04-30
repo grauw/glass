@@ -61,6 +61,16 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
+	public void testMember() {
+		assertEquals("{$.member}", parse("$.member"));
+	}
+	
+	@Test
+	public void testMemberCombinedIdentifier() {
+		assertEquals("object.member", parse("object.member"));
+	}
+	
+	@Test
 	public void testTernaryIfElse() {
 		assertEquals("{a ? 1H : 2H}", parse("a ? 1H : 2H"));
 	}
