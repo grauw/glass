@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class IfElse extends Expression {
+public class IfElse extends Passthrough {
 	
 	private final Expression condition;
 	private final Expression trueTerm;
@@ -33,58 +33,34 @@ public class IfElse extends Expression {
 		return condition.getInteger() != 0;
 	}
 	
-	public Expression getTerm() {
+	@Override
+	public Expression resolve() {
 		return isTrue() ? trueTerm : falseTerm;
 	}
 	
 	@Override
 	public boolean isInteger() {
-		return (trueTerm.isInteger() && falseTerm.isInteger()) || getTerm().isInteger();
-	}
-	
-	@Override
-	public int getInteger() {
-		return getTerm().getInteger();
+		return (trueTerm.isInteger() && falseTerm.isInteger()) || super.isInteger();
 	}
 	
 	@Override
 	public boolean isString() {
-		return (trueTerm.isString() && falseTerm.isString()) || getTerm().isString();
-	}
-	
-	@Override
-	public String getString() {
-		return getTerm().getString();
+		return (trueTerm.isString() && falseTerm.isString()) || super.isString();
 	}
 	
 	@Override
 	public boolean isRegister() {
-		return (trueTerm.isRegister() && falseTerm.isRegister()) || getTerm().isRegister();
-	}
-	
-	@Override
-	public Register getRegister() {
-		return getTerm().getRegister();
+		return (trueTerm.isRegister() && falseTerm.isRegister()) || super.isRegister();
 	}
 	
 	@Override
 	public boolean isFlag() {
-		return (trueTerm.isFlag() && falseTerm.isFlag()) || getTerm().isFlag();
-	}
-	
-	@Override
-	public Flag getFlag() {
-		return getTerm().getFlag();
+		return (trueTerm.isFlag() && falseTerm.isFlag()) || super.isFlag();
 	}
 	
 	@Override
 	public boolean isContext() {
-		return (trueTerm.isContext() && falseTerm.isContext()) || getTerm().isContext();
-	}
-	
-	@Override
-	public Context getContext() {
-		return getTerm().getContext();
+		return (trueTerm.isContext() && falseTerm.isContext()) || super.isContext();
 	}
 	
 	@Override

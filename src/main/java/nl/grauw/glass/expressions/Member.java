@@ -1,8 +1,6 @@
 package nl.grauw.glass.expressions;
 
-import nl.grauw.glass.instructions.InstructionFactory;
-
-public class Member extends Expression {
+public class Member extends Passthrough {
 	
 	private final Expression object;
 	private final Identifier subject;
@@ -25,65 +23,11 @@ public class Member extends Expression {
 		return subject;
 	}
 	
+	@Override
 	public Expression resolve() {
 		if (!object.isContext())
 			throw new EvaluationException("Object not found.");
 		return object.getContext().getSymbol(subject.getName());
-	}
-	
-	@Override
-	public boolean isInteger() {
-		return resolve().isInteger();
-	}
-	
-	@Override
-	public int getInteger() {
-		return resolve().getInteger();
-	}
-	
-	@Override
-	public boolean isRegister() {
-		return resolve().isRegister();
-	}
-	
-	@Override
-	public Register getRegister() {
-		return resolve().getRegister();
-	}
-	
-	@Override
-	public boolean isFlag() {
-		return resolve().isFlag();
-	}
-	
-	@Override
-	public Flag getFlag() {
-		return resolve().getFlag();
-	}
-	
-	@Override
-	public boolean isGroup() {
-		return resolve().isGroup();
-	}
-	
-	@Override
-	public boolean isInstruction() {
-		return resolve().isInstruction();
-	}
-	
-	@Override
-	public InstructionFactory getInstruction() {
-		return resolve().getInstruction();
-	}
-	
-	@Override
-	public boolean isContext() {
-		return resolve().isContext();
-	}
-	
-	@Override
-	public Context getContext() {
-		return resolve().getContext();
 	}
 	
 	@Override

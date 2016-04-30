@@ -1,8 +1,6 @@
 package nl.grauw.glass.expressions;
 
-import nl.grauw.glass.instructions.InstructionFactory;
-
-public class Group extends Expression {
+public class Group extends Passthrough {
 	
 	private final Expression term;
 	
@@ -20,68 +18,13 @@ public class Group extends Expression {
 	}
 	
 	@Override
-	public boolean isInteger() {
-		return term.isInteger();
-	}
-	
-	@Override
-	public int getInteger() {
-		return term.getInteger();
-	}
-	
-	@Override
-	public boolean isString() {
-		return term.isString();
-	}
-	
-	@Override
-	public String getString() {
-		return term.getString();
-	}
-	
-	@Override
-	public boolean isRegister() {
-		return term.isRegister();
-	}
-	
-	@Override
-	public Register getRegister() {
-		return term.getRegister();
-	}
-	
-	@Override
-	public boolean isFlag() {
-		return term.isFlag();
-	}
-	
-	@Override
-	public Flag getFlag() {
-		return term.getFlag();
+	public Expression resolve() {
+		return term;
 	}
 	
 	@Override
 	public boolean isGroup() {
 		return true;
-	}
-	
-	@Override
-	public boolean isInstruction() {
-		return term.isInstruction();
-	}
-	
-	@Override
-	public InstructionFactory getInstruction() {
-		return term.getInstruction();
-	}
-	
-	@Override
-	public boolean isContext() {
-		return term.isContext();
-	}
-	
-	@Override
-	public Context getContext() {
-		return term.getContext();
 	}
 	
 	public String toString() {
