@@ -10,7 +10,7 @@ import nl.grauw.glass.expressions.Equals;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 
-public class MacroInstruction extends Instruction {
+public class MacroInstruction extends InstructionFactory {
 	
 	private final Expression parameters;
 	private final Source source;

@@ -5,7 +5,7 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
-public class Rr extends Instruction {
+public class Rr extends InstructionFactory {
 	
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {

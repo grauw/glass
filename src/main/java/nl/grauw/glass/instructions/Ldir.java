@@ -4,7 +4,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Ldir extends Instruction {
+public class Ldir extends InstructionFactory {
 	
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {

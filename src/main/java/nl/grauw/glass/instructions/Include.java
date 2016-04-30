@@ -4,7 +4,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Include extends Instruction {
+public class Include extends InstructionFactory {
 	
 	public static Schema ARGUMENTS = new Schema(Schema.STRING);
 	public static Schema ARGUMENTS_ONCE = new Schema(new Schema.IsAnnotation(Schema.STRING));

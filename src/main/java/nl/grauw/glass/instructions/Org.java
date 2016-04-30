@@ -7,7 +7,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Org extends Instruction {
+public class Org extends InstructionFactory {
 	
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {

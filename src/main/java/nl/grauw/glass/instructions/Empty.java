@@ -3,7 +3,7 @@ package nl.grauw.glass.instructions;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 
-public class Empty extends Instruction {
+public class Empty extends InstructionFactory {
 	
 	public static final Empty INSTANCE = new Empty();
 	

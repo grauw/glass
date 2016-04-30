@@ -10,7 +10,7 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
-public class Rept extends Instruction {
+public class Rept extends InstructionFactory {
 	
 	public static Schema ARGUMENTS_N = new Schema(Schema.INTEGER);
 	public static Schema ARGUMENTS_N_ID = new Schema(Schema.INTEGER, Schema.IDENTIFIER);

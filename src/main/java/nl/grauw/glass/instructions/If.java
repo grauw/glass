@@ -9,7 +9,7 @@ import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class If extends Instruction {
+public class If extends InstructionFactory {
 	
 	private static Schema ARGUMENTS = new Schema(Schema.INTEGER);
 	

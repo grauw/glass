@@ -13,7 +13,7 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
-public class Incbin extends Instruction {
+public class Incbin extends InstructionFactory {
 	
 	private final List<File> basePaths = new ArrayList<File>();
 	

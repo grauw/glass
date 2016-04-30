@@ -11,7 +11,7 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
-public class Macro extends Instruction {
+public class Macro extends InstructionFactory {
 	
 	private final Source source;
 	private final Scope parameterScope;

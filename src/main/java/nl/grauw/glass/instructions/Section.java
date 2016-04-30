@@ -10,7 +10,7 @@ import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.Schema;
 import nl.grauw.glass.expressions.SectionContextLiteral;
 
-public class Section extends Instruction {
+public class Section extends InstructionFactory {
 	
 	public static Schema ARGUMENTS = new Schema(Schema.IDENTIFIER);
 	

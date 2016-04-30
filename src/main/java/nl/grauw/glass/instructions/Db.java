@@ -5,7 +5,7 @@ import java.util.List;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 
-public class Db extends Instruction {
+public class Db extends InstructionFactory {
 	
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {

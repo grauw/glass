@@ -4,7 +4,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Ends extends Instruction {
+public class Ends extends InstructionFactory {
 	
 	public static Schema ARGUMENTS = new Schema();
 	

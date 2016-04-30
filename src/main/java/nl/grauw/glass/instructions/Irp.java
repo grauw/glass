@@ -9,7 +9,7 @@ import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Irp extends Instruction {
+public class Irp extends InstructionFactory {
 	
 	private final Source source;
 	

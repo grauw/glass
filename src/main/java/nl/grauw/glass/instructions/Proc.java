@@ -8,7 +8,7 @@ import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
-public class Proc extends Instruction {
+public class Proc extends InstructionFactory {
 	
 	public static Schema ARGUMENTS = new Schema();
 	

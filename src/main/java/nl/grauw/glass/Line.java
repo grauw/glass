@@ -8,7 +8,7 @@ import java.util.List;
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Empty;
-import nl.grauw.glass.instructions.Instruction;
+import nl.grauw.glass.instructions.InstructionFactory;
 import nl.grauw.glass.instructions.InstructionObject;
 
 public class Line {
@@ -22,7 +22,7 @@ public class Line {
 	private final int lineNumber;
 	private final String sourceText;
 	
-	private Instruction instruction;
+	private InstructionFactory instruction;
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
@@ -79,11 +79,11 @@ public class Line {
 		this.directive = directive;
 	}
 	
-	public void setInstruction(Instruction instruction) {
+	public void setInstruction(InstructionFactory instruction) {
 		this.instruction = instruction;
 	}
 	
-	public Instruction getInstruction() {
+	public InstructionFactory getInstruction() {
 		if (instruction == null)
 			instruction = mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
 		return instruction;

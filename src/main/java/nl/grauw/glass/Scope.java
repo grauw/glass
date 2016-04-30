@@ -8,13 +8,13 @@ import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.Instruction;
+import nl.grauw.glass.instructions.InstructionFactory;
 
 public class Scope implements Context {
 	
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
-	private final Map<String, Instruction> instructions = new HashMap<>();
+	private final Map<String, InstructionFactory> instructions = new HashMap<>();
 	private int address = -1;
 	
 	public Scope() {
@@ -84,7 +84,7 @@ public class Scope implements Context {
 		return null;
 	}
 	
-	public Instruction addInstruction(String mnemonic, Instruction factory) {
+	public InstructionFactory addInstruction(String mnemonic, InstructionFactory factory) {
 		if (mnemonic == null || factory == null)
 			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
 		if (instructions.containsKey(mnemonic))
@@ -93,8 +93,8 @@ public class Scope implements Context {
 		return factory;
 	}
 	
-	public Instruction getInstruction(String mnemonic) {
-		Instruction factory = instructions.get(mnemonic);
+	public InstructionFactory getInstruction(String mnemonic) {
+		InstructionFactory factory = instructions.get(mnemonic);
 		if (factory != null)
 			return factory;
 		if (parent != null)
