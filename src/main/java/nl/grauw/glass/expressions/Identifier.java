@@ -20,36 +20,23 @@ public class Identifier extends Passthrough {
 	}
 	
 	public boolean exists() {
-		return context.hasSymbol(name);
+		return FlagOrRegister.getByName(name) != null || context.hasSymbol(name);
 	}
 	
 	@Override
 	public Expression resolve() {
-		return context.getSymbol(name);
+		Literal flagOrRegister = FlagOrRegister.getByName(name);
+		return flagOrRegister != null ? flagOrRegister : context.getSymbol(name);
 	}
 	
 	@Override
 	public boolean isRegister() {
-		Register register = Register.getByName(name);
-		return register != null || exists() && super.isRegister();
-	}
-	
-	@Override
-	public Register getRegister() {
-		Register register = Register.getByName(name);
-		return register != null ? register : super.getRegister();
+		return exists() && super.isRegister();
 	}
 	
 	@Override
 	public boolean isFlag() {
-		Flag flag = Flag.getByName(name);
-		return flag != null || exists() && super.isFlag();
-	}
-	
-	@Override
-	public Flag getFlag() {
-		Flag flag = Flag.getByName(name);
-		return flag != null ? flag : super.getFlag();
+		return exists() && super.isFlag();
 	}
 	
 	@Override
