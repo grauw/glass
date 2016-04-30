@@ -2,48 +2,37 @@ package nl.grauw.glass.expressions;
 
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
-public class Annotation extends BinaryOperator {
+public class Annotation extends Operator {
+	
+	private final Expression annotation;
+	private final Expression annotee;
 	
 	public Annotation(Expression annotation, Expression annotee) {
-		super(annotation, annotee);
 		if (!(annotation instanceof Identifier))
 			throw new ExpressionError("Annotation left hand side must be an identifier: " + annotation);
+		this.annotation = annotation;
+		this.annotee = annotee;
 	}
 	
 	public Identifier getAnnotation() {
-		return (Identifier)term1;
+		return (Identifier)annotation;
 	}
 	
 	public Expression getAnnotee() {
-		return term2;
+		return annotee;
 	}
 	
 	@Override
 	public Annotation copy(Context context) {
-		return new Annotation(term1.copy(context), term2.copy(context));
-	}
-	
-	@Override
-	public boolean isInteger() {
-		return false;
-	}
-	
-	@Override
-	public int getInteger() {
-		throw new EvaluationException("Not an integer.");
-	}
-	
-	@Override
-	public String getLexeme() {
-		return " ";
+		return new Annotation(annotation.copy(context), annotee.copy(context));
 	}
 	
 	public String toString() {
-		return "" + term1 + " " + term2;
+		return "" + annotation + " " + annotee;
 	}
 	
 	public String toDebugString() {
-		return "{" + term1.toDebugString() + " " + term2.toDebugString() + "}";
+		return "{" + annotation.toDebugString() + " " + annotee.toDebugString() + "}";
 	}
 	
 }
