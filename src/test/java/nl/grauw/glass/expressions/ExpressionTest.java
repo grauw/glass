@@ -202,9 +202,29 @@ public class ExpressionTest {
 		assertEquals(9, parse("(1 + 2) * 3").getInteger());
 	}
 	
+	@Test
+	public void testIdentifier() {
+		Scope scope = new Scope();
+		scope.addSymbol("symbol", new IntegerLiteral(11));
+		assertEquals(11, parse("symbol", scope).getInteger());
+	}
+	
+	@Test
+	public void testMember() {
+		Scope objectScope = new Scope();
+		objectScope.addSymbol("symbol", new IntegerLiteral(11));
+		Scope scope = new Scope();
+		scope.addSymbol("object", new ContextLiteral(objectScope));
+		assertEquals(11, parse("object.symbol", scope).getInteger());
+	}
+	
 	public Expression parse(String text) {
+		return parse(text, new Scope());
+	}
+	
+	public Expression parse(String text, Scope scope) {
 		LineNumberReader reader = new LineNumberReader(new StringReader(" test " + text));
-		Line line = new Parser().parse(reader, new Scope(), null);
+		Line line = new Parser().parse(reader, scope, null);
 		return line.getArguments();
 	}
 	
