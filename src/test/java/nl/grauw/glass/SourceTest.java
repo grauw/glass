@@ -848,8 +848,8 @@ public class SourceTest {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
 			builder.append(lineText).append("\n");
-		SourceParser parser = new SourceParser(new ArrayList<File>());
-		Source source = parser.parse(new StringReader(builder.toString()), null);
+		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<File>());
+		Source source = sourceBuilder.parse(new StringReader(builder.toString()), null);
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
 			source.assemble(output);

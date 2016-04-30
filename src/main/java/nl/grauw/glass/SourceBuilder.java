@@ -29,7 +29,7 @@ import nl.grauw.glass.expressions.Annotation;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 
-public class SourceParser {
+public class SourceBuilder {
 	
 	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
 	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
@@ -45,13 +45,13 @@ public class SourceParser {
 	
 	private static final List<File> sourceFiles = new ArrayList<File>();
 	
-	public SourceParser(List<File> includePaths) {
+	public SourceBuilder(List<File> includePaths) {
 		this.source = new Source();
 		this.terminators = END_TERMINATORS;
 		this.includePaths = includePaths;
 	}
 	
-	public SourceParser(Source source, List<String> terminators, List<File> includePaths) {
+	public SourceBuilder(Source source, List<String> terminators, List<File> includePaths) {
 		this.source = source;
 		this.terminators = terminators;
 		this.includePaths = includePaths;
@@ -194,13 +194,13 @@ public class SourceParser {
 			throw new AssemblyException("Include only accepts 1 argument.");
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		SourceParser parser = new SourceParser(source, END_TERMINATORS, includePaths);
-		parser.parseInclude(new File(argument.getString()), sourceFile, once);
+		SourceBuilder sourceBuilder = new SourceBuilder(source, END_TERMINATORS, includePaths);
+		sourceBuilder.parseInclude(new File(argument.getString()), sourceFile, once);
 		return new Include();
 	}
 	
 	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, File sourceFile) {
-		return new SourceParser(new Source(scope), terminators, includePaths).parse(reader, sourceFile);
+		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(reader, sourceFile);
 	}
 	
 }

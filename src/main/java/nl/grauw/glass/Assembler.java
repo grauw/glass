@@ -47,7 +47,7 @@ public class Assembler {
 	}
 	
 	public Assembler(File sourcePath, List<File> includePaths) {
-		source = new SourceParser(includePaths).parse(sourcePath);
+		source = new SourceBuilder(includePaths).parse(sourcePath);
 	}
 	
 	public void writeObject(File objectPath) {
