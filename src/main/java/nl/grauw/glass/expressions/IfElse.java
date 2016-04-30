@@ -12,6 +12,11 @@ public class IfElse extends Operator {
 		this.falseTerm = falseTerm;
 	}
 	
+	@Override
+	public IfElse copy(Context context) {
+		return new IfElse(condition.copy(context), trueTerm.copy(context), falseTerm.copy(context));
+	}
+	
 	public Expression getCondition() {
 		return condition;
 	}
@@ -30,11 +35,6 @@ public class IfElse extends Operator {
 	
 	public Expression getTerm() {
 		return isTrue() ? trueTerm : falseTerm;
-	}
-	
-	@Override
-	public IfElse copy(Context context) {
-		return new IfElse(condition.copy(context), trueTerm.copy(context), falseTerm.copy(context));
 	}
 	
 	@Override

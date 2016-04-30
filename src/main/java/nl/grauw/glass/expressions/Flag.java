@@ -19,13 +19,13 @@ public class Flag extends Literal {
 		this.code = code;
 	}
 	
-	public int getCode() {
-		return code;
-	}
-	
 	@Override
 	public Flag copy(Context context) {
 		return this;
+	}
+	
+	public int getCode() {
+		return code;
 	}
 	
 	@Override

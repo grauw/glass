@@ -6,17 +6,17 @@ public class Modulo extends BinaryOperator {
 		super(dividend, divisor);
 	}
 	
+	@Override
+	public Modulo copy(Context context) {
+		return new Modulo(term1.copy(context), term2.copy(context));
+	}
+	
 	public Expression getDividend() {
 		return term1;
 	}
 	
 	public Expression getDivisor() {
 		return term2;
-	}
-	
-	@Override
-	public Modulo copy(Context context) {
-		return new Modulo(term1.copy(context), term2.copy(context));
 	}
 	
 	@Override

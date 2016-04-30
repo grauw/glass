@@ -6,17 +6,17 @@ public class Add extends BinaryOperator {
 		super(augend, addend);
 	}
 	
+	@Override
+	public Add copy(Context context) {
+		return new Add(term1.copy(context), term2.copy(context));
+	}
+	
 	public Expression getAugend() {
 		return term1;
 	}
 	
 	public Expression getAddend() {
 		return term2;
-	}
-	
-	@Override
-	public Add copy(Context context) {
-		return new Add(term1.copy(context), term2.copy(context));
 	}
 	
 	@Override

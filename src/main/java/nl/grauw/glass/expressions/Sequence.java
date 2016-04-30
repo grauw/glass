@@ -8,17 +8,17 @@ public class Sequence extends BinaryOperator {
 		super(value, tail);
 	}
 	
+	@Override
+	public Sequence copy(Context context) {
+		return new Sequence(term1.copy(context), term2.copy(context));
+	}
+	
 	public Expression getValue() {
 		return term1;
 	}
 	
 	public Expression getTail() {
 		return term2;
-	}
-	
-	@Override
-	public Sequence copy(Context context) {
-		return new Sequence(term1.copy(context), term2.copy(context));
 	}
 	
 	@Override

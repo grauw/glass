@@ -10,17 +10,17 @@ public class Annotation extends Operator {
 		this.annotee = annotee;
 	}
 	
+	@Override
+	public Annotation copy(Context context) {
+		return new Annotation(annotation.copy(context), annotee.copy(context));
+	}
+	
 	public Identifier getAnnotation() {
 		return annotation;
 	}
 	
 	public Expression getAnnotee() {
 		return annotee;
-	}
-	
-	@Override
-	public Annotation copy(Context context) {
-		return new Annotation(annotation.copy(context), annotee.copy(context));
 	}
 	
 	public String toString() {

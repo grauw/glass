@@ -6,17 +6,17 @@ public class Subtract extends BinaryOperator {
 		super(minuend, subtrahend);
 	}
 	
+	@Override
+	public Subtract copy(Context context) {
+		return new Subtract(term1.copy(context), term2.copy(context));
+	}
+	
 	public Expression getMinuend() {
 		return term1;
 	}
 	
 	public Expression getSubtrahend() {
 		return term2;
-	}
-	
-	@Override
-	public Subtract copy(Context context) {
-		return new Subtract(term1.copy(context), term2.copy(context));
 	}
 	
 	@Override

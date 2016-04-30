@@ -8,13 +8,13 @@ public class CharacterLiteral extends Literal {
 		this.character = character;
 	}
 	
-	public char getCharacter() {
-		return character;
-	}
-	
 	@Override
 	public CharacterLiteral copy(Context context) {
 		return this;
+	}
+	
+	public char getCharacter() {
+		return character;
 	}
 	
 	@Override

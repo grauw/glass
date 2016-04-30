@@ -12,13 +12,13 @@ public class Identifier extends Expression {
 		this.context = context;
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 	@Override
 	public Identifier copy(Context context) {
 		return new Identifier(name, context);
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public boolean exists() {

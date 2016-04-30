@@ -9,6 +9,11 @@ public class ContextLiteral extends Literal {
 	}
 	
 	@Override
+	public ContextLiteral copy(Context context) {
+		return new ContextLiteral(context);
+	}
+	
+	@Override
 	public boolean isContext() {
 		return true;
 	}
@@ -16,11 +21,6 @@ public class ContextLiteral extends Literal {
 	@Override
 	public Context getContext() {
 		return context;
-	}
-	
-	@Override
-	public ContextLiteral copy(Context context) {
-		return new ContextLiteral(context);
 	}
 	
 	@Override

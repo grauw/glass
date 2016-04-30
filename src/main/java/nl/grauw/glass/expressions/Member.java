@@ -12,17 +12,17 @@ public class Member extends Operator {
 		this.subject = subject;
 	}
 	
+	@Override
+	public Member copy(Context context) {
+		return new Member(object.copy(context), subject.copy(context));
+	}
+	
 	public Expression getObject() {
 		return object;
 	}
 	
 	public Expression getSubject() {
 		return subject;
-	}
-	
-	@Override
-	public Member copy(Context context) {
-		return new Member(object.copy(context), subject.copy(context));
 	}
 	
 	public Expression resolve() {

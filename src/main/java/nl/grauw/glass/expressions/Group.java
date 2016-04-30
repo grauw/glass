@@ -10,13 +10,13 @@ public class Group extends Expression {
 		this.term = term;
 	}
 	
-	public Expression getTerm() {
-		return term;
-	}
-	
 	@Override
 	public Group copy(Context context) {
 		return new Group(term.copy(context));
+	}
+	
+	public Expression getTerm() {
+		return term;
 	}
 	
 	@Override

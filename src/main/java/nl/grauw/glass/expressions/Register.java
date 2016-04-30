@@ -57,6 +57,11 @@ public class Register extends Literal {
 		this(register.name, register.pair, register.code8, register.code16, register.indexCode, offset);
 	}
 	
+	@Override
+	public Register copy(Context context) {
+		return this;
+	}
+	
 	public boolean isPair() {
 		return pair;
 	}
@@ -87,11 +92,6 @@ public class Register extends Literal {
 		if (indexCode == NONE || !pair)
 			throw new EvaluationException("Not an index register pair.");
 		return indexOffset;
-	}
-	
-	@Override
-	public Register copy(Context context) {
-		return this;
 	}
 	
 	@Override

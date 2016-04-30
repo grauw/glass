@@ -6,17 +6,17 @@ public class Divide extends BinaryOperator {
 		super(dividend, divisor);
 	}
 	
+	@Override
+	public Divide copy(Context context) {
+		return new Divide(term1.copy(context), term2.copy(context));
+	}
+	
 	public Expression getDividend() {
 		return term1;
 	}
 	
 	public Expression getDivisor() {
 		return term2;
-	}
-	
-	@Override
-	public Divide copy(Context context) {
-		return new Divide(term1.copy(context), term2.copy(context));
 	}
 	
 	@Override
