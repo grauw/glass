@@ -278,7 +278,10 @@ public class ExpressionBuilder {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
-			return new Annotation(operands.pop(), operandRight);
+			Expression operandLeft = operands.pop();
+			if (!(operandLeft instanceof Identifier))
+				throw new ExpressionError("Annotation left hand side must be an identifier.");
+			return new Annotation((Identifier)operandLeft, operandRight);
 		};
 	};
 	
