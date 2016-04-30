@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public abstract class BinaryOperator extends Operator {
+public abstract class BinaryOperator extends Expression {
 	
 	protected final Expression term1;
 	protected final Expression term2;

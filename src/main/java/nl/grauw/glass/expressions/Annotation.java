@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class Annotation extends Operator {
+public class Annotation extends Expression {
 	
 	private final Identifier annotation;
 	private final Expression annotee;

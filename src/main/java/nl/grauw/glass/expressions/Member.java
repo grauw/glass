@@ -2,7 +2,7 @@ package nl.grauw.glass.expressions;
 
 import nl.grauw.glass.instructions.InstructionFactory;
 
-public class Member extends Operator {
+public class Member extends Expression {
 	
 	private final Expression object;
 	private final Identifier subject;

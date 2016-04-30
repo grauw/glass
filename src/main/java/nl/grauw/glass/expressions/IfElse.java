@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class IfElse extends Operator {
+public class IfElse extends Expression {
 	
 	private final Expression condition;
 	private final Expression trueTerm;
