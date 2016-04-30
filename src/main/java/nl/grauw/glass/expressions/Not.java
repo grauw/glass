@@ -9,7 +9,7 @@ public class Not extends UnaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Not copy(Context context) {
 		return new Not(term.copy(context));
 	}
 	

@@ -7,7 +7,7 @@ public class NotEquals extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public NotEquals copy(Context context) {
 		return new NotEquals(term1.copy(context), term2.copy(context));
 	}
 	

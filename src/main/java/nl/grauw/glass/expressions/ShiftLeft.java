@@ -7,7 +7,7 @@ public class ShiftLeft extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public ShiftLeft copy(Context context) {
 		return new ShiftLeft(term1.copy(context), term2.copy(context));
 	}
 	

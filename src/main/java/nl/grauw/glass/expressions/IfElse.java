@@ -33,7 +33,7 @@ public class IfElse extends Operator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public IfElse copy(Context context) {
 		return new IfElse(condition.copy(context), trueTerm.copy(context), falseTerm.copy(context));
 	}
 	

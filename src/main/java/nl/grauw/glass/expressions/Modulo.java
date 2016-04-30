@@ -15,7 +15,7 @@ public class Modulo extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Modulo copy(Context context) {
 		return new Modulo(term1.copy(context), term2.copy(context));
 	}
 	

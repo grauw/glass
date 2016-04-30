@@ -19,7 +19,7 @@ public class ContextLiteral extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public ContextLiteral copy(Context context) {
 		return new ContextLiteral(context);
 	}
 	

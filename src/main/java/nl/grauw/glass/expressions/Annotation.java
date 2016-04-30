@@ -19,7 +19,7 @@ public class Annotation extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Annotation copy(Context context) {
 		return new Annotation(term1.copy(context), term2.copy(context));
 	}
 	

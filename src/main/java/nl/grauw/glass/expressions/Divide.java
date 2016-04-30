@@ -15,7 +15,7 @@ public class Divide extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Divide copy(Context context) {
 		return new Divide(term1.copy(context), term2.copy(context));
 	}
 	

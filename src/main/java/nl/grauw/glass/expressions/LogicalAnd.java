@@ -7,7 +7,7 @@ public class LogicalAnd extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public LogicalAnd copy(Context context) {
 		return new LogicalAnd(term1.copy(context), term2.copy(context));
 	}
 	

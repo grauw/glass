@@ -15,7 +15,7 @@ public class Add extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Add copy(Context context) {
 		return new Add(term1.copy(context), term2.copy(context));
 	}
 	

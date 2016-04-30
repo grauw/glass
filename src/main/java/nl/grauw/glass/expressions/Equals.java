@@ -7,7 +7,7 @@ public class Equals extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Equals copy(Context context) {
 		return new Equals(term1.copy(context), term2.copy(context));
 	}
 	

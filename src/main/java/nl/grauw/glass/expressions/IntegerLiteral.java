@@ -12,7 +12,7 @@ public class IntegerLiteral extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public IntegerLiteral copy(Context context) {
 		return this;
 	}
 	

@@ -7,7 +7,7 @@ public class GreaterOrEquals extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public GreaterOrEquals copy(Context context) {
 		return new GreaterOrEquals(term1.copy(context), term2.copy(context));
 	}
 	

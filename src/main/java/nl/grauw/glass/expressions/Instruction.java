@@ -13,7 +13,7 @@ public class Instruction extends Expression {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Instruction copy(Context context) {
 		return new Instruction(instruction, context);
 	}
 	

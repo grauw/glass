@@ -7,7 +7,7 @@ public class LessOrEquals extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public LessOrEquals copy(Context context) {
 		return new LessOrEquals(term1.copy(context), term2.copy(context));
 	}
 	

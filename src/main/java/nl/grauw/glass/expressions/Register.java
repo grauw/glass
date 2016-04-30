@@ -90,7 +90,7 @@ public class Register extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Register copy(Context context) {
 		return this;
 	}
 	

@@ -13,7 +13,7 @@ public class CharacterLiteral extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public CharacterLiteral copy(Context context) {
 		return this;
 	}
 	

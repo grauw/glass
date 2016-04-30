@@ -7,7 +7,7 @@ public class Negative extends UnaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Negative copy(Context context) {
 		return new Negative(term.copy(context));
 	}
 	

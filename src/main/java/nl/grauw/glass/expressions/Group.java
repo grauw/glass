@@ -15,7 +15,7 @@ public class Group extends Expression {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Group copy(Context context) {
 		return new Group(term.copy(context));
 	}
 	

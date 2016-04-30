@@ -24,7 +24,7 @@ public class Flag extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Flag copy(Context context) {
 		return this;
 	}
 	

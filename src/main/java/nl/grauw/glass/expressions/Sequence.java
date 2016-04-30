@@ -17,7 +17,7 @@ public class Sequence extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Sequence copy(Context context) {
 		return new Sequence(term1.copy(context), term2.copy(context));
 	}
 	

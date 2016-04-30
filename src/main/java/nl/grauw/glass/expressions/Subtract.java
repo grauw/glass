@@ -15,7 +15,7 @@ public class Subtract extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Subtract copy(Context context) {
 		return new Subtract(term1.copy(context), term2.copy(context));
 	}
 	

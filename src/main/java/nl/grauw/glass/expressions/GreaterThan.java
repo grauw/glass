@@ -7,7 +7,7 @@ public class GreaterThan extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public GreaterThan copy(Context context) {
 		return new GreaterThan(term1.copy(context), term2.copy(context));
 	}
 	

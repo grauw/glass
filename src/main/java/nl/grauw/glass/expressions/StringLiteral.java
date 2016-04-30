@@ -11,7 +11,7 @@ public class StringLiteral extends Literal {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public StringLiteral copy(Context context) {
 		return this;
 	}
 	

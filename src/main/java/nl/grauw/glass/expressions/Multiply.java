@@ -15,7 +15,7 @@ public class Multiply extends BinaryOperator {
 	}
 	
 	@Override
-	public Expression copy(Context context) {
+	public Multiply copy(Context context) {
 		return new Multiply(term1.copy(context), term2.copy(context));
 	}
 	
