@@ -21,7 +21,7 @@ public class Macro extends Directive {
 			throw new AssemblyException("Macro without label.");
 		scope.addSymbol(line.getLabel(),
 			new Instruction(
-				new MacroInstruction(line.getArguments(), new Source(line.getScope(), source)),
+				new MacroInstruction(line.getArguments(), source),
 				source.getScope()
 			)
 		);
