@@ -41,7 +41,7 @@ public class SourceBuilder {
 	private final Source source;
 	private final List<String> terminators;
 	private final List<File> includePaths;
-	private final LineParser lineParser = new LineParser();
+	private final Parser parser = new Parser();
 	
 	private static final List<File> sourceFiles = new ArrayList<File>();
 	
@@ -109,7 +109,7 @@ public class SourceBuilder {
 	private Source parse(LineNumberReader reader, File sourceFile) {
 		sourceFiles.add(sourceFile);
 		while (true) {
-			Line line = lineParser.parse(reader, new Scope(source.getScope()), sourceFile);
+			Line line = parser.parse(reader, new Scope(source.getScope()), sourceFile);
 			if (line == null)
 				break;
 			

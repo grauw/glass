@@ -6,7 +6,7 @@ import java.io.LineNumberReader;
 import java.io.StringReader;
 
 import nl.grauw.glass.Line;
-import nl.grauw.glass.LineParser;
+import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
 
 import org.junit.Test;
@@ -204,7 +204,7 @@ public class ExpressionTest {
 	
 	public Expression parse(String text) {
 		LineNumberReader reader = new LineNumberReader(new StringReader(" test " + text));
-		Line line = new LineParser().parse(reader, new Scope(), null);
+		Line line = new Parser().parse(reader, new Scope(), null);
 		return line.getArguments();
 	}
 	

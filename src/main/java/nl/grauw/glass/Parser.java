@@ -11,7 +11,7 @@ import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.StringLiteral;
 
-public class LineParser {
+public class Parser {
 	
 	private Scope scope;
 	private LineBuilder lineBuilder = new LineBuilder();
