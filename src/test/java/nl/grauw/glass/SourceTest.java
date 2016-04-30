@@ -445,7 +445,7 @@ public class SourceTest {
 			" REPT 3",
 			" nop",
 			" rst 38H",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -454,7 +454,7 @@ public class SourceTest {
 		assertArrayEquals(b(0x00, 0x00, 0x00, 0x00), assemble(
 			" REPT count",
 			" nop",
-			" ENDR",
+			" ENDM",
 			"count: equ 4"
 		));
 	}
@@ -464,7 +464,7 @@ public class SourceTest {
 		assertArrayEquals(b(0x3E, 0x00, 0x3E, 0x01, 0x3E, 0x02), assemble(
 			" REPT 3, ?value",
 			" ld a,?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -473,7 +473,7 @@ public class SourceTest {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x11, 0x3E, 0x12), assemble(
 			" REPT 3, ?value, 10H",
 			" ld a,?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -482,7 +482,7 @@ public class SourceTest {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x13, 0x3E, 0x16), assemble(
 			" REPT 3, ?value, 10H, 3",
 			" ld a,?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -492,7 +492,7 @@ public class SourceTest {
 			" ld hl,test.2",
 			"test: REPT 3",
 			" nop",
-			"test: ENDR"
+			"test: ENDM"
 		));
 	}
 	
@@ -502,7 +502,7 @@ public class SourceTest {
 			" ld hl,test.2.test",
 			"test: REPT 3",
 			" nop",
-			"test: ENDR"
+			"test: ENDM"
 		));
 	}
 	
@@ -513,7 +513,7 @@ public class SourceTest {
 			"test: REPT 2",
 			" nop",
 			"test: nop",
-			" ENDR",
+			" ENDM",
 			" ld hl,test.test"
 		);
 	}
@@ -524,8 +524,8 @@ public class SourceTest {
 			" REPT 2, ?value, 0, 10H",
 			" REPT 3, ?value2",
 			" db ?value + ?value2",
-			" ENDR",
-			" ENDR"
+			" ENDM",
+			" ENDM"
 		));
 	}
 	
@@ -533,7 +533,7 @@ public class SourceTest {
 	public void testReptNoBody() {
 		assertArrayEquals(b(), assemble(
 			" REPT 3",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -541,16 +541,8 @@ public class SourceTest {
 	public void testReptNoCount() {
 		assemble(
 			" REPT",
-			" ENDR"
-		);
-	}
-	
-	@Test
-	public void testReptEndm() {
-		assertArrayEquals(b(), assemble(
-			" REPT 3",
 			" ENDM"
-		));
+		);
 	}
 	
 	@Test
@@ -559,7 +551,7 @@ public class SourceTest {
 			" IRP ?value, 10H, 20H, 30H",
 			" ld a,?value",
 			" rst 38H",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -568,7 +560,7 @@ public class SourceTest {
 		assertArrayEquals(b(), assemble(
 			" IRP ?value",
 			" ld a,?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -576,7 +568,7 @@ public class SourceTest {
 	public void testIrpNoBody() {
 		assertArrayEquals(b(), assemble(
 			" IRP ?value, 1, 2, 3",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -585,7 +577,7 @@ public class SourceTest {
 		assertArrayEquals(b(0xC5, 0xD5, 0xE5, 0xF5), assemble(
 			" IRP ?register, bc, de, hl, af",
 			" push ?register",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -594,7 +586,7 @@ public class SourceTest {
 		assertArrayEquals(b(), assemble(
 			" IRP",
 			" nop",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -604,7 +596,7 @@ public class SourceTest {
 			" ld hl,test.2",
 			"test: IRP ?value, 10H, 20H, 30H",
 			"test: db ?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -614,7 +606,7 @@ public class SourceTest {
 			" ld hl,test.2.test",
 			"test: IRP ?value, 10H, 20H, 30H",
 			"test: db ?value",
-			" ENDR"
+			" ENDM"
 		));
 	}
 	
@@ -625,17 +617,9 @@ public class SourceTest {
 			"test: IRP ?value, 10H, 20H, 30H",
 			" nop",
 			"test: nop",
-			" ENDR",
+			" ENDM",
 			" ld hl,test.test"
 		);
-	}
-	
-	@Test
-	public void testIrpEndm() {
-		assertArrayEquals(b(), assemble(
-			" IRP ?value, 1, 2, 3",
-			" ENDM"
-		));
 	}
 	
 	@Test
@@ -833,13 +817,6 @@ public class SourceTest {
 	public void testEndm() {
 		assemble(
 			" ENDM"
-		);
-	}
-	
-	@Test(expected=AssemblyException.class)
-	public void testEndr() {
-		assemble(
-			" ENDR"
 		);
 	}
 	
