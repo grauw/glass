@@ -751,8 +751,6 @@ public class SourceTest {
 			);
 		} catch (ErrorDirectiveException e) {
 			assertEquals("Test", e.getPlainMessage());
-		} catch (Throwable e) {
-			fail();
 		}
 	}
 	
