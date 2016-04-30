@@ -1,5 +1,7 @@
 package nl.grauw.glass.expressions;
 
+import nl.grauw.glass.instructions.InstructionFactory;
+
 public class Identifier extends Expression {
 	
 	private final String name;
@@ -64,6 +66,16 @@ public class Identifier extends Expression {
 	@Override
 	public boolean isGroup() {
 		return exists() && resolve().isGroup();
+	}
+	
+	@Override
+	public boolean isInstruction() {
+		return resolve().isInstruction();
+	}
+	
+	@Override
+	public InstructionFactory getInstruction() {
+		return resolve().getInstruction();
 	}
 	
 	@Override

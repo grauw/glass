@@ -3,6 +3,8 @@ package nl.grauw.glass.expressions;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.grauw.glass.instructions.InstructionFactory;
+
 public abstract class Expression {
 	
 	public abstract String toDebugString();
@@ -51,6 +53,14 @@ public abstract class Expression {
 	
 	public Expression getAnnotee() {
 		return this;
+	}
+	
+	public boolean isInstruction() {
+		return false;
+	}
+	
+	public InstructionFactory getInstruction() {
+		throw new EvaluationException("Not an instruction.");
 	}
 	
 	public boolean isContext() {

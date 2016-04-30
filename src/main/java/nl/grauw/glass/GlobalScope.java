@@ -1,5 +1,6 @@
 package nl.grauw.glass;
 
+import nl.grauw.glass.expressions.Instruction;
 import nl.grauw.glass.instructions.*;
 import nl.grauw.glass.instructions.Error;
 
@@ -94,6 +95,15 @@ public class GlobalScope extends Scope {
 		addInstruction("else", addInstruction("ELSE", new Else()));
 		addInstruction("error", addInstruction("ERROR", new Error()));
 		addInstruction("warning", addInstruction("WARNING", new Warning()));
+	}
+	
+	private InstructionFactory addInstruction(String mnemonic, InstructionFactory factory) {
+		if (mnemonic == null || factory == null)
+			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
+		if (hasSymbol(mnemonic))
+			throw new AssemblyException("Instruction already registered.");
+		addSymbol(mnemonic, new Instruction(factory, null));
+		return factory;
 	}
 	
 }

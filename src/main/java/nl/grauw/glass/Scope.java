@@ -8,13 +8,11 @@ import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.instructions.InstructionFactory;
 
 public class Scope implements Context {
 	
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
-	private final Map<String, InstructionFactory> instructions = new HashMap<>();
 	private int address = -1;
 	
 	public Scope() {
@@ -82,24 +80,6 @@ public class Scope implements Context {
 				return ((Scope)result.getContext()).getLocalSymbol(name.substring(index + 1));
 		}
 		return null;
-	}
-	
-	public InstructionFactory addInstruction(String mnemonic, InstructionFactory factory) {
-		if (mnemonic == null || factory == null)
-			throw new AssemblyException("Instruction mnemonic and factory must not be null.");
-		if (instructions.containsKey(mnemonic))
-			throw new AssemblyException("Instruction already registered.");
-		instructions.put(mnemonic, factory);
-		return factory;
-	}
-	
-	public InstructionFactory getInstruction(String mnemonic) {
-		InstructionFactory factory = instructions.get(mnemonic);
-		if (factory != null)
-			return factory;
-		if (parent != null)
-			return parent.getInstruction(mnemonic);
-		throw new AssemblyException("Unrecognized mnemonic.");
 	}
 	
 	public static class SymbolNotFoundException extends AssemblyException {

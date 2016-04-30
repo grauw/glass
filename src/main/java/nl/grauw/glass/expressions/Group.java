@@ -1,5 +1,7 @@
 package nl.grauw.glass.expressions;
 
+import nl.grauw.glass.instructions.InstructionFactory;
+
 public class Group extends Expression {
 	
 	private final Expression term;
@@ -60,6 +62,16 @@ public class Group extends Expression {
 	@Override
 	public boolean isGroup() {
 		return true;
+	}
+	
+	@Override
+	public boolean isInstruction() {
+		return term.isInstruction();
+	}
+	
+	@Override
+	public InstructionFactory getInstruction() {
+		return term.getInstruction();
 	}
 	
 	@Override

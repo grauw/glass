@@ -450,6 +450,17 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroInstructionArgument() {
+		assertArrayEquals(b(0x3E, 0x10, 0xC9), assemble(
+			"test: MACRO arg",
+			" ld a,10H",
+			" arg",
+			" ENDM",
+			" test ret"
+		));
+	}
+	
+	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
 			" REPT 3",

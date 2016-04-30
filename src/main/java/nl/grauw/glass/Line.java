@@ -85,7 +85,7 @@ public class Line {
 	
 	public InstructionFactory getInstruction() {
 		if (instruction == null)
-			instruction = mnemonic != null ? scope.getInstruction(mnemonic) : Empty.INSTANCE;
+			instruction = mnemonic != null ? scope.getSymbol(mnemonic).getInstruction() : Empty.INSTANCE;
 		return instruction;
 	}
 	
