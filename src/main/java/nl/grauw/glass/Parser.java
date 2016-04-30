@@ -408,6 +408,9 @@ public class Parser {
 			if (character == ')') {
 				expressionBuilder.addOperatorToken(expressionBuilder.GROUP_CLOSE);
 				return argumentOperatorState;
+			} else if (character == '.') {
+				expressionBuilder.addOperatorToken(expressionBuilder.MEMBER);
+				return argumentValueState;
 			} else if (character == '*') {
 				expressionBuilder.addOperatorToken(expressionBuilder.MULTIPLY);
 				return argumentValueState;

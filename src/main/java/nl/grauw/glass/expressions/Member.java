@@ -2,31 +2,33 @@ package nl.grauw.glass.expressions;
 
 import nl.grauw.glass.instructions.InstructionFactory;
 
-public class Identifier extends Expression {
+public class Member extends Operator {
 	
-	private final String name;
-	private final Context context;
+	private final Expression object;
+	private final Identifier subject;
 	
-	public Identifier(String name, Context context) {
-		this.name = name;
-		this.context = context;
+	public Member(Expression object, Identifier subject) {
+		this.object = object;
+		this.subject = subject;
 	}
 	
-	public String getName() {
-		return name;
+	public Expression getObject() {
+		return object;
+	}
+	
+	public Expression getSubject() {
+		return subject;
 	}
 	
 	@Override
-	public Identifier copy(Context context) {
-		return new Identifier(name, context);
-	}
-	
-	public boolean exists() {
-		return context.hasSymbol(name);
+	public Member copy(Context context) {
+		return new Member(object.copy(context), subject.copy(context));
 	}
 	
 	public Expression resolve() {
-		return context.getSymbol(name);
+		if (!object.isContext())
+			throw new EvaluationException("Object not found.");
+		return object.getContext().getSymbol(subject.getName());
 	}
 	
 	@Override
@@ -41,31 +43,27 @@ public class Identifier extends Expression {
 	
 	@Override
 	public boolean isRegister() {
-		Register register = Register.getByName(name);
-		return register != null || exists() && resolve().isRegister();
+		return resolve().isRegister();
 	}
 	
 	@Override
 	public Register getRegister() {
-		Register register = Register.getByName(name);
-		return register != null ? register : resolve().getRegister();
+		return resolve().getRegister();
 	}
 	
 	@Override
 	public boolean isFlag() {
-		Flag flag = Flag.getByName(name);
-		return flag != null || exists() && resolve().isFlag();
+		return resolve().isFlag();
 	}
 	
 	@Override
 	public Flag getFlag() {
-		Flag flag = Flag.getByName(name);
-		return flag != null ? flag : resolve().getFlag();
+		return resolve().getFlag();
 	}
 	
 	@Override
 	public boolean isGroup() {
-		return exists() && resolve().isGroup();
+		return resolve().isGroup();
 	}
 	
 	@Override
@@ -88,12 +86,13 @@ public class Identifier extends Expression {
 		return resolve().getContext();
 	}
 	
+	@Override
 	public String toString() {
-		return name;
+		return "" + object + "." + subject;
 	}
 	
 	public String toDebugString() {
-		return toString();
+		return "{" + object.toDebugString() + "." + subject.toDebugString() + "}";
 	}
 	
 }

@@ -8,6 +8,7 @@ import java.io.StringReader;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
+import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.Test;
 
@@ -216,6 +217,30 @@ public class ExpressionTest {
 		Scope scope = new Scope();
 		scope.addSymbol("object", new ContextLiteral(objectScope));
 		assertEquals(11, parse("object.symbol", scope).getInteger());
+	}
+	
+	@Test
+	public void testThisMember() {
+		Scope scope = new Scope();
+		scope.addSymbol("symbol", new IntegerLiteral(11));
+		assertEquals(11, parse("$.symbol", scope).getInteger());
+	}
+	
+	@Test
+	public void testMemberOfExpression() {
+		Scope scope = new Scope();
+		scope.addSymbol("symbol", new IntegerLiteral(11));
+		assertEquals(11, parse("($).symbol", scope).getInteger());
+	}
+	
+	@Test(expected=EvaluationException.class)
+	public void testMemberNoContext() {
+		parse("1.symbol").getInteger();
+	}
+	
+	@Test(expected=ExpressionError.class)
+	public void testMemberNoIdentifier() {
+		parse("$.1").getInteger();
 	}
 	
 	public Expression parse(String text) {

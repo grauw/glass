@@ -120,6 +120,16 @@ public class ExpressionBuilder {
 		};
 	};
 	
+	public final Operator MEMBER = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			if (!(operandRight instanceof Identifier))
+				throw new ExpressionError("Member operator right hand side must be an identifier.");
+			return new Member(operands.pop(), (Identifier)operandRight);
+		};
+	};
+	
 	public final Operator MULTIPLY = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT) {
 		@Override
 		public Expression evaluate() {
@@ -327,6 +337,7 @@ public class ExpressionBuilder {
 	
 	private enum Precedence {
 		GROUPING,
+		MEMBER,
 		UNARY,
 		MULTIPLICATION,
 		ADDITION,
