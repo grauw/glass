@@ -4,8 +4,6 @@ import nl.grauw.glass.instructions.InstructionFactory;
 
 public abstract class Passthrough extends Expression {
 	
-	public abstract Expression resolve();
-	
 	@Override
 	public boolean isInteger() {
 		return resolve().isInteger();

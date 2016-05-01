@@ -11,6 +11,10 @@ public abstract class Expression {
 	
 	public abstract Expression copy(Context context);
 	
+	public Expression resolve() {
+		return this;
+	}
+	
 	public boolean isInteger() {
 		return false;
 	}
