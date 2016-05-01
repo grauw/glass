@@ -71,6 +71,16 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
+	public void testIndex() {
+		assertEquals("{({4H, 5H})[0H]}", parse("(4H, 5H)[0H]"));
+	}
+	
+	@Test
+	public void testIndexPrecedence() {
+		assertEquals("{$.member[0H]}", parse("$.member[0]"));
+	}
+	
+	@Test
 	public void testTernaryIfElse() {
 		assertEquals("{a ? 1H : 2H}", parse("a ? 1H : 2H"));
 	}

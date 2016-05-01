@@ -28,16 +28,18 @@ public class ExpressionBuilder {
 	public void addOperatorToken(Operator operator) {
 		evaluateNotYieldingTo(operator);
 		
-		if (operator == GROUP_OPEN) {
+		if (operator == GROUP_OPEN || operator == INDEX_OPEN) {
 			groupCount++;
 			operators.push(operator);
 			operators.push(SENTINEL);
-		} else if (operator == GROUP_CLOSE) {
+		} else if (operator == GROUP_CLOSE || operator == INDEX_CLOSE) {
 			groupCount--;
 			if (operators.pop() != SENTINEL)
 				throw new AssemblyException("Sentinel expected.");
-			if (operators.peek() != GROUP_OPEN)
+			if (operator == GROUP_CLOSE && operators.peek() != GROUP_OPEN)
 				throw new ExpressionError("Group open expected.");
+			if (operator == INDEX_CLOSE && operators.peek() != INDEX_OPEN)
+				throw new ExpressionError("Index open expected.");
 		} else {
 			operators.push(operator);
 		}
@@ -325,6 +327,21 @@ public class ExpressionBuilder {
 	};
 	
 	public final Operator GROUP_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT) {
+		@Override
+		public Expression evaluate() {
+			throw new AssemblyException("Can not evaluate group close.");
+		};
+	};
+	
+	public final Operator INDEX_OPEN = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT) {
+		@Override
+		public Expression evaluate() {
+			Expression operandRight = operands.pop();
+			return new Index(operands.pop(), operandRight);
+		};
+	};
+	
+	public final Operator INDEX_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT) {
 		@Override
 		public Expression evaluate() {
 			throw new AssemblyException("Can not evaluate group close.");

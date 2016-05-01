@@ -243,6 +243,27 @@ public class ExpressionTest {
 		parse("($).1").getInteger();
 	}
 	
+	@Test
+	public void testIndex() {
+		assertEquals(4, parse("(4H, 5H)[0]").getInteger());
+		assertEquals(5, parse("(4H, 5H)[1]").getInteger());
+	}
+	
+	@Test
+	public void testIndexNoSequence() {
+		assertEquals(4, parse("4H[0]").getInteger());
+	}
+	
+	@Test(expected=EvaluationException.class)
+	public void testIndexOutOfBounds() {
+		parse("(4H, 5H)[2]").getInteger();
+	}
+	
+	@Test(expected=EvaluationException.class)
+	public void testIndexNoSequenceOutOfBounds() {
+		parse("4H[1]").getInteger();
+	}
+	
 	public Expression parse(String text) {
 		return parse(text, new Scope());
 	}

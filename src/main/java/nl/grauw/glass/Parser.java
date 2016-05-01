@@ -406,6 +406,12 @@ public class Parser {
 			if (character == ')') {
 				expressionBuilder.addOperatorToken(expressionBuilder.GROUP_CLOSE);
 				return argumentOperatorState;
+			} else if (character == '[') {
+				expressionBuilder.addOperatorToken(expressionBuilder.INDEX_OPEN);
+				return argumentValueState;
+			} else if (character == ']') {
+				expressionBuilder.addOperatorToken(expressionBuilder.INDEX_CLOSE);
+				return argumentOperatorState;
 			} else if (character == '.') {
 				expressionBuilder.addOperatorToken(expressionBuilder.MEMBER);
 				return argumentValueState;
