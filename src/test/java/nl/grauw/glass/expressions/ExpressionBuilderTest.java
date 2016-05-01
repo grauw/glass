@@ -62,7 +62,7 @@ public class ExpressionBuilderTest {
 	
 	@Test
 	public void testMember() {
-		assertEquals("{$.member}", parse("$.member"));
+		assertEquals("{($).member}", parse("($).member"));
 	}
 	
 	@Test

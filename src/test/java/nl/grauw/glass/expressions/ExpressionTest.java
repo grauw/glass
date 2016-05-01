@@ -240,7 +240,7 @@ public class ExpressionTest {
 	
 	@Test(expected=ExpressionError.class)
 	public void testMemberNoIdentifier() {
-		parse("$.1").getInteger();
+		parse("($).1").getInteger();
 	}
 	
 	public Expression parse(String text) {

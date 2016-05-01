@@ -75,12 +75,13 @@ public class Parser {
 		
 		public boolean isIdentifier(char character) {
 			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
-					character == '$' || character == '\'';
+					character == '\'';
 		}
 		
 		public boolean isIdentifierStart(char character) {
 			return character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z' ||
-					character == '_' || character == '.' || character == '?' || character == '@';
+					character == '_' || character == '.' || character == '?' || character == '@' ||
+					character == '$';
 		}
 		
 	}
@@ -186,9 +187,6 @@ public class Parser {
 			if (isIdentifierStart(character)) {
 				accumulator.append(character);
 				return argumentIdentifierState;
-			} else if (character == '$') {
-				expressionBuilder.addValueToken(new Identifier("$", scope));
-				return argumentOperatorState;
 			} else if (character >= '0' && character <= '9') {
 				accumulator.append(character);
 				return argumentNumberState;
