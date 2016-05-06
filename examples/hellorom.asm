@@ -37,5 +37,6 @@ Finished:
 helloWorld:
 	db "Hello world!",0
 
-; Padding until 08000H to make the file 16K
-	ds 08000H - $
+; Padding to make the file size a multiple of 16K
+; (Alternatively, include macros.asm and use ALIGN 4000H)
+	ds -$ & 3FFFH
