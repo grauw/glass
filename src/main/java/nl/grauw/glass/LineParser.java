@@ -19,7 +19,7 @@ public class LineParser {
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-	
+
 	public Line parse(LineNumberReader reader, Scope scope, File sourceFile) {
 		this.scope = scope;
 		state = labelStartState;
@@ -343,6 +343,8 @@ public class LineParser {
 					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
+			} else if (character == 'x') {
+				return argumentHexadecimalState;
 			} else {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
