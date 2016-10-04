@@ -343,7 +343,7 @@ public class LineParser {
 					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
-			} else if (character == 'x') {
+			} else if (character == 'x' && accumulator.length() == 1) {
 				return argumentHexadecimalState;
 			} else {
 				String string = accumulator.toString();
