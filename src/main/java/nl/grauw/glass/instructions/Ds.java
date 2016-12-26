@@ -68,7 +68,8 @@ public class Ds extends InstructionFactory {
 		public void generateObjectCode(OutputStream output) throws IOException {
 			byte[] bytes = getSectionBytes();
 			if (bytes.length > size.getInteger())
-				throw new AssemblyException("Section size exceeds space.");
+				throw new AssemblyException("Section size exceeds space (required: " +
+					bytes.length + " bytes, available: " + size.getInteger() + " bytes).");
 			
 			if (virtual)
 				return;
