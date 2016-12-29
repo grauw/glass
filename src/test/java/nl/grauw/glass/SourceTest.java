@@ -832,6 +832,17 @@ public class SourceTest {
 		);
 	}
 	
+	@Test
+	public void testSectionIndirect() {
+		assemble(
+			"ROM2: ds 3H",
+			"ROM: equ ROM2",
+			" SECTION ROM",
+			" ld hl,$",
+			" ENDS"
+		);
+	}
+	
 	@Test(expected=AssemblyException.class)
 	public void testEndm() {
 		assemble(

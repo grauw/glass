@@ -69,4 +69,14 @@ public abstract class Passthrough extends Expression {
 		return resolve().getContext();
 	}
 	
+	@Override
+	public boolean isSectionContext() {
+		return resolve().isSectionContext();
+	}
+	
+	@Override
+	public SectionContext getSectionContext() {
+		return resolve().getSectionContext();
+	}
+	
 }

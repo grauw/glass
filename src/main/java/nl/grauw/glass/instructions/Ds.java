@@ -13,14 +13,16 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
+import nl.grauw.glass.expressions.SectionContext;
 
-public class Ds extends InstructionFactory {
+public class Ds extends InstructionFactory implements SectionContext {
 	
 	public static Schema ARGUMENTS_N = new Schema(new Schema.IsAnnotation(Schema.INTEGER));
 	public static Schema ARGUMENTS_N_N = new Schema(Schema.INTEGER, Schema.INTEGER);
 	
 	private final List<Section> sections = new ArrayList<>();
 	
+	@Override
 	public void addSection(Section section) {
 		sections.add(section);
 	}

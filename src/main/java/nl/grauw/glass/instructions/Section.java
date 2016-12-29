@@ -6,9 +6,7 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
-import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.Schema;
-import nl.grauw.glass.expressions.SectionContextLiteral;
 
 public class Section extends InstructionFactory {
 	
@@ -29,12 +27,10 @@ public class Section extends InstructionFactory {
 		if (!ARGUMENTS.check(line.getArguments()))
 			throw new ArgumentException();
 		
-		Expression argument = ((Identifier)line.getArguments()).resolve();
-		if (!(argument instanceof SectionContextLiteral))
+		if (!line.getArguments().isSectionContext())
 			throw new ArgumentException("Argument does not reference a section context.");
 		
-		Ds sectionContext = ((SectionContextLiteral)argument).getSectionContext();
-		sectionContext.addSection(this);
+		line.getArguments().getSectionContext().addSection(this);
 		
 		source.expand();
 		return super.expand(line);
