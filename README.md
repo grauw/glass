@@ -292,7 +292,7 @@ Literals
 --------
 
   * Decimal: `127`
-  * Hexadecimal: `0FC9EH` or `#FC9E`
+  * Hexadecimal: `0FC9EH`, `#FC9E` or `0xFC9E`
   * Binary: `10110001B` or `%10110001`
   * Octal: `377O`
   * Character: `'c'`
