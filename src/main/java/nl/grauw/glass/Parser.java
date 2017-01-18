@@ -186,7 +186,10 @@ public class Parser {
 			if (isIdentifierStart(character)) {
 				accumulator.append(character);
 				return argumentIdentifierState;
-			} else if (character >= '0' && character <= '9') {
+			} else if (character == '0') {
+				accumulator.append(character);
+				return argumentZeroState;
+			} else if (character >= '1' && character <= '9') {
 				accumulator.append(character);
 				return argumentNumberState;
 			} else if (character == '#') {
@@ -335,6 +338,18 @@ public class Parser {
 		}
 	}
 	
+	private ArgumentZeroState argumentZeroState = new ArgumentZeroState();
+	private class ArgumentZeroState extends State {
+		public State parse(char character) {
+			if (character == 'x' || character == 'X') {
+				accumulator.setLength(0);
+				return argumentHexadecimalState;
+			} else {
+				return argumentNumberState.parse(character);
+			}
+		}
+	}
+	
 	private ArgumentNumberState argumentNumberState = new ArgumentNumberState();
 	private class ArgumentNumberState extends State {
 		public State parse(char character) {
@@ -342,10 +357,6 @@ public class Parser {
 					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
-			} else if ((character == 'x' || character == 'X') &&
-					accumulator.length() == 1 && accumulator.charAt(0) == '0') {
-				accumulator.setLength(0);
-				return argumentHexadecimalState;
 			} else {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
