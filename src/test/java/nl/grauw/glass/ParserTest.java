@@ -14,7 +14,7 @@ import nl.grauw.glass.expressions.IntegerLiteral;
 
 import org.junit.Test;
 
-public class LineParserTest {
+public class ParserTest {
 	
 	@Test
 	public void testLabel() {
