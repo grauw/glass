@@ -75,13 +75,12 @@ public class Parser {
 		
 		public boolean isIdentifier(char character) {
 			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
-					character == '\'';
+					character == '\'' || character == '$';
 		}
 		
 		public boolean isIdentifierStart(char character) {
 			return character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z' ||
-					character == '_' || character == '.' || character == '?' || character == '@' ||
-					character == '$';
+					character == '_' || character == '.' || character == '?' || character == '@';
 		}
 		
 	}
@@ -192,6 +191,8 @@ public class Parser {
 				return argumentNumberState;
 			} else if (character == '#') {
 				return argumentHexadecimalState;
+			} else if (character == '$') {
+				return argumentDollarState;
 			} else if (character == '%') {
 				return argumentBinaryState;
 			} else if (character == '"') {
@@ -369,6 +370,21 @@ public class Parser {
 					}
 					return argumentOperatorState.parse(character);
 				}
+			}
+		}
+	}
+	
+	private ArgumentDollarState argumentDollarState = new ArgumentDollarState();
+	private class ArgumentDollarState extends State {
+		public State parse(char character) {
+			if (character >= '0' && character <= '9' || character >= 'A' && character <= 'F' ||
+					character >= 'a' && character <= 'f') {
+				accumulator.append(character);
+				return argumentHexadecimalState;
+			} else {
+				expressionBuilder.addValueToken(new Identifier("$", scope));
+				accumulator.setLength(0);
+				return argumentOperatorState.parse(character);
 			}
 		}
 	}

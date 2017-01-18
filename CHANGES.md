@@ -1,6 +1,12 @@
 What’s new in Glass
 ===================
 
+Glass 0.6 — ????-??-??
+----------------------
+
+  * The `$` prefix can now be used for hexadecimal numbers.
+  * Symbols can no longer start with the `$` character (bc).
+
 Glass 0.5 — 2017-01-18
 ----------------------
 

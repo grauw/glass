@@ -77,7 +77,7 @@ public class ExpressionBuilderTest {
 	
 	@Test
 	public void testIndexPrecedence() {
-		assertEquals("{$.member[0H]}", parse("$.member[0]"));
+		assertEquals("{{$.member}[0H]}", parse("$.member[0]"));
 	}
 	
 	@Test
