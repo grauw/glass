@@ -352,6 +352,8 @@ Operators
   * Ternary if: `a ? b : c`
   * Annotation: `a b`
   * Sequence: `a, b`
+  * Group: `()`
+  * Index: `[]`
 
 Logical operators use integers to represent true / false values. 0 means false,
 any other value means true. They return -1 for true values.
