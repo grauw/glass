@@ -9,7 +9,7 @@ Glass 0.5 — 2017-01-18
   * The `.` member operator is now an official operator.
   * Sequences can now be indexed with the `[]` operator.
   * Symbols can now also start with the `$` character.
-  * Include now support the `once` annotation.
+  * Include now supports the `once` annotation.
   * The `0x` and `0X` prefix can now be used for hexadecimal numbers.
     Thanks to Paul Bosselaar.
   * Macro arguments can now specify default values with `=`.
