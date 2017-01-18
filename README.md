@@ -6,7 +6,7 @@ Copyright © 2013, Laurens Holst
 Project information
 -------------------
 
-Glass is a cross-platform assembler for the Z80 processor, written in Java 7.
+Glass is a cross-platform assembler for the Z80 processor, written in Java 8.
 
 Downloads [available here](https://bitbucket.org/grauw/glass/downloads)
 ([changes](https://bitbucket.org/grauw/glass/src/tip/CHANGES.md)).
@@ -38,7 +38,7 @@ Supported options:
 
     -I include_path
 
-Note that [Java 7](http://java.com/getjava) must be installed to run Glass.
+Note that [Java 8](http://java.com/getjava) must be installed to run Glass.
 To check your Java version, invoke the `java -version` command.
 
 Syntax
