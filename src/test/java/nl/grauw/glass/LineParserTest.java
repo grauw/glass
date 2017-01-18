@@ -127,6 +127,11 @@ public class LineParserTest {
 		parseExpression("0x0x0");
 	}
 	
+	@Test(expected=ExpressionError.class)
+	public void testHexNumberWrong3() {
+		parseExpression("3x0");
+	}
+	
 	@Test
 	public void testNumber() {
 		assertEquals(127, parseExpression("127").getInteger());

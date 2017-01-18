@@ -341,7 +341,8 @@ public class Parser {
 					character >= 'a' && character <= 'f') {
 				accumulator.append(character);
 				return argumentNumberState;
-			} else if ((character == 'x' || character == 'X') && accumulator.length() == 1) {
+			} else if ((character == 'x' || character == 'X') &&
+					accumulator.length() == 1 && accumulator.charAt(0) == '0') {
 				accumulator.setLength(0);
 				return argumentHexadecimalState;
 			} else {
