@@ -8,6 +8,7 @@ import java.io.StringReader;
 import nl.grauw.glass.LineParser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 import nl.grauw.glass.expressions.Flag;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
@@ -113,17 +114,17 @@ public class LineParserTest {
 	
 	@Test(expected=SyntaxError.class)
 	public void testHexNumberTooShort() {
-		parse("0x");
+		parseExpression("0x");
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test(expected=ExpressionError.class)
 	public void testHexNumberWrong() {
-		parse("003x0");
+		parseExpression("003x0");
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test(expected=ExpressionError.class)
 	public void testHexNumberWrong2() {
-		parse("0x0x0");
+		parseExpression("0x0x0");
 	}
 	
 	@Test

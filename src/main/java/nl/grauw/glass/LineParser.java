@@ -344,6 +344,7 @@ public class LineParser {
 				accumulator.append(character);
 				return argumentNumberState;
 			} else if (character == 'x' && accumulator.length() == 1) {
+				accumulator.setLength(0);
 				return argumentHexadecimalState;
 			} else {
 				String string = accumulator.toString();
