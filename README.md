@@ -63,8 +63,8 @@ Labels
 Labels and other identifiers follow the following grammar:
 
     identifier = id_start_char id_char*
-    id_start_char = [a-z] | [A-Z] | _ | . | ? | @
-    id_char = id_start_char | [0-9] | $ | '
+    id_start_char = [a-z] | [A-Z] | _ | . | ? | @ | $
+    id_char = id_start_char | [0-9] | '
 
 The colon after a label is optional. If a label has no colon, it can not have
 any leading white space, it must start at column 0.
