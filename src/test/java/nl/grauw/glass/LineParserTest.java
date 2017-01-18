@@ -110,22 +110,22 @@ public class LineParserTest {
 	public void testCharacterLiteralUnclosedEscape() {
 		parse("'\\");
 	}
-
+	
 	@Test(expected=SyntaxError.class)
 	public void testHexNumberTooShort() {
 		parse("0x");
 	}
-
+	
 	@Test(expected=SyntaxError.class)
 	public void testHexNumberWrong() {
 		parse("003x0");
 	}
-
+	
 	@Test(expected=SyntaxError.class)
 	public void testHexNumberWrong2() {
 		parse("0x0x0");
 	}
-
+	
 	@Test
 	public void testNumber() {
 		assertEquals(127, parseExpression("127").getInteger());

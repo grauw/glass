@@ -19,7 +19,7 @@ public class LineParser {
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-
+	
 	public Line parse(LineNumberReader reader, Scope scope, File sourceFile) {
 		this.scope = scope;
 		state = labelStartState;
