@@ -1,6 +1,28 @@
 What’s new in Glass
 ===================
 
+Glass 0.5 — 2017-01-18
+----------------------
+
+  * The `incbin` directive is now supported.
+  * The ternary `?:` operator is now supported.
+  * The `.` member operator is now an official operator.
+  * Sequences can now be indexed with the `[]` operator.
+  * Symbols can now also start with the `$` character.
+  * Include now support the `once` annotation.
+  * The `0x` and `0X` prefix can now be used for hexadecimal numbers.
+    Thanks to Paul Bosselaar.
+  * Macro arguments can now specify default values with `=`.
+  * Expressions can now span multiple lines.
+  * The `org` statement no longer affects the address of a preceding label (bc).
+  * Some invalid instructions now throw errors (e.g. `bit 7,ixh`).
+  * Contexts are now resolved through macro arguments.
+  * Instructions and macros can now be passed into macro arguments.
+  * Section identifiers are now resolved like any other expression.
+  * Examples for COM, ROM and BIN files are now included in the source code.
+  * Error messages were improved.
+  * Java 8 is now required.
+
 Glass 0.4 — 2014-06-16
 ----------------------
 
