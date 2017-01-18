@@ -135,6 +135,7 @@ public class LineParserTest {
 		assertEquals(171, parseExpression("10101011B").getInteger());
 		assertEquals(171, parseExpression("%10101011").getInteger());
 		assertEquals(255, parseExpression("0xFF").getInteger());
+		assertEquals(50, parseExpression("0X032").getInteger());
 	}
 	
 	@Test
