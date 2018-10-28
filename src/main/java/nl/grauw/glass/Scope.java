@@ -39,8 +39,6 @@ public class Scope implements Context {
 	public void setAddress(int address) {
 		if (set)
 			throw new AssemblyException("Address was already set.");
-		if (address < 0 || address >= 0x10000)
-			throw new AssemblyException("Address out of range: " + Integer.toHexString(address) + "H");
 		this.address = address;
 		this.set = true;
 	}
