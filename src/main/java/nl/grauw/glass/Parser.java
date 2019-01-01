@@ -38,7 +38,8 @@ public class Parser {
 						throw new AssemblyException("Unexpected end of file.");
 					if (sourceLines.size() > 0)
 						break;  // return null (parsing end) the next time
-					return null;
+					lineBuilder.setMnemonic("END");
+					return lineBuilder.getLine(scope, sourceFile, firstLineNumber);
 				}
 				sourceLines.add(sourceLine);
 				lineNumber = reader.getLineNumber();

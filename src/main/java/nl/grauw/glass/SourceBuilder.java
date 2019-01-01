@@ -25,6 +25,7 @@ import nl.grauw.glass.directives.Macro;
 import nl.grauw.glass.directives.Proc;
 import nl.grauw.glass.directives.Rept;
 import nl.grauw.glass.directives.Section;
+import nl.grauw.glass.directives.Terminator;
 import nl.grauw.glass.expressions.Annotation;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
@@ -110,22 +111,18 @@ public class SourceBuilder {
 		sourceFiles.add(sourceFile);
 		while (true) {
 			Line line = parser.parse(reader, new Scope(source.getScope()), sourceFile);
-			if (line == null)
-				break;
 			
 			try {
-				line.setDirective(getDirective(line, reader, sourceFile));
+				Directive directive = getDirective(line, reader, sourceFile);
+				line.setDirective(directive);
 				source.addLine(line);
-				if (line.getMnemonic() != null && terminators.contains(line.getMnemonic()))
+				if (directive instanceof Terminator)
 					return source;
 			} catch (AssemblyException e) {
 				e.addContext(line);
 				throw e;
 			}
 		}
-		if (terminators != END_TERMINATORS)
-			throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
-		return source;
 	}
 	
 	public Directive getDirective(Line line, LineNumberReader reader, File sourceFile) {
@@ -166,15 +163,24 @@ public class SourceBuilder {
 		case "ds":
 		case "DS":
 			return new Ds();
+		case "end":
+		case "END":
 		case "endm":
 		case "ENDM":
 		case "endp":
 		case "ENDP":
 		case "ends":
 		case "ENDS":
-			if (!terminators.contains(line.getMnemonic()))
+		case "else":
+		case "ELSE":
+		case "endif":
+		case "ENDIF":
+			if (!terminators.contains(line.getMnemonic())) {
+				if (line.getMnemonic() == "end" || line.getMnemonic() == "END")
+					throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
 				throw new AssemblyException("Unexpected " + line.getMnemonic() + ".");
-			return new Instruction();
+			}
+			return new Terminator();
 		default:
 			return new Instruction();
 		}
