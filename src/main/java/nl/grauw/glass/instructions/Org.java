@@ -1,8 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
@@ -35,10 +32,6 @@ public class Org extends InstructionFactory {
 		public int resolve(int address) {
 			super.resolve(address);
 			return getAddress();
-		}
-		
-		@Override
-		public void generateObjectCode(OutputStream output) throws IOException {
 		}
 		
 	}
