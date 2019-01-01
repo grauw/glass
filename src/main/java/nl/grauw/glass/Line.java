@@ -98,9 +98,9 @@ public class Line {
 		}
 	}
 	
-	public List<Line> expand() {
+	public void expand(List<Line> lines) {
 		try {
-			return getInstruction().expand(this);
+			getInstruction().expand(this, lines);
 		} catch (AssemblyException e) {
 			e.addContext(this);
 			throw e;

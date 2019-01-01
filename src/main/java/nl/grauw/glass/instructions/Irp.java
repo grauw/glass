@@ -17,12 +17,12 @@ public class Irp extends InstructionFactory {
 		this.source = source;
 	}
 	
-	public List<Line> expand(Line line) {
+	public void expand(Line line, List<Line> lines) {
 		Expression arguments = line.getArguments();
 		if (arguments == null || !Schema.IDENTIFIER.check(arguments.getElement()))
 			throw new ArgumentException();
 		
-		List<Line> lines = super.expand(line);
+		super.expand(line, lines);
 		Expression parameter = arguments.getElement();
 		for (int i = 0; (arguments = arguments.getNext()) != null; i++) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter, arguments.getElement());
@@ -38,9 +38,8 @@ public class Irp extends InstructionFactory {
 			for (Line lineCopy : lineCopies)
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
-				lines.addAll(lineCopy.expand());
+				lineCopy.expand(lines);
 		}
-		return lines;
 	}
 	
 	@Override

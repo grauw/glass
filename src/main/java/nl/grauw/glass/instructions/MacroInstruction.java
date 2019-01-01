@@ -29,17 +29,16 @@ public class MacroInstruction extends InstructionFactory {
 	}
 	
 	@Override
-	public List<Line> expand(Line line) {
+	public void expand(Line line, List<Line> lines) {
 		Scope parameterScope = new ParameterScope(source.getScope(), parameters, line.getArguments());
-		List<Line> lines = super.expand(line);
+		super.expand(line, lines);
 		List<Line> lineCopies = source.getLineCopies(parameterScope);
 		for (Line lineCopy : lineCopies) {
 			lineCopy.register(parameterScope);
 			lineCopy.register(line.getScope());
 		}
 		for (Line lineCopy : lineCopies)
-			lines.addAll(lineCopy.expand());
-		return lines;
+			lineCopy.expand(lines);
 	}
 	
 	@Override

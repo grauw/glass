@@ -23,26 +23,27 @@ public class Rept extends InstructionFactory {
 		this.source = source;
 	}
 	
-	public List<Line> expand(Line line) {
+	public void expand(Line line, List<Line> lines) {
 		Expression arguments = line.getArguments();
 		if (ARGUMENTS_N.check(arguments))
-			return expand(line, arguments.getElement(0).getInteger(), null, 0, 1);
-		if (ARGUMENTS_N_ID.check(arguments))
-			return expand(line, arguments.getElement(0).getInteger(), arguments.getElement(1), 0, 1);
-		if (ARGUMENTS_N_ID_N.check(arguments))
-			return expand(line, arguments.getElement(0).getInteger(), arguments.getElement(1),
+			expand(line, lines, arguments.getElement(0).getInteger(), null, 0, 1);
+		else if (ARGUMENTS_N_ID.check(arguments))
+			expand(line, lines, arguments.getElement(0).getInteger(), arguments.getElement(1), 0, 1);
+		else if (ARGUMENTS_N_ID_N.check(arguments))
+			expand(line, lines, arguments.getElement(0).getInteger(), arguments.getElement(1),
 					arguments.getElement(2).getInteger(), 1);
-		if (ARGUMENTS_N_ID_N_N.check(arguments))
-			return expand(line, arguments.getElement(0).getInteger(), arguments.getElement(1),
+		else if (ARGUMENTS_N_ID_N_N.check(arguments))
+			expand(line, lines, arguments.getElement(0).getInteger(), arguments.getElement(1),
 					arguments.getElement(2).getInteger(), arguments.getElement(3).getInteger());
-		throw new ArgumentException();
+		else
+			throw new ArgumentException();
 	}
 	
-	public List<Line> expand(Line line, int count, Expression parameter, int start, int step) {
+	private void expand(Line line, List<Line> lines, int count, Expression parameter, int start, int step) {
 		if (count < 0)
 			throw new ArgumentException("Repetition count must be 0 or greater.");
 		
-		List<Line> lines = super.expand(line);
+		super.expand(line, lines);
 		for (int i = 0, counter = start; i < count; i++, counter += step) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter,
 					parameter != null ? new IntegerLiteral(counter) : null);
@@ -58,9 +59,8 @@ public class Rept extends InstructionFactory {
 			for (Line lineCopy : lineCopies)
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)
-				lines.addAll(lineCopy.expand());
+				lineCopy.expand(lines);
 		}
-		return lines;
 	}
 	
 	@Override

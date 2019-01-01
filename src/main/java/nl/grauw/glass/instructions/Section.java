@@ -23,7 +23,7 @@ public class Section extends InstructionFactory {
 	}
 	
 	@Override
-	public List<Line> expand(Line line) {
+	public void expand(Line line, List<Line> lines) {
 		if (!ARGUMENTS.check(line.getArguments()))
 			throw new ArgumentException();
 		
@@ -33,7 +33,7 @@ public class Section extends InstructionFactory {
 		line.getArguments().getSectionContext().addSection(this);
 		
 		source.expand();
-		return super.expand(line);
+		super.expand(line, lines);
 	}
 	
 	@Override

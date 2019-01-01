@@ -24,7 +24,7 @@ public class Macro extends InstructionFactory {
 	}
 	
 	@Override
-	public List<Line> expand(Line line) {
+	public void expand(Line line, List<Line> lines) {
 		Expression parameters = line.getArguments();
 		while (parameters != null) {
 			Expression parameter = parameters.getElement();
@@ -46,7 +46,7 @@ public class Macro extends InstructionFactory {
 		} catch (AssemblyException e) {
 			// ignore
 		}
-		return super.expand(line);
+		super.expand(line, lines);
 	}
 	
 	@Override

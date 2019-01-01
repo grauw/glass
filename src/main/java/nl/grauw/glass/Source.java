@@ -69,7 +69,7 @@ public class Source {
 	public void expand() {
 		List<Line> newLines = new ArrayList<>();
 		for (Line line : lines)
-			newLines.addAll(line.expand());
+			line.expand(newLines);
 		lines = newLines;
 	}
 	
