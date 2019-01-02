@@ -127,11 +127,21 @@ public class Line {
 	}
 	
 	public int getSize() {
-		return instructionObject.getSize();
+		try {
+			return instructionObject.getSize();
+		} catch (AssemblyException e) {
+			e.addContext(this);
+			throw e;
+		}
 	}
 	
 	public byte[] getBytes() {
-		return instructionObject.getBytes();
+		try {
+			return instructionObject.getBytes();
+		} catch (AssemblyException e) {
+			e.addContext(this);
+			throw e;
+		}
 	}
 	
 	public String toString() {
