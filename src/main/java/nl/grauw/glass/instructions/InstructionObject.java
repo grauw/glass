@@ -1,8 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Register;
 
@@ -20,11 +17,6 @@ public abstract class InstructionObject {
 	}
 	
 	public abstract int getSize();
-	
-	public void generateObjectCode(OutputStream output) throws IOException {
-		byte[] object = getBytes();
-		output.write(object, 0, object.length);
-	}
 	
 	public abstract byte[] getBytes();
 	

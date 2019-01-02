@@ -58,7 +58,9 @@ public class Source {
 		register();
 		expand();
 		resolve();
-		generateObjectCode(output);
+		
+		byte[] objectCode = getBytes();
+		output.write(objectCode, 0, objectCode.length);
 	}
 	
 	public void register() {
@@ -83,17 +85,12 @@ public class Source {
 		return address;
 	}
 	
-	public void generateObjectCode(OutputStream output) throws IOException {
-		for (Line line : lines)
-			line.generateObjectCode(output);
-	}
-	
-	public byte[] generateObjectCode() {
+	public byte[] getBytes() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		try {
-			generateObjectCode(bytes);
-		} catch (IOException e) {
-			throw new AssemblyException(e);
+		for (Line line : lines)
+		{
+			byte[] object = line.getBytes();
+			bytes.write(object, 0, object.length);
 		}
 		return bytes.toByteArray();
 	}

@@ -1,8 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
@@ -59,17 +56,13 @@ public class If extends InstructionFactory {
 		}
 		
 		@Override
-		public void generateObjectCode(OutputStream output) throws IOException {
-			if (argument.getInteger() != 0) {
-				thenSource.generateObjectCode(output);
-			} else if (elseSource != null) {
-				elseSource.generateObjectCode(output);
-			}
-		}
-		
-		@Override
 		public byte[] getBytes() {
-			throw new AssemblyException("Not implemented.");
+			if (argument.getInteger() != 0) {
+				return thenSource.getBytes();
+			} else if (elseSource != null) {
+				return elseSource.getBytes();
+			}
+			return new byte[] {};
 		}
 		
 	}

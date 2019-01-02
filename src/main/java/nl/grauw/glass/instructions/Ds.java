@@ -1,8 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,37 +65,25 @@ public class Ds extends InstructionFactory implements SectionContext {
 		}
 		
 		@Override
-		public void generateObjectCode(OutputStream output) throws IOException {
-			byte[] bytes = getSectionBytes();
-			if (bytes.length > size.getInteger())
-				throw new AssemblyException("Section size exceeds space (required: " +
-					bytes.length + " bytes, available: " + size.getInteger() + " bytes).");
-			
-			if (virtual)
-				return;
-			
-			output.write(bytes);
-			
-			byte[] padding = new byte[size.getInteger() - bytes.length];
-			Arrays.fill(padding, (byte)value.getInteger());
-			
-			output.write(padding);
-		}
-		
-		public byte[] getSectionBytes() throws IOException {
-			ByteArrayOutputStream sourceByteStream = new ByteArrayOutputStream(size.getInteger());
-			for (Section section : sections)
-				section.getSource().generateObjectCode(sourceByteStream);
-			return sourceByteStream.toByteArray();
-		}
-		
-		@Override
 		public byte[] getBytes() {
+			ByteArrayOutputStream sourceByteStream = new ByteArrayOutputStream(size.getInteger());
+			for (Section section : sections) {
+				byte[] sectionBytes = section.getSource().getBytes();
+				sourceByteStream.write(sectionBytes, 0, sectionBytes.length);
+			}
+			
+			if (sourceByteStream.size() > size.getInteger())
+				throw new AssemblyException("Section size exceeds space (required: " +
+					sourceByteStream.size() + " bytes, available: " + size.getInteger() + " bytes).");
+			
 			if (virtual)
 				return new byte[] {};
-			byte[] bytes = new byte[size.getInteger()];
-			Arrays.fill(bytes, (byte)value.getInteger());
-			return bytes;
+			
+			byte[] padding = new byte[size.getInteger() - sourceByteStream.size()];
+			Arrays.fill(padding, (byte)value.getInteger());
+			sourceByteStream.write(padding, 0, padding.length);
+			
+			return sourceByteStream.toByteArray();
 		}
 		
 	}

@@ -1,8 +1,6 @@
 package nl.grauw.glass;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
@@ -111,15 +109,6 @@ public class Line {
 		try {
 			instructionObject = getInstruction().createObject(scope, arguments);
 			return instructionObject.resolve(address);
-		} catch (AssemblyException e) {
-			e.addContext(this);
-			throw e;
-		}
-	}
-	
-	public void generateObjectCode(OutputStream output) throws IOException {
-		try {
-			instructionObject.generateObjectCode(output);
 		} catch (AssemblyException e) {
 			e.addContext(this);
 			throw e;
