@@ -1,6 +1,6 @@
 package nl.grauw.glass.directives;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.List;
 
 import nl.grauw.glass.Line;
@@ -8,17 +8,17 @@ import nl.grauw.glass.Scope;
 
 public class Incbin extends Directive {
 	
-	private final File sourceFile;
-	private final List<File> includePaths;
+	private final Path sourcePath;
+	private final List<Path> includePaths;
 	
-	public Incbin(File sourceFile, List<File> includePaths) {
-		this.sourceFile = sourceFile;
+	public Incbin(Path sourcePath, List<Path> includePaths) {
+		this.sourcePath = sourcePath;
 		this.includePaths = includePaths;
 	}
 	
 	@Override
 	public void register(Scope scope, Line line) {
-		line.setInstruction(new nl.grauw.glass.instructions.Incbin(sourceFile, includePaths));
+		line.setInstruction(new nl.grauw.glass.instructions.Incbin(sourcePath, includePaths));
 		super.register(scope, line);
 	}
 	

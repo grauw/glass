@@ -1,6 +1,6 @@
 package nl.grauw.glass;
 
-import java.io.File;
+import java.nio.file.Path;
 
 import nl.grauw.glass.expressions.Expression;
 
@@ -40,8 +40,8 @@ public class LineBuilder {
 		this.sourceText = sourceText;
 	}
 	
-	public Line getLine(Scope scope, File sourceFile, int lineNumber) {
-		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber, sourceText);
+	public Line getLine(Scope scope, Path sourcePath, int lineNumber) {
+		Line line = new Line(scope, label, mnemonic, arguments, comment, sourcePath, lineNumber, sourceText);
 		
 		label = null;
 		mnemonic = null;

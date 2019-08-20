@@ -1,8 +1,8 @@
 package nl.grauw.glass.instructions;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,10 +15,10 @@ import nl.grauw.glass.expressions.Schema;
 
 public class Incbin extends InstructionFactory {
 	
-	private final List<File> basePaths = new ArrayList<File>();
+	private final List<Path> basePaths = new ArrayList<Path>();
 	
-	public Incbin(File basePath, List<File> includePaths) {
-		this.basePaths.add(basePath);
+	public Incbin(Path basePath, List<Path> includePaths) {
+		this.basePaths.add(basePath.getParent());
 		this.basePaths.addAll(includePaths);
 	}
 	
@@ -45,10 +45,10 @@ public class Incbin extends InstructionFactory {
 		private final Expression path;
 		private final Expression start;
 		private final Expression length;
-		private final List<File> basePaths;
+		private final List<Path> basePaths;
 		private byte[] bytes;
 		
-		public Incbin_(Scope context, Expression path, Expression start, Expression length, List<File> basePaths) {
+		public Incbin_(Scope context, Expression path, Expression start, Expression length, List<Path> basePaths) {
 			super(context);
 			this.path = path;
 			this.start = start;
@@ -80,11 +80,11 @@ public class Incbin extends InstructionFactory {
 		
 		private byte[] loadFile()
 		{
-			for (File basePath : basePaths) {
-				File fullPath = new File(basePath.getParent(), path.getString());
-				if (fullPath.exists()) {
+			for (Path basePath : basePaths) {
+				Path fullPath = basePath.resolve(path.getString());
+				if (Files.exists(fullPath)) {
 					try {
-						return Files.readAllBytes(fullPath.toPath());
+						return Files.readAllBytes(fullPath);
 					} catch (IOException e) {
 						throw new AssemblyException(e);
 					}

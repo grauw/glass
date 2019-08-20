@@ -3,9 +3,9 @@ package nl.grauw.glass;
 import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Path;
 import java.util.ArrayList;
 
 import nl.grauw.glass.Scope.SymbolNotFoundException;
@@ -868,7 +868,7 @@ public class SourceTest {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
 			builder.append(lineText).append("\n");
-		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<File>());
+		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<Path>());
 		Source source = sourceBuilder.parse(new StringReader(builder.toString()), null);
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {

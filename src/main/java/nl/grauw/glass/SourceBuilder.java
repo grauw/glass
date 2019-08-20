@@ -1,14 +1,13 @@
 package nl.grauw.glass;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,79 +40,79 @@ public class SourceBuilder {
 	
 	private final Source source;
 	private final List<String> terminators;
-	private final List<File> includePaths;
+	private final List<Path> includePaths;
 	private final Parser parser = new Parser();
 	
-	private static final List<File> sourceFiles = new ArrayList<File>();
+	private static final List<Path> sourcePaths = new ArrayList<Path>();
 	
-	public SourceBuilder(List<File> includePaths) {
+	public SourceBuilder(List<Path> includePaths) {
 		this.source = new Source();
 		this.terminators = END_TERMINATORS;
 		this.includePaths = includePaths;
 	}
 	
-	public SourceBuilder(Source source, List<String> terminators, List<File> includePaths) {
+	public SourceBuilder(Source source, List<String> terminators, List<Path> includePaths) {
 		this.source = source;
 		this.terminators = terminators;
 		this.includePaths = includePaths;
 	}
 	
-	public boolean hasLoadedSourceFile(File file) {
+	public boolean hasLoadedSourceFile(Path path) {
 		try {
-			for (File sourceFile : sourceFiles)
-				if (file.getCanonicalPath().equals(sourceFile.getCanonicalPath()))
+			for (Path sourcePath : sourcePaths)
+				if (Files.isSameFile(path, sourcePath))
 					return true;
 		} catch (IOException e) {
 		}
 		return false;
 	}
 	
-	public Source parse(File sourceFile) {
+	public Source parse(Path sourcePath) {
 		try {
-			parse(new FileInputStream(sourceFile), sourceFile);
-		} catch (FileNotFoundException e) {
+			parse(Files.newInputStream(sourcePath), sourcePath);
+		} catch (IOException e) {
 			throw new AssemblyException(e);
 		}
 		return source;
 	}
 	
-	private Source parseInclude(Expression sourceFile, File basePath, boolean once) {
-		File fullPath = new File(basePath.getParent(), sourceFile.getString());
-		if (fullPath.exists()) {
+	private Source parseInclude(Expression sourcePath, Path basePath, boolean once) {
+		Path fullPath = basePath.resolveSibling(sourcePath.getString());
+		if (Files.exists(fullPath)) {
 			if (once && hasLoadedSourceFile(fullPath))
 				return null;
 			return parse(fullPath);
 		}
-		return parseInclude(sourceFile, once);
+		return parseInclude(sourcePath, once);
 	}
 	
-	private Source parseInclude(Expression sourceFile, boolean once) {
-		for (File includePath : includePaths) {
-			File fullPath = new File(includePath, sourceFile.getString());
-			if (fullPath.exists()) {
+	private Source parseInclude(Expression sourcePath, boolean once) {
+		for (Path includePath : includePaths) {
+			Path fullPath = includePath.resolve(sourcePath.getString());
+			if (Files.exists(fullPath)) {
 				if (once && hasLoadedSourceFile(fullPath))
 					return null;
 				return parse(fullPath);
 			}
 		}
-		throw new AssemblyException("Include file not found: " + sourceFile.getString());
+		throw new AssemblyException("Include file not found: " + sourcePath.getString());
 	}
 	
-	public Source parse(InputStream reader, File sourceFile) {
-		return parse(new InputStreamReader(reader, Charset.forName("ISO-8859-1")), sourceFile);
+	public Source parse(InputStream reader, Path sourcePath) {
+		return parse(new InputStreamReader(reader, Charset.forName("ISO-8859-1")), sourcePath);
 	}
 	
-	public Source parse(Reader reader, File sourceFile) {
-		return parse(new LineNumberReader(reader), sourceFile);
+	public Source parse(Reader reader, Path sourcePath) {
+		return parse(new LineNumberReader(reader), sourcePath);
 	}
 	
-	private Source parse(LineNumberReader reader, File sourceFile) {
-		sourceFiles.add(sourceFile);
+	private Source parse(LineNumberReader reader, Path sourcePath) {
+		sourcePaths.add(sourcePath);
 		while (true) {
-			Line line = parser.parse(reader, new Scope(source.getScope()), sourceFile);
+			Line line = parser.parse(reader, new Scope(source.getScope()), sourcePath);
 			
 			try {
-				Directive directive = getDirective(line, reader, sourceFile);
+				Directive directive = getDirective(line, reader, sourcePath);
 				line.setDirective(directive);
 				source.addLine(line);
 				if (directive instanceof Terminator)
@@ -125,7 +124,7 @@ public class SourceBuilder {
 		}
 	}
 	
-	public Directive getDirective(Line line, LineNumberReader reader, File sourceFile) {
+	public Directive getDirective(Line line, LineNumberReader reader, Path sourcePath) {
 		if (line.getMnemonic() == null)
 			return new Instruction();
 		
@@ -135,31 +134,31 @@ public class SourceBuilder {
 			return new Equ();
 		case "include":
 		case "INCLUDE":
-			return getIncludeDirective(line, sourceFile);
+			return getIncludeDirective(line, sourcePath);
 		case "incbin":
 		case "INCBIN":
-			return new Incbin(sourceFile, includePaths);
+			return new Incbin(sourcePath, includePaths);
 		case "macro":
 		case "MACRO":
-			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourcePath));
 		case "rept":
 		case "REPT":
-			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourcePath));
 		case "irp":
 		case "IRP":
-			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourceFile));
+			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader, sourcePath));
 		case "proc":
 		case "PROC":
-			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, reader, sourceFile));
+			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, reader, sourcePath));
 		case "if":
 		case "IF":
-			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, reader, sourceFile);
+			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, reader, sourcePath);
 			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
-					parseBlock(source.getScope(), ENDIF_TERMINATORS, reader, sourceFile) : null;
+					parseBlock(source.getScope(), ENDIF_TERMINATORS, reader, sourcePath) : null;
 			return new If(thenBlock, elseBlock);
 		case "section":
 		case "SECTION":
-			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, reader, sourceFile));
+			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, reader, sourcePath));
 		case "ds":
 		case "DS":
 			return new Ds();
@@ -186,7 +185,7 @@ public class SourceBuilder {
 		}
 	}
 	
-	private Directive getIncludeDirective(Line line, File sourceFile) {
+	private Directive getIncludeDirective(Line line, Path sourcePath) {
 		boolean once = false;
 		Expression argument = line.getArguments();
 		if (argument instanceof Annotation) {
@@ -201,12 +200,12 @@ public class SourceBuilder {
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
 		SourceBuilder sourceBuilder = new SourceBuilder(source, END_TERMINATORS, includePaths);
-		sourceBuilder.parseInclude(argument, sourceFile, once);
+		sourceBuilder.parseInclude(argument, sourcePath, once);
 		return new Include();
 	}
 	
-	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, File sourceFile) {
-		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(reader, sourceFile);
+	private Source parseBlock(Scope scope, List<String> terminators, LineNumberReader reader, Path sourcePath) {
+		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(reader, sourcePath);
 	}
 	
 }
