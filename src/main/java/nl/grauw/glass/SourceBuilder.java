@@ -77,8 +77,8 @@ public class SourceBuilder {
 		return source;
 	}
 	
-	private Source parseInclude(File sourceFile, File basePath, boolean once) {
-		File fullPath = new File(basePath.getParent(), sourceFile.getPath());
+	private Source parseInclude(Expression sourceFile, File basePath, boolean once) {
+		File fullPath = new File(basePath.getParent(), sourceFile.getString());
 		if (fullPath.exists()) {
 			if (once && hasLoadedSourceFile(fullPath))
 				return null;
@@ -87,16 +87,16 @@ public class SourceBuilder {
 		return parseInclude(sourceFile, once);
 	}
 	
-	private Source parseInclude(File sourceFile, boolean once) {
+	private Source parseInclude(Expression sourceFile, boolean once) {
 		for (File includePath : includePaths) {
-			File fullPath = new File(includePath, sourceFile.getPath());
+			File fullPath = new File(includePath, sourceFile.getString());
 			if (fullPath.exists()) {
 				if (once && hasLoadedSourceFile(fullPath))
 					return null;
 				return parse(fullPath);
 			}
 		}
-		throw new AssemblyException("Include file not found: " + sourceFile);
+		throw new AssemblyException("Include file not found: " + sourceFile.getString());
 	}
 	
 	public Source parse(InputStream reader, File sourceFile) {
@@ -201,7 +201,7 @@ public class SourceBuilder {
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
 		SourceBuilder sourceBuilder = new SourceBuilder(source, END_TERMINATORS, includePaths);
-		sourceBuilder.parseInclude(new File(argument.getString()), sourceFile, once);
+		sourceBuilder.parseInclude(argument, sourceFile, once);
 		return new Include();
 	}
 	
