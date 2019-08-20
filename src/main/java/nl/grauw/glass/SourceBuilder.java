@@ -68,6 +68,7 @@ public class SourceBuilder {
 	}
 	
 	public Source parse(Path sourcePath) {
+		sourcePaths.add(sourcePath);
 		try {
 			parse(Files.newInputStream(sourcePath), sourcePath);
 		} catch (IOException e) {
@@ -107,7 +108,6 @@ public class SourceBuilder {
 	}
 	
 	private Source parse(LineNumberReader reader, Path sourcePath) {
-		sourcePaths.add(sourcePath);
 		while (true) {
 			Line line = parser.parse(reader, new Scope(source.getScope()), sourcePath);
 			
