@@ -4,4 +4,5 @@
 ^.project$
 ^.classpath$
 ^.settings/
+^.vscode/
 glob:.DS_Store
