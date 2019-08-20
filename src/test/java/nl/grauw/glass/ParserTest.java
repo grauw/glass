@@ -2,9 +2,6 @@ package nl.grauw.glass;
 
 import static org.junit.Assert.*;
 
-import java.io.LineNumberReader;
-import java.io.StringReader;
-
 import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
@@ -169,8 +166,10 @@ public class ParserTest {
 	}
 	
 	public Line parse(String text) {
-		LineNumberReader reader = new LineNumberReader(new StringReader(text));
-		return new Parser().parse(reader, new Scope(), null);
+		return new Parser().parse(
+			new SourceFile(text).getReader(),
+			new Scope()
+		);
 	}
 	
 	public Expression parseExpression(String text) {

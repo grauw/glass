@@ -2,12 +2,10 @@ package nl.grauw.glass.expressions;
 
 import static org.junit.Assert.*;
 
-import java.io.LineNumberReader;
-import java.io.StringReader;
-
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
+import nl.grauw.glass.SourceFile;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.Test;
@@ -269,8 +267,10 @@ public class ExpressionTest {
 	}
 	
 	public Expression parse(String text, Scope scope) {
-		LineNumberReader reader = new LineNumberReader(new StringReader(" test " + text));
-		Line line = new Parser().parse(reader, scope, null);
+		Line line = new Parser().parse(
+			new SourceFile(" test " + text).getReader(),
+			scope
+		);
 		return line.getArguments();
 	}
 	

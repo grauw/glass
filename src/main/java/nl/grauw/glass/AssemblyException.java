@@ -1,6 +1,5 @@
 package nl.grauw.glass;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +25,11 @@ public class AssemblyException extends RuntimeException {
 	}
 	
 	public void addContext(Line line) {
-		addContext(line.getSourcePath(), line.getLineNumber(), -1, line.getSourceText());
+		addContext(line.getSourceFile(), line.getLineNumber(), -1, line.getSourceText());
 	}
 	
-	public void addContext(Path path, int line, int column, String text) {
-		contexts.add(new Context(path, line, column, text));
+	public void addContext(SourceFile sourceFile, int line, int column, String text) {
+		contexts.add(new Context(sourceFile, line, column, text));
 	}
 	
 	@Override
@@ -49,13 +48,13 @@ public class AssemblyException extends RuntimeException {
 	
 	private static class Context {
 		
-		private final Path path;
+		private final SourceFile sourceFile;
 		private final int line;
 		private final int column;
 		private final String text;
 		
-		public Context(Path path, int line, int column, String text) {
-			this.path = path;
+		public Context(SourceFile sourceFile, int line, int column, String text) {
+			this.sourceFile = sourceFile;
 			this.line = line;
 			this.column = column;
 			this.text = text;
@@ -63,7 +62,7 @@ public class AssemblyException extends RuntimeException {
 		
 		@Override
 		public String toString() {
-			String prefix = "[at " + path + ":" + line + (column != -1 ? "," + column : "") + "]\n";
+			String prefix = "[at " + sourceFile.getPath() + ":" + line + (column != -1 ? "," + column : "") + "]\n";
 			String context = prefix + text;
 			
 			if (column >= 0) {

@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
@@ -869,7 +868,7 @@ public class SourceTest {
 		for (String lineText : sourceLines)
 			builder.append(lineText).append("\n");
 		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<Path>());
-		Source source = sourceBuilder.parse(new StringReader(builder.toString()), null);
+		Source source = sourceBuilder.parse(new SourceFile(builder.toString()).getReader());
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
 			source.assemble(output);

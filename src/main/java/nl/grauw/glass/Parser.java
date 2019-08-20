@@ -1,10 +1,9 @@
 package nl.grauw.glass;
 
 import java.io.IOException;
-import java.io.LineNumberReader;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
+import nl.grauw.glass.SourceFile.SourceFileReader;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
@@ -20,7 +19,7 @@ public class Parser {
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	
-	public Line parse(LineNumberReader reader, Scope scope, Path sourcePath) {
+	public Line parse(SourceFileReader reader, Scope scope) {
 		this.scope = scope;
 		state = labelStartState;
 		
@@ -39,7 +38,7 @@ public class Parser {
 					if (sourceLines.size() > 0)
 						break;  // return null (parsing end) the next time
 					lineBuilder.setMnemonic("END");
-					return lineBuilder.getLine(scope, sourcePath, firstLineNumber);
+					return lineBuilder.getLine(scope, reader.getSourceFile(), firstLineNumber);
 				}
 				sourceLines.add(sourceLine);
 				lineNumber = reader.getLineNumber();
@@ -56,7 +55,7 @@ public class Parser {
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
 		} catch(AssemblyException e) {
-			e.addContext(sourcePath, lineNumber, column, String.join("\n", sourceLines));
+			e.addContext(reader.getSourceFile(), lineNumber, column, String.join("\n", sourceLines));
 			throw e;
 		} catch (IOException e) {
 			throw new AssemblyException(e);
@@ -64,7 +63,7 @@ public class Parser {
 		
 		lineBuilder.setSourceText(String.join("\n", sourceLines));
 		
-		return lineBuilder.getLine(scope, sourcePath, firstLineNumber);
+		return lineBuilder.getLine(scope, reader.getSourceFile(), firstLineNumber);
 	}
 	
 	private abstract class State {

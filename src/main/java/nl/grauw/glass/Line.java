@@ -1,6 +1,5 @@
 package nl.grauw.glass;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
@@ -16,7 +15,7 @@ public class Line {
 	private final String mnemonic;
 	private final Expression arguments;
 	private final String comment;
-	private final Path sourcePath;
+	private final SourceFile sourceFile;
 	private final int lineNumber;
 	private final String sourceText;
 	
@@ -24,20 +23,20 @@ public class Line {
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
-	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, Path sourcePath, int lineNumber, String sourceText) {
+	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, SourceFile sourceFile, int lineNumber, String sourceText) {
 		this.scope = scope;
 		this.label = label;
 		this.mnemonic = mnemonic;
 		this.arguments = arguments;
 		this.comment = comment;
-		this.sourcePath = sourcePath;
+		this.sourceFile = sourceFile;
 		this.lineNumber = lineNumber;
 		this.sourceText = sourceText;
 	}
 	
 	public Line(Scope scope, Line other) {
 		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
-				other.comment, other.sourcePath, other.lineNumber, other.sourceText);
+				other.comment, other.sourceFile, other.lineNumber, other.sourceText);
 		directive = other.directive;
 	}
 	
@@ -61,8 +60,8 @@ public class Line {
 		return comment;
 	}
 	
-	public Path getSourcePath() {
-		return sourcePath;
+	public SourceFile getSourceFile() {
+		return sourceFile;
 	}
 	
 	public int getLineNumber() {

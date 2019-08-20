@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,11 +14,10 @@ import nl.grauw.glass.expressions.Schema;
 
 public class Incbin extends InstructionFactory {
 	
-	private final List<Path> basePaths = new ArrayList<Path>();
+	private final List<Path> basePaths;
 	
-	public Incbin(Path basePath, List<Path> includePaths) {
-		this.basePaths.add(basePath.getParent());
-		this.basePaths.addAll(includePaths);
+	public Incbin(List<Path> basePaths) {
+		this.basePaths = basePaths;
 	}
 	
 	@Override
