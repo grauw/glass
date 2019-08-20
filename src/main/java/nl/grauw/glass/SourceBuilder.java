@@ -60,8 +60,8 @@ public class SourceBuilder {
 	
 	public boolean hasLoadedSourceFile(File file) {
 		try {
-			for (int i = 0; i < sourceFiles.size(); i++)
-				if (file.getCanonicalPath().equals(sourceFiles.get(i).getCanonicalPath()))
+			for (File sourceFile : sourceFiles)
+				if (file.getCanonicalPath().equals(sourceFile.getCanonicalPath()))
 					return true;
 		} catch (IOException e) {
 		}
