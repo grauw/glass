@@ -109,9 +109,6 @@ public class SourceBuilder {
 	}
 	
 	public Directive getDirective(Line line, Parser parser) {
-		if (line.getMnemonic() == null)
-			return new Instruction();
-		
 		switch (line.getMnemonic()) {
 		case "equ":
 		case "EQU":

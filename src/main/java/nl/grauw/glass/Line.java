@@ -12,7 +12,7 @@ import nl.grauw.glass.instructions.InstructionObject;
 public class Line {
 	
 	private final Scope scope;
-	private final String label;
+	private final List<String> labels;
 	private final String mnemonic;
 	private final Expression arguments;
 	private final String comment;
@@ -22,9 +22,11 @@ public class Line {
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
-	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, SourceFileSpan sourceSpan) {
+	public Line(Scope scope, List<String> labels, String mnemonic, Expression arguments, String comment, SourceFileSpan sourceSpan) {
+		if (mnemonic == null)
+			throw new AssemblyException("Missing mnemonic.");
 		this.scope = scope;
-		this.label = label;
+		this.labels = labels;
 		this.mnemonic = mnemonic;
 		this.arguments = arguments;
 		this.comment = comment;
@@ -32,7 +34,7 @@ public class Line {
 	}
 	
 	public Line(Scope scope, Line other) {
-		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
+		this(scope, other.labels, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
 				other.comment, other.sourceSpan);
 		directive = other.directive;
 	}
@@ -41,8 +43,8 @@ public class Line {
 		return scope;
 	}
 	
-	public String getLabel() {
-		return label;
+	public List<String> getLabels() {
+		return labels;
 	}
 	
 	public String getMnemonic() {
@@ -122,9 +124,21 @@ public class Line {
 	}
 	
 	public String toString() {
-		return (label != null ? label + ":" : "") +
-			(mnemonic != null ? (label != null ? " " : "\t") + mnemonic + (arguments != null ? " " + arguments : "") : "") +
-			(comment != null ? (label != null || mnemonic != null ? " ;" : ";") + comment : "");
+		StringBuilder builder = new StringBuilder();
+		for (String label : labels) {
+			builder.append(label).append(":\n");
+		}
+		if (mnemonic != null) {
+			builder.append("\t").append(mnemonic);
+			if (arguments != null)
+				builder.append(" ").append(arguments);
+		}
+		if (comment != null) {
+			if (mnemonic != null)
+				builder.append(" ");
+			builder.append(";").append(comment);
+		}
+		return builder.toString();
 	}
 	
 }

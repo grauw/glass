@@ -10,8 +10,9 @@ public class Ds extends Directive {
 	public void register(Scope scope, Line line) {
 		nl.grauw.glass.instructions.Ds ds = new nl.grauw.glass.instructions.Ds();
 		line.setInstruction(ds);
-		if (line.getLabel() != null)
-			scope.addSymbol(line.getLabel(), new SectionContextLiteral(line.getScope(), ds));
+		SectionContextLiteral sectionContextLiteral = new SectionContextLiteral(line.getScope(), ds);
+		for (String label : line.getLabels())
+			scope.addSymbol(label, sectionContextLiteral);
 	}
 	
 }

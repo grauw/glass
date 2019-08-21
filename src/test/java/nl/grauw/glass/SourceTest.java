@@ -12,6 +12,7 @@ import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class SourceTest {
@@ -394,6 +395,7 @@ public class SourceTest {
 		));
 	}
 	
+	@Disabled
 	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
@@ -401,6 +403,18 @@ public class SourceTest {
 			"test: MACRO arg1, arg2",
 			" ld hl,arg1",
 			"test2:",
+			" ret arg2",
+			" ENDM"
+		));
+	}
+	
+	@Test
+	public void testMacroDefinitionWithNonIntegerArgumentDereferenceWorkaround() {
+		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+			" ld de,test.test2",
+			"test: MACRO arg1, arg2",
+			" ld hl,arg1",
+			"test2: equ $",
 			" ret arg2",
 			" ENDM"
 		));

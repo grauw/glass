@@ -2,6 +2,9 @@ package nl.grauw.glass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
+import java.util.List;
+
 import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
@@ -15,23 +18,36 @@ public class ParserTest {
 	
 	@Test
 	public void testLabel() {
-		assertEquals("test_label1", parse("test_label1:").getLabel());
+		Line line = parse("test_label1:");
+		assertIterableEquals(s("test_label1"), line.getLabels());
 	}
 	
 	@Test
 	public void testLabelNoColon() {
-		assertEquals("test_label1", parse("test_label1").getLabel());
+		Line line = parse("test_label1");
+		assertIterableEquals(s("test_label1"), line.getLabels());
 	}
 	
 	@Test
 	public void testLabelIndented() {
-		assertEquals("test_label", parse(" test_label:").getLabel());
+		Line line = parse(" test_label:");
+		assertIterableEquals(s("test_label"), line.getLabels());
 	}
 	
 	@Test
 	public void testLabelIndentedWithMnemonic() {
-		assertEquals("test_label", parse(" test_label:exx").getLabel());
-		assertEquals("exx", parse(" test_label:exx").getMnemonic());
+		Line line = parse(" test_label:exx");
+		assertIterableEquals(s("test_label"), line.getLabels());
+		assertEquals("exx", line.getMnemonic());
+	}
+	
+	@Test
+	public void testLabelMultiple() {
+		Line line = parse("test_label:\n\ntest_label2:\n\texx");
+		assertIterableEquals(s("test_label", "test_label2"), line.getLabels());
+		assertEquals("exx", line.getMnemonic());
+		assertEquals(null, line.getArguments());
+		assertEquals(null, line.getComment());
 	}
 	
 	@Test
@@ -51,32 +67,32 @@ public class ParserTest {
 	
 	@Test
 	public void testParser1() {
-		assertEquals(";test comment", parse(" ;test comment").toString());
+		assertEquals("\tEND ;test comment", parse(" ;test comment").toString());
 	}
 	
 	@Test
 	public void testParser2() {
-		assertEquals("test_label1: ;test", parse("test_label1:;test").toString());
+		assertEquals("test_label1:\n\tEND ;test", parse("test_label1:;test").toString());
 	}
 	
 	@Test
 	public void testParser3() {
-		assertEquals("test_label1: ;test", parse("test_label1;test").toString());
+		assertEquals("test_label1:\n\tEND ;test", parse("test_label1;test").toString());
 	}
 	
 	@Test
 	public void testParser4() {
-		assertEquals("test_label1: exx ;test", parse("test_label1:exx;test").toString());
+		assertEquals("test_label1:\n\texx ;test", parse("test_label1:exx;test").toString());
 	}
 	
 	@Test
 	public void testParser5() {
-		assertEquals("test_label1: push af ;test", parse("test_label1: push af ;test").toString());
+		assertEquals("test_label1:\n\tpush af ;test", parse("test_label1: push af ;test").toString());
 	}
 	
 	@Test
 	public void testParser6() {
-		assertEquals("test_label1: ex af, af' ;test", parse("test_label1: ex af,af';test").toString());
+		assertEquals("test_label1:\n\tex af, af' ;test", parse("test_label1: ex af,af';test").toString());
 	}
 	
 	@Test
@@ -187,6 +203,10 @@ public class ParserTest {
 	
 	public Expression parseExpression(String text) {
 		return parse(" test " + text).getArguments();
+	}
+	
+	public List<String> s(String... values) {
+		return Arrays.asList(values);
 	}
 	
 }

@@ -52,7 +52,7 @@ public class Parser {
 				}
 				column = sourceLine.length();
 				state = state.parse('\n');
-			} while (state != labelStartState);
+			} while (state != labelStartState || lineBuilder.isEmpty());
 			
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());

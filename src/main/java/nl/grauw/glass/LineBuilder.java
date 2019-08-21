@@ -1,19 +1,23 @@
 package nl.grauw.glass;
 
+import java.util.ArrayList;
+
 import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.expressions.Expression;
 
 public class LineBuilder {
 	
-	private String label;
+	private ArrayList<String> labels;
 	private String mnemonic;
 	private Expression arguments;
 	private String comment;
 	
+	private final ArrayList<String> EMPTY_LABELS = new ArrayList<>();
+
 	public void setLabel(String label) {
-		if (this.label != null)
-			throw new AssemblyException("Label already set.");
-		this.label = label;
+		if (labels == null)
+			labels = new ArrayList<>();
+		this.labels.add(label);
 	}
 	
 	public void setMnemonic(String mnemonic) {
@@ -35,13 +39,13 @@ public class LineBuilder {
 	}
 
 	public boolean isEmpty() {
-		return label == null && mnemonic == null && arguments == null && comment == null;
+		return mnemonic == null;
 	}
 	
 	public Line getLine(Scope scope, SourceFileSpan sourceSpan) {
-		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceSpan);
+		Line line = new Line(scope, labels == null ? EMPTY_LABELS : labels, mnemonic, arguments, comment, sourceSpan);
 		
-		label = null;
+		labels = null;
 		mnemonic = null;
 		arguments = null;
 		comment = null;

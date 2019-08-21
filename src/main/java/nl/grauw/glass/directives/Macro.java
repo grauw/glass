@@ -17,14 +17,14 @@ public class Macro extends Directive {
 	
 	@Override
 	public void register(Scope scope, Line line) {
-		if (line.getLabel() == null)
+		if (line.getLabels().size() == 0)
 			throw new AssemblyException("Macro without label.");
-		scope.addSymbol(line.getLabel(),
-			new Instruction(
-				new MacroInstruction(line.getArguments(), source),
-				source.getScope()
-			)
+		Instruction instruction = new Instruction(
+			new MacroInstruction(line.getArguments(), source),
+			source.getScope()
 		);
+		for (String label : line.getLabels())
+			scope.addSymbol(label, instruction);
 		line.setInstruction(new nl.grauw.glass.instructions.Macro(source));
 	}
 	
