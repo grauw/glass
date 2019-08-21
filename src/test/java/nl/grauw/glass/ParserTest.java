@@ -1,6 +1,6 @@
 package nl.grauw.glass;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
@@ -9,7 +9,7 @@ import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 import nl.grauw.glass.expressions.Flag;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ParserTest {
 	
@@ -89,44 +89,60 @@ public class ParserTest {
 		assertEquals('"', ((CharacterLiteral)parseExpression("'\\\"'")).getCharacter());
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testCharacterLiteralTooLong() {
-		parse("'xx'");
+		assertThrows(SyntaxError.class, () -> {
+			parse("'xx'");
+		});
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testCharacterLiteralTooShort() {
-		parse("''");
+		assertThrows(SyntaxError.class, () -> {
+			parse("''");
+		});
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testCharacterLiteralUnclosed() {
-		parse("'");
+		assertThrows(SyntaxError.class, () -> {
+			parse("'");
+		});
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testCharacterLiteralUnclosedEscape() {
-		parse("'\\");
+		assertThrows(SyntaxError.class, () -> {
+			parse("'\\");
+		});
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testHexNumberTooShort() {
-		parseExpression("0x");
+		assertThrows(SyntaxError.class, () -> {
+			parseExpression("0x");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testHexNumberWrong() {
-		parseExpression("003x0");
+		assertThrows(ExpressionError.class, () -> {
+			parseExpression("003x0");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testHexNumberWrong2() {
-		parseExpression("0x0x0");
+		assertThrows(ExpressionError.class, () -> {
+			parseExpression("0x0x0");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testHexNumberWrong3() {
-		parseExpression("3x0");
+		assertThrows(ExpressionError.class, () -> {
+			parseExpression("3x0");
+		});
 	}
 	
 	@Test

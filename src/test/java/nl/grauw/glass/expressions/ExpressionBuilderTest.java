@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
@@ -9,7 +9,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ExpressionBuilderTest {
 	
@@ -48,14 +48,18 @@ public class ExpressionBuilderTest {
 		assertEquals("{{10H + ({15H * ({5H - 2H})})} + 4H}", parse("10H + (15H * (5H - 2H)) + 4H"));
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testGrouping3() {
-		parse("10H + (15H * (5H - 2H) + 4H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("10H + (15H * (5H - 2H) + 4H");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testGrouping4() {
-		parse("10H + 15H * (5H - 2H)) + 4H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("10H + 15H * (5H - 2H)) + 4H");
+		});
 	}
 	
 	@Test
@@ -104,14 +108,18 @@ public class ExpressionBuilderTest {
 				parse("ANN 1H, ANN a ? b ? 2H + 3H : c < d ? 4H : 5H - 6H : 7H, e ? 8H : 9H"));
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testTernaryIfWithoutElse() {
-		parse("a ? 1H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("a ? 1H");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testTernaryElseWithoutIf() {
-		parse("a : b");
+		assertThrows(ExpressionError.class, () -> {
+			parse("a : b");
+		});
 	}
 	
 	@Test
@@ -124,9 +132,11 @@ public class ExpressionBuilderTest {
 		assertEquals("{0H, {{a ? 1H : 2H}, 3H}}", parse("0H, a ? 1H : 2H, 3H"));
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testTernaryIfElseLowerPrecedenceNegative() {
-		parse("a ? 1H, 2H : 3H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("a ? 1H, 2H : 3H");
+		});
 	}
 	
 	@Test
@@ -204,19 +214,25 @@ public class ExpressionBuilderTest {
 		assertEquals("{a {1H || ({b 2H})}}", parse("a 1H || (b 2H)"));
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testAnnotationInTheMiddle() {
-		parse("a 1H || b 2H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("a 1H || b 2H");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testAnnotationNotAnIdentifier() {
-		parse("0 1H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("0 1H");
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testAnnotationNotAnIdentifier2() {
-		parse("a 0 1H");
+		assertThrows(ExpressionError.class, () -> {
+			parse("a 0 1H");
+		});
 	}
 	
 	@Test
@@ -234,14 +250,18 @@ public class ExpressionBuilderTest {
 		assertEquals("a", parse("a \n + 1H"));
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testMultilineLabel() {
-		assertEquals(null, parse("a +\ntest: 1H"));
+		assertThrows(ExpressionError.class, () -> {
+			assertEquals(null, parse("a +\ntest: 1H"));
+		});
 	}
 	
-	@Test(expected=SyntaxError.class)
+	@Test
 	public void testIncomplete() {
-		assertEquals(null, parse("a,"));
+		assertThrows(SyntaxError.class, () -> {
+			assertEquals(null, parse("a,"));
+		});
 	}
 	
 	public String parse(String text) {

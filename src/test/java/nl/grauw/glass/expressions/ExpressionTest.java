@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
@@ -8,7 +8,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class ExpressionTest {
 	
@@ -62,9 +62,11 @@ public class ExpressionTest {
 		assertEquals(3, parse("11 / 3").getInteger());
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testDivideByZero() {
-		parse("1 / 0").getInteger();
+		assertThrows(EvaluationException.class, () -> {
+			parse("1 / 0").getInteger();
+		});
 	}
 	
 	@Test
@@ -72,9 +74,11 @@ public class ExpressionTest {
 		assertEquals(2, parse("11 % 3").getInteger());
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testModuloByZero() {
-		parse("1 % 0").getInteger();
+		assertThrows(EvaluationException.class, () -> {
+			parse("1 % 0").getInteger();
+		});
 	}
 	
 	@Test
@@ -231,14 +235,18 @@ public class ExpressionTest {
 		assertEquals(11, parse("($).symbol", scope).getInteger());
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testMemberNoContext() {
-		parse("1.symbol").getInteger();
+		assertThrows(EvaluationException.class, () -> {
+			parse("1.symbol").getInteger();
+		});
 	}
 	
-	@Test(expected=ExpressionError.class)
+	@Test
 	public void testMemberNoIdentifier() {
-		parse("($).1").getInteger();
+		assertThrows(ExpressionError.class, () -> {
+			parse("($).1").getInteger();
+		});
 	}
 	
 	@Test
@@ -252,14 +260,18 @@ public class ExpressionTest {
 		assertEquals(4, parse("4H[0]").getInteger());
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testIndexOutOfBounds() {
-		parse("(4H, 5H)[2]").getInteger();
+		assertThrows(EvaluationException.class, () -> {
+			parse("(4H, 5H)[2]").getInteger();
+		});
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testIndexNoSequenceOutOfBounds() {
-		parse("4H[1]").getInteger();
+		assertThrows(EvaluationException.class, () -> {
+			parse("4H[1]").getInteger();
+		});
 	}
 	
 	public Expression parse(String text) {

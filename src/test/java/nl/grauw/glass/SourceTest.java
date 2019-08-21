@@ -1,6 +1,6 @@
 package nl.grauw.glass;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.instructions.ArgumentException;
 import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SourceTest {
 	
@@ -197,30 +197,36 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testMacroTooManyArguments() {
-		assemble(
-			"test: MACRO",
-			" ENDM",
-			" test 10H"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				"test: MACRO",
+				" ENDM",
+				" test 10H"
+			);
+		});
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testMacroTooFewArguments() {
-		assemble(
-			"test: MACRO arg",
-			" ENDM",
-			" test"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				"test: MACRO arg",
+				" ENDM",
+				" test"
+			);
+		});
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testMacroNonIdentifierArguments() {
-		assemble(
-			"test: MACRO (arg)",
-			" ENDM"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				"test: MACRO (arg)",
+				" ENDM"
+			);
+		});
 	}
 	
 	@Test
@@ -245,11 +251,13 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test
 	public void testMacroNoEnd() {
-		assemble(
-			"test: MACRO"
-		);
+		assertThrows(AssemblyException.class, () -> {
+			assemble(
+				"test: MACRO"
+			);
+		});
 	}
 	
 	@Test
@@ -323,19 +331,21 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=SymbolNotFoundException.class)
+	@Test
 	public void testMacroUnboundReference() {
-		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x24), assemble(
-			"test: MACRO arg",
-			" ld a,10H + arg + value",
-			" test2 arg",
-			"value: equ 3",
-			" ENDM",
-			"test2: MACRO arg",
-			" ld a,20H + arg + value",
-			" ENDM",
-			" test 1H"
-		));
+		assertThrows(SymbolNotFoundException.class, () -> {
+			assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x24), assemble(
+				"test: MACRO arg",
+				" ld a,10H + arg + value",
+				" test2 arg",
+				"value: equ 3",
+				" ENDM",
+				"test2: MACRO arg",
+				" ld a,20H + arg + value",
+				" ENDM",
+				" test 1H"
+			));
+		});
 	}
 	
 	@Test
@@ -396,16 +406,18 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=EvaluationException.class)
+	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentBeforeDereference() {
-		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
-			" ld de,test.test2",
-			"test: MACRO arg1, arg2",
-			" ld hl,arg1",
-			" ret arg2",
-			"test2:",
-			" ENDM"
-		));
+		assertThrows(EvaluationException.class, () -> {
+			assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
+				" ld de,test.test2",
+				"test: MACRO arg1, arg2",
+				" ld hl,arg1",
+				" ret arg2",
+				"test2:",
+				" ENDM"
+			));
+		});
 	}
 	
 	@Test
@@ -526,16 +538,18 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=SymbolNotFoundException.class)
+	@Test
 	public void testReptWithLabelNoIndex() {
-		assemble(
-			" nop",
-			"test: REPT 2",
-			" nop",
-			"test: nop",
-			" ENDM",
-			" ld hl,test.test"
-		);
+		assertThrows(SymbolNotFoundException.class, () -> {
+			assemble(
+				" nop",
+				"test: REPT 2",
+				" nop",
+				"test: nop",
+				" ENDM",
+				" ld hl,test.test"
+			);
+		});
 	}
 	
 	@Test
@@ -557,12 +571,14 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testReptNoCount() {
-		assemble(
-			" REPT",
-			" ENDM"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				" REPT",
+				" ENDM"
+			);
+		});
 	}
 	
 	@Test
@@ -601,13 +617,15 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testIrpNoIdentifier() {
-		assertArrayEquals(b(), assemble(
-			" IRP",
-			" nop",
-			" ENDM"
-		));
+		assertThrows(ArgumentException.class, () -> {
+			assertArrayEquals(b(), assemble(
+				" IRP",
+				" nop",
+				" ENDM"
+			));
+		});
 	}
 	
 	@Test
@@ -630,16 +648,18 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=SymbolNotFoundException.class)
+	@Test
 	public void testIrpWithLabelNoIndex() {
-		assemble(
-			" nop",
-			"test: IRP ?value, 10H, 20H, 30H",
-			" nop",
-			"test: nop",
-			" ENDM",
-			" ld hl,test.test"
-		);
+		assertThrows(SymbolNotFoundException.class, () -> {
+			assemble(
+				" nop",
+				"test: IRP ?value, 10H, 20H, 30H",
+				" nop",
+				"test: nop",
+				" ENDM",
+				" ld hl,test.test"
+			);
+		});
 	}
 	
 	@Test
@@ -725,21 +745,25 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=SymbolNotFoundException.class)
+	@Test
 	public void testIfWithEquForward() {
-		assemble(
-			" jp test",
-			" IF 1",
-			"test: equ 10H",
-			" ENDIF"
-		);
+		assertThrows(SymbolNotFoundException.class, () -> {
+			assemble(
+				" jp test",
+				" IF 1",
+				"test: equ 10H",
+				" ENDIF"
+			);
+		});
 	}
 	
-	@Test(expected=ErrorDirectiveException.class)
+	@Test
 	public void testError() {
-		assemble(
-			" ERROR"
-		);
+		assertThrows(ErrorDirectiveException.class, () -> {
+			assemble(
+				" ERROR"
+			);
+		});
 	}
 	
 	@Test
@@ -753,11 +777,13 @@ public class SourceTest {
 		}
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testAnnotationNotSupported() {
-		assemble(
-			" or A 0"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				" or A 0"
+			);
+		});
 	}
 	
 	@Test
@@ -769,18 +795,22 @@ public class SourceTest {
 		));
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testDsVirtualWithFill() {
-		assemble(
-			" ds VIRTUAL 10H, 0"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				" ds VIRTUAL 10H, 0"
+			);
+		});
 	}
 	
-	@Test(expected=ArgumentException.class)
+	@Test
 	public void testDsUnknownAnnotation() {
-		assemble(
-			" ds UNKNOWN 10H"
-		);
+		assertThrows(ArgumentException.class, () -> {
+			assemble(
+				" ds UNKNOWN 10H"
+			);
+		});
 	}
 	
 	@Test
@@ -821,14 +851,16 @@ public class SourceTest {
 		);
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test
 	public void testSectionExceedsSpace() {
-		assemble(
-			"ROM: ds 2H",
-			" SECTION ROM",
-			" ld hl,$",
-			" ENDS"
-		);
+		assertThrows(AssemblyException.class, () -> {
+			assemble(
+				"ROM: ds 2H",
+				" SECTION ROM",
+				" ld hl,$",
+				" ENDS"
+			);
+		});
 	}
 	
 	@Test
@@ -842,25 +874,31 @@ public class SourceTest {
 		);
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test
 	public void testEndm() {
-		assemble(
-			" ENDM"
-		);
+		assertThrows(AssemblyException.class, () -> {
+			assemble(
+				" ENDM"
+			);
+		});
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test
 	public void testEndp() {
-		assemble(
-			" ENDP"
-		);
+		assertThrows(AssemblyException.class, () -> {
+			assemble(
+				" ENDP"
+			);
+		});
 	}
 	
-	@Test(expected=AssemblyException.class)
+	@Test
 	public void testEnds() {
-		assemble(
-			" ENDS"
-		);
+		assertThrows(AssemblyException.class, () -> {
+			assemble(
+				" ENDS"
+			);
+		});
 	}
 	
 	public byte[] assemble(String... sourceLines) {
