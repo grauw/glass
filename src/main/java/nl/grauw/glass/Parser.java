@@ -20,6 +20,7 @@ public class Parser {
 	
 	public Parser(SourceFile sourceFile) {
 		reader = sourceFile.getReader();
+		state = labelStartState;
 	}
 
 	public SourceFile getSourceFile() {
@@ -28,18 +29,16 @@ public class Parser {
 
 	public Line parse(Scope scope) {
 		this.scope = scope;
-		state = labelStartState;
 		
 		SourceFileSpan span = null;
 		int column = 0;
 		try {
-			while (state != endState)
-			{
+			do {
 				span = reader.getSpan(span);
 				String sourceLine = reader.readLine();
 				if (sourceLine == null) {
 					state = state.parse('\0');
-					if (state != endState)
+					if (state != labelStartState)
 						throw new AssemblyException("Unexpected end of file.");
 					if (lineBuilder.isEmpty())
 						lineBuilder.setMnemonic("END");  // otherwise return END the next time
@@ -53,7 +52,7 @@ public class Parser {
 				}
 				column = sourceLine.length();
 				state = state.parse('\n');
-			}
+			} while (state != labelStartState);
 			
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
@@ -95,7 +94,7 @@ public class Parser {
 			} else if (character == ';') {
 				return commentReadState;
 			} else if (character == '\n' || character == '\0') {
-				return endState;
+				return labelStartState;
 			}
 			throw new SyntaxError();
 		}
@@ -115,7 +114,7 @@ public class Parser {
 				} else if (character == ';') {
 					return commentReadState;
 				} else if (character == '\n' || character == '\0') {
-					return endState;
+					return labelStartState;
 				}
 			}
 			throw new SyntaxError();
@@ -133,7 +132,7 @@ public class Parser {
 			} else if (character == ';') {
 				return commentReadState;
 			} else if (character == '\n' || character == '\0') {
-				return endState;
+				return labelStartState;
 			}
 			throw new SyntaxError();
 		}
@@ -157,7 +156,7 @@ public class Parser {
 				} else if (character == ';') {
 					return commentReadState;
 				} else if (character == '\n' || character == '\0') {
-					return endState;
+					return labelStartState;
 				}
 			}
 			throw new SyntaxError();
@@ -170,7 +169,7 @@ public class Parser {
 			if (character == ';') {
 				return commentReadState;
 			} else if (character == '\n' || character == '\0') {
-				return endState;
+				return labelStartState;
 			} else if (isWhitespace(character)) {
 				return argumentStartState;
 			} else {
@@ -497,7 +496,7 @@ public class Parser {
 			} else if (character == '\n' || character == '\0') {
 				if (!expressionBuilder.hasOpenGroup() || character == '\0') {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
-					return endState;
+					return labelStartState;
 				} else {
 					return argumentOperatorState;
 				}
@@ -586,7 +585,7 @@ public class Parser {
 			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
-				return endState;
+				return labelStartState;
 			} else {
 				accumulator.append(character);
 				return commentReadState;
@@ -620,7 +619,7 @@ public class Parser {
 				accumulator.setLength(0);
 				if (character == '\0') {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
-					return endState;
+					return labelStartState;
 				} else {
 					return argumentOperatorState;
 				}
@@ -628,13 +627,6 @@ public class Parser {
 				accumulator.append(character);
 				return commentReadState;
 			}
-		}
-	}
-	
-	private EndState endState = new EndState();
-	private class EndState extends State {
-		public State parse(char character) {
-			throw new AssemblyException("End state reached but not all characters consumed.");
 		}
 	}
 	
