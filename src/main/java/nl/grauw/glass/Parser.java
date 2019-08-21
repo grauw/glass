@@ -1,6 +1,5 @@
 package nl.grauw.glass;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import nl.grauw.glass.SourceFile.SourceFileReader;
@@ -57,8 +56,6 @@ public class Parser {
 		} catch(AssemblyException e) {
 			e.addContext(reader.getSourceFile(), lineNumber, column, String.join("\n", sourceLines));
 			throw e;
-		} catch (IOException e) {
-			throw new AssemblyException(e);
 		}
 		
 		lineBuilder.setSourceText(String.join("\n", sourceLines));
