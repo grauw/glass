@@ -32,10 +32,9 @@ public class Parser {
 					state = state.parse('\0');
 					if (state != endState)
 						throw new AssemblyException("Unexpected end of file.");
-					if (!lineBuilder.isEmpty())
-						break;  // return null (parsing end) the next time
-					lineBuilder.setMnemonic("END");
-					return lineBuilder.getLine(scope, span);
+					if (lineBuilder.isEmpty())
+						lineBuilder.setMnemonic("END");  // otherwise return END the next time
+					break;
 				}
 				column = 0;
 				
