@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import nl.grauw.glass.SourceFile.SourceFileReader;
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Ds;
 import nl.grauw.glass.directives.Equ;
@@ -37,7 +36,6 @@ public class SourceBuilder {
 	private final Source source;
 	private final List<String> terminators;
 	private final List<Path> includePaths;
-	private final Parser parser = new Parser();
 	
 	private static final List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
 	
@@ -86,15 +84,19 @@ public class SourceBuilder {
 	public Source parse(Path sourcePath) {
 		SourceFile sourceFile = new SourceFile(sourcePath);
 		sourceFiles.add(sourceFile);
-		return parse(sourceFile.getReader());
+		return parse(sourceFile);
+	}
+
+	public Source parse(SourceFile sourceFile) {
+		return parse(new Parser(sourceFile));
 	}
 	
-	public Source parse(SourceFileReader reader) {
+	public Source parse(Parser parser) {
 		while (true) {
-			Line line = parser.parse(reader, new Scope(source.getScope()));
+			Line line = parser.parse(new Scope(source.getScope()));
 			
 			try {
-				Directive directive = getDirective(line, reader);
+				Directive directive = getDirective(line, parser);
 				line.setDirective(directive);
 				source.addLine(line);
 				if (directive instanceof Terminator)
@@ -106,7 +108,7 @@ public class SourceBuilder {
 		}
 	}
 	
-	public Directive getDirective(Line line, SourceFileReader reader) {
+	public Directive getDirective(Line line, Parser parser) {
 		if (line.getMnemonic() == null)
 			return new Instruction();
 		
@@ -116,31 +118,31 @@ public class SourceBuilder {
 			return new Equ();
 		case "include":
 		case "INCLUDE":
-			return getIncludeDirective(line, reader.getSourceFile());
+			return getIncludeDirective(line, parser.getSourceFile());
 		case "incbin":
 		case "INCBIN":
-			return new Incbin(getIncludePaths(reader.getSourceFile()));
+			return new Incbin(getIncludePaths(parser.getSourceFile()));
 		case "macro":
 		case "MACRO":
-			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, reader));
+			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
 		case "rept":
 		case "REPT":
-			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, reader));
+			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
 		case "irp":
 		case "IRP":
-			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, reader));
+			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
 		case "proc":
 		case "PROC":
-			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, reader));
+			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, parser));
 		case "if":
 		case "IF":
-			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, reader);
+			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, parser);
 			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
-					parseBlock(source.getScope(), ENDIF_TERMINATORS, reader) : null;
+					parseBlock(source.getScope(), ENDIF_TERMINATORS, parser) : null;
 			return new If(thenBlock, elseBlock);
 		case "section":
 		case "SECTION":
-			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, reader));
+			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, parser));
 		case "ds":
 		case "DS":
 			return new Ds();
@@ -186,8 +188,8 @@ public class SourceBuilder {
 		return new Include();
 	}
 	
-	private Source parseBlock(Scope scope, List<String> terminators, SourceFileReader reader) {
-		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(reader);
+	private Source parseBlock(Scope scope, List<String> terminators, Parser parser) {
+		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(parser);
 	}
 	
 }

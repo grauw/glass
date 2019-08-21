@@ -868,7 +868,7 @@ public class SourceTest {
 		for (String lineText : sourceLines)
 			builder.append(lineText).append("\n");
 		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<Path>());
-		Source source = sourceBuilder.parse(new SourceFile(builder.toString()).getReader());
+		Source source = sourceBuilder.parse(new SourceFile(builder.toString()));
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
 			source.assemble(output);

@@ -10,6 +10,7 @@ import nl.grauw.glass.expressions.StringLiteral;
 
 public class Parser {
 	
+	private SourceFileReader reader;
 	private Scope scope;
 	private LineBuilder lineBuilder = new LineBuilder();
 	
@@ -17,7 +18,15 @@ public class Parser {
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
 	
-	public Line parse(SourceFileReader reader, Scope scope) {
+	public Parser(SourceFile sourceFile) {
+		reader = sourceFile.getReader();
+	}
+
+	public SourceFile getSourceFile() {
+		return reader.getSourceFile();
+	}
+
+	public Line parse(Scope scope) {
 		this.scope = scope;
 		state = labelStartState;
 		

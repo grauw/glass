@@ -267,10 +267,7 @@ public class ExpressionTest {
 	}
 	
 	public Expression parse(String text, Scope scope) {
-		Line line = new Parser().parse(
-			new SourceFile(" test " + text).getReader(),
-			scope
-		);
+		Line line = new Parser(new SourceFile(" test " + text)).parse(scope);
 		return line.getArguments();
 	}
 	

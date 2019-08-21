@@ -166,10 +166,7 @@ public class ParserTest {
 	}
 	
 	public Line parse(String text) {
-		return new Parser().parse(
-			new SourceFile(text).getReader(),
-			new Scope()
-		);
+		return new Parser(new SourceFile(text)).parse(new Scope());
 	}
 	
 	public Expression parseExpression(String text) {

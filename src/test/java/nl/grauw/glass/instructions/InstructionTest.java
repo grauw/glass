@@ -952,10 +952,7 @@ public class InstructionTest {
 	}
 	
 	public byte[] parse(String string) {
-		Line line = new Parser().parse(
-			new SourceFile(" " + string).getReader(),
-			new Scope(new GlobalScope())
-		);
+		Line line = new Parser(new SourceFile(" " + string)).parse(new Scope(new GlobalScope()));
 		line.resolve(0x4321);
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());

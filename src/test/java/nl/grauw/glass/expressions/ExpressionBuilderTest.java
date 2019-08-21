@@ -245,10 +245,7 @@ public class ExpressionBuilderTest {
 	}
 	
 	public String parse(String text) {
-		Line line = new Parser().parse(
-			new SourceFile(" test " + text).getReader(),
-			new Scope()
-		);
+		Line line = new Parser(new SourceFile(" test " + text)).parse(new Scope());
 		return line.getArguments().toDebugString();
 	}
 	
