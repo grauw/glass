@@ -2,6 +2,7 @@ package nl.grauw.glass;
 
 import java.util.List;
 
+import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.instructions.Empty;
@@ -15,28 +16,24 @@ public class Line {
 	private final String mnemonic;
 	private final Expression arguments;
 	private final String comment;
-	private final SourceFile sourceFile;
-	private final int lineNumber;
-	private final String sourceText;
+	private final SourceFileSpan sourceSpan;
 	
 	private InstructionFactory instruction;
 	private InstructionObject instructionObject;
 	private Directive directive;
 	
-	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, SourceFile sourceFile, int lineNumber, String sourceText) {
+	public Line(Scope scope, String label, String mnemonic, Expression arguments, String comment, SourceFileSpan sourceSpan) {
 		this.scope = scope;
 		this.label = label;
 		this.mnemonic = mnemonic;
 		this.arguments = arguments;
 		this.comment = comment;
-		this.sourceFile = sourceFile;
-		this.lineNumber = lineNumber;
-		this.sourceText = sourceText;
+		this.sourceSpan = sourceSpan;
 	}
 	
 	public Line(Scope scope, Line other) {
 		this(scope, other.label, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
-				other.comment, other.sourceFile, other.lineNumber, other.sourceText);
+				other.comment, other.sourceSpan);
 		directive = other.directive;
 	}
 	
@@ -60,16 +57,8 @@ public class Line {
 		return comment;
 	}
 	
-	public SourceFile getSourceFile() {
-		return sourceFile;
-	}
-	
-	public int getLineNumber() {
-		return lineNumber;
-	}
-	
-	public String getSourceText() {
-		return sourceText;
+	public SourceFileSpan getSourceSpan() {
+		return sourceSpan;
 	}
 	
 	public void setDirective(Directive directive) {
@@ -90,7 +79,7 @@ public class Line {
 		try {
 			directive.register(sourceScope, this);
 		} catch (AssemblyException e) {
-			e.addContext(this);
+			e.addContext(sourceSpan);
 			throw e;
 		}
 	}
@@ -99,7 +88,7 @@ public class Line {
 		try {
 			getInstruction().expand(this, lines);
 		} catch (AssemblyException e) {
-			e.addContext(this);
+			e.addContext(sourceSpan);
 			throw e;
 		}
 	}
@@ -109,7 +98,7 @@ public class Line {
 			instructionObject = getInstruction().createObject(scope, arguments);
 			return instructionObject.resolve(address);
 		} catch (AssemblyException e) {
-			e.addContext(this);
+			e.addContext(sourceSpan);
 			throw e;
 		}
 	}
@@ -118,7 +107,7 @@ public class Line {
 		try {
 			return instructionObject.getSize();
 		} catch (AssemblyException e) {
-			e.addContext(this);
+			e.addContext(sourceSpan);
 			throw e;
 		}
 	}
@@ -127,7 +116,7 @@ public class Line {
 		try {
 			return instructionObject.getBytes();
 		} catch (AssemblyException e) {
-			e.addContext(this);
+			e.addContext(sourceSpan);
 			throw e;
 		}
 	}

@@ -100,7 +100,7 @@ public class SourceBuilder {
 				if (directive instanceof Terminator)
 					return source;
 			} catch (AssemblyException e) {
-				e.addContext(line);
+				e.addContext(line.getSourceSpan());
 				throw e;
 			}
 		}

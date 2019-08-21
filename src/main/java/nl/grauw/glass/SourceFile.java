@@ -51,9 +51,50 @@ public class SourceFile {
 			return content.get(lineNumber++);
 		}
 
-		public int getLineNumber() {
-			return lineNumber;
+		public SourceFileSpan getSpan(SourceFileSpan span) {
+			return new SourceFileSpan(span != null ? span.lineStart : lineNumber, lineNumber + 1);
+		}
+	}
+
+	public class SourceFileSpan {
+
+		final int lineStart;
+		final int lineEnd;
+		final int column;
+
+		public SourceFileSpan(int lineStart, int lineEnd, int column) {
+			this.lineStart = lineStart;
+			this.lineEnd = lineEnd;
+			this.column = column;
 		}
 
+		public SourceFileSpan(int lineStart, int lineEnd) {
+			this(lineStart, lineEnd, -1);
+		}
+
+		public SourceFile getSourceFile() {
+			return SourceFile.this;
+		}
+
+		public SourceFileSpan atColumn(int column) {
+			return new SourceFileSpan(lineStart, lineEnd, column);
+		}
+
+		@Override
+		public String toString() {
+			String string = "[at " + getSourceFile().getPath() + ":" + lineStart + (column != -1 ? "," + column : "") + "]";
+
+			for (int i = lineStart; i < lineEnd && i < content.size(); i++) {
+				string += "\n" + content.get(i);
+			}
+
+			if (column != -1) {
+				String line = content.get(Math.min(lineEnd, content.size()) - 1);
+				int end = Math.min(column, line.length());
+				string += "\n" + line.substring(0, end).replaceAll("[^\t]", " ") + "^";
+			}
+
+			return string;
+		}
 	}
 }

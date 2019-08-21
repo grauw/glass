@@ -3,10 +3,12 @@ package nl.grauw.glass;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.grauw.glass.SourceFile.SourceFileSpan;
+
 public class AssemblyException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	
-	private final List<Context> contexts = new ArrayList<>();
+	private final List<SourceFileSpan> contexts = new ArrayList<>();
 	
 	public AssemblyException() {
 		this((Throwable)null);
@@ -24,19 +26,15 @@ public class AssemblyException extends RuntimeException {
 		super(message, cause);
 	}
 	
-	public void addContext(Line line) {
-		addContext(line.getSourceFile(), line.getLineNumber(), -1, line.getSourceText());
-	}
-	
-	public void addContext(SourceFile sourceFile, int line, int column, String text) {
-		contexts.add(new Context(sourceFile, line, column, text));
+	public void addContext(SourceFileSpan sourceSpan) {
+		contexts.add(sourceSpan);
 	}
 	
 	@Override
 	public String getMessage() {
 		String message = super.getMessage();
 		
-		for (Context context : contexts)
+		for (SourceFileSpan context : contexts)
 			message += "\n" + context;
 		
 		return message;
@@ -44,36 +42,6 @@ public class AssemblyException extends RuntimeException {
 	
 	public String getPlainMessage() {
 		return super.getMessage();
-	}
-	
-	private static class Context {
-		
-		private final SourceFile sourceFile;
-		private final int line;
-		private final int column;
-		private final String text;
-		
-		public Context(SourceFile sourceFile, int line, int column, String text) {
-			this.sourceFile = sourceFile;
-			this.line = line;
-			this.column = column;
-			this.text = text;
-		}
-		
-		@Override
-		public String toString() {
-			String prefix = "[at " + sourceFile.getPath() + ":" + line + (column != -1 ? "," + column : "") + "]\n";
-			String context = prefix + text;
-			
-			if (column >= 0) {
-				int start = Math.min(context.lastIndexOf('\n') + 1, context.length());
-				int end = Math.min(start + column, context.length());
-				context += "\n" + context.substring(start, end).replaceAll("[^\t]", " ") + "^";
-			}
-			
-			return context;
-		}
-		
 	}
 	
 }

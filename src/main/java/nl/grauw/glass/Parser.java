@@ -1,8 +1,7 @@
 package nl.grauw.glass;
 
-import java.util.ArrayList;
-
 import nl.grauw.glass.SourceFile.SourceFileReader;
+import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
@@ -22,25 +21,22 @@ public class Parser {
 		this.scope = scope;
 		state = labelStartState;
 		
-		final int firstLineNumber = reader.getLineNumber();
-		int lineNumber = firstLineNumber;
+		SourceFileSpan span = null;
 		int column = 0;
-		ArrayList<String> sourceLines = new ArrayList<String>();
 		try {
 			while (state != endState)
 			{
+				span = reader.getSpan(span);
 				String sourceLine = reader.readLine();
 				if (sourceLine == null) {
 					state = state.parse('\0');
 					if (state != endState)
 						throw new AssemblyException("Unexpected end of file.");
-					if (sourceLines.size() > 0)
+					if (!lineBuilder.isEmpty())
 						break;  // return null (parsing end) the next time
 					lineBuilder.setMnemonic("END");
-					return lineBuilder.getLine(scope, reader.getSourceFile(), firstLineNumber);
+					return lineBuilder.getLine(scope, span);
 				}
-				sourceLines.add(sourceLine);
-				lineNumber = reader.getLineNumber();
 				column = 0;
 				
 				for (int i = 0, length = sourceLine.length(); i < length; i++) {
@@ -54,13 +50,11 @@ public class Parser {
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
 		} catch(AssemblyException e) {
-			e.addContext(reader.getSourceFile(), lineNumber, column, String.join("\n", sourceLines));
+			e.addContext(span.atColumn(column));
 			throw e;
 		}
 		
-		lineBuilder.setSourceText(String.join("\n", sourceLines));
-		
-		return lineBuilder.getLine(scope, reader.getSourceFile(), firstLineNumber);
+		return lineBuilder.getLine(scope, span);
 	}
 	
 	private abstract class State {

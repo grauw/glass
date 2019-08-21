@@ -1,5 +1,6 @@
 package nl.grauw.glass;
 
+import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.expressions.Expression;
 
 public class LineBuilder {
@@ -8,7 +9,6 @@ public class LineBuilder {
 	private String mnemonic;
 	private Expression arguments;
 	private String comment;
-	private String sourceText;
 	
 	public void setLabel(String label) {
 		if (this.label != null)
@@ -31,21 +31,18 @@ public class LineBuilder {
 	public void setComment(String comment) {
 		this.comment = this.comment == null ? comment : this.comment + "\n" + comment;
 	}
-	
-	public void setSourceText(String sourceText) {
-		if (this.sourceText != null)
-			throw new AssemblyException("Source text already set.");
-		this.sourceText = sourceText;
+
+	public boolean isEmpty() {
+		return label == null && mnemonic == null && arguments == null && comment == null;
 	}
 	
-	public Line getLine(Scope scope, SourceFile sourceFile, int lineNumber) {
-		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceFile, lineNumber, sourceText);
+	public Line getLine(Scope scope, SourceFileSpan sourceSpan) {
+		Line line = new Line(scope, label, mnemonic, arguments, comment, sourceSpan);
 		
 		label = null;
 		mnemonic = null;
 		arguments = null;
 		comment = null;
-		sourceText = null;
 		
 		return line;
 	}
