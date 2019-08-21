@@ -23,6 +23,8 @@ public class LineBuilder {
 	}
 	
 	public void setArguments(Expression arguments) {
+		if (this.mnemonic == null)
+			throw new AssemblyException("Mnemonic not set.");
 		if (this.arguments != null)
 			throw new AssemblyException("Arguments already set.");
 		this.arguments = arguments;
