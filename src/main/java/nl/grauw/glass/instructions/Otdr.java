@@ -19,7 +19,6 @@ public class Otdr extends InstructionFactory {
 		
 		public Otdr_(Scope context) {
 			super(context);
-			// TODO Auto-generated constructor stub
 		}
 		
 		@Override
