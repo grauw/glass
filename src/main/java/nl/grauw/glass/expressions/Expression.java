@@ -83,10 +83,6 @@ public abstract class Expression {
 		throw new EvaluationException("Not a context.");
 	}
 	
-	public int getAddress() {
-		return getInteger();
-	}
-	
 	public List<Expression> getList() {
 		List<Expression> list = new ArrayList<>();
 		addToList(list);

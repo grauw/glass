@@ -33,7 +33,7 @@ public class Call extends InstructionFactory {
 		
 		@Override
 		public byte[] getBytes() {
-			int address = argument.getAddress();
+			int address = argument.getInteger();
 			return new byte[] { (byte)0xCD, (byte)address, (byte)(address >> 8) };
 		}
 		
@@ -59,7 +59,7 @@ public class Call extends InstructionFactory {
 		
 		@Override
 		public byte[] getBytes() {
-			int address = argument2.getAddress();
+			int address = argument2.getInteger();
 			return new byte[] { (byte)(0xC4 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
 		}
 		

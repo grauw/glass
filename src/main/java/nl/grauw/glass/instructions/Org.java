@@ -25,7 +25,7 @@ public class Org extends InstructionFactory {
 		}
 		
 		public int getAddress() {
-			return argument.getAddress();
+			return argument.getInteger();
 		}
 		
 		@Override
