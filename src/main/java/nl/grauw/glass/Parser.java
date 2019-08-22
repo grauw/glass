@@ -3,6 +3,7 @@ package nl.grauw.glass;
 import nl.grauw.glass.SourceFile.SourceFileReader;
 import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.expressions.CharacterLiteral;
+import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.ExpressionBuilder;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -391,7 +392,7 @@ public class Parser {
 				accumulator.append(character);
 				return argumentHexadecimalState;
 			} else {
-				expressionBuilder.addValueToken(new Identifier("$", scope));
+				expressionBuilder.addValueToken(new ContextLiteral(scope));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}

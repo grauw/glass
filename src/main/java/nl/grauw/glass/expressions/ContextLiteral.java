@@ -34,11 +34,7 @@ public class ContextLiteral extends Literal {
 	}
 	
 	public String toString() {
-		try {
-			return getHexValue();
-		} catch (EvaluationException e) {
-			return "<" + e.getMessage() + ">";
-		}
+		return "$";
 	}
 	
 	public String toDebugString() {

@@ -22,7 +22,6 @@ public class Scope implements Context {
 	
 	public Scope(Scope parent) {
 		this.parent = parent;
-		addSymbol("$", this);
 	}
 	
 	public Scope getParent() {
@@ -98,7 +97,7 @@ public class Scope implements Context {
 		StringBuilder builder = new StringBuilder();
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
-			if (entry.getValue() instanceof ContextLiteral && !"$".equals(entry.getKey())) {
+			if (entry.getValue() instanceof ContextLiteral) {
 				String name = namePrefix + entry.getKey();
 				try {
 					builder.append(name + ": equ " + entry.getValue().getHexValue() + "\n");
