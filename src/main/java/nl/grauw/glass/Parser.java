@@ -13,6 +13,7 @@ public class Parser {
 	
 	private SourceFileReader reader;
 	private Scope scope;
+	private Scope lineScope;
 	private LineBuilder lineBuilder = new LineBuilder();
 	
 	private State state;
@@ -30,6 +31,7 @@ public class Parser {
 
 	public Line parse(Scope scope) {
 		this.scope = scope;
+		this.lineScope = new Scope(scope);
 		
 		SourceFileSpan span = null;
 		int column = 0;
@@ -62,7 +64,7 @@ public class Parser {
 			throw e;
 		}
 		
-		return lineBuilder.getLine(scope, span);
+		return lineBuilder.getLine(lineScope, span);
 	}
 	
 	private abstract class State {
@@ -392,7 +394,7 @@ public class Parser {
 				accumulator.append(character);
 				return argumentHexadecimalState;
 			} else {
-				expressionBuilder.addValueToken(new ContextLiteral(scope));
+				expressionBuilder.addValueToken(new ContextLiteral(lineScope));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}

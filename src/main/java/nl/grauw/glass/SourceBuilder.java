@@ -93,7 +93,7 @@ public class SourceBuilder {
 	
 	public Source parse(Parser parser) {
 		while (true) {
-			Line line = parser.parse(new Scope(source.getScope()));
+			Line line = parser.parse(source.getScope());
 			
 			try {
 				Directive directive = getDirective(line, parser);

@@ -1,5 +1,7 @@
 package nl.grauw.glass.expressions;
 
+import nl.grauw.glass.Scope;
+
 public class Identifier extends Passthrough {
 	
 	private final String name;
@@ -12,7 +14,7 @@ public class Identifier extends Passthrough {
 	
 	@Override
 	public Identifier copy(Context context) {
-		return new Identifier(name, context);
+		return new Identifier(name, ((Scope)context).getParent());
 	}
 	
 	public String getName() {

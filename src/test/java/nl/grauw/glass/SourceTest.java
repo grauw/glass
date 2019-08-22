@@ -301,6 +301,38 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testMacroNesting2() {
+		assertArrayEquals(b(0x1E, 0x1E, 0x1E), assemble(
+			"test2: MACRO ?x",
+			"x: db ?x * 5",
+			" ENDM",
+			"test: MACRO arg", // ?x
+			"x: equ arg * 2",  // ?x
+			" test2 x * 3",
+			" ENDM",
+			" test 1H",
+			" test 1H",
+			" test 1H"
+		));
+	}
+	
+	@Test
+	public void testMacroNesting3() {
+		assertArrayEquals(b(0x02, 0x1E), assemble(
+			"test2: MACRO ?x",
+			"x: equ ?x * 5",
+			" db x",
+			" ENDM",
+			"test: MACRO ?x = 1",
+			"x: equ ?x * 2",
+			"inner: test2 x * 3",
+			" ENDM",
+			" db test.x",
+			" db test.inner.x"
+		));
+	}
+	
+	@Test
 	public void testMacroTwiceWithLocalReferences() {
 		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x23), assemble(
 			"test: MACRO arg",
