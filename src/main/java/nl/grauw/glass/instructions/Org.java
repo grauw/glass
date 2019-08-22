@@ -24,14 +24,10 @@ public class Org extends InstructionFactory {
 			this.argument = argument;
 		}
 		
-		public int getAddress() {
-			return argument.getInteger();
-		}
-		
 		@Override
 		public int resolve(int address) {
 			super.resolve(address);
-			return getAddress();
+			return argument.getInteger();
 		}
 		
 	}
