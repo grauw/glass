@@ -15,8 +15,9 @@ import nl.grauw.glass.expressions.SectionContext;
 
 public class Ds extends InstructionFactory implements SectionContext {
 	
-	public static Schema ARGUMENTS_N = new Schema(new Schema.IsAnnotation(Schema.INTEGER));
+	public static Schema ARGUMENTS_N = new Schema(Schema.INTEGER);
 	public static Schema ARGUMENTS_N_N = new Schema(Schema.INTEGER, Schema.INTEGER);
+	public static Schema ARGUMENTS_VIRTUAL = new Schema(new Schema.IsAnnotation(Schema.INTEGER));
 	
 	private final List<Section> sections = new ArrayList<>();
 	
@@ -28,10 +29,11 @@ public class Ds extends InstructionFactory implements SectionContext {
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS_N.check(arguments))
-			return new Ds_N_N(context, arguments.getAnnotation(),
-					arguments.getAnnotee(), IntegerLiteral.ZERO);
+			return new Ds_N_N(context, null, arguments, IntegerLiteral.ZERO);
 		if (ARGUMENTS_N_N.check(arguments))
 			return new Ds_N_N(context, null, arguments.getElement(0), arguments.getElement(1));
+		if (ARGUMENTS_VIRTUAL.check(arguments))
+			return new Ds_N_N(context, arguments.getAnnotation(), arguments.getAnnotee(), IntegerLiteral.ZERO);
 		throw new ArgumentException();
 	}
 	
