@@ -490,12 +490,7 @@ public class Parser {
 			} else if (isWhitespace(character)) {
 				return argumentOperatorState;
 			} else if (character == ';') {
-				if (!expressionBuilder.hasOpenGroup()) {
-					lineBuilder.setArguments(expressionBuilder.getExpression());
-					return commentReadState;
-				} else {
-					return commentReadThenOperatorState;
-				}
+				return commentReadThenOperatorState;
 			} else if (character == '\n' || character == '\0') {
 				if (!expressionBuilder.hasOpenGroup() || character == '\0') {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
@@ -602,11 +597,7 @@ public class Parser {
 			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
-				if (character == '\0') {
-					throw new SyntaxError();
-				} else {
-					return argumentValueState;
-				}
+				return argumentValueState.parse(character);
 			} else {
 				accumulator.append(character);
 				return commentReadThenArgumentState;
@@ -620,12 +611,7 @@ public class Parser {
 			if (character == '\n' || character == '\0') {
 				lineBuilder.setComment(accumulator.toString());
 				accumulator.setLength(0);
-				if (character == '\0') {
-					lineBuilder.setArguments(expressionBuilder.getExpression());
-					return labelStartState;
-				} else {
-					return argumentOperatorState;
-				}
+				return argumentOperatorState.parse(character);
 			} else {
 				accumulator.append(character);
 				return commentReadThenOperatorState;
