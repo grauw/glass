@@ -96,6 +96,26 @@ public class ParserTest {
 	}
 	
 	@Test
+	public void testMultiLineArguments() {
+		assertEquals("test_label1:\n\tex af, af' ;test", parse("test_label1: ex af,\naf';test").toString());
+	}
+	
+	@Test
+	public void testMultiLineArguments2() {
+		assertEquals("test_label1:\n\tex af, af' ;test\ntest2", parse("test_label1: ex af,;test\naf';test2").toString());
+	}
+	
+	@Test
+	public void testMultiLineArguments3() {
+		assertEquals("test_label1:\n\tdb (1H + 2H) ;test", parse("test_label1: db (1 +\n2);test").toString());
+	}
+	
+	@Test
+	public void testMultiLineArguments4() {
+		assertEquals("test_label1:\n\tdb (1H + 2H) ;test\ntest2", parse("test_label1: db (1;test\n+ 2);test2").toString());
+	}
+	
+	@Test
 	public void testCharacterLiteral() {
 		assertEquals('x', ((CharacterLiteral)parseExpression("'x'")).getCharacter());
 	}

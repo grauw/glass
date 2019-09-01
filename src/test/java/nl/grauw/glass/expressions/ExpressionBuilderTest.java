@@ -242,12 +242,22 @@ public class ExpressionBuilderTest {
 	
 	@Test
 	public void testMultiline2() {
-		assertEquals("{a, 1H}", parse("a, ;\n 1H"));
+		assertEquals("{a, 1H}", parse("a, ;xx\n 1H"));
 	}
 	
 	@Test
 	public void testMultiline3() {
 		assertEquals("a", parse("a \n + 1H"));
+	}
+	
+	@Test
+	public void testMultiline4() {
+		assertEquals("({a + 1H})", parse("(a\n+ 1H)"));
+	}
+	
+	@Test
+	public void testMultiline5() {
+		assertEquals("({a, 1H})", parse("(a;xx\n, 1H)"));
 	}
 	
 	@Test

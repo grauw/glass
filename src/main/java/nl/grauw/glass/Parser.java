@@ -609,7 +609,7 @@ public class Parser {
 				}
 			} else {
 				accumulator.append(character);
-				return commentReadState;
+				return commentReadThenArgumentState;
 			}
 		}
 	}
@@ -628,7 +628,7 @@ public class Parser {
 				}
 			} else {
 				accumulator.append(character);
-				return commentReadState;
+				return commentReadThenOperatorState;
 			}
 		}
 	}
