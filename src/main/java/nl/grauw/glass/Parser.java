@@ -435,6 +435,15 @@ public class Parser {
 	private ArgumentOperatorState argumentOperatorState = new ArgumentOperatorState();
 	private class ArgumentOperatorState extends State {
 		public State parse(char character) {
+			State state = tryParse(character);
+			if (state != null) {
+				return state;
+			} else {
+				throw new SyntaxError();
+			}
+		}
+		
+		public State tryParse(char character) {
 			if (character == ')') {
 				expressionBuilder.addOperatorToken(expressionBuilder.GROUP_CLOSE);
 				return argumentOperatorState;
@@ -488,7 +497,7 @@ public class Parser {
 				expressionBuilder.addOperatorToken(expressionBuilder.SEQUENCE);
 				return argumentValueState;
 			} else if (isWhitespace(character)) {
-				return argumentOperatorState;
+				return argumentOperatorAnnotationState;
 			} else if (character == ';') {
 				return commentReadThenOperatorState;
 			} else if (character == '\n' || character == '\0') {
@@ -496,11 +505,27 @@ public class Parser {
 					lineBuilder.setArguments(expressionBuilder.getExpression());
 					return labelStartState;
 				} else {
-					return argumentOperatorState;
+					return argumentOperatorAnnotationState;
 				}
 			} else {
-				expressionBuilder.addOperatorToken(expressionBuilder.ANNOTATION);
-				return argumentValueState.parse(character);
+				return null;
+			}
+		}
+	}
+	
+	private ArgumentOperatorAnnotationState argumentOperatorAnnotationState = new ArgumentOperatorAnnotationState();
+	private class ArgumentOperatorAnnotationState extends State {
+		public State parse(char character) {
+			if (character == '!') {
+				return argumentNotEqualsAnnotationState;
+			} else {
+				State state = argumentOperatorState.tryParse(character);
+				if (state != null) {
+					return state;
+				} else {
+					expressionBuilder.addOperatorToken(expressionBuilder.ANNOTATION);
+					return argumentValueState.parse(character);
+				}
 			}
 		}
 	}
@@ -543,6 +568,17 @@ public class Parser {
 			if (character == '=') {
 				expressionBuilder.addOperatorToken(expressionBuilder.NOT_EQUALS);
 				return argumentValueState;
+			} else {
+				throw new SyntaxError();
+			}
+		}
+	}
+	
+	private ArgumentNotEqualsAnnotationState argumentNotEqualsAnnotationState = new ArgumentNotEqualsAnnotationState();
+	private class ArgumentNotEqualsAnnotationState extends State {
+		public State parse(char character) {
+			if (character == '=') {
+				return argumentNotEqualsState.parse(character);
 			} else {
 				expressionBuilder.addOperatorToken(expressionBuilder.ANNOTATION);
 				expressionBuilder.addOperatorToken(expressionBuilder.NOT);

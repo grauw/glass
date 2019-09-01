@@ -236,6 +236,27 @@ public class ExpressionBuilderTest {
 	}
 	
 	@Test
+	public void testAnnotationNoSpace1() {
+		assertThrows(SyntaxError.class, () -> {
+			parse("a!1H");
+		});
+	}
+	
+	@Test
+	public void testAnnotationNoSpace2() {
+		assertThrows(SyntaxError.class, () -> {
+			parse("(x)a");
+		});
+	}
+	
+	@Test
+	public void testAnnotationNoSpace3() {
+		assertThrows(SyntaxError.class, () -> {
+			parse("(x)[0]a");
+		});
+	}
+	
+	@Test
 	public void testMultiline() {
 		assertEquals("{a + 1H}", parse("a +\n1H"));
 	}
