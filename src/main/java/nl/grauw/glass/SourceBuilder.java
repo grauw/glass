@@ -63,8 +63,9 @@ public class SourceBuilder {
 	
 	private List<Path> getIncludePaths(SourceFile sourceFile) {
 		List<Path> basePaths = new ArrayList<Path>();
-		if (sourceFile.getPath() != null)
-			basePaths.add(sourceFile.getPath().getParent());
+		Path path = sourceFile.getPath();
+		if (path != null)
+			basePaths.add(path.resolveSibling(path.getFileSystem().getPath("")));
 		basePaths.addAll(includePaths);
 		return basePaths;
 	}
