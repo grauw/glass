@@ -55,11 +55,11 @@ public class Scope implements Context {
 	}
 	
 	public boolean hasSymbol(String name) {
-		return getLocalSymbol(name) != null || parent != null && parent.hasSymbol(name);
+		return hasLocalSymbol(name) || parent != null && parent.hasSymbol(name);
 	}
 	
 	public Expression getSymbol(String name) {
-		Expression value = getLocalSymbol(name);
+		Expression value = getLocalSymbolOrNull(name);
 		if (value != null)
 			return value;
 		if (parent != null)
@@ -67,7 +67,18 @@ public class Scope implements Context {
 		throw new SymbolNotFoundException(name);
 	}
 	
-	private Expression getLocalSymbol(String name) {
+	public boolean hasLocalSymbol(String name) {
+		return getLocalSymbolOrNull(name) != null;
+	}
+	
+	public Expression getLocalSymbol(String name) {
+		Expression value = getLocalSymbolOrNull(name);
+		if (value != null)
+			return value;
+		throw new SymbolNotFoundException(name);
+	}
+	
+	private Expression getLocalSymbolOrNull(String name) {
 		Expression value = symbols.get(name);
 		if (value != null)
 			return value;
@@ -76,7 +87,7 @@ public class Scope implements Context {
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
 			Expression result = symbols.get(name.substring(0, index));
 			if (result != null && result.isContext())
-				return ((Scope)result.getContext()).getLocalSymbol(name.substring(index + 1));
+				return ((Scope)result.getContext()).getLocalSymbolOrNull(name.substring(index + 1));
 		}
 		return null;
 	}

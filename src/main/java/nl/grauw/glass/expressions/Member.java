@@ -27,7 +27,7 @@ public class Member extends Passthrough {
 	public Expression resolve() {
 		if (!object.isContext())
 			throw new EvaluationException("Object not found.");
-		return object.getContext().getSymbol(subject.getName());
+		return object.getContext().getLocalSymbol(subject.getName());
 	}
 	
 	@Override

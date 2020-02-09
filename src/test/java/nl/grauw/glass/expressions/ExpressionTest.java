@@ -6,6 +6,7 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
+import nl.grauw.glass.Scope.SymbolNotFoundException;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.jupiter.api.Test;
@@ -214,25 +215,25 @@ public class ExpressionTest {
 	
 	@Test
 	public void testMember() {
-		Scope objectScope = new Scope();
-		objectScope.addSymbol("symbol", new IntegerLiteral(11));
 		Scope scope = new Scope();
+		Scope objectScope = new Scope(scope);
+		objectScope.addSymbol("symbol", new IntegerLiteral(11));
 		scope.addSymbol("object", new ContextLiteral(objectScope));
 		assertEquals(11, parse("object.symbol", scope).getInteger());
+		assertEquals(11, parse("(object).symbol", scope).getInteger());
 	}
 	
 	@Test
-	public void testThisMember() {
+	public void testMemberInParent() {
 		Scope scope = new Scope();
+		scope.addSymbol("object", new ContextLiteral(new Scope(scope)));
 		scope.addSymbol("symbol", new IntegerLiteral(11));
-		assertEquals(11, parse("$.symbol", scope).getInteger());
-	}
-	
-	@Test
-	public void testMemberOfExpression() {
-		Scope scope = new Scope();
-		scope.addSymbol("symbol", new IntegerLiteral(11));
-		assertEquals(11, parse("($).symbol", scope).getInteger());
+		assertThrows(SymbolNotFoundException.class, () -> {
+			parse("object.symbol", scope).getInteger();
+		});
+		assertThrows(SymbolNotFoundException.class, () -> {
+			parse("(object).symbol", scope).getInteger();
+		});
 	}
 	
 	@Test
