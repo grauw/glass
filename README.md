@@ -6,23 +6,28 @@ Copyright © 2013, Laurens Holst
 Project information
 -------------------
 
-Glass is a cross-platform assembler for the Z80 processor, written in Java 8.
+  * Author: Laurens Holst <laurens@grauw.nl>
+  * Site: <https://bitbucket.org/grauw/glass>
+  * Downloads: <https://bitbucket.org/grauw/glass/downloads>
+  * History: <https://bitbucket.org/grauw/glass/src/@/CHANGES.md>
+  * Issues: <https://bitbucket.org/grauw/glass/issues>
+  * Support: <https://www.msx.org/forum/msx-talk/development/glass-z80-assembler>
+  * License: Simplified BSD License
 
-Downloads [available here](https://bitbucket.org/grauw/glass/downloads)
-([changes](https://bitbucket.org/grauw/glass/src/@/CHANGES.md)).
+Glass is a cross-assembler for the Z80 processor written in Java 8. Its core
+principles are to be open source, cross-platform, and to provide a standard Z80
+syntax infused with modern language features.
 
-Bug reports and feature requests
-[go here](https://bitbucket.org/grauw/glass/issues).
+It presents a flexible language for Z80 object code generation by building an
+abstract syntax tree with strong scoping rules, rather than using the
+traditional multi-pass architecture with separate preprocessor and mnemonic
+translation. This allows the user to write powerful expressions, use macros as
+type definitions, etc. Future developments aim to bring more modern programming
+concepts to the Z80 assembly programming realm.
 
-Author: Laurens Holst  
-Contact: <laurens.nospam@grauw.nl>  
-Site: <https://bitbucket.org/grauw/glass>  
-License: Simplified BSD License
-
-Glass is BSD licensed, which means that you are free to use the software
-and source code in any way you wish as long as attribution is given to the
-original project and its author(s). For details, please consult the LICENSE
-file. To submit contributions, please contact the author.
+Because the binary is a jar which runs on the Java virtual machine, it can be
+included in a project easily without requiring the user to acquire a separate
+binary build for their operating system.
 
 Usage
 -----
@@ -380,3 +385,22 @@ Operator precedence:
   13. `?:`
   14. ` `
   15. `,`
+
+Development information
+-----------------------
+
+Glass is free and open source software. If you want to contribute to the project
+you are very welcome to. Please contact me at any one of the places mentioned in
+the project information section.
+
+You are also free to re-use code for your own projects, provided you abide by
+the license terms.
+
+Glass is written in [Java 8](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html).
+To check your Java version, invoke the `java -version` command. The project can
+be built using [Maven](https://maven.apache.org/) by invoking the following
+command on the command line:
+
+    mvn verify
+
+The jar binary will be output to the `target` directory.
