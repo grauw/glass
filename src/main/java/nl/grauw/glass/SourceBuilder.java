@@ -45,8 +45,8 @@ public class SourceBuilder {
 		this.includePaths = includePaths;
 	}
 	
-	public SourceBuilder(Source source, List<String> terminators, List<Path> includePaths) {
-		this.source = source;
+	public SourceBuilder(Scope scope, List<String> terminators, List<Path> includePaths) {
+		this.source = new Source(scope);
 		this.terminators = terminators;
 		this.includePaths = includePaths;
 	}
@@ -181,13 +181,13 @@ public class SourceBuilder {
 			throw new AssemblyException("Include only accepts 1 argument.");
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		SourceBuilder sourceBuilder = new SourceBuilder(new Source(source.getScope()), END_TERMINATORS, includePaths);
+		SourceBuilder sourceBuilder = new SourceBuilder(source.getScope(), END_TERMINATORS, includePaths);
 		sourceBuilder.parseInclude(argument, sourceFile, once);
 		return new Include(sourceBuilder.source);
 	}
 	
 	private Source parseBlock(Scope scope, List<String> terminators, Parser parser) {
-		return new SourceBuilder(new Source(scope), terminators, includePaths).parse(parser);
+		return new SourceBuilder(scope, terminators, includePaths).parse(parser);
 	}
 	
 }
