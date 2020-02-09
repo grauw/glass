@@ -181,9 +181,9 @@ public class SourceBuilder {
 			throw new AssemblyException("Include only accepts 1 argument.");
 		if (!argument.isString())
 			throw new AssemblyException("A string literal is expected.");
-		SourceBuilder sourceBuilder = new SourceBuilder(source, END_TERMINATORS, includePaths);
+		SourceBuilder sourceBuilder = new SourceBuilder(new Source(source.getScope()), END_TERMINATORS, includePaths);
 		sourceBuilder.parseInclude(argument, sourceFile, once);
-		return new Include();
+		return new Include(sourceBuilder.source);
 	}
 	
 	private Source parseBlock(Scope scope, List<String> terminators, Parser parser) {

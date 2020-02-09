@@ -85,7 +85,6 @@ public class GlobalScope extends Scope {
 		addBuiltInSymbol("sub", new Instruction(new Sub()));
 		addBuiltInSymbol("xor", new Instruction(new Xor()));
 		
-		addBuiltInSymbol("include", new Instruction(new Include()));
 		addBuiltInSymbol("equ", new Instruction(new Equ()));
 		addBuiltInSymbol("org", new Instruction(new Org()));
 		addBuiltInSymbol("endm", new Instruction(new Endm()));

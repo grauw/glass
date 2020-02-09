@@ -1,6 +1,10 @@
 package nl.grauw.glass.instructions;
 
+import java.util.List;
+
+import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
+import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
@@ -8,6 +12,18 @@ public class Include extends InstructionFactory {
 	
 	public static Schema ARGUMENTS = new Schema(Schema.STRING);
 	public static Schema ARGUMENTS_ONCE = new Schema(new Schema.IsAnnotation(Schema.STRING));
+	
+	private final Source source;
+	
+	public Include(Source source) {
+		this.source = source;
+	}
+	
+	public void expand(Line line, List<Line> lines) {
+		super.expand(line, lines);
+		for (Line sourceLine : source.getLines())
+			sourceLine.expand(lines);
+	}
 	
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {

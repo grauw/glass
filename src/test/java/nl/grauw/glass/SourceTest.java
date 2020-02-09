@@ -4,8 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import nl.grauw.glass.Scope.SymbolNotFoundException;
 import nl.grauw.glass.expressions.EvaluationException;
@@ -14,6 +15,7 @@ import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class SourceTest {
 	
@@ -804,6 +806,42 @@ public class SourceTest {
 	}
 	
 	@Test
+	public void testIfInclude() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIfInclude.asm"), Arrays.asList(
+			"test: IF condition",
+			" ld a,a",
+			" ENDIF"
+		));
+
+		assertArrayEquals(b(0x00, 0x7F, 0xC3, 0x01, 0x00), assemble(
+			" nop",
+			" IF $ > 100H",
+			"condition: equ 0",
+			" include \"testIfInclude.asm\"",
+			" ELSE",
+			"condition: equ 1",
+			" include \"testIfInclude.asm\"",
+			" ENDIF",
+			" jp test"
+		));
+	}
+	
+	@Test
+	public void testIfIncludeConstant() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIfIncludeConstant.asm"), Arrays.asList(
+			"DEBUG: equ 1",
+			" nop"
+		));
+
+		assertArrayEquals(b(0x00, 0xFF), assemble(
+			" include \"testIfIncludeConstant.asm\"",
+			" IF DEBUG",
+			" rst 38H",
+			" ENDIF"
+		));
+	}
+	
+	@Test
 	public void testError() {
 		assertThrows(ErrorDirectiveException.class, () -> {
 			assemble(
@@ -946,12 +984,70 @@ public class SourceTest {
 			);
 		});
 	}
+
+	@Test
+	public void testInclude() throws IOException {
+		Files.write(temporaryDirectory.resolve("testInclude.asm"), Arrays.asList(
+			" ld a,a"
+		));
+
+		assertArrayEquals(b(0x00, 0x7F, 0xFF), assemble(
+			" nop",
+			" include \"testInclude.asm\"",
+			" rst 38H"
+		));
+	}
+
+	@Test
+	public void testIncludeLabel() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIncludeLabel.asm"), Arrays.asList(
+			"test: ld a,a"
+		));
+
+		assertArrayEquals(b(0x00, 0x7F, 0xC3, 0x01, 0x00), assemble(
+			" nop",
+			" include \"testIncludeLabel.asm\"",
+			" jp test"
+		));
+	}
+
+	@Test
+	public void testIncludeLabel2() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIncludeLabel2.asm"), Arrays.asList(
+			" ld a,a"
+		));
+
+		assertArrayEquals(b(0x00, 0x7F, 0xC3, 0x01, 0x00), assemble(
+			" nop",
+			"test: include \"testIncludeLabel2.asm\"",
+			" jp test"
+		));
+	}
+
+	@Test
+	public void testIncludeMacro() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIncludeMacro.asm"), Arrays.asList(
+			"test: MACRO",
+			"x: db 11H",
+			"y: db 22H",
+			" ENDM"
+		));
+
+		assertArrayEquals(b(0x11, 0x22, 0x00, 0x01), assemble(
+			" test",
+			" include \"testIncludeMacro.asm\"",
+			" db test.x, test.y"
+		));
+	}
+
+	@TempDir
+	static Path temporaryDirectory;
 	
 	public byte[] assemble(String... sourceLines) {
 		StringBuilder builder = new StringBuilder();
 		for (String lineText : sourceLines)
 			builder.append(lineText).append("\n");
-		SourceBuilder sourceBuilder = new SourceBuilder(new ArrayList<Path>());
+		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(builder.toString()));
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
@@ -968,6 +1064,5 @@ public class SourceTest {
 			bytes[i] = (byte)values[i];
 		return bytes;
 	}
-	
 	
 }
