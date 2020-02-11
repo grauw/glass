@@ -68,9 +68,13 @@ public class Source {
 	
 	public void expand() {
 		List<Line> newLines = new ArrayList<>();
+		expand(newLines);
+		lines = newLines;
+	}
+	
+	public void expand(List<Line> newLines) {
 		for (Line line : lines)
 			line.expand(newLines);
-		lines = newLines;
 	}
 	
 	public int resolve() {

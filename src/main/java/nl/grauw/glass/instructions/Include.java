@@ -21,8 +21,7 @@ public class Include extends InstructionFactory {
 	
 	public void expand(Line line, List<Line> lines) {
 		super.expand(line, lines);
-		for (Line sourceLine : source.getLines())
-			sourceLine.expand(lines);
+		source.expand(lines);
 	}
 	
 	@Override
