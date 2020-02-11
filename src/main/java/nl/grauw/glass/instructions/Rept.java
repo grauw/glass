@@ -50,12 +50,12 @@ public class Rept extends InstructionFactory {
 			
 			// set up the number symbol
 			line.getScope().addSymbol(Integer.toString(i), parameterScope);
-			Line rept = new Line(parameterScope, line);
+			Line rept = line.copy(parameterScope);
 			rept.setInstruction(Empty.INSTANCE);
 			lines.add(rept);  // so that the parameterScope address gets initialised
 			
 			// copy & expand content
-			List<Line> lineCopies = source.getLineCopies(parameterScope);
+			List<Line> lineCopies = source.copy(parameterScope).getLines();
 			for (Line lineCopy : lineCopies)
 				lineCopy.register(parameterScope);
 			for (Line lineCopy : lineCopies)

@@ -19,7 +19,7 @@ public class Macro extends InstructionFactory {
 	public Macro(Source source) {
 		this.source = new Source(source.getScope());
 		this.parameterScope = new Scope(source.getScope());
-		this.source.addLines(source.getLineCopies(parameterScope));
+		this.source.addLines(source.copy(parameterScope).getLines());
 		this.source.register();
 	}
 	

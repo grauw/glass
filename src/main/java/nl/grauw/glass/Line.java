@@ -33,10 +33,10 @@ public class Line {
 		this.sourceSpan = sourceSpan;
 	}
 	
-	public Line(Scope scope, Line other) {
-		this(scope, other.labels, other.mnemonic, other.arguments != null ? other.arguments.copy(scope) : null,
-				other.comment, other.sourceSpan);
-		directive = other.directive;
+	public Line copy(Scope scope) {
+		Line newLine = new Line(scope, labels, mnemonic, arguments != null ? arguments.copy(scope) : null, comment, sourceSpan);
+		newLine.setDirective(directive);
+		return newLine;
 	}
 	
 	public Scope getScope() {

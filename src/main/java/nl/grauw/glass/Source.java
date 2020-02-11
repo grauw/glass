@@ -19,12 +19,6 @@ public class Source {
 		this.scope = scope;
 	}
 	
-	public Source(Scope scope, Source other) {
-		this(scope);
-		for (Line line : other.lines)
-			addLine(new Line(new Scope(scope), line));
-	}
-	
 	public Scope getScope() {
 		return scope;
 	}
@@ -37,11 +31,11 @@ public class Source {
 		return lines.size() > 0 ? lines.get(lines.size() - 1) : null;
 	}
 	
-	public List<Line> getLineCopies(Scope newParent) {
-		List<Line> lineCopies = new ArrayList<>();
+	public Source copy(Scope scope) {
+		Source newSource = new Source(scope);
 		for (Line line : lines)
-			lineCopies.add(new Line(new Scope(newParent), line));
-		return lineCopies;
+			newSource.addLine(line.copy(new Scope(scope)));
+		return newSource;
 	}
 	
 	public void addLine(Line line) {
