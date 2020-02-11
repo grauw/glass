@@ -136,7 +136,7 @@ public class SourceBuilder {
 		case "IF":
 			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, parser);
 			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
-					parseBlock(source.getScope(), ENDIF_TERMINATORS, parser) : null;
+					parseBlock(source.getScope(), ENDIF_TERMINATORS, parser) : new Source(source.getScope());
 			return new If(thenBlock, elseBlock);
 		case "section":
 		case "SECTION":

@@ -41,12 +41,10 @@ public class If extends InstructionFactory {
 				thenSource.register();
 				thenSource.expand();
 				return thenSource.resolve(address);
-			} else if (elseSource != null) {
+			} else {
 				elseSource.register();
 				elseSource.expand();
 				return elseSource.resolve(address);
-			} else {
-				return address;
 			}
 		}
 		
@@ -59,10 +57,9 @@ public class If extends InstructionFactory {
 		public byte[] getBytes() {
 			if (argument.getInteger() != 0) {
 				return thenSource.getBytes();
-			} else if (elseSource != null) {
+			} else {
 				return elseSource.getBytes();
 			}
-			return new byte[] {};
 		}
 		
 	}

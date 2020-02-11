@@ -17,9 +17,9 @@ public class If extends Directive {
 	@Override
 	public void register(Scope scope, Line line) {
 		line.setInstruction(new nl.grauw.glass.instructions.If(
-				new Source(scope, thenSource),
-				elseSource != null ? new Source(scope, elseSource) : null
-			));
+			new Source(scope, thenSource),
+			new Source(scope, elseSource)
+		));
 		super.register(scope, line);
 	}
 	
