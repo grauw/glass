@@ -44,14 +44,12 @@ public class Source {
 		return lineCopies;
 	}
 	
-	public Line addLine(Line line) {
+	public void addLine(Line line) {
 		lines.add(line);
-		return line;
 	}
 	
-	public List<Line> addLines(List<Line> lines) {
+	public void addLines(List<Line> lines) {
 		this.lines.addAll(lines);
-		return lines;
 	}
 	
 	public void assemble(OutputStream output) throws IOException {
