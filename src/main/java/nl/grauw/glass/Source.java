@@ -56,6 +56,10 @@ public class Source {
 	}
 	
 	public void register() {
+		register(scope);
+	}
+	
+	public void register(Scope scope) {
 		for (Line line : lines)
 			line.register(scope);
 	}

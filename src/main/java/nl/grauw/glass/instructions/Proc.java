@@ -24,11 +24,9 @@ public class Proc extends InstructionFactory {
 			throw new ArgumentException();
 		
 		super.expand(line, lines);
-		List<Line> lineCopies = source.copy(line.getScope()).getLines();
-		for (Line lineCopy : lineCopies)
-			lineCopy.register(line.getScope());
-		for (Line lineCopy : lineCopies)
-			lineCopy.expand(lines);
+		Source sourceCopy = source.copy(line.getScope());
+		sourceCopy.register();
+		sourceCopy.expand(lines);
 	}
 	
 	@Override

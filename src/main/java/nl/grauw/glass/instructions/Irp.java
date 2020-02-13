@@ -34,11 +34,9 @@ public class Irp extends InstructionFactory {
 			lines.add(rept);  // so that the parameterScope address gets initialised
 			
 			// copy & expand content
-			List<Line> lineCopies = source.copy(parameterScope).getLines();
-			for (Line lineCopy : lineCopies)
-				lineCopy.register(parameterScope);
-			for (Line lineCopy : lineCopies)
-				lineCopy.expand(lines);
+			Source sourceCopy = source.copy(parameterScope);
+			sourceCopy.register();
+			sourceCopy.expand(lines);
 		}
 	}
 	

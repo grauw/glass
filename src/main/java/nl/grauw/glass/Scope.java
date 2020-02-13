@@ -3,6 +3,7 @@ package nl.grauw.glass;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
@@ -52,6 +53,12 @@ public class Scope implements Context {
 	
 	public void addSymbol(String name, Scope context) {
 		addSymbol(name, new ContextLiteral(context));
+	}
+
+	public void addSymbols(Scope other) {
+		for (Entry<String, Expression> entry : other.symbols.entrySet()) {
+			addSymbol(entry.getKey(), entry.getValue());
+		}
 	}
 	
 	public boolean hasSymbol(String name) {
