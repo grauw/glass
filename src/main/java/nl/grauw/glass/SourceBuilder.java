@@ -134,9 +134,9 @@ public class SourceBuilder {
 			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, parser));
 		case "if":
 		case "IF":
-			Source thenBlock = parseBlock(source.getScope(), ELSE_TERMINATORS, parser);
+			Source thenBlock = parseBlock(new Scope(line.getScope()), ELSE_TERMINATORS, parser);
 			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
-					parseBlock(source.getScope(), ENDIF_TERMINATORS, parser) : new Source(source.getScope());
+					parseBlock(new Scope(line.getScope()), ENDIF_TERMINATORS, parser) : new Source(new Scope(line.getScope()));
 			return new If(thenBlock, elseBlock);
 		case "section":
 		case "SECTION":

@@ -2,6 +2,7 @@ package nl.grauw.glass;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
@@ -28,6 +29,10 @@ public class Scope implements Context {
 	
 	public Scope getParent() {
 		return parent;
+	}
+
+	public Set<String> getSymbols() {
+		return symbols.keySet();
 	}
 	
 	@Override

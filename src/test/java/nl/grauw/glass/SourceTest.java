@@ -766,6 +766,20 @@ public class SourceTest extends TestBase {
 	}
 	
 	@Test
+	public void testIfInMacro() {
+		assertArrayEquals(b(0x3E, 0x20), assemble(
+			" test 10H, 20H",
+			"test: MACRO ?test, ?value",
+			" IF ?test = 10H",
+			" ld a,?value",
+			" ELSE",
+			" ld b,?value",
+			" ENDIF",
+			" ENDM"
+		));
+	}
+	
+	@Test
 	public void testIfInRepeat() {
 		assertArrayEquals(b(0xFF, 0x00, 0xFF), assemble(
 			" IRP ?test, 00H, 10H, 11H",
@@ -803,11 +817,22 @@ public class SourceTest extends TestBase {
 	}
 	
 	@Test
+	public void testIfWithAddress() {
+		assertArrayEquals(b(0x11, 0x22), assemble(
+			" IF $ < 100H",
+			" db 11H",
+			" ENDIF",
+			" db 22H"
+		));
+	}
+	
+	@Test
 	public void testIfWithEquForward() {
-		assertArrayEquals(b(0xC3, 0x10, 0x00), assemble(
-			" jp test",
+		assertArrayEquals(b(0xC2, 0x10, 0x00), assemble(
+			" jp test2,test",
 			" IF 1",
 			"test: equ 10H",
+			"test2: equ nz",
 			" ENDIF"
 		));
 	}

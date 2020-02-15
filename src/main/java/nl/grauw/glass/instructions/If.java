@@ -1,6 +1,9 @@
 package nl.grauw.glass.instructions;
 
+import java.util.List;
+
 import nl.grauw.glass.AssemblyException;
+import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
@@ -16,6 +19,16 @@ public class If extends InstructionFactory {
 	public If(Source thenSource, Source elseSource) {
 		this.thenSource = thenSource;
 		this.elseSource = elseSource;
+	}
+	
+	public void expand(Line line, List<Line> lines) {
+		Expression arguments = line.getArguments();
+		if (!ARGUMENTS.check(arguments))
+			throw new ArgumentException();
+		
+		super.expand(line, lines);
+		thenSource.expand();
+		elseSource.expand();
 	}
 	
 	@Override
@@ -38,12 +51,8 @@ public class If extends InstructionFactory {
 		public int resolve(int address) {
 			context.setAddress(address);
 			if (argument.getInteger() != 0) {
-				thenSource.register();
-				thenSource.expand();
 				return thenSource.resolve(address);
 			} else {
-				elseSource.register();
-				elseSource.expand();
 				return elseSource.resolve(address);
 			}
 		}
