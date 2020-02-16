@@ -14,6 +14,11 @@ public class Macro extends Directive {
 	public Macro(Source source) {
 		this.source = source;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new Macro(source.copy(scope));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {

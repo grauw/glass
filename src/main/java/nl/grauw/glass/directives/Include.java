@@ -11,6 +11,11 @@ public class Include extends Directive {
 	public Include(Source source) {
 		this.source = source;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new Include(source.copy(scope.getParent()));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {

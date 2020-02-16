@@ -13,6 +13,11 @@ public class If extends Directive {
 		this.thenSource = thenSource;
 		this.elseSource = elseSource;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new If(thenSource.copy(scope.getParent()), elseSource.copy(scope.getParent()));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {

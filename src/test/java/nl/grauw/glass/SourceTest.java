@@ -513,6 +513,20 @@ public class SourceTest extends TestBase {
 			" test ret"
 		));
 	}
+
+	@Test
+	public void testMacroInRepeat() {
+		assertArrayEquals(b(0x3E, 0x30, 0x3E, 0x32), assemble(
+			" REPT 2",
+			"test: MACRO arg",
+			" ld a,value + value2 + arg",
+			"value2: equ 20H",
+			" ENDM",
+			" test $",
+			"value: equ 10H",
+			" ENDM"
+		));
+	}
 	
 	@Test
 	public void testRept() {
@@ -752,7 +766,7 @@ public class SourceTest extends TestBase {
 	}
 	
 	@Test
-	public void testIfInsideRept() {
+	public void testIfInRepeat() {
 		assertArrayEquals(b(0xFF, 0x00, 0xFF), assemble(
 			" IRP ?test, 00H, 10H, 11H",
 			" IF ?test = 10H",
@@ -965,6 +979,19 @@ public class SourceTest extends TestBase {
 	}
 	
 	@Test
+	public void testSectionInRepeat() {
+		assertArrayEquals(b(0x21, 0x00, 0x00, 0x21, 0x03, 0x00), assemble(
+			" REPT 2",
+			"ROM: ds 3H",
+			" SECTION ROM",
+			" ld hl,$",
+			"label:",
+			" ENDS",
+			" ENDM"
+		));
+	}
+	
+	@Test
 	public void testEndm() {
 		assertAssemblyException(0, () -> {
 			assemble(
@@ -1043,6 +1070,19 @@ public class SourceTest extends TestBase {
 			" test",
 			" include \"testIncludeMacro.asm\"",
 			" db test.x, test.y"
+		));
+	}
+
+	@Test
+	public void testIncludeInRepeat() throws IOException {
+		Files.write(temporaryDirectory.resolve("testIncludeRept.asm"), Arrays.asList(
+			"test: db test"
+		));
+
+		assertArrayEquals(b(0x00, 0x01, 0x02), assemble(
+			" REPT 3",
+			" include \"testIncludeRept.asm\"",
+			" ENDM"
 		));
 	}
 

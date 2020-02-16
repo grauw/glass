@@ -35,7 +35,7 @@ public class Line {
 	
 	public Line copy(Scope scope) {
 		Line newLine = new Line(scope, labels, mnemonic, arguments != null ? arguments.copy(scope) : null, comment, sourceSpan);
-		newLine.setDirective(directive);
+		newLine.setDirective(directive.copy(scope));
 		return newLine;
 	}
 	

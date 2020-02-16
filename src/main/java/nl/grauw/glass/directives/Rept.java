@@ -11,6 +11,11 @@ public class Rept extends Directive {
 	public Rept(Source source) {
 		this.source = source;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new Rept(source.copy(scope));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {

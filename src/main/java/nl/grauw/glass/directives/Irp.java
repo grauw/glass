@@ -11,6 +11,11 @@ public class Irp extends Directive {
 	public Irp(Source source) {
 		this.source = source;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new Irp(source.copy(scope));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {

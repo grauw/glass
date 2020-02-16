@@ -11,6 +11,11 @@ public class Proc extends Directive {
 	public Proc(Source source) {
 		this.source = source;
 	}
+
+	@Override
+	public Directive copy(Scope scope) {
+		return new Proc(source.copy(scope));
+	}
 	
 	@Override
 	public void register(Scope scope, Line line) {
