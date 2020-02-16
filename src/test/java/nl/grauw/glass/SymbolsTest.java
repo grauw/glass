@@ -53,6 +53,9 @@ public class SymbolsTest extends TestBase {
 	public void testMacro() {
 		assertIterableEquals(
 			s(
+				"Test._size: equ 5H",
+				"Test.x: equ 0H",
+				"Test.y: equ 4H",
 				"test: equ 1H",
 				"test._size: equ 6H",
 				"test.x: equ 1H",
