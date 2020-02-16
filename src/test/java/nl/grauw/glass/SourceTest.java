@@ -1044,11 +1044,8 @@ public class SourceTest {
 	static Path temporaryDirectory;
 	
 	public byte[] assemble(String... sourceLines) {
-		StringBuilder builder = new StringBuilder();
-		for (String lineText : sourceLines)
-			builder.append(lineText).append("\n");
 		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
-		Source source = sourceBuilder.parse(new SourceFile(builder.toString()));
+		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		try {
 			source.assemble(output);
