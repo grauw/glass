@@ -927,12 +927,12 @@ public class SourceTest {
 	
 	@Test
 	public void testSectionFitsSpace() {
-		assemble(
+		assertArrayEquals(b(0x21, 0x00, 0x00), assemble(
 			"ROM: ds 3H",
 			" SECTION ROM",
 			" ld hl,$",
 			" ENDS"
-		);
+		));
 	}
 	
 	@Test
@@ -949,13 +949,13 @@ public class SourceTest {
 	
 	@Test
 	public void testSectionIndirect() {
-		assemble(
+		assertArrayEquals(b(0x21, 0x00, 0x00), assemble(
 			"ROM2: ds 3H",
 			"ROM: equ ROM2",
 			" SECTION ROM",
 			" ld hl,$",
 			" ENDS"
-		);
+		));
 	}
 	
 	@Test
