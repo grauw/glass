@@ -106,8 +106,9 @@ public abstract class Expression {
 	}
 	
 	public String getHexValue() {
-		String string = Integer.toHexString(getInteger()).toUpperCase();
-		return (string.charAt(0) >= 'A' && string.charAt(0) <= 'F' ? "0" : "") + string + "H";
+		int value = getInteger();
+		String string = Integer.toHexString(Math.abs(value)).toUpperCase();
+		return (value < 0 ? "-" : "") + (string.charAt(0) >= 'A' && string.charAt(0) <= 'F' ? "0" : "") + string + "H";
 	}
 	
 }

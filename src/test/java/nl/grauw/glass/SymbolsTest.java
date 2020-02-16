@@ -41,10 +41,13 @@ public class SymbolsTest extends TestBase {
 	@Test
 	public void testEqu() {
 		assertIterableEquals(
-			s(),
+			s(
+				"test: equ 10H",
+				"test2: equ -10H"
+			),
 			symbols(
 				"test: equ 10H",
-				"test2: equ 20H"
+				"test2: equ -10H"
 			)
 		);
 	}
@@ -97,15 +100,19 @@ public class SymbolsTest extends TestBase {
 			s(
 				"Test: equ 1H",
 				"Test.0: equ 1H",
+				"Test.0.?value: equ 2H",
 				"Test.0.x: equ 1H",
 				"Test.0.y: equ 3H",
+				"Test.0.z: equ 2H",
 				"Test.1: equ 5H",
+				"Test.1.?value: equ 6H",
 				"Test.1.x: equ 5H",
-				"Test.1.y: equ 7H"
+				"Test.1.y: equ 7H",
+				"Test.1.z: equ 6H"
 			),
 			symbols(
 				" nop",
-				"Test: REPT 2, ?value",
+				"Test: REPT 2, ?value, 2, 4",
 				"x: push ix",
 				"y: pop ix",
 				"z: equ ?value",
@@ -120,11 +127,15 @@ public class SymbolsTest extends TestBase {
 			s(
 				"Test: equ 1H",
 				"Test.0: equ 1H",
+				"Test.0.?value: equ 5H",
 				"Test.0.x: equ 1H",
 				"Test.0.y: equ 3H",
+				"Test.0.z: equ 5H",
 				"Test.1: equ 5H",
+				"Test.1.?value: equ 7H",
 				"Test.1.x: equ 5H",
-				"Test.1.y: equ 7H"
+				"Test.1.y: equ 7H",
+				"Test.1.z: equ 7H"
 			),
 			symbols(
 				" nop",

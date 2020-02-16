@@ -99,7 +99,7 @@ public class Scope implements Context {
 		return null;
 	}
 	
-	public class SymbolNotFoundException extends AssemblyException {
+	public class SymbolNotFoundException extends EvaluationException {
 		private static final long serialVersionUID = 1L;
 
 		private String name;
@@ -126,13 +126,15 @@ public class Scope implements Context {
 		StringBuilder builder = new StringBuilder();
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
-			if (entry.getValue().isContext()) {
-				String name = namePrefix + entry.getKey();
-				try {
+			String name = namePrefix + entry.getKey();
+			try {
+				if (entry.getValue().isInteger()) {
 					builder.append(name + ": equ " + entry.getValue().getHexValue() + "\n");
-				} catch (EvaluationException e) {
-					// ignore
 				}
+			} catch (EvaluationException e) {
+				// ignore
+			}
+			if (entry.getValue().isContext()) {
 				Scope context = (Scope)entry.getValue().getContext();
 				builder.append(context.serializeSymbols(name + "."));
 			}
