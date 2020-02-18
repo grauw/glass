@@ -90,7 +90,7 @@ public class Register extends Literal {
 	
 	public Expression getIndexOffset() {
 		if (indexCode == NONE || !pair)
-			throw new EvaluationException("Not an index register pair.");
+			return new ErrorLiteral(new EvaluationException("Not an index register pair."));
 		return indexOffset;
 	}
 	

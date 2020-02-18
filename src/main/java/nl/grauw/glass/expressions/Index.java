@@ -27,7 +27,7 @@ public class Index extends Passthrough {
 	public Expression resolve() {
 		Expression element = sequence.resolve().getElement(index.getInteger());
 		if (element == null)
-			throw new EvaluationException("Index out of bounds.");
+			return new ErrorLiteral(new EvaluationException("Index out of bounds."));
 		return element;
 	}
 	

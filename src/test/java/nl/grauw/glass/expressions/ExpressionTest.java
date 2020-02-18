@@ -201,6 +201,14 @@ public class ExpressionTest extends TestBase {
 		assertEquals(2, parse("1 ? 2 : 3").getInteger());
 		assertEquals(3, parse("0 ? 2 : 3").getInteger());
 	}
+
+	@Test
+	public void testTernaryNeverTaken() {
+		assertEquals(true, parse("1 ? 2 : $.x").isInteger());
+		assertEquals(2, parse("1 ? 2 : $.x").getInteger());
+		assertEquals(true, parse("0 ? $.x : 3").isInteger());
+		assertEquals(3, parse("0 ? $.x : 3").getInteger());
+	}
 	
 	@Test
 	public void testGroup() {

@@ -804,14 +804,12 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testIfWithEquForward() {
-		assertSymbolNotFoundException("test", 0, () -> {
-			assemble(
-				" jp test",
-				" IF 1",
-				"test: equ 10H",
-				" ENDIF"
-			);
-		});
+		assertArrayEquals(b(0xC3, 0x10, 0x00), assemble(
+			" jp test",
+			" IF 1",
+			"test: equ 10H",
+			" ENDIF"
+		));
 	}
 
 	@Test

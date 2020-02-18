@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
+import nl.grauw.glass.expressions.ErrorLiteral;
 import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
 
@@ -71,7 +72,7 @@ public class Scope implements Context {
 			return value;
 		if (parent != null)
 			return parent.getSymbol(name);
-		throw new SymbolNotFoundException(name);
+		return new ErrorLiteral(new SymbolNotFoundException(name));
 	}
 	
 	public boolean hasLocalSymbol(String name) {
@@ -82,7 +83,7 @@ public class Scope implements Context {
 		Expression value = getLocalSymbolOrNull(name);
 		if (value != null)
 			return value;
-		throw new SymbolNotFoundException(name);
+		return new ErrorLiteral(new SymbolNotFoundException(name));
 	}
 	
 	private Expression getLocalSymbolOrNull(String name) {
