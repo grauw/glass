@@ -2,13 +2,7 @@ package nl.grauw.glass.expressions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import nl.grauw.glass.Line;
-import nl.grauw.glass.Parser;
-import nl.grauw.glass.Parser.SyntaxError;
-import nl.grauw.glass.Scope;
-import nl.grauw.glass.SourceFile;
 import nl.grauw.glass.TestBase;
-import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.jupiter.api.Test;
 
@@ -51,14 +45,14 @@ public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testGrouping3() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 2, 27, () -> {
 			parse("10H + (15H * (5H - 2H) + 4H");
 		});
 	}
 	
 	@Test
 	public void testGrouping4() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 21, () -> {
 			parse("10H + 15H * (5H - 2H)) + 4H");
 		});
 	}
@@ -111,14 +105,14 @@ public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testTernaryIfWithoutElse() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 6, () -> {
 			parse("a ? 1H");
 		});
 	}
 	
 	@Test
 	public void testTernaryElseWithoutIf() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 5, () -> {
 			parse("a : b");
 		});
 	}
@@ -135,7 +129,7 @@ public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testTernaryIfElseLowerPrecedenceNegative() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 6, () -> {
 			parse("a ? 1H, 2H : 3H");
 		});
 	}
@@ -217,42 +211,42 @@ public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testAnnotationInTheMiddle() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 12, () -> {
 			parse("a 1H || b 2H");
 		});
 	}
 	
 	@Test
 	public void testAnnotationNotAnIdentifier() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 4, () -> {
 			parse("0 1H");
 		});
 	}
 	
 	@Test
 	public void testAnnotationNotAnIdentifier2() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 1, 6, () -> {
 			parse("a 0 1H");
 		});
 	}
 	
 	@Test
 	public void testAnnotationNoSpace1() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 2, () -> {
 			parse("a!1H");
 		});
 	}
 	
 	@Test
 	public void testAnnotationNoSpace2() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 3, () -> {
 			parse("(x)a");
 		});
 	}
 	
 	@Test
 	public void testAnnotationNoSpace3() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 6, () -> {
 			parse("(x)[0]a");
 		});
 	}
@@ -284,21 +278,20 @@ public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testMultilineLabel() {
-		assertThrows(ExpressionError.class, () -> {
+		assertExpressionError(0, 2, 8, () -> {
 			assertEquals(null, parse("a +\ntest: 1H"));
 		});
 	}
 	
 	@Test
 	public void testIncomplete() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 2, 2, () -> {
 			assertEquals(null, parse("a,"));
 		});
 	}
 	
 	public String parse(String text) {
-		Line line = new Parser(new SourceFile(" test " + text)).parse(new Scope());
-		return line.getArguments().toDebugString();
+		return parseExpression(text).toDebugString();
 	}
 	
 }

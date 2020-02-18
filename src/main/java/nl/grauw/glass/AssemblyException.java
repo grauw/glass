@@ -1,6 +1,7 @@
 package nl.grauw.glass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import nl.grauw.glass.SourceFile.SourceFileSpan;
@@ -42,6 +43,10 @@ public class AssemblyException extends RuntimeException {
 	
 	public String getPlainMessage() {
 		return super.getMessage();
+	}
+
+	public List<SourceFileSpan> getContexts() {
+		return Collections.unmodifiableList(contexts);
 	}
 	
 }

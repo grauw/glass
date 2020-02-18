@@ -99,11 +99,22 @@ public class Scope implements Context {
 		return null;
 	}
 	
-	public static class SymbolNotFoundException extends AssemblyException {
+	public class SymbolNotFoundException extends AssemblyException {
 		private static final long serialVersionUID = 1L;
+
+		private String name;
 		
 		public SymbolNotFoundException(String name) {
 			super("Symbol not found: " + name);
+			this.name = name;
+		}
+
+		public Scope getScope() {
+			return Scope.this;
+		}
+
+		public String getName() {
+			return name;
 		}
 	}
 	

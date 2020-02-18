@@ -116,10 +116,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testBit_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x5C), parse("bit 3,ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x55), parse("bit 2,iyl"));
-		});
+		assertArgumentException(0, () -> { parse("bit 3,ixh"); });
+		assertArgumentException(0, () -> { parse("bit 2,iyl"); });
 	}
 	
 	@Test
@@ -645,10 +643,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testRes_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x9C), parse("res 3,ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x95), parse("res 2,iyl"));
-		});
+		assertArgumentException(0, () -> { parse("res 3,ixh"); });
+		assertArgumentException(0, () -> { parse("res 2,iyl"); });
 	}
 	
 	@Test
@@ -694,10 +690,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testRl_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x14), parse("rl ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x15), parse("rl iyl"));
-		});
+		assertArgumentException(0, () -> { parse("rl ixh"); });
+		assertArgumentException(0, () -> { parse("rl iyl"); });
 	}
 	
 	@Test
@@ -721,10 +715,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testRlc_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x04), parse("rlc ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x05), parse("rlc iyl"));
-		});
+		assertArgumentException(0, () -> { parse("rlc ixh"); });
+		assertArgumentException(0, () -> { parse("rlc iyl"); });
 	}
 	
 	@Test
@@ -753,10 +745,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testRr_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x1C), parse("rr ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x1D), parse("rr iyl"));
-		});
+		assertArgumentException(0, () -> { parse("rr ixh"); });
+		assertArgumentException(0, () -> { parse("rr iyl"); });
 	}
 	
 	@Test
@@ -780,10 +770,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testRrc_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x0C), parse("rrc ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x0D), parse("rrc iyl"));
-		});
+		assertArgumentException(0, () -> { parse("rrc ixh"); });
+		assertArgumentException(0, () -> { parse("rrc iyl"); });
 	}
 	
 	@Test
@@ -858,10 +846,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testSet_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0xDC), parse("set 3,ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0xD5), parse("set 2,iyl"));
-		});
+		assertArgumentException(0, () -> { parse("set 3,ixh"); });
+		assertArgumentException(0, () -> { parse("set 2,iyl"); });
 	}
 	
 	@Test
@@ -880,10 +866,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testSla_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x24), parse("sla ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x25), parse("sla iyl"));
-		});
+		assertArgumentException(0, () -> { parse("sla ixh"); });
+		assertArgumentException(0, () -> { parse("sla iyl"); });
 	}
 	
 	@Test
@@ -902,10 +886,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testSra_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x2C), parse("sra ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x2D), parse("sra iyl"));
-		});
+		assertArgumentException(0, () -> { parse("sra ixh"); });
+		assertArgumentException(0, () -> { parse("sra iyl"); });
 	}
 	
 	@Test
@@ -924,10 +906,8 @@ public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testSrl_Invalid() {
-		assertThrows(ArgumentException.class, () -> {
-			assertArrayEquals(b(0xDD, 0xCB, 0x3C), parse("srl ixh"));
-			assertArrayEquals(b(0xFD, 0xCB, 0x3D), parse("srl iyl"));
-		});
+		assertArgumentException(0, () -> { parse("srl ixh"); });
+		assertArgumentException(0, () -> { parse("srl iyl"); });
 	}
 	
 	@Test

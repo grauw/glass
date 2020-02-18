@@ -8,11 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-import nl.grauw.glass.Scope.SymbolNotFoundException;
-import nl.grauw.glass.expressions.EvaluationException;
-import nl.grauw.glass.instructions.ArgumentException;
-import nl.grauw.glass.instructions.Error.ErrorDirectiveException;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -202,7 +197,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroTooManyArguments() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(2, () -> {
 			assemble(
 				"test: MACRO",
 				" ENDM",
@@ -213,7 +208,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroTooFewArguments() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(2, () -> {
 			assemble(
 				"test: MACRO arg",
 				" ENDM",
@@ -224,7 +219,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroNonIdentifierArguments() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assemble(
 				"test: MACRO (arg)",
 				" ENDM"
@@ -256,7 +251,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroNoEnd() {
-		assertThrows(AssemblyException.class, () -> {
+		assertAssemblyException(1, () -> {
 			assemble(
 				"test: MACRO"
 			);
@@ -368,7 +363,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroUnboundReference() {
-		assertThrows(SymbolNotFoundException.class, () -> {
+		assertSymbolNotFoundException("value", 6, () -> {
 			assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x24), assemble(
 				"test: MACRO arg",
 				" ld a,10H + arg + value",
@@ -456,7 +451,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentBeforeDereference() {
-		assertThrows(EvaluationException.class, () -> {
+		assertEvaluationException(0, () -> {
 			assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
 				" ld de,test.test2",
 				"test: MACRO arg1, arg2",
@@ -588,7 +583,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testReptWithLabelNoIndex() {
-		assertThrows(SymbolNotFoundException.class, () -> {
+		assertSymbolNotFoundException("test.test", 5, () -> {
 			assemble(
 				" nop",
 				"test: REPT 2",
@@ -621,7 +616,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testReptNoCount() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assemble(
 				" REPT",
 				" ENDM"
@@ -667,7 +662,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testIrpNoIdentifier() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assertArrayEquals(b(), assemble(
 				" IRP",
 				" nop",
@@ -698,7 +693,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testIrpWithLabelNoIndex() {
-		assertThrows(SymbolNotFoundException.class, () -> {
+		assertSymbolNotFoundException("test.test", 5, () -> {
 			assemble(
 				" nop",
 				"test: IRP ?value, 10H, 20H, 30H",
@@ -795,12 +790,25 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testIfWithEquForward() {
-		assertThrows(SymbolNotFoundException.class, () -> {
+		assertSymbolNotFoundException("test", 0, () -> {
 			assemble(
 				" jp test",
 				" IF 1",
 				"test: equ 10H",
 				" ENDIF"
+			);
+		});
+	}
+
+	@Test
+	public void testIfSymbolNotFound() {
+		assertSymbolNotFoundException("y", 4, () -> {
+			assemble(
+				"x: equ y",
+				" IF 0",
+				"y: equ 1",
+				" ENDIF",
+				" jp x"
 			);
 		});
 	}
@@ -843,7 +851,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testError() {
-		assertThrows(ErrorDirectiveException.class, () -> {
+		assertErrorDirectiveException("Error directive was encountered.", 0, () -> {
 			assemble(
 				" ERROR"
 			);
@@ -852,18 +860,16 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testErrorWithMessage() {
-		try {
+		assertErrorDirectiveException("Test", 0, () -> {
 			assemble(
 				" ERROR \"Test\""
 			);
-		} catch (ErrorDirectiveException e) {
-			assertEquals("Test", e.getPlainMessage());
-		}
+		});
 	}
 	
 	@Test
 	public void testAnnotationNotSupported() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assemble(
 				" or A 0"
 			);
@@ -881,7 +887,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testDsVirtualWithFill() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assemble(
 				" ds VIRTUAL 10H, 0"
 			);
@@ -890,7 +896,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testDsUnknownAnnotation() {
-		assertThrows(ArgumentException.class, () -> {
+		assertArgumentException(0, () -> {
 			assemble(
 				" ds UNKNOWN 10H"
 			);
@@ -937,7 +943,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testSectionExceedsSpace() {
-		assertThrows(AssemblyException.class, () -> {
+		assertAssemblyException(0, () -> {
 			assemble(
 				"ROM: ds 2H",
 				" SECTION ROM",
@@ -960,7 +966,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testEndm() {
-		assertThrows(AssemblyException.class, () -> {
+		assertAssemblyException(0, () -> {
 			assemble(
 				" ENDM"
 			);
@@ -969,7 +975,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testEndp() {
-		assertThrows(AssemblyException.class, () -> {
+		assertAssemblyException(0, () -> {
 			assemble(
 				" ENDP"
 			);
@@ -978,7 +984,7 @@ public class SourceTest extends TestBase {
 	
 	@Test
 	public void testEnds() {
-		assertThrows(AssemblyException.class, () -> {
+		assertAssemblyException(0, () -> {
 			assemble(
 				" ENDS"
 			);

@@ -66,6 +66,12 @@ public class Parser {
 		
 		return lineBuilder.getLine(lineScope, span);
 	}
+
+	void skipToArgumentStartState(String mnemonic)
+	{
+		lineBuilder.setMnemonic(mnemonic);
+		state = argumentStartState;
+	}
 	
 	private abstract class State {
 		public abstract State parse(char character);

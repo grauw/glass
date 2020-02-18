@@ -2,9 +2,7 @@ package nl.grauw.glass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
-import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Flag;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
@@ -123,56 +121,56 @@ public class ParserTest extends TestBase {
 	
 	@Test
 	public void testCharacterLiteralTooLong() {
-		assertThrows(SyntaxError.class, () -> {
-			parse("'xx'");
+		assertSyntaxError(0, 1, 2, () -> {
+			parseExpression("'xx'");
 		});
 	}
 	
 	@Test
 	public void testCharacterLiteralTooShort() {
-		assertThrows(SyntaxError.class, () -> {
-			parse("''");
+		assertSyntaxError(0, 1, 1, () -> {
+			parseExpression("''");
 		});
 	}
 	
 	@Test
 	public void testCharacterLiteralUnclosed() {
-		assertThrows(SyntaxError.class, () -> {
-			parse("'");
+		assertSyntaxError(0, 1, 1, () -> {
+			parseExpression("'");
 		});
 	}
 	
 	@Test
 	public void testCharacterLiteralUnclosedEscape() {
-		assertThrows(SyntaxError.class, () -> {
-			parse("'\\");
+		assertSyntaxError(0, 1, 2, () -> {
+			parseExpression("'\\");
 		});
 	}
 	
 	@Test
 	public void testHexNumberTooShort() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 2, () -> {
 			parseExpression("0x");
 		});
 	}
 	
 	@Test
 	public void testHexNumberWrong() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 3, () -> {
 			parseExpression("003x0");
 		});
 	}
 	
 	@Test
 	public void testHexNumberWrong2() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 3, () -> {
 			parseExpression("0x0x0");
 		});
 	}
 	
 	@Test
 	public void testHexNumberWrong3() {
-		assertThrows(SyntaxError.class, () -> {
+		assertSyntaxError(0, 1, 1, () -> {
 			parseExpression("3x0");
 		});
 	}
@@ -215,10 +213,6 @@ public class ParserTest extends TestBase {
 	
 	public Line parse(String text) {
 		return new Parser(new SourceFile(text)).parse(new Scope());
-	}
-	
-	public Expression parseExpression(String text) {
-		return parse(" test " + text).getArguments();
 	}
 	
 }
