@@ -2,9 +2,6 @@ package nl.grauw.glass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
-import java.util.List;
-
 import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Expression;
@@ -13,7 +10,7 @@ import nl.grauw.glass.expressions.IntegerLiteral;
 
 import org.junit.jupiter.api.Test;
 
-public class ParserTest {
+public class ParserTest extends TestBase {
 	
 	@Test
 	public void testLabel() {
@@ -222,10 +219,6 @@ public class ParserTest {
 	
 	public Expression parseExpression(String text) {
 		return parse(" test " + text).getArguments();
-	}
-	
-	public List<String> s(String... values) {
-		return Arrays.asList(values);
 	}
 	
 }

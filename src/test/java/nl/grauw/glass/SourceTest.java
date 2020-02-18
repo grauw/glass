@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class SourceTest {
+public class SourceTest extends TestBase {
 	
 	@Test
 	public void testNops() {
@@ -1053,13 +1053,6 @@ public class SourceTest {
 			throw new RuntimeException(e);
 		}
 		return output.toByteArray();
-	}
-	
-	public byte[] b(int... values) {
-		byte[] bytes = new byte[values.length];
-		for (int i = 0; i < values.length; i++)
-			bytes[i] = (byte)values[i];
-		return bytes;
 	}
 	
 }

@@ -12,7 +12,7 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
-public class SymbolsTest {
+public class SymbolsTest extends TestBase {
 
 	@Test
 	public void testNone() {
@@ -209,10 +209,6 @@ public class SymbolsTest {
 		}
 		String symbols = source.getScope().serializeSymbols();
 		return symbols.isEmpty() ? Collections.emptyList() : Arrays.asList(symbols.split("\\R"));
-	}
-
-	public List<String> s(String... lines) {
-		return Arrays.asList(lines);
 	}
 
 }

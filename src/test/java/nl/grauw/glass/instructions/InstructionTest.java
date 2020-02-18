@@ -7,10 +7,11 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
+import nl.grauw.glass.TestBase;
 
 import org.junit.jupiter.api.Test;
 
-public class InstructionTest {
+public class InstructionTest extends TestBase {
 	
 	@Test
 	public void testAdcA() {
@@ -976,13 +977,6 @@ public class InstructionTest {
 		line.resolve(0x4321);
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());
-		return bytes;
-	}
-	
-	public byte[] b(int... values) {
-		byte[] bytes = new byte[values.length];
-		for (int i = 0; i < values.length; i++)
-			bytes[i] = (byte)values[i];
 		return bytes;
 	}
 	

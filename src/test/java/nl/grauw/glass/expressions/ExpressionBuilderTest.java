@@ -7,11 +7,12 @@ import nl.grauw.glass.Parser;
 import nl.grauw.glass.Parser.SyntaxError;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
+import nl.grauw.glass.TestBase;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.jupiter.api.Test;
 
-public class ExpressionBuilderTest {
+public class ExpressionBuilderTest extends TestBase {
 	
 	@Test
 	public void testSingleValue() {

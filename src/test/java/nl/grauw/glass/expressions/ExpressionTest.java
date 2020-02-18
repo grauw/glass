@@ -6,12 +6,13 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
+import nl.grauw.glass.TestBase;
 import nl.grauw.glass.Scope.SymbolNotFoundException;
 import nl.grauw.glass.expressions.ExpressionBuilder.ExpressionError;
 
 import org.junit.jupiter.api.Test;
 
-public class ExpressionTest {
+public class ExpressionTest extends TestBase {
 	
 	@Test
 	public void testPositive() {
