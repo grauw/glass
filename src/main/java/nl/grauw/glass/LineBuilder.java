@@ -1,6 +1,7 @@
 package nl.grauw.glass;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.expressions.Expression;
@@ -12,8 +13,6 @@ public class LineBuilder {
 	private Expression arguments;
 	private String comment;
 	
-	private final ArrayList<String> EMPTY_LABELS = new ArrayList<>();
-
 	public void setLabel(String label) {
 		if (labels == null)
 			labels = new ArrayList<>();
@@ -43,7 +42,7 @@ public class LineBuilder {
 	}
 	
 	public Line getLine(Scope scope, SourceFileSpan sourceSpan) {
-		Line line = new Line(scope, labels == null ? EMPTY_LABELS : labels, mnemonic, arguments, comment, sourceSpan);
+		Line line = new Line(scope, labels == null ? Collections.emptyList() : labels, mnemonic, arguments, comment, sourceSpan);
 		
 		labels = null;
 		mnemonic = null;
