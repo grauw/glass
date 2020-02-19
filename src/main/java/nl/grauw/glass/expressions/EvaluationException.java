@@ -6,11 +6,19 @@ public class EvaluationException extends AssemblyException {
 	private static final long serialVersionUID = 1L;
 	
 	public EvaluationException() {
-		this(null);
+		super();
 	}
 	
 	public EvaluationException(String message) {
 		super(message);
+	}
+	
+	public EvaluationException(Throwable cause) {
+		super(cause);
+	}
+	
+	public EvaluationException(String message, Throwable cause) {
+		super(message, cause);
 	}
 	
 }
