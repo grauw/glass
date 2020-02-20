@@ -23,6 +23,7 @@ import nl.grauw.glass.directives.Terminator;
 import nl.grauw.glass.expressions.Annotation;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
+import nl.grauw.glass.expressions.Type;
 
 public class SourceBuilder {
 
@@ -179,7 +180,7 @@ public class SourceBuilder {
 		}
 		if (line.getArguments() instanceof Sequence)
 			throw new AssemblyException("Include only accepts 1 argument.");
-		if (!argument.isString())
+		if (!argument.is(Type.STRING))
 			throw new AssemblyException("A string literal is expected.");
 		SourceBuilder sourceBuilder = new SourceBuilder(source.getScope(), END_TERMINATORS, includePaths);
 		sourceBuilder.parseInclude(argument, sourceFile, once);

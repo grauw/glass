@@ -21,7 +21,7 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isInteger() {
+	public boolean is(Type type) {
 		return true;
 	}
 
@@ -31,18 +31,8 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isString() {
-		return true;
-	}
-
-	@Override
 	public String getString() {
 		throw exception;
-	}
-
-	@Override
-	public boolean isRegister() {
-		return true;
 	}
 
 	@Override
@@ -51,18 +41,8 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isFlag() {
-		return true;
-	}
-
-	@Override
 	public Flag getFlag() {
 		throw exception;
-	}
-
-	@Override
-	public boolean isGroup() {
-		return true;
 	}
 
 	@Override
@@ -76,28 +56,13 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isInstruction() {
-		return true;
-	}
-
-	@Override
 	public InstructionFactory getInstruction() {
 		throw exception;
 	}
 
 	@Override
-	public boolean isContext() {
-		return true;
-	}
-
-	@Override
 	public Context getContext() {
 		throw exception;
-	}
-
-	@Override
-	public boolean isSectionContext() {
-		return true;
 	}
 
 	@Override

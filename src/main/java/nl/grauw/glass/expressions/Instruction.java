@@ -18,23 +18,18 @@ public class Instruction extends Expression {
 	}
 
 	@Override
-	public boolean isInstruction() {
-		return true;
-	}
-
-	@Override
 	public InstructionFactory getInstruction() {
 		return instruction;
 	}
 
 	@Override
-	public boolean isContext() {
-		return true;
+	public Context getContext() {
+		return context;
 	}
 
 	@Override
-	public Context getContext() {
-		return context;
+	public boolean is(Type type) {
+		return type == Type.INSTRUCTION || type == Type.CONTEXT;
 	}
 
 	public String toString() {

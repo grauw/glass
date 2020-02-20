@@ -14,13 +14,13 @@ public class Not extends UnaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		return term.getInteger() == 0 ? -1 : 0;
+	public boolean is(Type type) {
+		return type == Type.FLAG && term.is(Type.FLAG) || super.is(type);
 	}
 
 	@Override
-	public boolean isFlag() {
-		return term.isFlag();
+	public int getInteger() {
+		return term.getInteger() == 0 ? -1 : 0;
 	}
 
 	@Override

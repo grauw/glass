@@ -29,8 +29,8 @@ public class Flag extends Literal {
 	}
 
 	@Override
-	public boolean isFlag() {
-		return true;
+	public boolean is(Type type) {
+		return type == Type.FLAG;
 	}
 
 	@Override

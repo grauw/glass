@@ -204,9 +204,9 @@ public class ExpressionTest extends TestBase {
 
 	@Test
 	public void testTernaryNeverTaken() {
-		assertEquals(true, parse("1 ? 2 : $.x").isInteger());
+		assertEquals(true, parse("1 ? 2 : $.x").is(Type.INTEGER));
 		assertEquals(2, parse("1 ? 2 : $.x").getInteger());
-		assertEquals(true, parse("0 ? $.x : 3").isInteger());
+		assertEquals(true, parse("0 ? $.x : 3").is(Type.INTEGER));
 		assertEquals(3, parse("0 ? $.x : 3").getInteger());
 	}
 

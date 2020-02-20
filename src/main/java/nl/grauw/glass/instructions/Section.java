@@ -7,6 +7,7 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
+import nl.grauw.glass.expressions.Type;
 
 public class Section extends InstructionFactory {
 
@@ -27,7 +28,7 @@ public class Section extends InstructionFactory {
 		if (!ARGUMENTS.check(line.getArguments()))
 			throw new ArgumentException();
 
-		if (!line.getArguments().isSectionContext())
+		if (!line.getArguments().is(Type.SECTIONCONTEXT))
 			throw new ArgumentException("Argument does not reference a section context.");
 
 		line.getArguments().getSectionContext().addSection(this);

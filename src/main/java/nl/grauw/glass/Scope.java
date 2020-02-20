@@ -11,6 +11,7 @@ import nl.grauw.glass.expressions.ContextLiteral;
 import nl.grauw.glass.expressions.ErrorLiteral;
 import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.Type;
 
 public class Scope implements Context {
 
@@ -99,7 +100,7 @@ public class Scope implements Context {
 		int index = name.length();
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
 			Expression result = symbols.get(name.substring(0, index));
-			if (result != null && result.isContext())
+			if (result != null && result.is(Type.CONTEXT))
 				return ((Scope)result.getContext()).getLocalSymbolOrNull(name.substring(index + 1));
 		}
 		return null;
@@ -134,14 +135,14 @@ public class Scope implements Context {
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
 			String name = namePrefix + entry.getKey();
 			Expression value = entry.getValue();
-			if (value.isInteger()) {
+			if (value.is(Type.INTEGER)) {
 				try {
 					builder.append(name + ": equ " + value.getHexValue() + "\n");
 				} catch (EvaluationException e) {
 					// ignore
 				}
 			}
-			if (value.isContext()) {
+			if (value.is(Type.CONTEXT)) {
 				try {
 					Scope context = (Scope)value.getContext();
 					builder.append(context.serializeSymbols(name + "."));

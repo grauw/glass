@@ -21,8 +21,8 @@ public abstract class BinaryOperator extends Expression {
 	}
 
 	@Override
-	public boolean isInteger() {
-		return term1.isInteger() && term2.isInteger();
+	public boolean is(Type type) {
+		return type == Type.INTEGER && term1.is(type) && term2.is(type);
 	}
 
 	public String toString() {

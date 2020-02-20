@@ -39,28 +39,8 @@ public class IfElse extends Passthrough {
 	}
 
 	@Override
-	public boolean isInteger() {
-		return (trueTerm.isInteger() && falseTerm.isInteger()) || super.isInteger();
-	}
-
-	@Override
-	public boolean isString() {
-		return (trueTerm.isString() && falseTerm.isString()) || super.isString();
-	}
-
-	@Override
-	public boolean isRegister() {
-		return (trueTerm.isRegister() && falseTerm.isRegister()) || super.isRegister();
-	}
-
-	@Override
-	public boolean isFlag() {
-		return (trueTerm.isFlag() && falseTerm.isFlag()) || super.isFlag();
-	}
-
-	@Override
-	public boolean isContext() {
-		return (trueTerm.isContext() && falseTerm.isContext()) || super.isContext();
+	public boolean is(Type type) {
+		return (trueTerm.is(type) && falseTerm.is(type)) || super.is(type);
 	}
 
 	@Override

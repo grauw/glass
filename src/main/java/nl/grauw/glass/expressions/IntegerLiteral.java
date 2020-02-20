@@ -17,13 +17,13 @@ public class IntegerLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isInteger() {
-		return true;
+	public int getInteger() {
+		return value;
 	}
 
 	@Override
-	public int getInteger() {
-		return value;
+	public boolean is(Type type) {
+		return type == Type.INTEGER;
 	}
 
 	public String toString() {

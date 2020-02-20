@@ -18,23 +18,18 @@ public class FlagOrRegister extends Literal {
 	}
 
 	@Override
-	public boolean isFlag() {
-		return true;
-	}
-
-	@Override
 	public Flag getFlag() {
 		return flag;
 	}
 
 	@Override
-	public boolean isRegister() {
-		return true;
+	public Register getRegister() {
+		return register;
 	}
 
 	@Override
-	public Register getRegister() {
-		return register;
+	public boolean is(Type type) {
+		return type == Type.FLAG || type == Type.REGISTER;
 	}
 
 	@Override

@@ -20,22 +20,25 @@ public class Add extends BinaryOperator {
 	}
 
 	@Override
+	public boolean is(Type type) {
+		if (type == Type.REGISTER) {
+			if (term1.is(Type.REGISTER)) {
+				Register register = term1.getRegister();
+				return register.isIndex() && register.isPair();
+			}
+			return false;
+		}
+		return super.is(type);
+	}
+
+	@Override
 	public int getInteger() {
 		return term1.getInteger() + term2.getInteger();
 	}
 
 	@Override
-	public boolean isRegister() {
-		if (term1.isRegister()) {
-			Register register = term1.getRegister();
-			return register.isIndex() && register.isPair();
-		}
-		return false;
-	}
-
-	@Override
 	public Register getRegister() {
-		if (term1.isRegister()) {
+		if (term1.is(Type.REGISTER)) {
 			Register register = term1.getRegister();
 			if (register.isIndex() && register.isPair())
 				return new Register(register, new Add(register.getIndexOffset(), term2));

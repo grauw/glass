@@ -15,9 +15,13 @@ public class StringLiteral extends Literal {
 		return this;
 	}
 
+	public String getString() {
+		return string;
+	}
+
 	@Override
-	public boolean isInteger() {
-		return string.length() == 1;
+	public boolean is(Type type) {
+		return type == Type.STRING || (type == Type.INTEGER && string.length() == 1);
 	}
 
 	@Override
@@ -25,15 +29,6 @@ public class StringLiteral extends Literal {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);
-	}
-
-	@Override
-	public boolean isString() {
-		return true;
-	}
-
-	public String getString() {
-		return string;
 	}
 
 	@Override

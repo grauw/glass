@@ -18,8 +18,8 @@ public class CharacterLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isInteger() {
-		return true;
+	public boolean is(Type type) {
+		return type == Type.INTEGER;
 	}
 
 	@Override

@@ -95,8 +95,8 @@ public class Register extends Literal {
 	}
 
 	@Override
-	public boolean isRegister() {
-		return true;
+	public boolean is(Type type) {
+		return type == Type.REGISTER;
 	}
 
 	@Override

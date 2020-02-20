@@ -11,44 +11,26 @@ public abstract class Expression {
 
 	public abstract Expression copy(Context context);
 
+	public abstract boolean is(Type type);
+
 	public Expression resolve() {
 		return this;
-	}
-
-	public boolean isInteger() {
-		return false;
 	}
 
 	public int getInteger() {
 		throw new EvaluationException("Not an integer.");
 	}
 
-	public boolean isString() {
-		return false;
-	}
-
 	public String getString() {
 		throw new EvaluationException("Not a string.");
-	}
-
-	public boolean isRegister() {
-		return false;
 	}
 
 	public Register getRegister() {
 		throw new EvaluationException("Not a register.");
 	}
 
-	public boolean isFlag() {
-		return false;
-	}
-
 	public Flag getFlag() {
 		throw new EvaluationException("Not a flag.");
-	}
-
-	public boolean isGroup() {
-		return false;
 	}
 
 	public Identifier getAnnotation() {
@@ -59,24 +41,12 @@ public abstract class Expression {
 		return this;
 	}
 
-	public boolean isInstruction() {
-		return false;
-	}
-
 	public InstructionFactory getInstruction() {
 		throw new EvaluationException("Not an instruction.");
 	}
 
-	public boolean isContext() {
-		return false;
-	}
-
 	public Context getContext() {
 		throw new EvaluationException("Not a context.");
-	}
-
-	public boolean isSectionContext() {
-		return false;
 	}
 
 	public SectionContext getSectionContext() {

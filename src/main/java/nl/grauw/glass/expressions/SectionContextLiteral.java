@@ -10,13 +10,13 @@ public class SectionContextLiteral extends ContextLiteral {
 	}
 
 	@Override
-	public boolean isSectionContext() {
-		return true;
+	public SectionContext getSectionContext() {
+		return sectionContext;
 	}
 
 	@Override
-	public SectionContext getSectionContext() {
-		return sectionContext;
+	public boolean is(Type type) {
+		return type == Type.SECTIONCONTEXT || super.is(type);
 	}
 
 }

@@ -23,6 +23,11 @@ public class Annotation extends Expression {
 		return annotee;
 	}
 
+	@Override
+	public boolean is(Type type) {
+		return type == Type.ANNOTATION;
+	}
+
 	public String toString() {
 		return "" + annotation + " " + annotee;
 	}

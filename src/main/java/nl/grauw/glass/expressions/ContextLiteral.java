@@ -14,18 +14,13 @@ public class ContextLiteral extends Literal {
 	}
 
 	@Override
-	public boolean isContext() {
-		return true;
-	}
-
-	@Override
 	public Context getContext() {
 		return context;
 	}
 
 	@Override
-	public boolean isInteger() {
-		return true;
+	public boolean is(Type type) {
+		return type == Type.INTEGER || type == Type.CONTEXT;
 	}
 
 	@Override

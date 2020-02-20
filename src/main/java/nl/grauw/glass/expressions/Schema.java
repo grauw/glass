@@ -64,13 +64,13 @@ public class Schema implements SchemaType {
 
 	public static class IsDirect implements SchemaType {
 		public boolean check(Expression argument) {
-			return !argument.isGroup();
+			return !argument.is(Type.GROUP);
 		}
 	}
 
 	public static class IsIndirect implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isGroup();
+			return argument.is(Type.GROUP);
 		}
 	}
 
@@ -86,13 +86,13 @@ public class Schema implements SchemaType {
 
 	public static class IsInteger implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isInteger();
+			return argument.is(Type.INTEGER);
 		}
 	}
 
 	public static class IsString implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isString();
+			return argument.is(Type.STRING);
 		}
 	}
 
@@ -108,7 +108,7 @@ public class Schema implements SchemaType {
 			this.registers = registers;
 		}
 		public boolean check(Expression argument) {
-			if (argument.isRegister()) {
+			if (argument.is(Type.REGISTER)) {
 				Register register = argument.getRegister();
 				for (Register expected : registers)
 					if (register == expected)
@@ -120,7 +120,7 @@ public class Schema implements SchemaType {
 
 	public static class IsRegister8Bit implements SchemaType {
 		public boolean check(Expression argument) {
-			if (argument.isRegister()) {
+			if (argument.is(Type.REGISTER)) {
 				Register register = argument.getRegister();
 				return !register.isPair() && register != Register.I && register != Register.R;
 			}
@@ -130,7 +130,7 @@ public class Schema implements SchemaType {
 
 	public static class IsDirectRIndirectHLIXIY implements SchemaType {
 		public boolean check(Expression argument) {
-			if (argument.isRegister()) {
+			if (argument.is(Type.REGISTER)) {
 				Register register = argument.getRegister();
 				return DIRECT.check(argument) && !register.isPair() && register != Register.I && register != Register.R ||
 						INDIRECT.check(argument) && (register == Register.HL || register.isIndex());
@@ -141,13 +141,13 @@ public class Schema implements SchemaType {
 
 	public static class IsFlag implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isFlag();
+			return argument.is(Type.FLAG);
 		}
 	}
 
 	public static class IsFlagZC implements SchemaType {
 		public boolean check(Expression argument) {
-			return argument.isFlag() && argument.getFlag().getCode() < 4;
+			return argument.is(Type.FLAG) && argument.getFlag().getCode() < 4;
 		}
 	}
 

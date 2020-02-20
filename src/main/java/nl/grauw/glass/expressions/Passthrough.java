@@ -5,8 +5,8 @@ import nl.grauw.glass.instructions.InstructionFactory;
 public abstract class Passthrough extends Expression {
 
 	@Override
-	public boolean isInteger() {
-		return resolve().isInteger();
+	public boolean is(Type type) {
+		return resolve().is(type);
 	}
 
 	@Override
@@ -15,18 +15,8 @@ public abstract class Passthrough extends Expression {
 	}
 
 	@Override
-	public boolean isString() {
-		return resolve().isString();
-	}
-
-	@Override
 	public String getString() {
 		return resolve().getString();
-	}
-
-	@Override
-	public boolean isRegister() {
-		return resolve().isRegister();
 	}
 
 	@Override
@@ -35,23 +25,8 @@ public abstract class Passthrough extends Expression {
 	}
 
 	@Override
-	public boolean isFlag() {
-		return resolve().isFlag();
-	}
-
-	@Override
 	public Flag getFlag() {
 		return resolve().getFlag();
-	}
-
-	@Override
-	public boolean isGroup() {
-		return resolve().isGroup();
-	}
-
-	@Override
-	public boolean isInstruction() {
-		return resolve().isInstruction();
 	}
 
 	@Override
@@ -60,18 +35,8 @@ public abstract class Passthrough extends Expression {
 	}
 
 	@Override
-	public boolean isContext() {
-		return resolve().isContext();
-	}
-
-	@Override
 	public Context getContext() {
 		return resolve().getContext();
-	}
-
-	@Override
-	public boolean isSectionContext() {
-		return resolve().isSectionContext();
 	}
 
 	@Override
