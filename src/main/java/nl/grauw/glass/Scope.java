@@ -133,16 +133,17 @@ public class Scope implements Context {
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
 			String name = namePrefix + entry.getKey();
-			if (entry.getValue().isInteger()) {
+			Expression value = entry.getValue();
+			if (value.isInteger()) {
 				try {
-					builder.append(name + ": equ " + entry.getValue().getHexValue() + "\n");
+					builder.append(name + ": equ " + value.getHexValue() + "\n");
 				} catch (EvaluationException e) {
 					// ignore
 				}
 			}
-			if (entry.getValue().isContext()) {
+			if (value.isContext()) {
 				try {
-					Scope context = (Scope)entry.getValue().getContext();
+					Scope context = (Scope)value.getContext();
 					builder.append(context.serializeSymbols(name + "."));
 				} catch (EvaluationException e) {
 					// ignore
