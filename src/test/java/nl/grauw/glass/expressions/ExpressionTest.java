@@ -220,7 +220,7 @@ public class ExpressionTest extends TestBase {
 	@Test
 	public void testIdentifier() {
 		Scope scope = new Scope();
-		scope.addSymbol("symbol", new IntegerLiteral(11));
+		scope.addSymbol("symbol", IntegerLiteral.of(11));
 		assertEquals(11, parse("symbol", scope).getInteger());
 	}
 
@@ -228,7 +228,7 @@ public class ExpressionTest extends TestBase {
 	public void testMember() {
 		Scope scope = new Scope();
 		Scope objectScope = new Scope(scope);
-		objectScope.addSymbol("symbol", new IntegerLiteral(11));
+		objectScope.addSymbol("symbol", IntegerLiteral.of(11));
 		scope.addSymbol("object", new ContextLiteral(objectScope));
 		assertEquals(11, parse("object.symbol", scope).getInteger());
 		assertEquals(11, parse("(object).symbol", scope).getInteger());
@@ -238,7 +238,7 @@ public class ExpressionTest extends TestBase {
 	public void testMemberInParent() {
 		Scope scope = new Scope();
 		scope.addSymbol("object", new ContextLiteral(new Scope(scope)));
-		scope.addSymbol("symbol", new IntegerLiteral(11));
+		scope.addSymbol("symbol", IntegerLiteral.of(11));
 		assertThrows(SymbolNotFoundException.class, () -> {
 			parse("object.symbol", scope).getInteger();
 		});

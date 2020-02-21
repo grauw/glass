@@ -15,7 +15,7 @@ public class LogicalAnd extends BinaryOperator {
 	public Expression get(Type type) {
 		if (type == Type.INTEGER) {
 			int value1 = term1.getInteger();
-			return new IntegerLiteral(value1 == 0 ? value1 : term2.getInteger());
+			return IntegerLiteral.of(value1 == 0 ? value1 : term2.getInteger());
 		}
 		return super.get(type);
 	}

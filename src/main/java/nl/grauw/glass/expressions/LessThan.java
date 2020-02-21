@@ -14,7 +14,7 @@ public class LessThan extends BinaryOperator {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(term1.getInteger() < term2.getInteger() ? -1 : 0);
+			return IntegerLiteral.of(term1.getInteger() < term2.getInteger());
 		return super.get(type);
 	}
 

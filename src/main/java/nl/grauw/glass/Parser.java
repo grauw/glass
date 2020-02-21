@@ -368,22 +368,22 @@ public class Parser {
 				String string = accumulator.toString();
 				if (character == 'H' || character == 'h') {
 					int value = parseInt(string, 16);
-					expressionBuilder.addValueToken(new IntegerLiteral(value));
+					expressionBuilder.addValueToken(IntegerLiteral.of(value));
 					accumulator.setLength(0);
 					return argumentOperatorState;
 				} else if (character == 'O' || character == 'o') {
 					int value = parseInt(string, 8);
-					expressionBuilder.addValueToken(new IntegerLiteral(value));
+					expressionBuilder.addValueToken(IntegerLiteral.of(value));
 					accumulator.setLength(0);
 					return argumentOperatorState;
 				} else {
 					if (string.endsWith("B") || string.endsWith("b")) {
 						int value = parseInt(string.substring(0, string.length() - 1), 2);
-						expressionBuilder.addValueToken(new IntegerLiteral(value));
+						expressionBuilder.addValueToken(IntegerLiteral.of(value));
 						accumulator.setLength(0);
 					} else {
 						int value = parseInt(string, 10);
-						expressionBuilder.addValueToken(new IntegerLiteral(value));
+						expressionBuilder.addValueToken(IntegerLiteral.of(value));
 						accumulator.setLength(0);
 					}
 					return argumentOperatorState.parse(character);
@@ -416,7 +416,7 @@ public class Parser {
 				return argumentHexadecimalState;
 			} else {
 				int value = parseInt(accumulator.toString(), 16);
-				expressionBuilder.addValueToken(new IntegerLiteral(value));
+				expressionBuilder.addValueToken(IntegerLiteral.of(value));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}
@@ -431,7 +431,7 @@ public class Parser {
 				return argumentBinaryState;
 			} else {
 				int value = parseInt(accumulator.toString(), 2);
-				expressionBuilder.addValueToken(new IntegerLiteral(value));
+				expressionBuilder.addValueToken(IntegerLiteral.of(value));
 				accumulator.setLength(0);
 				return argumentOperatorState.parse(character);
 			}

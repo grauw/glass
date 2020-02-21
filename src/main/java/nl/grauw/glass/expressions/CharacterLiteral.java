@@ -25,7 +25,7 @@ public class CharacterLiteral extends Literal {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(character);
+			return IntegerLiteral.of(character);
 		return super.get(type);
 	}
 

@@ -4,11 +4,20 @@ public class IntegerLiteral extends Literal {
 
 	public static final IntegerLiteral ZERO = new IntegerLiteral(0);
 	public static final IntegerLiteral ONE = new IntegerLiteral(1);
+	public static final IntegerLiteral MINUSONE = new IntegerLiteral(-1);
 
 	private final int value;
 
 	public IntegerLiteral(int value) {
 		this.value = value;
+	}
+
+	public static IntegerLiteral of(int value) {
+		return new IntegerLiteral(value);
+	}
+
+	public static IntegerLiteral of(boolean value) {
+		return value ? MINUSONE : ZERO;
 	}
 
 	@Override

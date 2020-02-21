@@ -25,7 +25,7 @@ public class Modulo extends BinaryOperator {
 			int divisor = term2.getInteger();
 			if (divisor == 0)
 				throw new EvaluationException("Division by zero.");
-			return new IntegerLiteral(term1.getInteger() % divisor);
+			return IntegerLiteral.of(term1.getInteger() % divisor);
 		}
 		return super.get(type);
 	}

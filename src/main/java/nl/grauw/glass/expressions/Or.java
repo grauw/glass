@@ -14,7 +14,7 @@ public class Or extends BinaryOperator {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(term1.getInteger() | term2.getInteger());
+			return IntegerLiteral.of(term1.getInteger() | term2.getInteger());
 		return super.get(type);
 	}
 

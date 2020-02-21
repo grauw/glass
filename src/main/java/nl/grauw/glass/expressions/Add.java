@@ -34,7 +34,7 @@ public class Add extends BinaryOperator {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(term1.getInteger() + term2.getInteger());
+			return IntegerLiteral.of(term1.getInteger() + term2.getInteger());
 		if (type == Type.REGISTER) {
 			if (term1.is(Type.REGISTER)) {
 				Register register = term1.getRegister();

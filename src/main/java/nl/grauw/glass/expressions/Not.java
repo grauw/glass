@@ -21,7 +21,7 @@ public class Not extends UnaryOperator {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(term.getInteger() == 0 ? -1 : 0);
+			return IntegerLiteral.of(term.getInteger() == 0);
 		if (type == Type.FLAG) {
 			Flag flag = term.getFlag();
 			if (flag == Flag.NZ)

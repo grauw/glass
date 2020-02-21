@@ -29,7 +29,7 @@ public class StringLiteral extends Literal {
 		if (type == Type.STRING)
 			return this;
 		if (type == Type.INTEGER && string.length() == 1)
-			return new IntegerLiteral(string.codePointAt(0));
+			return IntegerLiteral.of(string.codePointAt(0));
 		return super.get(type);
 	}
 

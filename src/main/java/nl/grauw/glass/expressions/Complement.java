@@ -14,7 +14,7 @@ public class Complement extends UnaryOperator {
 	@Override
 	public Expression get(Type type) {
 		if (type == Type.INTEGER)
-			return new IntegerLiteral(~term.getInteger());
+			return IntegerLiteral.of(~term.getInteger());
 		return super.get(type);
 	}
 

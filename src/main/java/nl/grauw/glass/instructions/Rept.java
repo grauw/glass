@@ -46,7 +46,7 @@ public class Rept extends InstructionFactory {
 		super.expand(line, lines);
 		for (int i = 0, counter = start; i < count; i++, counter += step) {
 			Scope parameterScope = new ParameterScope(line.getScope(), parameter,
-					parameter != null ? new IntegerLiteral(counter) : null);
+					parameter != null ? IntegerLiteral.of(counter) : null);
 
 			// set up the number symbol
 			line.getScope().addSymbol(Integer.toString(i), parameterScope);
