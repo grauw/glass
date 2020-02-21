@@ -89,17 +89,17 @@ public abstract class Expression {
 		return null;
 	}
 
-	public List<Expression> getList() {
+	public List<Expression> getFlatList() {
 		List<Expression> list = new ArrayList<>();
-		addToList(list);
+		addToFlatList(list);
 		return list;
 	}
 
-	private void addToList(List<Expression> list) {
+	private void addToFlatList(List<Expression> list) {
 		Expression tail = this;
 		while (tail.is(Type.SEQUENCE)) {
 			Expression sequence = tail.get(Type.SEQUENCE);
-			sequence.getHead().addToList(list);
+			sequence.getHead().addToFlatList(list);
 			tail = sequence.getTail();
 		}
 		list.add(tail);

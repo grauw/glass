@@ -200,8 +200,8 @@ public class ExpressionTest extends TestBase {
 	}
 
 	@Test
-	public void testSequenceList() {
-		List<Expression> list = parse("4, 5, 6").getList();
+	public void testSequenceFlatList() {
+		List<Expression> list = parse("4, 5, 6").getFlatList();
 		assertEquals(3, list.size());
 		assertEquals(4, list.get(0).getInteger());
 		assertEquals(5, list.get(1).getInteger());
@@ -209,8 +209,8 @@ public class ExpressionTest extends TestBase {
 	}
 
 	@Test
-	public void testSequenceListDeep() {
-		List<Expression> list = parse("4, (5, 6), (7, 8)").getList();
+	public void testSequenceFlatListDeep() {
+		List<Expression> list = parse("4, (5, 6), (7, 8)").getFlatList();
 		assertEquals(5, list.size());
 		assertEquals(4, list.get(0).getInteger());
 		assertEquals(5, list.get(1).getInteger());

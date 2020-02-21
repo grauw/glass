@@ -10,7 +10,7 @@ public class Db extends InstructionFactory {
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (arguments != null)
-			return new Db_N(context, arguments.getList());
+			return new Db_N(context, arguments.getFlatList());
 		throw new ArgumentException();
 	}
 
