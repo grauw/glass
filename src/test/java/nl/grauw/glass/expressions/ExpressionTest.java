@@ -307,6 +307,15 @@ public class ExpressionTest extends TestBase {
 		});
 	}
 
+	@Test
+	public void testIndexString() {
+		assertEquals('a', parse("\"abc\"[0]").getInteger());
+		assertEquals('b', parse("\"abc\"[1]").getInteger());
+		assertEquals('c', parse("\"abc\"[2]").getInteger());
+		EvaluationException e = assertThrows(EvaluationException.class, () -> { parse("\"abc\"[3]").getInteger(); });
+		assertEquals("Index out of bounds.", e.getPlainMessage());
+	}
+
 	public Expression parse(String text) {
 		return parse(text, new Scope());
 	}

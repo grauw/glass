@@ -25,10 +25,17 @@ public class Index extends Passthrough {
 
 	@Override
 	public Expression resolve() {
-		Expression element = sequence.resolve().getElement(index.getInteger());
-		if (element == null)
+		int index = this.index.get(Type.INTEGER).getInteger();
+		Expression tail = sequence;
+		while (index > 0 && tail.is(Type.SEQUENCE)) {
+			tail = tail.get(Type.SEQUENCE).getTail();
+			index--;
+		}
+		if (index != 0)
 			return new ErrorLiteral(new EvaluationException("Index out of bounds."));
-		return element;
+		if (tail.is(Type.SEQUENCE))
+			return tail.get(Type.SEQUENCE).getHead();
+		return tail;
 	}
 
 	public String toString() {
