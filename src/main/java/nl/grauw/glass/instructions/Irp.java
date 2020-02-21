@@ -19,13 +19,13 @@ public class Irp extends InstructionFactory {
 
 	public void expand(Line line, List<Line> lines) {
 		Expression arguments = line.getArguments();
-		if (arguments == null || !Schema.IDENTIFIER.check(arguments.getElement()))
+		if (arguments == null || !Schema.IDENTIFIER.check(arguments.getHead()))
 			throw new ArgumentException();
 
 		super.expand(line, lines);
-		Expression parameter = arguments.getElement();
-		for (int i = 0; (arguments = arguments.getNext()) != null; i++) {
-			Scope parameterScope = new ParameterScope(line.getScope(), parameter, arguments.getElement());
+		Expression parameter = arguments.getHead();
+		for (int i = 0; (arguments = arguments.getTail()) != null; i++) {
+			Scope parameterScope = new ParameterScope(line.getScope(), parameter, arguments.getHead());
 
 			// set up the number symbol
 			line.getScope().addSymbol(Integer.toString(i), parameterScope);

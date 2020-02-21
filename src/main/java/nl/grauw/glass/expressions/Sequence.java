@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Sequence extends BinaryOperator {
 
-	public Sequence(Expression value, Expression tail) {
-		super(value, tail);
+	public Sequence(Expression head, Expression tail) {
+		super(head, tail);
 	}
 
 	@Override
@@ -13,10 +13,12 @@ public class Sequence extends BinaryOperator {
 		return new Sequence(term1.copy(context), term2.copy(context));
 	}
 
-	public Expression getValue() {
+	@Override
+	public Expression getHead() {
 		return term1;
 	}
 
+	@Override
 	public Expression getTail() {
 		return term2;
 	}
@@ -26,19 +28,14 @@ public class Sequence extends BinaryOperator {
 		term1.addToList(list);
 		Expression tail = term2;
 		while (tail != null) {
-			tail.getElement().addToList(list);
-			tail = tail.getNext();
+			tail.getHead().addToList(list);
+			tail = tail.getTail();
 		}
 	}
 
 	@Override
 	public Expression getElement(int index) {
 		return index == 0 ? term1 : term2.getElement(index - 1);
-	}
-
-	@Override
-	public Expression getNext() {
-		return term2;
 	}
 
 	@Override

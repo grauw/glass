@@ -10,9 +10,9 @@ public class Schema implements SchemaType {
 
 	public boolean check(Expression arguments) {
 		for (SchemaType type : types) {
-			if (arguments == null || !type.check(arguments.getElement()))
+			if (arguments == null || !type.check(arguments.getHead()))
 				return false;
-			arguments = arguments.getNext();
+			arguments = arguments.getTail();
 		}
 		return arguments == null;
 	}

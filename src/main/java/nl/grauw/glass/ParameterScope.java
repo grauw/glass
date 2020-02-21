@@ -11,16 +11,16 @@ public class ParameterScope extends Scope {
 		super(parent);
 
 		while (parameters != null) {
-			Expression parameter = parameters.getElement();
+			Expression parameter = parameters.getHead();
 			Expression argument;
 
 			if (parameter instanceof Equals) {
-				argument = arguments != null ? arguments.getElement() : ((Equals)parameter).getTerm2();
+				argument = arguments != null ? arguments.getHead() : ((Equals)parameter).getTerm2();
 				parameter = ((Equals)parameter).getTerm1();
 			} else {
 				if (arguments == null)
 					throw new ArgumentException("Not enough arguments.");
-				argument = arguments.getElement();
+				argument = arguments.getHead();
 			}
 
 			if (!(parameter instanceof Identifier))
@@ -28,9 +28,9 @@ public class ParameterScope extends Scope {
 
 			addSymbol(((Identifier)parameter).getName(), argument);
 
-			parameters = parameters.getNext();
+			parameters = parameters.getTail();
 			if (arguments != null)
-				arguments = arguments.getNext();
+				arguments = arguments.getTail();
 		}
 		if (arguments != null)
 			throw new ArgumentException("Too many arguments.");

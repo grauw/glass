@@ -81,6 +81,14 @@ public abstract class Expression {
 		throw new EvaluationException("Not a section context.");
 	}
 
+	public Expression getHead() {
+		return this;
+	}
+
+	public Expression getTail() {
+		return null;
+	}
+
 	public List<Expression> getList() {
 		List<Expression> list = new ArrayList<>();
 		addToList(list);
@@ -91,16 +99,8 @@ public abstract class Expression {
 		list.add(this);
 	}
 
-	public Expression getElement() {
-		return getElement(0);
-	}
-
 	public Expression getElement(int index) {
 		return index == 0 ? this : null;
-	}
-
-	public Expression getNext() {
-		return null;
 	}
 
 	public String getHexValue() {

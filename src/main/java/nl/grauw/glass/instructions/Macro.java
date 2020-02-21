@@ -27,7 +27,7 @@ public class Macro extends InstructionFactory {
 	public void expand(Line line, List<Line> lines) {
 		Expression parameters = line.getArguments();
 		while (parameters != null) {
-			Expression parameter = parameters.getElement();
+			Expression parameter = parameters.getHead();
 			if (!(parameter instanceof Identifier) &&
 					!(parameter instanceof Equals && ((Equals)parameter).getTerm1() instanceof Identifier))
 				throw new ArgumentException("Parameter must be an identifier.");
@@ -38,7 +38,7 @@ public class Macro extends InstructionFactory {
 			} else {
 				parameterScope.addSymbol(((Identifier)parameter).getName(), IntegerLiteral.ZERO);
 			}
-			parameters = parameters.getNext();
+			parameters = parameters.getTail();
 		}
 
 		try {
