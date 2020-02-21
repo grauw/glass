@@ -6,11 +6,11 @@ import nl.grauw.glass.instructions.*;
 import nl.grauw.glass.instructions.Error;
 
 public class GlobalScope extends Scope {
-	
+
 	public GlobalScope() {
 		super();
 		setAddress(0);
-		
+
 		addBuiltInSymbol("adc", new Instruction(new Adc()));
 		addBuiltInSymbol("add", new Instruction(new Add()));
 		addBuiltInSymbol("and", new Instruction(new And()));
@@ -84,7 +84,7 @@ public class GlobalScope extends Scope {
 		addBuiltInSymbol("srl", new Instruction(new Srl()));
 		addBuiltInSymbol("sub", new Instruction(new Sub()));
 		addBuiltInSymbol("xor", new Instruction(new Xor()));
-		
+
 		addBuiltInSymbol("equ", new Instruction(new Equ()));
 		addBuiltInSymbol("org", new Instruction(new Org()));
 		addBuiltInSymbol("endm", new Instruction(new Endm()));
@@ -96,10 +96,10 @@ public class GlobalScope extends Scope {
 		addBuiltInSymbol("error", new Instruction(new Error()));
 		addBuiltInSymbol("warning", new Instruction(new Warning()));
 	}
-	
+
 	private void addBuiltInSymbol(String symbol, Expression value) {
 		addSymbol(symbol, value);
 		addSymbol(symbol.toUpperCase(), value);
 	}
-	
+
 }

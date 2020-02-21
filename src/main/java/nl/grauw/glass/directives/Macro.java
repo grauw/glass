@@ -8,9 +8,9 @@ import nl.grauw.glass.expressions.Instruction;
 import nl.grauw.glass.instructions.MacroInstruction;
 
 public class Macro extends Directive {
-	
+
 	private final Source source;
-	
+
 	public Macro(Source source) {
 		this.source = source;
 	}
@@ -19,7 +19,7 @@ public class Macro extends Directive {
 	public Directive copy(Scope scope) {
 		return new Macro(source.copy(scope));
 	}
-	
+
 	@Override
 	public void register(Scope scope, Line line) {
 		if (line.getLabels().size() == 0)
@@ -32,5 +32,5 @@ public class Macro extends Directive {
 			scope.addSymbol(label, instruction);
 		line.setInstruction(new nl.grauw.glass.instructions.Macro(source));
 	}
-	
+
 }

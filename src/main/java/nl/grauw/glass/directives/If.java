@@ -12,10 +12,10 @@ import nl.grauw.glass.expressions.IfElse;
 import nl.grauw.glass.expressions.Member;
 
 public class If extends Directive {
-	
+
 	private final Source thenSource;
 	private final Source elseSource;
-	
+
 	public If(Source thenSource, Source elseSource) {
 		this.thenSource = thenSource;
 		this.elseSource = elseSource;
@@ -25,7 +25,7 @@ public class If extends Directive {
 	public Directive copy(Scope scope) {
 		return new If(thenSource.copy(new Scope(scope.getParent())), elseSource.copy(new Scope(scope.getParent())));
 	}
-	
+
 	@Override
 	public void register(Scope scope, Line line) {
 		line.setInstruction(new nl.grauw.glass.instructions.If(thenSource, elseSource));
@@ -44,5 +44,5 @@ public class If extends Directive {
 			));
 		}
 	}
-	
+
 }

@@ -5,7 +5,7 @@ import nl.grauw.glass.Line;
 import nl.grauw.glass.Scope;
 
 public class Equ extends Directive {
-	
+
 	@Override
 	public void register(Scope scope, Line line) {
 		if (line.getLabels().size() == 0)
@@ -13,5 +13,5 @@ public class Equ extends Directive {
 		for (String label : line.getLabels())
 			scope.addSymbol(label, line.getArguments());
 	}
-	
+
 }

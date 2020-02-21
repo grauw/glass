@@ -1,29 +1,29 @@
 package nl.grauw.glass.expressions;
 
 public class Subtract extends BinaryOperator {
-	
+
 	public Subtract(Expression minuend, Expression subtrahend) {
 		super(minuend, subtrahend);
 	}
-	
+
 	@Override
 	public Subtract copy(Context context) {
 		return new Subtract(term1.copy(context), term2.copy(context));
 	}
-	
+
 	public Expression getMinuend() {
 		return term1;
 	}
-	
+
 	public Expression getSubtrahend() {
 		return term2;
 	}
-	
+
 	@Override
 	public int getInteger() {
 		return term1.getInteger() - term2.getInteger();
 	}
-	
+
 	@Override
 	public boolean isRegister() {
 		if (term1.isRegister() && term2.isInteger()) {
@@ -32,7 +32,7 @@ public class Subtract extends BinaryOperator {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Register getRegister() {
 		if (term1.isRegister() && term2.isInteger()) {
@@ -42,10 +42,10 @@ public class Subtract extends BinaryOperator {
 		}
 		throw new EvaluationException("Not a register.");
 	}
-	
+
 	@Override
 	public String getLexeme() {
 		return "-";
 	}
-	
+
 }

@@ -13,20 +13,20 @@ import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
 
 public class Scope implements Context {
-	
+
 	private boolean set = false;
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
 	private int address = 0;
-	
+
 	public Scope() {
 		this(null);
 	}
-	
+
 	public Scope(Scope parent) {
 		this.parent = parent;
 	}
-	
+
 	public Scope getParent() {
 		return parent;
 	}
@@ -34,21 +34,21 @@ public class Scope implements Context {
 	public Set<String> getSymbols() {
 		return symbols.keySet();
 	}
-	
+
 	@Override
 	public int getAddress() {
 		if (!set)
 			throw new EvaluationException("Address not initialized.");
 		return address;
 	}
-	
+
 	public void setAddress(int address) {
 		if (set)
 			throw new AssemblyException("Address was already set.");
 		this.address = address;
 		this.set = true;
 	}
-	
+
 	public void addSymbol(String name, Expression value) {
 		if (name == null || value == null)
 			throw new AssemblyException("Symbol name and value must not be null.");
@@ -56,7 +56,7 @@ public class Scope implements Context {
 			throw new AssemblyException("Can not redefine symbol: " + name);
 		symbols.put(name, value);
 	}
-	
+
 	public void addSymbol(String name, Scope context) {
 		addSymbol(name, new ContextLiteral(context));
 	}
@@ -66,11 +66,11 @@ public class Scope implements Context {
 			addSymbol(entry.getKey(), entry.getValue());
 		}
 	}
-	
+
 	public boolean hasSymbol(String name) {
 		return hasLocalSymbol(name) || parent != null && parent.hasSymbol(name);
 	}
-	
+
 	public Expression getSymbol(String name) {
 		Expression value = getLocalSymbolOrNull(name);
 		if (value != null)
@@ -79,23 +79,23 @@ public class Scope implements Context {
 			return parent.getSymbol(name);
 		return new ErrorLiteral(new SymbolNotFoundException(name));
 	}
-	
+
 	public boolean hasLocalSymbol(String name) {
 		return getLocalSymbolOrNull(name) != null;
 	}
-	
+
 	public Expression getLocalSymbol(String name) {
 		Expression value = getLocalSymbolOrNull(name);
 		if (value != null)
 			return value;
 		return new ErrorLiteral(new SymbolNotFoundException(name));
 	}
-	
+
 	private Expression getLocalSymbolOrNull(String name) {
 		Expression value = symbols.get(name);
 		if (value != null)
 			return value;
-		
+
 		int index = name.length();
 		while ((index = name.lastIndexOf('.', index - 1)) != -1) {
 			Expression result = symbols.get(name.substring(0, index));
@@ -104,12 +104,12 @@ public class Scope implements Context {
 		}
 		return null;
 	}
-	
+
 	public class SymbolNotFoundException extends EvaluationException {
 		private static final long serialVersionUID = 1L;
 
 		private String name;
-		
+
 		public SymbolNotFoundException(String name) {
 			super("Symbol not found: " + name);
 			this.name = name;
@@ -123,11 +123,11 @@ public class Scope implements Context {
 			return name;
 		}
 	}
-	
+
 	public String serializeSymbols() {
 		return serializeSymbols("");
 	}
-	
+
 	public String serializeSymbols(String namePrefix) {
 		StringBuilder builder = new StringBuilder();
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
@@ -151,9 +151,9 @@ public class Scope implements Context {
 		}
 		return builder.toString();
 	}
-	
+
 	public String toString() {
 		return serializeSymbols();
 	}
-	
+
 }

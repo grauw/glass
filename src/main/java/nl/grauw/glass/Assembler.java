@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Assembler {
-	
+
 	private static Assembler instance;
 	private final Source source;
-	
+
 	/**
 	 * @param args
 	 */
@@ -22,7 +22,7 @@ public class Assembler {
 			System.out.println("Usage: java -jar glass.jar [OPTION] SOURCE [OBJECT] [SYMBOL]");
 			System.exit(1);
 		}
-		
+
 		Path sourcePath = null;
 		Path objectPath = null;
 		Path symbolPath = null;
@@ -40,17 +40,17 @@ public class Assembler {
 				throw new AssemblyException("Too many arguments.");
 			}
 		}
-		
+
 		instance = new Assembler(sourcePath, includePaths);
 		instance.writeObject(objectPath);
 		if (symbolPath != null)
 			instance.writeSymbols(symbolPath);
 	}
-	
+
 	public Assembler(Path sourcePath, List<Path> includePaths) {
 		source = new SourceBuilder(includePaths).parse(sourcePath);
 	}
-	
+
 	public void writeObject(Path objectPath) {
 		try (OutputStream output = objectPath != null ? Files.newOutputStream(objectPath) : new NullOutputStream()) {
 			source.assemble(output);
@@ -58,7 +58,7 @@ public class Assembler {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public void writeSymbols(Path symbolPath) {
 		try (PrintStream symbolOutput = new PrintStream(Files.newOutputStream(symbolPath))) {
 			symbolOutput.print(source.getScope().serializeSymbols());
@@ -66,11 +66,11 @@ public class Assembler {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
 	public static class NullOutputStream extends OutputStream {
 		public void write(int b) throws IOException {}
 		public void write(byte[] b) throws IOException {}
 		public void write(byte[] b, int off, int len) throws IOException {}
 	}
-	
+
 }

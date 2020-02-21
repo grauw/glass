@@ -1,7 +1,7 @@
 package nl.grauw.glass.expressions;
 
 public class Flag extends Literal {
-	
+
 	public static Flag NZ = new Flag("nz", 0);
 	public static Flag Z = new Flag("z", 1);
 	public static Flag NC = new Flag("nc", 2);
@@ -10,44 +10,44 @@ public class Flag extends Literal {
 	public static Flag PE = new Flag("pe", 5);
 	public static Flag P = new Flag("p", 6);
 	public static Flag M = new Flag("m", 7);
-	
+
 	private final String name;
 	private final int code;
-	
+
 	public Flag(String name, int code) {
 		this.name = name;
 		this.code = code;
 	}
-	
+
 	@Override
 	public Flag copy(Context context) {
 		return this;
 	}
-	
+
 	public int getCode() {
 		return code;
 	}
-	
+
 	@Override
 	public boolean isFlag() {
 		return true;
 	}
-	
+
 	@Override
 	public Flag getFlag() {
 		return this;
 	}
-	
+
 	@Override
 	public String toString() {
 		return name;
 	}
-	
+
 	@Override
 	public String toDebugString() {
 		return toString();
 	}
-	
+
 	public static Flag getByName(String name) {
 		switch (name) {
 		case "nz":
@@ -77,5 +77,5 @@ public class Flag extends Literal {
 		}
 		return null;
 	}
-	
+
 }

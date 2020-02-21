@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 public class SourceTest extends TestBase {
-	
+
 	@Test
 	public void testNops() {
 		assertArrayEquals(b(0x00, 0x00), assemble(
@@ -21,7 +21,7 @@ public class SourceTest extends TestBase {
 			" nop"
 		));
 	}
-	
+
 	@Test
 	public void testJumpSelf() {
 		assertArrayEquals(b(0x00, 0xC3, 0x01, 0x00), assemble(
@@ -29,7 +29,7 @@ public class SourceTest extends TestBase {
 			" jp $"
 		));
 	}
-	
+
 	@Test
 	public void testJumpLabelSelf() {
 		assertArrayEquals(b(0x00, 0x00, 0xC3, 0x01, 0x00), assemble(
@@ -38,7 +38,7 @@ public class SourceTest extends TestBase {
 			" jp label"
 		));
 	}
-	
+
 	@Test
 	public void testJumpLabelBackward() {
 		assertArrayEquals(b(0x00, 0x00, 0xC3, 0x01, 0x00), assemble(
@@ -47,7 +47,7 @@ public class SourceTest extends TestBase {
 			" jp label"
 		));
 	}
-	
+
 	@Test
 	public void testJumpLabelForward() {
 		assertArrayEquals(b(0xC3, 0x03, 0x00), assemble(
@@ -55,7 +55,7 @@ public class SourceTest extends TestBase {
 			"label:"
 		));
 	}
-	
+
 	@Test
 	public void testEqu() {
 		assertArrayEquals(b(0x3E, 0x10), assemble(
@@ -63,7 +63,7 @@ public class SourceTest extends TestBase {
 			"label: equ 10H"
 		));
 	}
-	
+
 	@Test
 	public void testEquRegister() {
 		assertArrayEquals(b(0x78), assemble(
@@ -71,7 +71,7 @@ public class SourceTest extends TestBase {
 			"label: equ b"
 		));
 	}
-	
+
 	@Test
 	public void testEquIndirectRegister() {
 		assertArrayEquals(b(0x7E), assemble(
@@ -79,7 +79,7 @@ public class SourceTest extends TestBase {
 			"label: equ (hl)"
 		));
 	}
-	
+
 	@Test
 	public void testOrg() {
 		assertArrayEquals(b(0xC3, 0x32, 0x40, 0x00, 0x18, 0xFD), assemble(
@@ -90,7 +90,7 @@ public class SourceTest extends TestBase {
 			" jr label"
 		));
 	}
-	
+
 	@Test
 	public void testOrgLabel() {
 		assertArrayEquals(b(0xC3, 0x03, 0x00, 0x00), assemble(
@@ -99,7 +99,7 @@ public class SourceTest extends TestBase {
 			" nop"
 		));
 	}
-	
+
 	@Test
 	public void testOrgLabelBefore() {
 		assertArrayEquals(b(0xC3, 0x03, 0x00, 0x00), assemble(
@@ -109,7 +109,7 @@ public class SourceTest extends TestBase {
 			" nop"
 		));
 	}
-	
+
 	@Test
 	public void testOrgSelfAddress() {
 		assertArrayEquals(b(0xC3, 0x04, 0x01, 0x00), assemble(
@@ -119,7 +119,7 @@ public class SourceTest extends TestBase {
 			" nop"
 		));
 	}
-	
+
 	@Test
 	public void testRelativeJumpAssembly() {
 		assertArrayEquals(b(0x18, 0x05, 0x28, 0x03, 0x10, 0x01, 0x00), assemble(
@@ -131,7 +131,7 @@ public class SourceTest extends TestBase {
 			"label:"
 		));
 	}
-	
+
 	@Test
 	public void testIndexDoubleAdd() {
 		assertArrayEquals(b(
@@ -149,7 +149,7 @@ public class SourceTest extends TestBase {
 			)
 		);
 	}
-	
+
 	@Test
 	public void testMacro() {
 		assertArrayEquals(b(0x00, 0x00), assemble(
@@ -160,7 +160,7 @@ public class SourceTest extends TestBase {
 			" test"
 		));
 	}
-	
+
 	@Test
 	public void testMacroAddress() {
 		assertArrayEquals(b(0x00, 0xC3, 0x01, 0x00, 0xC3, 0x04, 0x00), assemble(
@@ -172,7 +172,7 @@ public class SourceTest extends TestBase {
 			" test"
 		));
 	}
-	
+
 	@Test
 	public void testMacroArguments() {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x20), assemble(
@@ -183,7 +183,7 @@ public class SourceTest extends TestBase {
 			" test 20H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroArgumentsTwo() {
 		assertArrayEquals(b(0x3E, 0x30, 0x3E, 0x77), assemble(
@@ -194,7 +194,7 @@ public class SourceTest extends TestBase {
 			" test 33H, 44H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroTooManyArguments() {
 		assertArgumentException(2, () -> {
@@ -205,7 +205,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testMacroTooFewArguments() {
 		assertArgumentException(2, () -> {
@@ -216,7 +216,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testMacroNonIdentifierArguments() {
 		assertArgumentException(0, () -> {
@@ -226,7 +226,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testMacroDefaultArgument() {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x20), assemble(
@@ -237,7 +237,7 @@ public class SourceTest extends TestBase {
 			" test 20H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefaultFlagArgument() {
 		assertArrayEquals(b(0xC8, 0xC0), assemble(
@@ -248,7 +248,7 @@ public class SourceTest extends TestBase {
 			" test nz"
 		));
 	}
-	
+
 	@Test
 	public void testMacroNoEnd() {
 		assertAssemblyException(1, () -> {
@@ -257,7 +257,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testMacroLabels() {
 		assertArrayEquals(b(0x00, 0x21, 0x04, 0x00, 0x21, 0x07, 0x00), assemble(
@@ -270,7 +270,7 @@ public class SourceTest extends TestBase {
 			" test"
 		));
 	}
-	
+
 	@Test
 	public void testMacroOuterScope() {
 		assertArrayEquals(b(0x3E, 0x11), assemble(
@@ -281,7 +281,7 @@ public class SourceTest extends TestBase {
 			"value: equ 10H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroNesting() {
 		assertArrayEquals(b(0x3E, 0x13, 0x3E, 0x23), assemble(
@@ -296,7 +296,7 @@ public class SourceTest extends TestBase {
 			" test 1H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroNesting2() {
 		assertArrayEquals(b(0x1E, 0x1E, 0x1E), assemble(
@@ -312,7 +312,7 @@ public class SourceTest extends TestBase {
 			" test 1H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroNesting3() {
 		assertArrayEquals(b(0x02, 0x1E), assemble(
@@ -328,7 +328,7 @@ public class SourceTest extends TestBase {
 			" db test.inner.x"
 		));
 	}
-	
+
 	@Test
 	public void testMacroTwiceWithLocalReferences() {
 		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x23), assemble(
@@ -344,7 +344,7 @@ public class SourceTest extends TestBase {
 			" test 1H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroClosure() {
 		assertArrayEquals(b(0x3E, 0x14, 0x3E, 0x25), assemble(
@@ -360,7 +360,7 @@ public class SourceTest extends TestBase {
 			" test 1H"
 		));
 	}
-	
+
 	@Test
 	public void testMacroUnboundReference() {
 		assertSymbolNotFoundException("value", 6, () -> {
@@ -377,7 +377,7 @@ public class SourceTest extends TestBase {
 			));
 		});
 	}
-	
+
 	@Test
 	public void testMacroLabelsDereference() {
 		assertArrayEquals(b(0x11, 0x09, 0x00, 0x21, 0x06, 0x00, 0x21, 0x09, 0x00), assemble(
@@ -390,7 +390,7 @@ public class SourceTest extends TestBase {
 			"test.z: test"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefinitionDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
@@ -401,7 +401,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefinitionWithArgumentsDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
@@ -412,7 +412,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefinitionWithDefaultArgumentsDereference() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
@@ -423,7 +423,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Disabled
 	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentDereference() {
@@ -436,7 +436,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentDereferenceWorkaround() {
 		assertArrayEquals(b(0x11, 0x03, 0x00), assemble(
@@ -448,7 +448,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testMacroDefinitionWithNonIntegerArgumentBeforeDereference() {
 		assertEvaluationException(0, () -> {
@@ -462,7 +462,7 @@ public class SourceTest extends TestBase {
 			));
 		});
 	}
-	
+
 	@Test
 	public void testMacroDefinitionWithDefaultFlagArgumentBeforeDereference() {
 		assertArrayEquals(b(0x11, 0x01, 0x00), assemble(
@@ -473,7 +473,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testMacroContextArgumentDereference() {
 		assertArrayEquals(b(0x03), assemble(
@@ -487,7 +487,7 @@ public class SourceTest extends TestBase {
 			" macro2 macro1"
 		));
 	}
-	
+
 	@Test
 	public void testMacroContextArgumentDereference2() {
 		assertArrayEquals(b(0x3E, 0x05, 0x21, 0x00, 0x00), assemble(
@@ -502,7 +502,7 @@ public class SourceTest extends TestBase {
 			"m1: macro1"
 		));
 	}
-	
+
 	@Test
 	public void testMacroInstructionArgument() {
 		assertArrayEquals(b(0x3E, 0x10, 0xC9), assemble(
@@ -527,7 +527,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
@@ -537,7 +537,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptIndirect() {
 		assertArrayEquals(b(0x00, 0x00, 0x00, 0x00), assemble(
@@ -547,7 +547,7 @@ public class SourceTest extends TestBase {
 			"count: equ 4"
 		));
 	}
-	
+
 	@Test
 	public void testReptParameter() {
 		assertArrayEquals(b(0x3E, 0x00, 0x3E, 0x01, 0x3E, 0x02), assemble(
@@ -556,7 +556,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptParameterStart() {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x11, 0x3E, 0x12), assemble(
@@ -565,7 +565,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptParameterStartStep() {
 		assertArrayEquals(b(0x3E, 0x10, 0x3E, 0x13, 0x3E, 0x16), assemble(
@@ -574,7 +574,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptWithIndex() {
 		assertArrayEquals(b(0x21, 0x05, 0x00, 0x00, 0x00, 0x00), assemble(
@@ -584,7 +584,7 @@ public class SourceTest extends TestBase {
 			"test: ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptWithLabel() {
 		assertArrayEquals(b(0x21, 0x06, 0x00, 0x00, 0x00, 0x00), assemble(
@@ -594,7 +594,7 @@ public class SourceTest extends TestBase {
 			"test: ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptWithLabelNoIndex() {
 		assertSymbolNotFoundException("test.test", 5, () -> {
@@ -608,7 +608,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testReptNested() {
 		assertArrayEquals(b(0x00, 0x01, 0x02, 0x10, 0x11, 0x12), assemble(
@@ -619,7 +619,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptNoBody() {
 		assertArrayEquals(b(), assemble(
@@ -627,7 +627,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testReptNoCount() {
 		assertArgumentException(0, () -> {
@@ -637,7 +637,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testIrp() {
 		assertArrayEquals(b(0x3E, 0x10, 0xFF, 0x3E, 0x20, 0xFF, 0x3E, 0x30, 0xFF), assemble(
@@ -647,7 +647,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpNoValues() {
 		assertArrayEquals(b(), assemble(
@@ -656,7 +656,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpNoBody() {
 		assertArrayEquals(b(), assemble(
@@ -664,7 +664,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpRegisters() {
 		assertArrayEquals(b(0xC5, 0xD5, 0xE5, 0xF5), assemble(
@@ -673,7 +673,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpNoIdentifier() {
 		assertArgumentException(0, () -> {
@@ -684,7 +684,7 @@ public class SourceTest extends TestBase {
 			));
 		});
 	}
-	
+
 	@Test
 	public void testIrpWithIndex() {
 		assertArrayEquals(b(0x21, 0x05, 0x00, 0x10, 0x20, 0x30), assemble(
@@ -694,7 +694,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpWithLabel() {
 		assertArrayEquals(b(0x21, 0x05, 0x00, 0x10, 0x20, 0x30), assemble(
@@ -704,7 +704,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIrpWithLabelNoIndex() {
 		assertSymbolNotFoundException("test.test", 5, () -> {
@@ -718,7 +718,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testProc() {
 		assertArrayEquals(b(0x21, 0x0A, 0x00, 0xC3, 0x06, 0x00, 0xFF, 0xC3, 0x0A, 0x00, 0xFF), assemble(
@@ -733,7 +733,7 @@ public class SourceTest extends TestBase {
 			" ENDP"
 		));
 	}
-	
+
 	@Test
 	public void testIf() {
 		assertArrayEquals(b(0x00), assemble(
@@ -742,7 +742,7 @@ public class SourceTest extends TestBase {
 			" ENDIF"
 		));
 	}
-	
+
 	@Test
 	public void testIfThen() {
 		assertArrayEquals(b(0x00), assemble(
@@ -753,7 +753,7 @@ public class SourceTest extends TestBase {
 			" ENDIF"
 		));
 	}
-	
+
 	@Test
 	public void testIfThenElse() {
 		assertArrayEquals(b(0xFF), assemble(
@@ -764,7 +764,7 @@ public class SourceTest extends TestBase {
 			" ENDIF"
 		));
 	}
-	
+
 	@Test
 	public void testIfInMacro() {
 		assertArrayEquals(b(0x3E, 0x20), assemble(
@@ -778,7 +778,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIfInRepeat() {
 		assertArrayEquals(b(0xFF, 0x00, 0xFF), assemble(
@@ -791,7 +791,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testIfWithEqu() {
 		assertArrayEquals(b(0xC3, 0x10, 0x00), assemble(
@@ -803,7 +803,7 @@ public class SourceTest extends TestBase {
 			" jp test"
 		));
 	}
-	
+
 	@Test
 	public void testIfWithLabel() {
 		assertArrayEquals(b(0x22, 0x22, 0xC3, 0x02, 0x00), assemble(
@@ -815,7 +815,7 @@ public class SourceTest extends TestBase {
 			" jp test"
 		));
 	}
-	
+
 	@Test
 	public void testIfWithAddress() {
 		assertArrayEquals(b(0x11, 0x22), assemble(
@@ -825,7 +825,7 @@ public class SourceTest extends TestBase {
 			" db 22H"
 		));
 	}
-	
+
 	@Test
 	public void testIfWithEquForward() {
 		assertArrayEquals(b(0xC2, 0x10, 0x00), assemble(
@@ -849,7 +849,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testIfInclude() throws IOException {
 		Files.write(temporaryDirectory.resolve("testIfInclude.asm"), Arrays.asList(
@@ -870,7 +870,7 @@ public class SourceTest extends TestBase {
 			" jp test"
 		));
 	}
-	
+
 	@Test
 	public void testIfIncludeConstant() throws IOException {
 		Files.write(temporaryDirectory.resolve("testIfIncludeConstant.asm"), Arrays.asList(
@@ -885,7 +885,7 @@ public class SourceTest extends TestBase {
 			" ENDIF"
 		));
 	}
-	
+
 	@Test
 	public void testError() {
 		assertErrorDirectiveException("Error directive was encountered.", 0, () -> {
@@ -894,7 +894,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testErrorWithMessage() {
 		assertErrorDirectiveException("Test", 0, () -> {
@@ -903,7 +903,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testAnnotationNotSupported() {
 		assertArgumentException(0, () -> {
@@ -912,7 +912,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testDsVirtual() {
 		assertArrayEquals(b(0x3E, 0x86, 0x21, 0x12, 0x00), assemble(
@@ -921,7 +921,7 @@ public class SourceTest extends TestBase {
 			" ld hl,$"
 		));
 	}
-	
+
 	@Test
 	public void testDsVirtualWithFill() {
 		assertArgumentException(0, () -> {
@@ -930,7 +930,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testDsUnknownAnnotation() {
 		assertArgumentException(0, () -> {
@@ -939,7 +939,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testSection() {
 		assertArrayEquals(b(0x00, 0x21, 0x07, 0x00, 0x21, 0x04, 0x00, 0x86, 0x86, 0x00, 0x11, 0x07, 0x00), assemble(
@@ -953,7 +953,7 @@ public class SourceTest extends TestBase {
 			" ld de,label"
 		));
 	}
-	
+
 	@Test
 	public void testSectionVirtual() {
 		assertArrayEquals(b(0x00, 0x00, 0x11, 0x07, 0x00), assemble(
@@ -967,7 +967,7 @@ public class SourceTest extends TestBase {
 			" ld de,label"
 		));
 	}
-	
+
 	@Test
 	public void testSectionFitsSpace() {
 		assertArrayEquals(b(0x21, 0x00, 0x00), assemble(
@@ -977,7 +977,7 @@ public class SourceTest extends TestBase {
 			" ENDS"
 		));
 	}
-	
+
 	@Test
 	public void testSectionExceedsSpace() {
 		assertAssemblyException(0, () -> {
@@ -989,7 +989,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testSectionIndirect() {
 		assertArrayEquals(b(0x21, 0x00, 0x00), assemble(
@@ -1000,7 +1000,7 @@ public class SourceTest extends TestBase {
 			" ENDS"
 		));
 	}
-	
+
 	@Test
 	public void testSectionInRepeat() {
 		assertArrayEquals(b(0x21, 0x00, 0x00, 0x21, 0x03, 0x00), assemble(
@@ -1013,7 +1013,7 @@ public class SourceTest extends TestBase {
 			" ENDM"
 		));
 	}
-	
+
 	@Test
 	public void testEndm() {
 		assertAssemblyException(0, () -> {
@@ -1022,7 +1022,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testEndp() {
 		assertAssemblyException(0, () -> {
@@ -1031,7 +1031,7 @@ public class SourceTest extends TestBase {
 			);
 		});
 	}
-	
+
 	@Test
 	public void testEnds() {
 		assertAssemblyException(0, () -> {
@@ -1111,7 +1111,7 @@ public class SourceTest extends TestBase {
 
 	@TempDir
 	static Path temporaryDirectory;
-	
+
 	public byte[] assemble(String... sourceLines) {
 		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
@@ -1123,5 +1123,5 @@ public class SourceTest extends TestBase {
 		}
 		return output.toByteArray();
 	}
-	
+
 }

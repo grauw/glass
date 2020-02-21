@@ -12,17 +12,17 @@ import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
 public class Macro extends InstructionFactory {
-	
+
 	private final Source source;
 	private final Scope parameterScope;
-	
+
 	public Macro(Source source) {
 		this.source = new Source(source.getScope());
 		this.parameterScope = new Scope(source.getScope());
 		this.source.addLines(source.copy(parameterScope).getLines());
 		this.source.register();
 	}
-	
+
 	@Override
 	public void expand(Line line, List<Line> lines) {
 		Expression parameters = line.getArguments();
@@ -31,7 +31,7 @@ public class Macro extends InstructionFactory {
 			if (!(parameter instanceof Identifier) &&
 					!(parameter instanceof Equals && ((Equals)parameter).getTerm1() instanceof Identifier))
 				throw new ArgumentException("Parameter must be an identifier.");
-			
+
 			if (parameter instanceof Equals) {
 				Equals equals = (Equals)parameter;
 				parameterScope.addSymbol(((Identifier)equals.getTerm1()).getName(), equals.getTerm2());
@@ -40,7 +40,7 @@ public class Macro extends InstructionFactory {
 			}
 			parameters = parameters.getNext();
 		}
-		
+
 		try {
 			source.expand();
 		} catch (AssemblyException e) {
@@ -48,18 +48,18 @@ public class Macro extends InstructionFactory {
 		}
 		super.expand(line, lines);
 	}
-	
+
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		return new MacroObject(context);
 	}
-	
+
 	public class MacroObject extends Empty.EmptyObject {
-		
+
 		public MacroObject(Scope context) {
 			super(context);
 		}
-		
+
 		@Override
 		public int resolve(int address) {
 			try {
@@ -69,7 +69,7 @@ public class Macro extends InstructionFactory {
 			}
 			return super.resolve(address);
 		}
-		
+
 	}
-	
+
 }

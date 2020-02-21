@@ -9,21 +9,21 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
 public class Include extends InstructionFactory {
-	
+
 	public static Schema ARGUMENTS = new Schema(Schema.STRING);
 	public static Schema ARGUMENTS_ONCE = new Schema(new Schema.IsAnnotation(Schema.STRING));
-	
+
 	private final Source source;
-	
+
 	public Include(Source source) {
 		this.source = source;
 	}
-	
+
 	public void expand(Line line, List<Line> lines) {
 		super.expand(line, lines);
 		source.expand(lines);
 	}
-	
+
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
@@ -35,5 +35,5 @@ public class Include extends InstructionFactory {
 		}
 		throw new ArgumentException();
 	}
-	
+
 }

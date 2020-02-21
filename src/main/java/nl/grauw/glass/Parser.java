@@ -10,16 +10,16 @@ import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.StringLiteral;
 
 public class Parser {
-	
+
 	private SourceFileReader reader;
 	private Scope scope;
 	private Scope lineScope;
 	private LineBuilder lineBuilder = new LineBuilder();
-	
+
 	private State state;
 	private StringBuilder accumulator = new StringBuilder();
 	private ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-	
+
 	public Parser(SourceFile sourceFile) {
 		reader = sourceFile.getReader();
 		state = labelStartState;
@@ -32,7 +32,7 @@ public class Parser {
 	public Line parse(Scope scope) {
 		this.scope = scope;
 		this.lineScope = new Scope(scope);
-		
+
 		SourceFileSpan span = null;
 		int column = 0;
 		try {
@@ -48,7 +48,7 @@ public class Parser {
 					break;
 				}
 				column = 0;
-				
+
 				for (int i = 0, length = sourceLine.length(); i < length; i++) {
 					column = i;
 					state = state.parse(sourceLine.charAt(i));
@@ -56,14 +56,14 @@ public class Parser {
 				column = sourceLine.length();
 				state = state.parse('\n');
 			} while (state != labelStartState || lineBuilder.isEmpty());
-			
+
 			if (accumulator.length() > 0)
 				throw new AssemblyException("Accumulator not consumed. Value: " + accumulator.toString());
 		} catch(AssemblyException e) {
 			e.addContext(span.atColumn(column));
 			throw e;
 		}
-		
+
 		return lineBuilder.getLine(lineScope, span);
 	}
 
@@ -72,26 +72,26 @@ public class Parser {
 		lineBuilder.setMnemonic(mnemonic);
 		state = argumentStartState;
 	}
-	
+
 	private abstract class State {
 		public abstract State parse(char character);
-		
+
 		public boolean isWhitespace(char character) {
 			return character == ' ' || character == '\t';
 		}
-		
+
 		public boolean isIdentifier(char character) {
 			return isIdentifierStart(character) || character >= '0' && character <= '9' ||
 					character == '\'' || character == '$';
 		}
-		
+
 		public boolean isIdentifierStart(char character) {
 			return character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z' ||
 					character == '_' || character == '.' || character == '?' || character == '@';
 		}
-		
+
 	}
-	
+
 	private LabelStartState labelStartState = new LabelStartState();
 	private class LabelStartState extends State {
 		public State parse(char character) {
@@ -108,7 +108,7 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	private LabelReadState labelReadState = new LabelReadState();
 	private class LabelReadState extends State {
 		public State parse(char character) {
@@ -129,7 +129,7 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	private StatementStartState statementStartState = new StatementStartState();
 	private class StatementStartState extends State {
 		public State parse(char character) {
@@ -146,7 +146,7 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	private StatementReadState statementReadState = new StatementReadState();
 	private class StatementReadState extends State {
 		public State parse(char character) {
@@ -171,7 +171,7 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	private ArgumentStartState argumentStartState = new ArgumentStartState();
 	private class ArgumentStartState extends State {
 		public State parse(char character) {
@@ -186,7 +186,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentValueState argumentValueState = new ArgumentValueState();
 	private class ArgumentValueState extends State {
 		public State parse(char character) {
@@ -234,7 +234,7 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	private ArgumentIdentifierState argumentIdentifierState = new ArgumentIdentifierState();
 	private class ArgumentIdentifierState extends State {
 		public State parse(char character) {
@@ -248,7 +248,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentStringState argumentStringState = new ArgumentStringState();
 	private class ArgumentStringState extends State {
 		public State parse(char character) {
@@ -266,7 +266,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentStringEscapeState argumentStringEscapeState = new ArgumentStringEscapeState();
 	private class ArgumentStringEscapeState extends State {
 		public State parse(char character) {
@@ -307,7 +307,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentCharacterState argumentCharacterState = new ArgumentCharacterState();
 	private class ArgumentCharacterState extends State {
 		public State parse(char character) {
@@ -321,7 +321,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentCharacterEscapeState argumentCharacterEscapeState = new ArgumentCharacterEscapeState();
 	private class ArgumentCharacterEscapeState extends State {
 		public State parse(char character) {
@@ -331,7 +331,7 @@ public class Parser {
 			throw new AssemblyException("Unexpected state.");
 		}
 	}
-	
+
 	private ArgumentCharacterEndState argumentCharacterEndState = new ArgumentCharacterEndState();
 	private class ArgumentCharacterEndState extends State {
 		public State parse(char character) {
@@ -344,7 +344,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentZeroState argumentZeroState = new ArgumentZeroState();
 	private class ArgumentZeroState extends State {
 		public State parse(char character) {
@@ -356,7 +356,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentNumberState argumentNumberState = new ArgumentNumberState();
 	private class ArgumentNumberState extends State {
 		public State parse(char character) {
@@ -391,7 +391,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentDollarState argumentDollarState = new ArgumentDollarState();
 	private class ArgumentDollarState extends State {
 		public State parse(char character) {
@@ -406,7 +406,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentHexadecimalState argumentHexadecimalState = new ArgumentHexadecimalState();
 	private class ArgumentHexadecimalState extends State {
 		public State parse(char character) {
@@ -422,7 +422,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentBinaryState argumentBinaryState = new ArgumentBinaryState();
 	private class ArgumentBinaryState extends State {
 		public State parse(char character) {
@@ -437,7 +437,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentOperatorState argumentOperatorState = new ArgumentOperatorState();
 	private class ArgumentOperatorState extends State {
 		public State parse(char character) {
@@ -448,7 +448,7 @@ public class Parser {
 				throw new SyntaxError();
 			}
 		}
-		
+
 		public State tryParse(char character) {
 			if (character == ')') {
 				expressionBuilder.addOperatorToken(expressionBuilder.GROUP_CLOSE);
@@ -518,7 +518,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentOperatorAnnotationState argumentOperatorAnnotationState = new ArgumentOperatorAnnotationState();
 	private class ArgumentOperatorAnnotationState extends State {
 		public State parse(char character) {
@@ -535,7 +535,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentLessThanState argumentLessThanState = new ArgumentLessThanState();
 	private class ArgumentLessThanState extends State {
 		public State parse(char character) {
@@ -551,7 +551,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentGreaterThanState argumentGreaterThanState = new ArgumentGreaterThanState();
 	private class ArgumentGreaterThanState extends State {
 		public State parse(char character) {
@@ -567,7 +567,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentNotEqualsState argumentNotEqualsState = new ArgumentNotEqualsState();
 	private class ArgumentNotEqualsState extends State {
 		public State parse(char character) {
@@ -579,7 +579,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentNotEqualsAnnotationState argumentNotEqualsAnnotationState = new ArgumentNotEqualsAnnotationState();
 	private class ArgumentNotEqualsAnnotationState extends State {
 		public State parse(char character) {
@@ -592,7 +592,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentAndState argumentAndState = new ArgumentAndState();
 	private class ArgumentAndState extends State {
 		public State parse(char character) {
@@ -605,7 +605,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private ArgumentOrState argumentOrState = new ArgumentOrState();
 	private class ArgumentOrState extends State {
 		public State parse(char character) {
@@ -618,7 +618,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private CommentReadState commentReadState = new CommentReadState();
 	private class CommentReadState extends State {
 		public State parse(char character) {
@@ -632,7 +632,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private CommentReadThenArgumentState commentReadThenArgumentState = new CommentReadThenArgumentState();
 	private class CommentReadThenArgumentState extends State {
 		public State parse(char character) {
@@ -646,7 +646,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private CommentReadThenOperatorState commentReadThenOperatorState = new CommentReadThenOperatorState();
 	private class CommentReadThenOperatorState extends State {
 		public State parse(char character) {
@@ -660,7 +660,7 @@ public class Parser {
 			}
 		}
 	}
-	
+
 	private static int parseInt(String string, int radix) {
 		try {
 			long value = Long.parseLong(string, radix);
@@ -671,18 +671,18 @@ public class Parser {
 			throw new SyntaxError();
 		}
 	}
-	
+
 	public static class SyntaxError extends AssemblyException {
 		private static final long serialVersionUID = 1L;
-		
+
 		public SyntaxError() {
 			this(null);
 		}
-		
+
 		public SyntaxError(Throwable cause) {
 			super("Syntax error.", cause);
 		}
-		
+
 	}
-	
+
 }

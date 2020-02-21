@@ -10,18 +10,18 @@ import nl.grauw.glass.instructions.InstructionFactory;
 import nl.grauw.glass.instructions.InstructionObject;
 
 public class Line {
-	
+
 	private final Scope scope;
 	private final List<String> labels;
 	private final String mnemonic;
 	private final Expression arguments;
 	private final String comment;
 	private final SourceFileSpan sourceSpan;
-	
+
 	private InstructionFactory instruction;
 	private InstructionObject instructionObject;
 	private Directive directive;
-	
+
 	public Line(Scope scope, List<String> labels, String mnemonic, Expression arguments, String comment, SourceFileSpan sourceSpan) {
 		if (mnemonic == null)
 			throw new AssemblyException("Missing mnemonic.");
@@ -32,51 +32,51 @@ public class Line {
 		this.comment = comment;
 		this.sourceSpan = sourceSpan;
 	}
-	
+
 	public Line copy(Scope scope) {
 		Line newLine = new Line(scope, labels, mnemonic, arguments != null ? arguments.copy(scope) : null, comment, sourceSpan);
 		newLine.setDirective(directive.copy(scope));
 		return newLine;
 	}
-	
+
 	public Scope getScope() {
 		return scope;
 	}
-	
+
 	public List<String> getLabels() {
 		return labels;
 	}
-	
+
 	public String getMnemonic() {
 		return mnemonic;
 	}
-	
+
 	public Expression getArguments() {
 		return arguments;
 	}
-	
+
 	public String getComment() {
 		return comment;
 	}
-	
+
 	public SourceFileSpan getSourceSpan() {
 		return sourceSpan;
 	}
-	
+
 	public void setDirective(Directive directive) {
 		this.directive = directive;
 	}
-	
+
 	public void setInstruction(InstructionFactory instruction) {
 		this.instruction = instruction;
 	}
-	
+
 	private InstructionFactory getInstruction() {
 		if (instruction == null)
 			instruction = mnemonic != null ? scope.getSymbol(mnemonic).getInstruction() : Empty.INSTANCE;
 		return instruction;
 	}
-	
+
 	public void register(Scope sourceScope) {
 		try {
 			directive.register(sourceScope, this);
@@ -85,7 +85,7 @@ public class Line {
 			throw e;
 		}
 	}
-	
+
 	public void expand(List<Line> lines) {
 		try {
 			getInstruction().expand(this, lines);
@@ -94,7 +94,7 @@ public class Line {
 			throw e;
 		}
 	}
-	
+
 	public int resolve(int address) {
 		try {
 			instructionObject = getInstruction().createObject(scope, arguments);
@@ -104,7 +104,7 @@ public class Line {
 			throw e;
 		}
 	}
-	
+
 	public int getSize() {
 		try {
 			return instructionObject.getSize();
@@ -113,7 +113,7 @@ public class Line {
 			throw e;
 		}
 	}
-	
+
 	public byte[] getBytes() {
 		try {
 			return instructionObject.getBytes();
@@ -122,7 +122,7 @@ public class Line {
 			throw e;
 		}
 	}
-	
+
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		for (String label : labels) {
@@ -140,5 +140,5 @@ public class Line {
 		}
 		return builder.toString();
 	}
-	
+
 }

@@ -3,45 +3,45 @@ package nl.grauw.glass.expressions;
 import java.util.List;
 
 public class StringLiteral extends Literal {
-	
+
 	private final String string;
-	
+
 	public StringLiteral(String string) {
 		this.string = string;
 	}
-	
+
 	@Override
 	public StringLiteral copy(Context context) {
 		return this;
 	}
-	
+
 	@Override
 	public boolean isInteger() {
 		return string.length() == 1;
 	}
-	
+
 	@Override
 	public int getInteger() {
 		if (string.length() != 1)
 			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
 		return string.codePointAt(0);
 	}
-	
+
 	@Override
 	public boolean isString() {
 		return true;
 	}
-	
+
 	public String getString() {
 		return string;
 	}
-	
+
 	@Override
 	protected void addToList(List<Expression> list) {
 		for (int i = 0, length = string.length(); i < length; i++)
 			list.add(new CharacterLiteral(string.charAt(i)));
 	}
-	
+
 	public String toString() {
 		String escaped = string;
 		escaped = escaped.replace("\\", "\\\\");
@@ -55,9 +55,9 @@ public class StringLiteral extends Literal {
 		escaped = escaped.replace("\33", "\\e");
 		return "\"" + escaped + "\"";
 	}
-	
+
 	public String toDebugString() {
 		return toString();
 	}
-	
+
 }

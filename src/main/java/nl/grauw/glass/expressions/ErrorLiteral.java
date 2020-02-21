@@ -3,9 +3,9 @@ package nl.grauw.glass.expressions;
 import nl.grauw.glass.instructions.InstructionFactory;
 
 public class ErrorLiteral extends Literal {
-	
+
 	private final EvaluationException exception;
-	
+
 	public ErrorLiteral(EvaluationException exception) {
 		this.exception = exception;
 	}
@@ -19,7 +19,7 @@ public class ErrorLiteral extends Literal {
 	public Expression resolve() {
 		throw exception;
 	}
-	
+
 	@Override
 	public boolean isInteger() {
 		return true;
@@ -104,13 +104,13 @@ public class ErrorLiteral extends Literal {
 	public SectionContext getSectionContext() {
 		throw exception;
 	}
-	
+
 	public String toString() {
 		return exception.getMessage();
 	}
-	
+
 	public String toDebugString() {
 		return toString();
 	}
-	
+
 }

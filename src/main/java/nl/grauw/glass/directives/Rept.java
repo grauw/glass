@@ -5,9 +5,9 @@ import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 
 public class Rept extends Directive {
-	
+
 	private final Source source;
-	
+
 	public Rept(Source source) {
 		this.source = source;
 	}
@@ -16,11 +16,11 @@ public class Rept extends Directive {
 	public Directive copy(Scope scope) {
 		return new Rept(source.copy(scope));
 	}
-	
+
 	@Override
 	public void register(Scope scope, Line line) {
 		line.setInstruction(new nl.grauw.glass.instructions.Rept(source));
 		super.register(scope, line);
 	}
-	
+
 }

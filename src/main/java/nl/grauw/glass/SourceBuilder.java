@@ -25,32 +25,32 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 
 public class SourceBuilder {
-	
+
 	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
 	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
 	public static final List<String> ENDP_TERMINATORS = Arrays.asList(new String[] { "endp", "ENDP" });
 	public static final List<String> ENDS_TERMINATORS = Arrays.asList(new String[] { "ends", "ENDS" });
 	public static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
 	public static final List<String> ENDIF_TERMINATORS = Arrays.asList(new String[] { "endif", "ENDIF" });
-	
+
 	private final Source source;
 	private final List<String> terminators;
 	private final List<Path> includePaths;
-	
+
 	private static final List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
-	
+
 	public SourceBuilder(List<Path> includePaths) {
 		this.source = new Source();
 		this.terminators = END_TERMINATORS;
 		this.includePaths = includePaths;
 	}
-	
+
 	public SourceBuilder(Scope scope, List<String> terminators, List<Path> includePaths) {
 		this.source = new Source(scope);
 		this.terminators = terminators;
 		this.includePaths = includePaths;
 	}
-	
+
 	public boolean hasLoadedSourceFile(Path path) {
 		try {
 			for (SourceFile sourceFile : sourceFiles)
@@ -60,7 +60,7 @@ public class SourceBuilder {
 		}
 		return false;
 	}
-	
+
 	private List<Path> getIncludePaths(SourceFile sourceFile) {
 		List<Path> basePaths = new ArrayList<Path>();
 		Path path = sourceFile.getPath();
@@ -69,7 +69,7 @@ public class SourceBuilder {
 		basePaths.addAll(includePaths);
 		return basePaths;
 	}
-	
+
 	private Source parseInclude(Expression sourcePath, SourceFile baseSourceFile, boolean once) {
 		for (Path includePath : getIncludePaths(baseSourceFile)) {
 			Path fullPath = includePath.resolve(sourcePath.getString());
@@ -81,7 +81,7 @@ public class SourceBuilder {
 		}
 		throw new AssemblyException("Include file not found: " + sourcePath.getString());
 	}
-	
+
 	public Source parse(Path sourcePath) {
 		SourceFile sourceFile = new SourceFile(sourcePath);
 		sourceFiles.add(sourceFile);
@@ -91,11 +91,11 @@ public class SourceBuilder {
 	public Source parse(SourceFile sourceFile) {
 		return parse(new Parser(sourceFile));
 	}
-	
+
 	public Source parse(Parser parser) {
 		while (true) {
 			Line line = parser.parse(source.getScope());
-			
+
 			try {
 				Directive directive = getDirective(line, parser);
 				line.setDirective(directive);
@@ -108,7 +108,7 @@ public class SourceBuilder {
 			}
 		}
 	}
-	
+
 	public Directive getDirective(Line line, Parser parser) {
 		switch (line.getMnemonic()) {
 		case "equ":
@@ -166,7 +166,7 @@ public class SourceBuilder {
 			return new Instruction();
 		}
 	}
-	
+
 	private Directive getIncludeDirective(Line line, SourceFile sourceFile) {
 		boolean once = false;
 		Expression argument = line.getArguments();
@@ -185,9 +185,9 @@ public class SourceBuilder {
 		sourceBuilder.parseInclude(argument, sourceFile, once);
 		return new Include(sourceBuilder.source);
 	}
-	
+
 	private Source parseBlock(Scope scope, List<String> terminators, Parser parser) {
 		return new SourceBuilder(scope, terminators, includePaths).parse(parser);
 	}
-	
+
 }

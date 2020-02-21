@@ -11,14 +11,14 @@ import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 
 public class MacroInstruction extends InstructionFactory {
-	
+
 	private final Expression parameters;
 	private final Source source;
-	
+
 	public MacroInstruction(Expression parameters, Source source) {
 		this.parameters = parameters;
 		this.source = source;
-		
+
 		Expression parameter = parameters != null ? parameters.getElement(0) : null;
 		for (int i = 0; parameter != null; i++) {
 			if (!(parameter instanceof Identifier) &&
@@ -27,7 +27,7 @@ public class MacroInstruction extends InstructionFactory {
 			parameter = parameters.getElement(i);
 		}
 	}
-	
+
 	@Override
 	public void expand(Line line, List<Line> lines) {
 		super.expand(line, lines);
@@ -37,10 +37,10 @@ public class MacroInstruction extends InstructionFactory {
 		sourceCopy.register(line.getScope());
 		sourceCopy.expand(lines);
 	}
-	
+
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		return new Empty.EmptyObject(context);
 	}
-	
+
 }
