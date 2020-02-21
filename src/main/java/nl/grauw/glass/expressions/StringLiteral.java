@@ -1,7 +1,5 @@
 package nl.grauw.glass.expressions;
 
-import java.util.List;
-
 public class StringLiteral extends Literal {
 
 	private final String string;
@@ -21,7 +19,9 @@ public class StringLiteral extends Literal {
 
 	@Override
 	public boolean is(Type type) {
-		return type == Type.STRING || (type == Type.INTEGER && string.length() == 1);
+		return type == Type.STRING ||
+			(type == Type.INTEGER && string.length() == 1) ||
+			(type == Type.SEQUENCE && string.length() > 1);
 	}
 
 	@Override
@@ -29,14 +29,14 @@ public class StringLiteral extends Literal {
 		if (type == Type.STRING)
 			return this;
 		if (type == Type.INTEGER && string.length() == 1)
-			return IntegerLiteral.of(string.codePointAt(0));
+			return new CharacterLiteral(string.charAt(0));
+		if (type == Type.SEQUENCE && string.length() > 1) {
+			Expression tail = new CharacterLiteral(string.charAt(string.length() - 1));
+			for (int i = string.length() - 2; i >= 0; i--)
+				tail = new Sequence(new CharacterLiteral(string.charAt(i)), tail);
+			return tail;
+		}
 		return super.get(type);
-	}
-
-	@Override
-	protected void addToList(List<Expression> list) {
-		for (int i = 0, length = string.length(); i < length; i++)
-			list.add(new CharacterLiteral(string.charAt(i)));
 	}
 
 	public String toString() {

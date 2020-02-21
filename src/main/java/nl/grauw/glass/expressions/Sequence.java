@@ -1,7 +1,5 @@
 package nl.grauw.glass.expressions;
 
-import java.util.List;
-
 public class Sequence extends BinaryOperator {
 
 	public Sequence(Expression head, Expression tail) {
@@ -24,13 +22,15 @@ public class Sequence extends BinaryOperator {
 	}
 
 	@Override
-	protected void addToList(List<Expression> list) {
-		term1.addToList(list);
-		Expression tail = term2;
-		while (tail != null) {
-			tail.getHead().addToList(list);
-			tail = tail.getTail();
-		}
+	public boolean is(Type type) {
+		return type == Type.SEQUENCE;
+	}
+
+	@Override
+	public Expression get(Type type) {
+		if (type == Type.SEQUENCE)
+			return this;
+		return super.get(type);
 	}
 
 	@Override

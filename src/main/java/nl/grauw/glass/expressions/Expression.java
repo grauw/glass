@@ -95,8 +95,14 @@ public abstract class Expression {
 		return list;
 	}
 
-	protected void addToList(List<Expression> list) {
-		list.add(this);
+	private void addToList(List<Expression> list) {
+		Expression tail = this;
+		while (tail.is(Type.SEQUENCE)) {
+			Expression sequence = tail.get(Type.SEQUENCE);
+			sequence.getHead().addToList(list);
+			tail = sequence.getTail();
+		}
+		list.add(tail);
 	}
 
 	public Expression getElement(int index) {

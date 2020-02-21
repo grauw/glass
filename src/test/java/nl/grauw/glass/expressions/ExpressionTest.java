@@ -2,6 +2,8 @@ package nl.grauw.glass.expressions;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
@@ -191,11 +193,30 @@ public class ExpressionTest extends TestBase {
 
 	@Test
 	public void testSequence() {
-		assertEquals(3, parse("4, 5, 6").getList().size());
 		assertEquals(4, parse("4, 5, 6").getElement(0).getInteger());
 		assertEquals(5, parse("4, 5, 6").getElement(1).getInteger());
 		assertEquals(6, parse("4, 5, 6").getElement(2).getInteger());
 		assertEquals(null, parse("4, 5, 6").getElement(3));
+	}
+
+	@Test
+	public void testSequenceList() {
+		List<Expression> list = parse("4, 5, 6").getList();
+		assertEquals(3, list.size());
+		assertEquals(4, list.get(0).getInteger());
+		assertEquals(5, list.get(1).getInteger());
+		assertEquals(6, list.get(2).getInteger());
+	}
+
+	@Test
+	public void testSequenceListDeep() {
+		List<Expression> list = parse("4, (5, 6), (7, 8)").getList();
+		assertEquals(5, list.size());
+		assertEquals(4, list.get(0).getInteger());
+		assertEquals(5, list.get(1).getInteger());
+		assertEquals(6, list.get(2).getInteger());
+		assertEquals(7, list.get(3).getInteger());
+		assertEquals(8, list.get(4).getInteger());
 	}
 
 	@Test

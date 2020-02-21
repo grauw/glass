@@ -11,6 +11,7 @@ public class Type {
 	public static final Type INSTRUCTION = new Type("Instruction");
 	public static final Type CONTEXT = new Type("Context");
 	public static final Type SECTIONCONTEXT = new Type("SectionContext");
+	public static final Type SEQUENCE = new Type("Sequence");
 
 	private String name;
 
