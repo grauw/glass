@@ -23,13 +23,17 @@ public class Instruction extends Expression {
 	}
 
 	@Override
-	public Context getContext() {
-		return context;
+	public boolean is(Type type) {
+		return type == Type.INSTRUCTION || type == Type.CONTEXT;
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.INSTRUCTION || type == Type.CONTEXT;
+	public Expression get(Type type) {
+		if (type == Type.INSTRUCTION)
+			return this;
+		if (type == Type.CONTEXT)
+			return new ContextLiteral(context);
+		return super.get(type);
 	}
 
 	public String toString() {

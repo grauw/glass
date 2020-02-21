@@ -12,8 +12,10 @@ public class ShiftLeft extends BinaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		return term1.getInteger() << term2.getInteger();
+	public Expression get(Type type) {
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(term1.getInteger() << term2.getInteger());
+		return super.get(type);
 	}
 
 	@Override

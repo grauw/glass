@@ -12,9 +12,12 @@ public class LogicalOr extends BinaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		int value1 = term1.getInteger();
-		return value1 != 0 ? value1 : term2.getInteger();
+	public Expression get(Type type) {
+		if (type == Type.INTEGER) {
+			int value1 = term1.getInteger();
+			return new IntegerLiteral(value1 != 0 ? value1 : term2.getInteger());
+		}
+		return super.get(type);
 	}
 
 	@Override

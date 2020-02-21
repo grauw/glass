@@ -25,10 +25,12 @@ public class StringLiteral extends Literal {
 	}
 
 	@Override
-	public int getInteger() {
-		if (string.length() != 1)
-			throw new EvaluationException("Can not evaluate strings of more than 1 character to integer.");
-		return string.codePointAt(0);
+	public Expression get(Type type) {
+		if (type == Type.STRING)
+			return this;
+		if (type == Type.INTEGER && string.length() == 1)
+			return new IntegerLiteral(string.codePointAt(0));
+		return super.get(type);
 	}
 
 	@Override

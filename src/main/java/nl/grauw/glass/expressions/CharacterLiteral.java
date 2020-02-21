@@ -23,8 +23,10 @@ public class CharacterLiteral extends Literal {
 	}
 
 	@Override
-	public int getInteger() {
-		return character;
+	public Expression get(Type type) {
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(character);
+		return super.get(type);
 	}
 
 	public String toString() {

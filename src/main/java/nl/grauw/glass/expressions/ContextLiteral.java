@@ -24,8 +24,12 @@ public class ContextLiteral extends Literal {
 	}
 
 	@Override
-	public int getInteger() {
-		return context.getAddress();
+	public Expression get(Type type) {
+		if (type == Type.CONTEXT)
+			return this;
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(context.getAddress());
+		return super.get(type);
 	}
 
 	public String toString() {

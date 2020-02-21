@@ -19,4 +19,11 @@ public class SectionContextLiteral extends ContextLiteral {
 		return type == Type.SECTIONCONTEXT || super.is(type);
 	}
 
+	@Override
+	public Expression get(Type type) {
+		if (type == Type.SECTIONCONTEXT)
+			return this;
+		return super.get(type);
+	}
+
 }

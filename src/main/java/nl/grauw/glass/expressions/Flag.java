@@ -34,8 +34,10 @@ public class Flag extends Literal {
 	}
 
 	@Override
-	public Flag getFlag() {
-		return this;
+	public Expression get(Type type) {
+		if (type == Type.FLAG)
+			return this;
+		return super.get(type);
 	}
 
 	@Override

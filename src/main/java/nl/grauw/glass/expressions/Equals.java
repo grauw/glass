@@ -12,8 +12,10 @@ public class Equals extends BinaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		return term1.getInteger() == term2.getInteger() ? -1 : 0;
+	public Expression get(Type type) {
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(term1.getInteger() == term2.getInteger() ? -1 : 0);
+		return super.get(type);
 	}
 
 	@Override

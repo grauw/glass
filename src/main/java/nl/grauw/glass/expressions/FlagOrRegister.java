@@ -33,6 +33,15 @@ public class FlagOrRegister extends Literal {
 	}
 
 	@Override
+	public Expression get(Type type) {
+		if (type == Type.FLAG)
+			return flag;
+		if (type == Type.REGISTER)
+			return register;
+		return super.get(type);
+	}
+
+	@Override
 	public String toString() {
 		return flag.toString();
 	}

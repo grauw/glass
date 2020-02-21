@@ -19,30 +19,30 @@ public class Not extends UnaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		return term.getInteger() == 0 ? -1 : 0;
-	}
-
-	@Override
-	public Flag getFlag() {
-		Flag flag = term.getFlag();
-		if (flag == Flag.NZ)
-			return Flag.Z;
-		if (flag == Flag.Z)
-			return Flag.NZ;
-		if (flag == Flag.NC)
-			return Flag.C;
-		if (flag == Flag.C)
-			return Flag.NC;
-		if (flag == Flag.PO)
-			return Flag.PE;
-		if (flag == Flag.PE)
-			return Flag.PO;
-		if (flag == Flag.P)
-			return Flag.M;
-		if (flag == Flag.M)
-			return Flag.P;
-		throw new AssemblyException("Unrecognised flag.");
+	public Expression get(Type type) {
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(term.getInteger() == 0 ? -1 : 0);
+		if (type == Type.FLAG) {
+			Flag flag = term.getFlag();
+			if (flag == Flag.NZ)
+				return Flag.Z;
+			if (flag == Flag.Z)
+				return Flag.NZ;
+			if (flag == Flag.NC)
+				return Flag.C;
+			if (flag == Flag.C)
+				return Flag.NC;
+			if (flag == Flag.PO)
+				return Flag.PE;
+			if (flag == Flag.PE)
+				return Flag.PO;
+			if (flag == Flag.P)
+				return Flag.M;
+			if (flag == Flag.M)
+				return Flag.P;
+			throw new AssemblyException("Unrecognised flag.");
+		}
+		return super.get(type);
 	}
 
 	@Override

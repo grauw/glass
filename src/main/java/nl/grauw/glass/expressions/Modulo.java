@@ -20,11 +20,14 @@ public class Modulo extends BinaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		int divisor = term2.getInteger();
-		if (divisor == 0)
-			throw new EvaluationException("Division by zero.");
-		return term1.getInteger() % divisor;
+	public Expression get(Type type) {
+		if (type == Type.INTEGER) {
+			int divisor = term2.getInteger();
+			if (divisor == 0)
+				throw new EvaluationException("Division by zero.");
+			return new IntegerLiteral(term1.getInteger() % divisor);
+		}
+		return super.get(type);
 	}
 
 	@Override

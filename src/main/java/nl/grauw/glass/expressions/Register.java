@@ -100,8 +100,10 @@ public class Register extends Literal {
 	}
 
 	@Override
-	public Register getRegister() {
-		return this;
+	public Expression get(Type type) {
+		if (type == Type.REGISTER)
+			return this;
+		return super.get(type);
 	}
 
 	@Override

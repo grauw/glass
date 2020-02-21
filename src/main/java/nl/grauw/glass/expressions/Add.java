@@ -32,18 +32,18 @@ public class Add extends BinaryOperator {
 	}
 
 	@Override
-	public int getInteger() {
-		return term1.getInteger() + term2.getInteger();
-	}
-
-	@Override
-	public Register getRegister() {
-		if (term1.is(Type.REGISTER)) {
-			Register register = term1.getRegister();
-			if (register.isIndex() && register.isPair())
-				return new Register(register, new Add(register.getIndexOffset(), term2));
+	public Expression get(Type type) {
+		if (type == Type.INTEGER)
+			return new IntegerLiteral(term1.getInteger() + term2.getInteger());
+		if (type == Type.REGISTER) {
+			if (term1.is(Type.REGISTER)) {
+				Register register = term1.getRegister();
+				if (register.isIndex() && register.isPair()) {
+					return new Register(register, new Add(register.getIndexOffset(), term2));
+				}
+			}
 		}
-		throw new EvaluationException("Not a register.");
+		return super.get(type);
 	}
 
 	@Override

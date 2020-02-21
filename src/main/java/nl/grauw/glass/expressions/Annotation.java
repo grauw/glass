@@ -28,6 +28,13 @@ public class Annotation extends Expression {
 		return type == Type.ANNOTATION;
 	}
 
+	@Override
+	public Expression get(Type type) {
+		if (type == Type.ANNOTATION)
+			return this;
+		return super.get(type);
+	}
+
 	public String toString() {
 		return "" + annotation + " " + annotee;
 	}

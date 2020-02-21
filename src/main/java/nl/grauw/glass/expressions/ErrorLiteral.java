@@ -1,7 +1,5 @@
 package nl.grauw.glass.expressions;
 
-import nl.grauw.glass.instructions.InstructionFactory;
-
 public class ErrorLiteral extends Literal {
 
 	private final EvaluationException exception;
@@ -26,47 +24,7 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public int getInteger() {
-		throw exception;
-	}
-
-	@Override
-	public String getString() {
-		throw exception;
-	}
-
-	@Override
-	public Register getRegister() {
-		throw exception;
-	}
-
-	@Override
-	public Flag getFlag() {
-		throw exception;
-	}
-
-	@Override
-	public Identifier getAnnotation() {
-		throw exception;
-	}
-
-	@Override
-	public Expression getAnnotee() {
-		throw exception;
-	}
-
-	@Override
-	public InstructionFactory getInstruction() {
-		throw exception;
-	}
-
-	@Override
-	public Context getContext() {
-		throw exception;
-	}
-
-	@Override
-	public SectionContext getSectionContext() {
+	public Expression get(Type type) {
 		throw exception;
 	}
 
