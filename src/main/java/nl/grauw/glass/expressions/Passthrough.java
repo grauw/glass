@@ -30,6 +30,16 @@ public abstract class Passthrough extends Expression {
 	}
 
 	@Override
+	public Identifier getAnnotation() {
+		return resolve().getAnnotation();
+	}
+
+	@Override
+	public Expression getAnnotee() {
+		return resolve().getAnnotee();
+	}
+
+	@Override
 	public InstructionFactory getInstruction() {
 		return resolve().getInstruction();
 	}

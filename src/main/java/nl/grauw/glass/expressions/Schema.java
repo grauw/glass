@@ -80,7 +80,7 @@ public class Schema implements SchemaType {
 			this.rhsType = rhsType;
 		}
 		public boolean check(Expression argument) {
-			return argument instanceof Annotation && rhsType.check(argument.getAnnotee());
+			return argument.is(Type.ANNOTATION) && rhsType.check(argument.getAnnotee());
 		}
 	}
 

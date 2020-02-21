@@ -34,11 +34,11 @@ public abstract class Expression {
 	}
 
 	public Identifier getAnnotation() {
-		return null;
+		throw new EvaluationException("Not an annotation.");
 	}
 
 	public Expression getAnnotee() {
-		return this;
+		throw new EvaluationException("Not an annotation.");
 	}
 
 	public InstructionFactory getInstruction() {

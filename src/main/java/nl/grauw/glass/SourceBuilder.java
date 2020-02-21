@@ -20,7 +20,6 @@ import nl.grauw.glass.directives.Proc;
 import nl.grauw.glass.directives.Rept;
 import nl.grauw.glass.directives.Section;
 import nl.grauw.glass.directives.Terminator;
-import nl.grauw.glass.expressions.Annotation;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Sequence;
 import nl.grauw.glass.expressions.Type;
@@ -171,7 +170,7 @@ public class SourceBuilder {
 	private Directive getIncludeDirective(Line line, SourceFile sourceFile) {
 		boolean once = false;
 		Expression argument = line.getArguments();
-		if (argument instanceof Annotation) {
+		if (argument.is(Type.ANNOTATION)) {
 			String annotation = argument.getAnnotation().getName();
 			if ("once".equals(annotation) || "ONCE".equals(annotation)) {
 				argument = argument.getAnnotee();

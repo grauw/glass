@@ -185,6 +185,8 @@ public class ExpressionTest extends TestBase {
 	public void testAnnotation() {
 		assertEquals("VIRTUAL", parse("VIRTUAL 15").getAnnotation().getName());
 		assertEquals(15, parse("VIRTUAL 15").getAnnotee().getInteger());
+		assertEquals("VIRTUAL", parse("(VIRTUAL 15)").getAnnotation().getName());
+		assertEquals(15, parse("(VIRTUAL 15)").getAnnotee().getInteger());
 	}
 
 	@Test
