@@ -14,11 +14,6 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public Expression resolve() {
-		throw exception;
-	}
-
-	@Override
 	public boolean is(Type type) {
 		return true;
 	}

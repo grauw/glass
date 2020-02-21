@@ -17,10 +17,6 @@ public abstract class Expression {
 		return new ErrorLiteral(new EvaluationException("Not of type " + type)).get(type);
 	}
 
-	public Expression resolve() {
-		return this;
-	}
-
 	public int getInteger() {
 		if (is(Type.INTEGER))
 			return get(Type.INTEGER).getInteger();
