@@ -7,10 +7,6 @@ public class Instruction extends Expression {
 	private final InstructionFactory instruction;
 	private final Context context;
 
-	public Instruction(InstructionFactory instruction) {
-		this(instruction, null);
-	}
-
 	public Instruction(InstructionFactory instruction, Context context) {
 		this.instruction = instruction;
 		this.context = context;
@@ -33,13 +29,11 @@ public class Instruction extends Expression {
 
 	@Override
 	public boolean isContext() {
-		return context != null;
+		return true;
 	}
 
 	@Override
 	public Context getContext() {
-		if (!isContext())
-			super.getContext();
 		return context;
 	}
 
