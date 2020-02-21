@@ -95,7 +95,7 @@ public class Line {
 		}
 	}
 
-	public int resolve(int address) {
+	public Expression resolve(Expression address) {
 		try {
 			instructionObject = getInstruction().createObject(scope, arguments);
 			return instructionObject.resolve(address);

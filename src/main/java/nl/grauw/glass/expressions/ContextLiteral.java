@@ -28,7 +28,7 @@ public class ContextLiteral extends Literal {
 		if (type == Type.CONTEXT)
 			return this;
 		if (type == Type.INTEGER)
-			return IntegerLiteral.of(context.getAddress());
+			return context.getAddress();
 		return super.get(type);
 	}
 

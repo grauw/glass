@@ -15,10 +15,9 @@ import nl.grauw.glass.expressions.Type;
 
 public class Scope implements Context {
 
-	private boolean set = false;
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
-	private int address = 0;
+	private Expression address;
 
 	public Scope() {
 		this(null);
@@ -37,17 +36,16 @@ public class Scope implements Context {
 	}
 
 	@Override
-	public int getAddress() {
-		if (!set)
+	public Expression getAddress() {
+		if (this.address == null)
 			throw new EvaluationException("Address not initialized.");
 		return address;
 	}
 
-	public void setAddress(int address) {
-		if (set)
+	public void setAddress(Expression address) {
+		if (this.address != null)
 			throw new AssemblyException("Address was already set.");
 		this.address = address;
-		this.set = true;
 	}
 
 	public void addSymbol(String name, Expression value) {

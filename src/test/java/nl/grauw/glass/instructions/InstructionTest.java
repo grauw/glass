@@ -8,6 +8,7 @@ import nl.grauw.glass.Parser;
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.SourceFile;
 import nl.grauw.glass.TestBase;
+import nl.grauw.glass.expressions.IntegerLiteral;
 
 import org.junit.jupiter.api.Test;
 
@@ -954,7 +955,7 @@ public class InstructionTest extends TestBase {
 
 	public byte[] parse(String string) {
 		Line line = new Parser(new SourceFile(" " + string)).parse(new Scope(new GlobalScope()));
-		line.resolve(0x4321);
+		line.resolve(IntegerLiteral.of(0x4321));
 		byte[] bytes = line.getBytes();
 		assertEquals(bytes.length, line.getSize());
 		return bytes;

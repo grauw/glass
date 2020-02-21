@@ -25,9 +25,9 @@ public class Org extends InstructionFactory {
 		}
 
 		@Override
-		public int resolve(int address) {
+		public Expression resolve(Expression address) {
 			super.resolve(address);
-			return argument.getInteger();
+			return argument;
 		}
 
 	}

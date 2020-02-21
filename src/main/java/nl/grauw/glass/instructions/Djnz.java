@@ -31,7 +31,7 @@ public class Djnz extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			int offset = argument.getInteger() - (context.getAddress() + 2);
+			int offset = argument.getInteger() - (context.getAddress().getInteger() + getSize());
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);
 			return new byte[] { (byte)0x10, (byte)offset };

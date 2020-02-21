@@ -6,6 +6,9 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
+
 public class Source {
 
 	private final Scope scope;
@@ -75,11 +78,11 @@ public class Source {
 			line.expand(newLines);
 	}
 
-	public int resolve() {
-		return resolve(0);
+	public Expression resolve() {
+		return resolve(IntegerLiteral.ZERO);
 	}
 
-	public int resolve(int address) {
+	public Expression resolve(Expression address) {
 		for (Line line : lines)
 			address = line.resolve(address);
 		return address;

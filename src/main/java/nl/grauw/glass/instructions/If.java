@@ -48,7 +48,7 @@ public class If extends InstructionFactory {
 		}
 
 		@Override
-		public int resolve(int address) {
+		public Expression resolve(Expression address) {
 			context.setAddress(address);
 			if (argument.getInteger() != 0) {
 				return thenSource.resolve(address);

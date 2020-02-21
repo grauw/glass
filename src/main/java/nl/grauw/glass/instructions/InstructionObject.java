@@ -1,7 +1,11 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
+import nl.grauw.glass.expressions.Add;
+import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
+import nl.grauw.glass.expressions.Type;
 
 public abstract class InstructionObject {
 
@@ -11,9 +15,9 @@ public abstract class InstructionObject {
 		this.context = context;
 	}
 
-	public int resolve(int address) {
+	public Expression resolve(Expression address) {
 		context.setAddress(address);
-		return address + getSize();
+		return new Add(IntegerLiteral.of(getSize()), address).get(Type.INTEGER);
 	}
 
 	public abstract int getSize();

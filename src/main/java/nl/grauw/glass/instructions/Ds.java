@@ -54,8 +54,8 @@ public class Ds extends InstructionFactory implements SectionContext {
 		}
 
 		@Override
-		public int resolve(int address) {
-			int innerAddress = address;
+		public Expression resolve(Expression address) {
+			Expression innerAddress = address;
 			for (Section section : sections)
 				innerAddress = section.getSource().resolve(innerAddress);
 			return super.resolve(address);

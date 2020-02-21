@@ -10,6 +10,6 @@ public interface Context {
 
 	public boolean hasLocalSymbol(String name);
 
-	public int getAddress();
+	public Expression getAddress();
 
 }

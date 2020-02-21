@@ -61,9 +61,9 @@ public class Macro extends InstructionFactory {
 		}
 
 		@Override
-		public int resolve(int address) {
+		public Expression resolve(Expression address) {
 			try {
-				source.resolve(0);
+				source.resolve(IntegerLiteral.ZERO);
 			} catch (AssemblyException e) {
 				// ignore
 			}
