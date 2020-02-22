@@ -95,13 +95,13 @@ public class Register extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.REGISTER;
+	public boolean is(Expression type) {
+		return type.is(Type.REGISTER);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.REGISTER)
+	public Expression get(Expression type) {
+		if (type.is(Type.REGISTER))
 			return this;
 		return super.get(type);
 	}

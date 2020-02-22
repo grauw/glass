@@ -39,7 +39,7 @@ public class IfElse extends Passthrough {
 	}
 
 	@Override
-	public boolean is(Type type) {
+	public boolean is(Expression type) {
 		return (trueTerm.is(type) && falseTerm.is(type)) || super.is(type);
 	}
 

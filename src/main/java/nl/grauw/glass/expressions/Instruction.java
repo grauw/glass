@@ -23,15 +23,15 @@ public class Instruction extends Expression {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.INSTRUCTION || type == Type.CONTEXT;
+	public boolean is(Expression type) {
+		return type.is(Type.INSTRUCTION) || type.is(Type.CONTEXT);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.INSTRUCTION)
+	public Expression get(Expression type) {
+		if (type.is(Type.INSTRUCTION))
 			return this;
-		if (type == Type.CONTEXT)
+		if (type.is(Type.CONTEXT))
 			return new ContextLiteral(context);
 		return super.get(type);
 	}

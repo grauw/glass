@@ -18,13 +18,13 @@ public class CharacterLiteral extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.INTEGER;
+	public boolean is(Expression type) {
+		return type.is(Type.INTEGER);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.INTEGER)
+	public Expression get(Expression type) {
+		if (type.is(Type.INTEGER))
 			return IntegerLiteral.of(character);
 		return super.get(type);
 	}

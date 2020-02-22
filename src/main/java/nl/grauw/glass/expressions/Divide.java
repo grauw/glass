@@ -20,8 +20,8 @@ public class Divide extends BinaryOperator {
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.INTEGER) {
+	public Expression get(Expression type) {
+		if (type.is(Type.INTEGER)) {
 			int divisor = term2.getInteger();
 			if (divisor == 0)
 				throw new EvaluationException("Division by zero.");

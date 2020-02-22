@@ -15,13 +15,13 @@ public class SectionContextLiteral extends ContextLiteral {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.SECTIONCONTEXT || super.is(type);
+	public boolean is(Expression type) {
+		return type.is(Type.SECTIONCONTEXT) || super.is(type);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.SECTIONCONTEXT)
+	public Expression get(Expression type) {
+		if (type.is(Type.SECTIONCONTEXT))
 			return this;
 		return super.get(type);
 	}

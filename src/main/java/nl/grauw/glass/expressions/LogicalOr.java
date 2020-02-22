@@ -12,8 +12,8 @@ public class LogicalOr extends BinaryOperator {
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.INTEGER) {
+	public Expression get(Expression type) {
+		if (type.is(Type.INTEGER)) {
 			int value1 = term1.getInteger();
 			return IntegerLiteral.of(value1 != 0 ? value1 : term2.getInteger());
 		}

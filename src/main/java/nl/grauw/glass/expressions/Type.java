@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class Type {
+public class Type extends Expression {
 
 	public static final Type INTEGER = new Type("Integer");
 	public static final Type STRING = new Type("String");
@@ -20,8 +20,30 @@ public class Type {
 	}
 
 	@Override
+	public Expression copy(Context context) {
+		return this;
+	}
+
+	@Override
+	public boolean is(Expression type) {
+		return type == this;
+	}
+
+	@Override
+	public Expression get(Expression type) {
+		if (type == this)
+			return this;
+		return super.get(type);
+	}
+
+	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public String toDebugString() {
+		return toString();
 	}
 
 }

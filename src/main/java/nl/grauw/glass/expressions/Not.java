@@ -14,15 +14,15 @@ public class Not extends UnaryOperator {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.FLAG && term.is(Type.FLAG) || super.is(type);
+	public boolean is(Expression type) {
+		return type.is(Type.FLAG) && term.is(Type.FLAG) || super.is(type);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.INTEGER)
+	public Expression get(Expression type) {
+		if (type.is(Type.INTEGER))
 			return IntegerLiteral.of(term.getInteger() == 0);
-		if (type == Type.FLAG) {
+		if (type.is(Type.FLAG)) {
 			Flag flag = term.getFlag();
 			if (flag == Flag.NZ)
 				return Flag.Z;

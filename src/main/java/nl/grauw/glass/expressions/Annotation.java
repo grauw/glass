@@ -24,13 +24,13 @@ public class Annotation extends Expression {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.ANNOTATION;
+	public boolean is(Expression type) {
+		return type.is(Type.ANNOTATION);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.ANNOTATION)
+	public Expression get(Expression type) {
+		if (type.is(Type.ANNOTATION))
 			return this;
 		return super.get(type);
 	}

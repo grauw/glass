@@ -19,15 +19,15 @@ public class ContextLiteral extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.INTEGER || type == Type.CONTEXT;
+	public boolean is(Expression type) {
+		return type.is(Type.INTEGER) || type.is(Type.CONTEXT);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.CONTEXT)
+	public Expression get(Expression type) {
+		if (type.is(Type.CONTEXT))
 			return this;
-		if (type == Type.INTEGER)
+		if (type.is(Type.INTEGER))
 			return context.getAddress();
 		return super.get(type);
 	}

@@ -23,8 +23,8 @@ public class Group extends Passthrough {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.GROUP || super.is(type);
+	public boolean is(Expression type) {
+		return type.is(Type.GROUP) || super.is(type);
 	}
 
 	public String toString() {

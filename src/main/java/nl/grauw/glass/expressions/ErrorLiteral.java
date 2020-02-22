@@ -14,12 +14,12 @@ public class ErrorLiteral extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
+	public boolean is(Expression type) {
 		return true;
 	}
 
 	@Override
-	public Expression get(Type type) {
+	public Expression get(Expression type) {
 		throw exception;
 	}
 

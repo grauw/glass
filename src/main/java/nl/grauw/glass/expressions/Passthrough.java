@@ -5,12 +5,12 @@ public abstract class Passthrough extends Expression {
 	public abstract Expression resolve();
 
 	@Override
-	public boolean is(Type type) {
+	public boolean is(Expression type) {
 		return resolve().is(type);
 	}
 
 	@Override
-	public Expression get(Type type) {
+	public Expression get(Expression type) {
 		return resolve().get(type);
 	}
 

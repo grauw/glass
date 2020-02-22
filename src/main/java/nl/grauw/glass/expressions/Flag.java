@@ -29,13 +29,13 @@ public class Flag extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.FLAG;
+	public boolean is(Expression type) {
+		return type.is(Type.FLAG);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.FLAG)
+	public Expression get(Expression type) {
+		if (type.is(Type.FLAG))
 			return this;
 		return super.get(type);
 	}

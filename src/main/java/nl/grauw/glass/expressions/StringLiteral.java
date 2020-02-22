@@ -18,19 +18,19 @@ public class StringLiteral extends Literal {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.STRING ||
-			(type == Type.INTEGER && string.length() == 1) ||
-			(type == Type.SEQUENCE && string.length() > 1);
+	public boolean is(Expression type) {
+		return type.is(Type.STRING) ||
+			(type.is(Type.INTEGER) && string.length() == 1) ||
+			(type.is(Type.SEQUENCE) && string.length() > 1);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.STRING)
+	public Expression get(Expression type) {
+		if (type.is(Type.STRING))
 			return this;
-		if (type == Type.INTEGER && string.length() == 1)
+		if (type.is(Type.INTEGER) && string.length() == 1)
 			return new CharacterLiteral(string.charAt(0));
-		if (type == Type.SEQUENCE && string.length() > 1) {
+		if (type.is(Type.SEQUENCE) && string.length() > 1) {
 			Expression tail = new CharacterLiteral(string.charAt(string.length() - 1));
 			for (int i = string.length() - 2; i >= 0; i--)
 				tail = new Sequence(new CharacterLiteral(string.charAt(i)), tail);

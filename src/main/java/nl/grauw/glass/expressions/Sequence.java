@@ -22,13 +22,13 @@ public class Sequence extends BinaryOperator {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.SEQUENCE;
+	public boolean is(Expression type) {
+		return type.is(Type.SEQUENCE);
 	}
 
 	@Override
-	public Expression get(Type type) {
-		if (type == Type.SEQUENCE)
+	public Expression get(Expression type) {
+		if (type.is(Type.SEQUENCE))
 			return this;
 		return super.get(type);
 	}

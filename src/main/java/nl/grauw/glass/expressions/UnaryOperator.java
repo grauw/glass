@@ -15,8 +15,8 @@ public abstract class UnaryOperator extends Expression {
 	}
 
 	@Override
-	public boolean is(Type type) {
-		return type == Type.INTEGER && term.is(type);
+	public boolean is(Expression type) {
+		return type.is(Type.INTEGER) && term.is(type);
 	}
 
 	public String toString() {

@@ -11,9 +11,9 @@ public abstract class Expression {
 
 	public abstract Expression copy(Context context);
 
-	public abstract boolean is(Type type);
+	public abstract boolean is(Expression type);
 
-	public Expression get(Type type) {
+	public Expression get(Expression type) {
 		return new ErrorLiteral(new EvaluationException("Not of type " + type)).get(type);
 	}
 
