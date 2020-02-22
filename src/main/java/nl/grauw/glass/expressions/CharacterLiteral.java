@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class CharacterLiteral extends Literal {
+public class CharacterLiteral extends Expression {
 
 	private final char character;
 

@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class FlagOrRegister extends Literal {
+public class FlagOrRegister extends Expression {
 
 	public static FlagOrRegister C = new FlagOrRegister(Flag.C, Register.C);
 
@@ -51,7 +51,7 @@ public class FlagOrRegister extends Literal {
 		return flag.toString();
 	}
 
-	public static Literal getByName(String name) {
+	public static Expression getByName(String name) {
 		Flag flag = Flag.getByName(name);
 		Register register = Register.getByName(name);
 		if (flag != null && register == null)

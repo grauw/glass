@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class IntegerLiteral extends Literal {
+public class IntegerLiteral extends Expression {
 
 	public static final IntegerLiteral ZERO = new IntegerLiteral(0);
 	public static final IntegerLiteral ONE = new IntegerLiteral(1);

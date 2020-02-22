@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class ContextLiteral extends Literal {
+public class ContextLiteral extends Expression {
 
 	private final Context context;
 

@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class ErrorLiteral extends Literal {
+public class ErrorLiteral extends Expression {
 
 	private final EvaluationException exception;
 

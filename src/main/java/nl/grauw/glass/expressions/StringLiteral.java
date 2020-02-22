@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class StringLiteral extends Literal {
+public class StringLiteral extends Expression {
 
 	private final String string;
 

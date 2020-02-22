@@ -2,7 +2,7 @@ package nl.grauw.glass.expressions;
 
 import nl.grauw.glass.AssemblyException;
 
-public class Register extends Literal {
+public class Register extends Expression {
 
 	public static final int NONE = -1;
 	public static final int IX_CODE = 0xDD;

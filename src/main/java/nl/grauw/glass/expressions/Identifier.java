@@ -23,7 +23,7 @@ public class Identifier extends Passthrough {
 
 	@Override
 	public Expression resolve() {
-		Literal flagOrRegister = FlagOrRegister.getByName(name);
+		Expression flagOrRegister = FlagOrRegister.getByName(name);
 		return flagOrRegister != null ? flagOrRegister : context.getSymbol(name);
 	}
 

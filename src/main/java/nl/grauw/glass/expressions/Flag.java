@@ -1,6 +1,6 @@
 package nl.grauw.glass.expressions;
 
-public class Flag extends Literal {
+public class Flag extends Expression {
 
 	public static Flag NZ = new Flag("nz", 0);
 	public static Flag Z = new Flag("z", 1);
