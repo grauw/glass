@@ -78,6 +78,11 @@ public class ExpressionBuilderTest extends TestBase {
 	}
 
 	@Test
+	public void testIndexAssociativity() {
+		assertEquals("{{({\"abc\", \"def\"})[0H]}[1H]}", parse("(\"abc\", \"def\")[0][1]"));
+	}
+
+	@Test
 	public void testTernaryIfElse() {
 		assertEquals("{a ? 1H : 2H}", parse("a ? 1H : 2H"));
 	}
