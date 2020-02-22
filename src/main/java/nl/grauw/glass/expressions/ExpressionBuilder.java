@@ -326,7 +326,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator GROUP_OPEN = new Operator(Precedence.GROUPING, Associativity.LEFT_TO_RIGHT, "(") {
+	public final Operator GROUP_OPEN = new Operator(Precedence.GROUPING, Associativity.RIGHT_TO_LEFT, "(") {
 		@Override
 		public void evaluate() {
 			operands.push(new Group(operands.pop()));
