@@ -78,10 +78,12 @@ public class ExpressionBuilder {
 
 		private Precedence precedence;
 		private Associativity associativity;
+		private String token;
 
-		private Operator(Precedence precedence, Associativity associativity) {
+		private Operator(Precedence precedence, Associativity associativity, String token) {
 			this.precedence = precedence;
 			this.associativity = associativity;
+			this.token = token;
 		}
 
 		public boolean yieldsTo(Operator other) {
@@ -92,37 +94,42 @@ public class ExpressionBuilder {
 		}
 
 		public abstract Expression evaluate();
+
+		@Override
+		public String toString() {
+			return token;
+		}
 	}
 
-	public final Operator POSITIVE = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT) {
+	public final Operator POSITIVE = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT, "+") {
 		@Override
 		public Expression evaluate() {
 			return new Positive(operands.pop());
 		};
 	};
 
-	public final Operator NEGATIVE = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT) {
+	public final Operator NEGATIVE = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT, "-") {
 		@Override
 		public Expression evaluate() {
 			return new Negative(operands.pop());
 		};
 	};
 
-	public final Operator COMPLEMENT = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT) {
+	public final Operator COMPLEMENT = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT, "~") {
 		@Override
 		public Expression evaluate() {
 			return new Complement(operands.pop());
 		};
 	};
 
-	public final Operator NOT = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT) {
+	public final Operator NOT = new Operator(Precedence.UNARY, Associativity.RIGHT_TO_LEFT, "!") {
 		@Override
 		public Expression evaluate() {
 			return new Not(operands.pop());
 		};
 	};
 
-	public final Operator MEMBER = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT) {
+	public final Operator MEMBER = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT, ".") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -132,7 +139,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator MULTIPLY = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT) {
+	public final Operator MULTIPLY = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT, "*") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -140,7 +147,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator DIVIDE = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT) {
+	public final Operator DIVIDE = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT, "/") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -148,7 +155,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator MODULO = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT) {
+	public final Operator MODULO = new Operator(Precedence.MULTIPLICATION, Associativity.LEFT_TO_RIGHT, "%") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -156,7 +163,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator ADD = new Operator(Precedence.ADDITION, Associativity.LEFT_TO_RIGHT) {
+	public final Operator ADD = new Operator(Precedence.ADDITION, Associativity.LEFT_TO_RIGHT, "+") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -164,7 +171,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator SUBTRACT = new Operator(Precedence.ADDITION, Associativity.LEFT_TO_RIGHT) {
+	public final Operator SUBTRACT = new Operator(Precedence.ADDITION, Associativity.LEFT_TO_RIGHT, "-") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -172,7 +179,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator SHIFT_LEFT = new Operator(Precedence.SHIFT, Associativity.LEFT_TO_RIGHT) {
+	public final Operator SHIFT_LEFT = new Operator(Precedence.SHIFT, Associativity.LEFT_TO_RIGHT, "<<") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -180,7 +187,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator SHIFT_RIGHT = new Operator(Precedence.SHIFT, Associativity.LEFT_TO_RIGHT) {
+	public final Operator SHIFT_RIGHT = new Operator(Precedence.SHIFT, Associativity.LEFT_TO_RIGHT, ">>") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -188,7 +195,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator LESS_THAN = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT) {
+	public final Operator LESS_THAN = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT, "<") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -196,7 +203,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator LESS_OR_EQUALS = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT) {
+	public final Operator LESS_OR_EQUALS = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT, "<=") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -204,7 +211,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator GREATER_THAN = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT) {
+	public final Operator GREATER_THAN = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT, ">") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -212,7 +219,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator GREATER_OR_EQUALS = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT) {
+	public final Operator GREATER_OR_EQUALS = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT, ">=") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -220,7 +227,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator EQUALS = new Operator(Precedence.EQUALITY, Associativity.LEFT_TO_RIGHT) {
+	public final Operator EQUALS = new Operator(Precedence.EQUALITY, Associativity.LEFT_TO_RIGHT, "=") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -228,7 +235,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator NOT_EQUALS = new Operator(Precedence.EQUALITY, Associativity.LEFT_TO_RIGHT) {
+	public final Operator NOT_EQUALS = new Operator(Precedence.EQUALITY, Associativity.LEFT_TO_RIGHT, "!=") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -236,7 +243,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator AND = new Operator(Precedence.AND, Associativity.LEFT_TO_RIGHT) {
+	public final Operator AND = new Operator(Precedence.AND, Associativity.LEFT_TO_RIGHT, "&") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -244,7 +251,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator XOR = new Operator(Precedence.XOR, Associativity.LEFT_TO_RIGHT) {
+	public final Operator XOR = new Operator(Precedence.XOR, Associativity.LEFT_TO_RIGHT, "^") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -252,7 +259,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator OR = new Operator(Precedence.OR, Associativity.LEFT_TO_RIGHT) {
+	public final Operator OR = new Operator(Precedence.OR, Associativity.LEFT_TO_RIGHT, "|") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -260,7 +267,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator LOGICAL_AND = new Operator(Precedence.LOGICAL_AND, Associativity.LEFT_TO_RIGHT) {
+	public final Operator LOGICAL_AND = new Operator(Precedence.LOGICAL_AND, Associativity.LEFT_TO_RIGHT, "&&") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -268,7 +275,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator LOGICAL_OR = new Operator(Precedence.LOGICAL_OR, Associativity.LEFT_TO_RIGHT) {
+	public final Operator LOGICAL_OR = new Operator(Precedence.LOGICAL_OR, Associativity.LEFT_TO_RIGHT, "||") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -276,7 +283,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator ANNOTATION = new Operator(Precedence.ANNOTATION, Associativity.RIGHT_TO_LEFT) {
+	public final Operator ANNOTATION = new Operator(Precedence.ANNOTATION, Associativity.RIGHT_TO_LEFT, " ") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -287,7 +294,7 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator SEQUENCE = new Operator(Precedence.SEQUENCE, Associativity.RIGHT_TO_LEFT) {
+	public final Operator SEQUENCE = new Operator(Precedence.SEQUENCE, Associativity.RIGHT_TO_LEFT, ",") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -295,14 +302,14 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator TERNARYIF = new Operator(Precedence.TERNARYIFELSE, Associativity.RIGHT_TO_LEFT) {
+	public final Operator TERNARYIF = new Operator(Precedence.TERNARYIFELSE, Associativity.RIGHT_TO_LEFT, "?") {
 		@Override
 		public Expression evaluate() {
 			throw new ExpressionError("Ternary if (?) without else (:).");
 		};
 	};
 
-	public final Operator TERNARYELSE = new Operator(Precedence.TERNARYIFELSE, Associativity.RIGHT_TO_LEFT) {
+	public final Operator TERNARYELSE = new Operator(Precedence.TERNARYIFELSE, Associativity.RIGHT_TO_LEFT, ":") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -319,21 +326,21 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator GROUP_OPEN = new Operator(Precedence.GROUPING, Associativity.LEFT_TO_RIGHT) {
+	public final Operator GROUP_OPEN = new Operator(Precedence.GROUPING, Associativity.LEFT_TO_RIGHT, "(") {
 		@Override
 		public Expression evaluate() {
 			return new Group(operands.pop());
 		};
 	};
 
-	public final Operator GROUP_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT) {
+	public final Operator GROUP_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT, ")") {
 		@Override
 		public Expression evaluate() {
 			throw new AssemblyException("Can not evaluate group close.");
 		};
 	};
 
-	public final Operator INDEX_OPEN = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT) {
+	public final Operator INDEX_OPEN = new Operator(Precedence.MEMBER, Associativity.LEFT_TO_RIGHT, "[") {
 		@Override
 		public Expression evaluate() {
 			Expression operandRight = operands.pop();
@@ -341,14 +348,14 @@ public class ExpressionBuilder {
 		};
 	};
 
-	public final Operator INDEX_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT) {
+	public final Operator INDEX_CLOSE = new Operator(Precedence.NONE, Associativity.LEFT_TO_RIGHT, "]") {
 		@Override
 		public Expression evaluate() {
-			throw new AssemblyException("Can not evaluate group close.");
+			throw new AssemblyException("Can not evaluate index close.");
 		};
 	};
 
-	public final Operator SENTINEL = new Operator(Precedence.NONE, Associativity.RIGHT_TO_LEFT) {
+	public final Operator SENTINEL = new Operator(Precedence.NONE, Associativity.RIGHT_TO_LEFT, "#") {
 		@Override
 		public Expression evaluate() {
 			throw new AssemblyException("Can not evaluate sentinel.");
