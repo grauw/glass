@@ -1,16 +1,14 @@
 Glass Z80 assembler
 ===================
 
-Copyright © 2013, Laurens Holst
+Copyright 2013 Laurens Holst
 
 Project information
 -------------------
 
   * Author: Laurens Holst <laurens@grauw.nl>
-  * Site: <https://bitbucket.org/grauw/glass>
-  * Downloads: <https://bitbucket.org/grauw/glass/downloads>
-  * History: <https://bitbucket.org/grauw/glass/src/@/CHANGES.md>
-  * Issues: <https://bitbucket.org/grauw/glass/issues>
+  * Site: <http://www.grauw.nl/projects/glass/>
+  * Source: <https://hg.sr.ht/~grauw/glass>
   * Support: <https://www.msx.org/forum/msx-talk/development/glass-z80-assembler>
   * License: Simplified BSD License
 

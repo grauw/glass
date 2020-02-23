@@ -9,13 +9,13 @@
 	
 	<name>Glass Z80 assembler</name>
 	<description>A cross-platform Z80 assembler.</description>
-	<url>https://bitbucket.org/grauw/glass/</url>
+	<url>http://www.grauw.nl/projects/glass/</url>
 	<inceptionYear>2013</inceptionYear>
 	
 	<licenses>
 		<license>
 			<name>Simplified BSD</name>
-			<url>https://bitbucket.org/grauw/glass/raw/default/LICENSE</url>
+			<url>https://hg.sr.ht/~grauw/fmpcm/raw/@/LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>This is a free software license.</comments>
 		</license>
@@ -27,9 +27,9 @@
 	</organization>
 	
 	<scm>
-		<connection>scm:hg:https://bitbucket.org/grauw/glass</connection>
-		<developerConnection>scm:hg:https://bitbucket.org/grauw/glass</developerConnection>
-		<url>https://bitbucket.org/grauw/glass</url>
+		<connection>scm:hg:https://hg.sr.ht/~grauw/glass</connection>
+		<developerConnection>scm:hg:https://hg.sr.ht/~grauw/glass</developerConnection>
+		<url>https://hg.sr.ht/~grauw/glass</url>
 	</scm>
 	
 	<properties>
