@@ -82,7 +82,7 @@ public class SourceFile {
 
 		@Override
 		public String toString() {
-			String string = "[at " + getSourceFile().getPath() + ":" + lineStart + (column != -1 ? "," + column : "") + "]";
+			String string = "[at " + getSourceFile().getPath() + ":" + (lineStart + 1) + (column != -1 ? "," + (column + 1) : "") + "]";
 
 			for (int i = lineStart; i < lineEnd && i < content.size(); i++) {
 				string += "\n" + content.get(i);
