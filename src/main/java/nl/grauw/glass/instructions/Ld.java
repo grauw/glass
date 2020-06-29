@@ -2,6 +2,7 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
 import nl.grauw.glass.expressions.Schema;
 
@@ -65,8 +66,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyIndirect(register1.isIndex() ? register1 : register2, 1);
+		public Expression getSize() {
+			return indexifyIndirect(register1.isIndex() ? register1 : register2, IntegerLiteral.ONE);
 		}
 
 		@Override
@@ -89,8 +90,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 1;
+		public Expression getSize() {
+			return IntegerLiteral.ONE;
 		}
 
 		@Override
@@ -112,8 +113,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 1;
+		public Expression getSize() {
+			return IntegerLiteral.ONE;
 		}
 
 		@Override
@@ -135,8 +136,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyDirect(argument.getRegister(), 1);
+		public Expression getSize() {
+			return indexifyDirect(argument.getRegister(), IntegerLiteral.ONE);
 		}
 
 		@Override
@@ -158,8 +159,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 2;
+		public Expression getSize() {
+			return IntegerLiteral.TWO;
 		}
 
 		@Override
@@ -183,8 +184,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 2;
+		public Expression getSize() {
+			return IntegerLiteral.TWO;
 		}
 
 		@Override
@@ -210,8 +211,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyIndirect(argument1.getRegister(), 2);
+		public Expression getSize() {
+			return indexifyIndirect(argument1.getRegister(), IntegerLiteral.TWO);
 		}
 
 		@Override
@@ -236,8 +237,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyDirect(argument1.getRegister(), 3);
+		public Expression getSize() {
+			return indexifyDirect(argument1.getRegister(), IntegerLiteral.THREE);
 		}
 
 		@Override
@@ -261,8 +262,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 3;
+		public Expression getSize() {
+			return IntegerLiteral.THREE;
 		}
 
 		@Override
@@ -287,8 +288,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyDirect(argument1.getRegister(), 3);
+		public Expression getSize() {
+			return indexifyDirect(argument1.getRegister(), IntegerLiteral.THREE);
 		}
 
 		@Override
@@ -313,8 +314,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 4;
+		public Expression getSize() {
+			return IntegerLiteral.FOUR;
 		}
 
 		@Override
@@ -338,8 +339,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 3;
+		public Expression getSize() {
+			return IntegerLiteral.THREE;
 		}
 
 		@Override
@@ -364,8 +365,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyDirect(argument2.getRegister(), 3);
+		public Expression getSize() {
+			return indexifyDirect(argument2.getRegister(), IntegerLiteral.THREE);
 		}
 
 		@Override
@@ -390,8 +391,8 @@ public class Ld extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 4;
+		public Expression getSize() {
+			return IntegerLiteral.FOUR;
 		}
 
 		@Override

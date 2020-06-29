@@ -17,19 +17,19 @@ public abstract class InstructionObject {
 
 	public Expression resolve(Expression address) {
 		context.setAddress(address);
-		return new Add(IntegerLiteral.of(getSize()), address).get(Type.INTEGER);
+		return new Add(getSize(), address).get(Type.INTEGER);
 	}
 
-	public abstract int getSize();
+	public abstract Expression getSize();
 
 	public abstract byte[] getBytes();
 
-	public int indexifyDirect(Register register, int size) {
-		return register.isIndex() ? size + 1 : size;
+	public Expression indexifyDirect(Register register, Expression size) {
+		return register.isIndex() ? new Add(IntegerLiteral.ONE, size) : size;
 	}
 
-	public int indexifyIndirect(Register register, int size) {
-		return register.isIndex() ? register.isPair() ? size + 2 : size + 1 : size;
+	public Expression indexifyIndirect(Register register, Expression size) {
+		return register.isIndex() ? register.isPair() ? new Add(IntegerLiteral.TWO, size) : new Add(IntegerLiteral.ONE, size) : size;
 	}
 
 	/**

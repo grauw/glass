@@ -105,7 +105,7 @@ public class Line {
 		}
 	}
 
-	public int getSize() {
+	public Expression getSize() {
 		try {
 			return instructionObject.getSize();
 		} catch (AssemblyException e) {

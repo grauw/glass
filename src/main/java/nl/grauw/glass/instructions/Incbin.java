@@ -55,8 +55,8 @@ public class Incbin extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return length != null ? length.getInteger() : getBytes().length;
+		public Expression getSize() {
+			return length != null ? length : IntegerLiteral.of(getBytes().length);
 		}
 
 		@Override

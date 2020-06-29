@@ -2,6 +2,7 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
 public class Jp extends InstructionFactory {
@@ -29,8 +30,8 @@ public class Jp extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 3;
+		public Expression getSize() {
+			return IntegerLiteral.THREE;
 		}
 
 		@Override
@@ -55,8 +56,8 @@ public class Jp extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 3;
+		public Expression getSize() {
+			return IntegerLiteral.THREE;
 		}
 
 		@Override
@@ -80,8 +81,8 @@ public class Jp extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return indexifyDirect(argument.getRegister(), 1);
+		public Expression getSize() {
+			return indexifyDirect(argument.getRegister(), IntegerLiteral.ONE);
 		}
 
 		@Override

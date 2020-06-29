@@ -58,7 +58,7 @@ public class If extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
+		public Expression getSize() {
 			throw new AssemblyException("Not implemented.");
 		}
 

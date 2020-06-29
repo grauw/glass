@@ -62,8 +62,8 @@ public class Ds extends InstructionFactory implements SectionContext {
 		}
 
 		@Override
-		public int getSize() {
-			return size.getInteger();
+		public Expression getSize() {
+			return size;
 		}
 
 		@Override

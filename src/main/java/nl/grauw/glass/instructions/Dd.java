@@ -4,6 +4,7 @@ import java.util.List;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 
 public class Dd extends InstructionFactory {
 
@@ -24,8 +25,8 @@ public class Dd extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return arguments.size() * 4;
+		public Expression getSize() {
+			return IntegerLiteral.of(arguments.size() * 4);
 		}
 
 		@Override

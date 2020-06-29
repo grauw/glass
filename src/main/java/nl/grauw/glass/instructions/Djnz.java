@@ -1,8 +1,11 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
+import nl.grauw.glass.expressions.Add;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
+import nl.grauw.glass.expressions.Subtract;
 
 public class Djnz extends InstructionFactory {
 
@@ -25,13 +28,13 @@ public class Djnz extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 2;
+		public Expression getSize() {
+			return IntegerLiteral.TWO;
 		}
 
 		@Override
 		public byte[] getBytes() {
-			int offset = argument.getInteger() - (context.getAddress().getInteger() + getSize());
+			int offset = new Subtract(argument, new Add(context.getAddress(), getSize())).getInteger();
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);
 			return new byte[] { (byte)0x10, (byte)offset };

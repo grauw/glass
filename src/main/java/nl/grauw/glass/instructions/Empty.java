@@ -2,6 +2,7 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 
 public class Empty extends InstructionFactory {
 
@@ -21,8 +22,8 @@ public class Empty extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 0;
+		public Expression getSize() {
+			return IntegerLiteral.ZERO;
 		}
 
 		@Override

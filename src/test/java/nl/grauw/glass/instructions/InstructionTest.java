@@ -957,7 +957,7 @@ public class InstructionTest extends TestBase {
 		Line line = new Parser(new SourceFile(" " + string)).parse(new Scope(new GlobalScope()));
 		line.resolve(IntegerLiteral.of(0x4321));
 		byte[] bytes = line.getBytes();
-		assertEquals(bytes.length, line.getSize());
+		assertEquals(bytes.length, line.getSize().getInteger());
 		return bytes;
 	}
 

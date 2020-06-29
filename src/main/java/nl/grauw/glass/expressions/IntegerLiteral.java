@@ -4,6 +4,9 @@ public class IntegerLiteral extends Expression {
 
 	public static final IntegerLiteral ZERO = new IntegerLiteral(0);
 	public static final IntegerLiteral ONE = new IntegerLiteral(1);
+	public static final IntegerLiteral TWO = new IntegerLiteral(2);
+	public static final IntegerLiteral THREE = new IntegerLiteral(3);
+	public static final IntegerLiteral FOUR = new IntegerLiteral(4);
 	public static final IntegerLiteral MINUSONE = new IntegerLiteral(-1);
 
 	private final int value;

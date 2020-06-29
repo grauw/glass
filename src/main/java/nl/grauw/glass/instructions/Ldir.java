@@ -2,6 +2,7 @@ package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
 
 public class Ldir extends InstructionFactory {
@@ -22,8 +23,8 @@ public class Ldir extends InstructionFactory {
 		}
 
 		@Override
-		public int getSize() {
-			return 2;
+		public Expression getSize() {
+			return IntegerLiteral.TWO;
 		}
 
 		@Override
