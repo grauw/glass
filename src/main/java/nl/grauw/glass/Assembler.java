@@ -27,10 +27,13 @@ public class Assembler {
 		Path sourcePath = null;
 		Path objectPath = null;
 		Path symbolPath = null;
+		Path listPath = null;
 		List<Path> includePaths = new ArrayList<Path>();
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-I") && (i + 1) < args.length) {
 				includePaths.add(Paths.get(args[++i]));
+			} else if (args[i].equals("-L") && (i + 1) < args.length) {
+				listPath = Paths.get(args[++i]);
 			} else if (sourcePath == null) {
 				sourcePath = Paths.get(args[i]);
 			} else if (objectPath == null) {
@@ -46,6 +49,8 @@ public class Assembler {
 		instance.writeObject(objectPath);
 		if (symbolPath != null)
 			instance.writeSymbols(symbolPath);
+		if (listPath != null)
+			instance.writeList(listPath);
 	}
 
 	public Assembler(Path sourcePath, List<Path> includePaths) {
@@ -63,6 +68,14 @@ public class Assembler {
 	public void writeSymbols(Path symbolPath) {
 		try (PrintStream symbolOutput = new PrintStream(createBufferedOutputStream(symbolPath))) {
 			symbolOutput.print(source.getScope().serializeSymbols());
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void writeList(Path listPath) {
+		try (PrintStream output = new PrintStream(createBufferedOutputStream(listPath))) {
+			new ListingWriter(output).write(source);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

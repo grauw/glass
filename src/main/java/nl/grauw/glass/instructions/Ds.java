@@ -26,6 +26,10 @@ public class Ds extends InstructionFactory implements SectionContext {
 		sections.add(section);
 	}
 
+	public List<Section> getSections() {
+		return sections;
+	}
+
 	@Override
 	public InstructionObject createObject(Scope context, Expression arguments) {
 		if (ARGUMENTS_N.check(arguments))

@@ -37,9 +37,11 @@ To run Glass from the command line, use the following command.
 Source specifies the source file, object the output file, and symbol a text file
 which will hold a list of symbols and their addresses in the output.
 
-Supported options:
+Options:
 
-    -I include_path
+  * `-I include_path` Include path for additional source files.
+    
+  * `-L list_file` File to output a listing of the assembled code to.
 
 Note that [Java 8](http://java.com/getjava) must be installed to run Glass.
 To check your Java version, invoke the `java -version` command.
