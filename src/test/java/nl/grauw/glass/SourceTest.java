@@ -251,7 +251,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testMacroNoEnd() {
-		assertAssemblyException(1, () -> {
+		assertAssemblyException(1, 1, () -> {
 			assemble(
 				"test: MACRO"
 			);

@@ -45,7 +45,7 @@ public class ExpressionBuilderTest extends TestBase {
 
 	@Test
 	public void testGrouping3() {
-		assertExpressionError(0, 2, 27, () -> {
+		assertExpressionError(0, 1, 27, () -> {
 			parse("10H + (15H * (5H - 2H) + 4H");
 		});
 	}
@@ -290,7 +290,7 @@ public class ExpressionBuilderTest extends TestBase {
 
 	@Test
 	public void testIncomplete() {
-		assertSyntaxError(0, 2, 2, () -> {
+		assertSyntaxError(0, 1, 2, () -> {
 			assertEquals(null, parse("a,"));
 		});
 	}

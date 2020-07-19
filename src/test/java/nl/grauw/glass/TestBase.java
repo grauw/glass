@@ -36,8 +36,12 @@ public class TestBase {
 	}
 
 	public static AssemblyException assertAssemblyException(int line, Executable executable) {
+		return assertAssemblyException(line, line + 1, executable);
+	}
+
+	public static AssemblyException assertAssemblyException(int lineStart, int lineEnd, Executable executable) {
 		AssemblyException exception = assertThrows(AssemblyException.class, executable);
-		assertAssemblyExceptionSpanEquals(line, line + 1, -1, exception);
+		assertAssemblyExceptionSpanEquals(lineStart, lineEnd, -1, exception);
 		return exception;
 	}
 
