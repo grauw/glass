@@ -1,5 +1,6 @@
 package nl.grauw.glass;
 
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -52,7 +53,7 @@ public class Assembler {
 	}
 
 	public void writeObject(Path objectPath) {
-		try (OutputStream output = objectPath != null ? Files.newOutputStream(objectPath) : new NullOutputStream()) {
+		try (OutputStream output = objectPath != null ? createBufferedOutputStream(objectPath) : new NullOutputStream()) {
 			source.assemble(output);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -60,11 +61,15 @@ public class Assembler {
 	}
 
 	public void writeSymbols(Path symbolPath) {
-		try (PrintStream symbolOutput = new PrintStream(Files.newOutputStream(symbolPath))) {
+		try (PrintStream symbolOutput = new PrintStream(createBufferedOutputStream(symbolPath))) {
 			symbolOutput.print(source.getScope().serializeSymbols());
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public static OutputStream createBufferedOutputStream(Path path) throws IOException {
+		return new BufferedOutputStream(Files.newOutputStream(path), 0x10000);
 	}
 
 	public static class NullOutputStream extends OutputStream {
