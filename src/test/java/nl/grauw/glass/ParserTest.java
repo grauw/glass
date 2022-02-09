@@ -116,7 +116,16 @@ public class ParserTest extends TestBase {
 
 	@Test
 	public void testCharacterLiteralEscape() {
+		assertEquals('\0', ((CharacterLiteral)parseExpression("'\\0'")).getCharacter());
+		assertEquals('\7', ((CharacterLiteral)parseExpression("'\\a'")).getCharacter());
+		assertEquals('\t', ((CharacterLiteral)parseExpression("'\\t'")).getCharacter());
+		assertEquals('\n', ((CharacterLiteral)parseExpression("'\\n'")).getCharacter());
+		assertEquals('\f', ((CharacterLiteral)parseExpression("'\\f'")).getCharacter());
+		assertEquals('\r', ((CharacterLiteral)parseExpression("'\\r'")).getCharacter());
+		assertEquals('\33', ((CharacterLiteral)parseExpression("'\\e'")).getCharacter());
 		assertEquals('"', ((CharacterLiteral)parseExpression("'\\\"'")).getCharacter());
+		assertEquals('\'', ((CharacterLiteral)parseExpression("'\\''")).getCharacter());
+		assertEquals('\\', ((CharacterLiteral)parseExpression("'\\\\'")).getCharacter());
 	}
 
 	@Test
