@@ -111,6 +111,16 @@ public class ExpressionTest extends TestBase {
 	}
 
 	@Test
+	public void testShiftRightUnsigned() {
+		assertEquals(3, parse("193 >>> 6").getInteger());
+	}
+
+	@Test
+	public void testShiftRightUnsignedSign() {
+		assertEquals(65535, parse("-1 >>> 16").getInteger());
+	}
+
+	@Test
 	public void testLessThan() {
 		assertEquals(-1, parse("3 < 4").getInteger());
 		assertEquals(0, parse("4 < 4").getInteger());

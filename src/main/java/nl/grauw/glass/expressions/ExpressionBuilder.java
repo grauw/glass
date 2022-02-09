@@ -182,6 +182,14 @@ public class ExpressionBuilder {
 		};
 	};
 
+	public final Operator SHIFT_RIGHT_UNSIGNED = new Operator(Precedence.SHIFT, Associativity.LEFT_TO_RIGHT, ">>>") {
+		@Override
+		public void evaluate() {
+			Expression operandRight = operands.pop();
+			operands.push(new ShiftRightUnsigned(operands.pop(), operandRight));
+		};
+	};
+
 	public final Operator LESS_THAN = new Operator(Precedence.COMPARISON, Associativity.LEFT_TO_RIGHT, "<") {
 		@Override
 		public void evaluate() {

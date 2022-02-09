@@ -556,13 +556,25 @@ public class Parser {
 	private class ArgumentGreaterThanState extends State {
 		public State parse(char character) {
 			if (character == '>') {
-				expressionBuilder.addOperatorToken(expressionBuilder.SHIFT_RIGHT);
-				return argumentValueState;
+				return argumentShiftRightState;
 			} else if (character == '=') {
 				expressionBuilder.addOperatorToken(expressionBuilder.GREATER_OR_EQUALS);
 				return argumentValueState;
 			} else {
 				expressionBuilder.addOperatorToken(expressionBuilder.GREATER_THAN);
+				return argumentValueState.parse(character);
+			}
+		}
+	}
+
+	private ArgumentShiftRightState argumentShiftRightState = new ArgumentShiftRightState();
+	private class ArgumentShiftRightState extends State {
+		public State parse(char character) {
+			if (character == '>') {
+				expressionBuilder.addOperatorToken(expressionBuilder.SHIFT_RIGHT_UNSIGNED);
+				return argumentValueState;
+			} else {
+				expressionBuilder.addOperatorToken(expressionBuilder.SHIFT_RIGHT);
 				return argumentValueState.parse(character);
 			}
 		}

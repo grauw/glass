@@ -343,6 +343,7 @@ Operators
   * Subtract: `a - b`
   * Shift left: `a << b`
   * Shift right: `a >> b`
+  * Shift right unsigned: `a >>> b`
   * Less than: `a < b`
   * Less or equal: `a <= b`
   * Greater than: `a > b`
@@ -374,7 +375,7 @@ Operator precedence:
   2. unary `+` `-` `~` `!`
   3. `*` `/` `%`
   4. `+` `-`
-  5. `<<` `>>`
+  5. `<<` `>>` `>>>`
   6. `<` `<=` `>` `>=`
   7. `=` `!=`
   8. `&`
