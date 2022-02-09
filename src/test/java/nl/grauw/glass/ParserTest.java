@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import nl.grauw.glass.expressions.CharacterLiteral;
 import nl.grauw.glass.expressions.Flag;
 import nl.grauw.glass.expressions.IntegerLiteral;
+import nl.grauw.glass.expressions.StringLiteral;
 
 import org.junit.jupiter.api.Test;
 
@@ -153,6 +154,39 @@ public class ParserTest extends TestBase {
 	public void testCharacterLiteralUnclosedEscape() {
 		assertSyntaxError(0, 1, 2, () -> {
 			parseExpression("'\\");
+		});
+	}
+
+	@Test
+	public void testStringLiteral() {
+		assertEquals("xyz", ((StringLiteral)parseExpression("\"xyz\"")).getString());
+	}
+
+	@Test
+	public void testStringLiteralEscape() {
+		assertEquals("x\0z", ((StringLiteral)parseExpression("\"x\\0z\"")).getString());
+		assertEquals("x\7z", ((StringLiteral)parseExpression("\"x\\az\"")).getString());
+		assertEquals("x\tz", ((StringLiteral)parseExpression("\"x\\tz\"")).getString());
+		assertEquals("x\nz", ((StringLiteral)parseExpression("\"x\\nz\"")).getString());
+		assertEquals("x\fz", ((StringLiteral)parseExpression("\"x\\fz\"")).getString());
+		assertEquals("x\rz", ((StringLiteral)parseExpression("\"x\\rz\"")).getString());
+		assertEquals("x\33z", ((StringLiteral)parseExpression("\"x\\ez\"")).getString());
+		assertEquals("x\"z", ((StringLiteral)parseExpression("\"x\\\"z\"")).getString());
+		assertEquals("x'z", ((StringLiteral)parseExpression("\"x\\'z\"")).getString());
+		assertEquals("x\\z", ((StringLiteral)parseExpression("\"x\\\\z\"")).getString());
+	}
+
+	@Test
+	public void testStringLiteralUnclosed() {
+		assertSyntaxError(0, 1, 1, () -> {
+			parseExpression("\"");
+		});
+	}
+
+	@Test
+	public void testStringLiteralUnclosedEscape() {
+		assertSyntaxError(0, 1, 2, () -> {
+			parseExpression("\"\\");
 		});
 	}
 
