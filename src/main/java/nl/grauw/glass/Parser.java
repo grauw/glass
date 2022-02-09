@@ -253,9 +253,7 @@ public class Parser {
 	private class ArgumentStringState extends State {
 		public State parse(char character) {
 			if (character == '"') {
-				expressionBuilder.addValueToken(new StringLiteral(accumulator.toString()));
-				accumulator.setLength(0);
-				return argumentOperatorState;
+				return argumentStringDoubleQuoteState;
 			} else if (character == '\\') {
 				return argumentStringEscapeState;
 			} else if (character == '\n' || character == '\0') {
@@ -263,6 +261,20 @@ public class Parser {
 			} else {
 				accumulator.append(character);
 				return argumentStringState;
+			}
+		}
+	}
+
+	private ArgumentStringDoubleQuoteState argumentStringDoubleQuoteState = new ArgumentStringDoubleQuoteState();
+	private class ArgumentStringDoubleQuoteState extends State {
+		public State parse(char character) {
+			if (character == '"') {
+				accumulator.append(character);
+				return argumentStringState;
+			} else {
+				expressionBuilder.addValueToken(new StringLiteral(accumulator.toString()));
+				accumulator.setLength(0);
+				return argumentOperatorState.parse(character);
 			}
 		}
 	}
@@ -311,13 +323,27 @@ public class Parser {
 	private ArgumentCharacterState argumentCharacterState = new ArgumentCharacterState();
 	private class ArgumentCharacterState extends State {
 		public State parse(char character) {
-			if (character == '\\') {
+			if (character == '\'') {
+				return argumentCharacterDoubleQuoteState;
+			} else if (character == '\\') {
 				return argumentCharacterEscapeState;
-			} else if (character == '\'' || character == '\n' || character == '\0') {
+			} else if (character == '\n' || character == '\0') {
 				throw new SyntaxError();
 			} else {
 				accumulator.append(character);
 				return argumentCharacterEndState;
+			}
+		}
+	}
+
+	private ArgumentCharacterDoubleQuoteState argumentCharacterDoubleQuoteState = new ArgumentCharacterDoubleQuoteState();
+	private class ArgumentCharacterDoubleQuoteState extends State {
+		public State parse(char character) {
+			if (character == '\'') {
+				accumulator.append(character);
+				return argumentCharacterEndState;
+			} else {
+				throw new SyntaxError();
 			}
 		}
 	}

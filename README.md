@@ -303,6 +303,9 @@ Literals
   * Character: `'c'`
   * String: `"abc"`
 
+Character literals can contain the `'` character by repeating it as `''`, and
+string literals can contain the `"` character by repeating it as `""`.
+
 Character and string literals support the following escape sequences:
 
   * `\0` (NUL)

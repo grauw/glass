@@ -116,6 +116,11 @@ public class ParserTest extends TestBase {
 	}
 
 	@Test
+	public void testCharacterLiteralDoubleQuote() {
+		assertEquals('\'', ((CharacterLiteral)parseExpression("''''")).getCharacter());
+	}
+
+	@Test
 	public void testCharacterLiteralEscape() {
 		assertEquals('\0', ((CharacterLiteral)parseExpression("'\\0'")).getCharacter());
 		assertEquals('\7', ((CharacterLiteral)parseExpression("'\\a'")).getCharacter());
@@ -138,7 +143,7 @@ public class ParserTest extends TestBase {
 
 	@Test
 	public void testCharacterLiteralTooShort() {
-		assertSyntaxError(0, 1, 1, () -> {
+		assertSyntaxError(0, 1, 2, () -> {
 			parseExpression("''");
 		});
 	}
@@ -160,6 +165,11 @@ public class ParserTest extends TestBase {
 	@Test
 	public void testStringLiteral() {
 		assertEquals("xyz", ((StringLiteral)parseExpression("\"xyz\"")).getString());
+	}
+
+	@Test
+	public void testStringLiteralDoubleQuote() {
+		assertEquals("x\"z", ((StringLiteral)parseExpression("\"x\"\"z\"")).getString());
 	}
 
 	@Test
