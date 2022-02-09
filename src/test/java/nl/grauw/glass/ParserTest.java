@@ -192,6 +192,22 @@ public class ParserTest extends TestBase {
 	}
 
 	@Test
+	public void testNumberSigned() {
+		assertEquals(-4096, parseExpression("-4096").getInteger());
+		assertEquals(-4096, parseExpression("-1000H").getInteger());
+		assertEquals(-4096, parseExpression("-1000000000000B").getInteger());
+		assertEquals(-4096, parseExpression("-10000O").getInteger());
+	}
+
+	@Test
+	public void testNumberSignedOverflow() {
+		assertEquals(-4096, parseExpression("4294963200").getInteger());
+		assertEquals(-4096, parseExpression("0FFFFF000H").getInteger());
+		assertEquals(-4096, parseExpression("37777770000O").getInteger());
+		assertEquals(-4096, parseExpression("11111111111111111111000000000000B").getInteger());
+	}
+
+	@Test
 	public void testFlag() {
 		assertEquals(Flag.NZ, parseExpression("nz").getFlag());
 		assertEquals(Flag.Z,  parseExpression("z").getFlag());
