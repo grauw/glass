@@ -303,7 +303,7 @@ Literals
   * Character: `'c'`
   * String: `"abc"`
 
-Strings support the following escape sequences:
+Character and string literals support the following escape sequences:
 
   * `\0` (NUL)
   * `\a` (bell)
