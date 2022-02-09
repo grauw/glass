@@ -30,10 +30,14 @@ public class Assembler {
 		Path listPath = null;
 		List<Path> includePaths = new ArrayList<Path>();
 		for (int i = 0; i < args.length; i++) {
-			if (args[i].equals("-I") && (i + 1) < args.length) {
-				includePaths.add(Paths.get(args[++i]));
-			} else if (args[i].equals("-L") && (i + 1) < args.length) {
-				listPath = Paths.get(args[++i]);
+			if (args[i].equals("-I")) {
+				if (++i >= args.length)
+					throw new AssemblyException("Missing argument value.");
+				includePaths.add(Paths.get(args[i]));
+			} else if (args[i].equals("-L")) {
+				if (++i >= args.length)
+					throw new AssemblyException("Missing argument value.");
+				listPath = Paths.get(args[i]);
 			} else if (sourcePath == null) {
 				sourcePath = Paths.get(args[i]);
 			} else if (objectPath == null) {
