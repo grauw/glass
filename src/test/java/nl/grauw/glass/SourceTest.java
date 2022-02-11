@@ -1045,7 +1045,7 @@ public class SourceTest extends TestBase {
 	public void testEnd() {
 		assertArrayEquals(b(), assemble(
 			" END",
-			" nop"
+			"+ this is not parsed +"
 		));
 	}
 
