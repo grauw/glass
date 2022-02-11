@@ -1117,6 +1117,13 @@ public class SourceTest extends TestBase {
 		));
 	}
 
+	@Test
+	public void testGlobalSymbolOverride() {
+		assertArrayEquals(b(0x18, 0xFE), assemble(
+			"end: jr end"
+		));
+	}
+
 	@TempDir
 	static Path temporaryDirectory;
 
