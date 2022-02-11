@@ -257,6 +257,12 @@ Directives
              ENDIF
              ENDM
     
+  * Source file end: `end`
+    
+    Indicates the end of the current source file. Specifying this is optional,
+    and usually omitted. Any content on lines beyond this directive will not be
+    parsed.
+    
   * Error: `error`
     
     Generates an error and aborts the compilation. Optionally a message can be

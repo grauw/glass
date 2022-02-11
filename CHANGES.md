@@ -9,6 +9,7 @@ Glass 0.6 — ????-??-??
   * The `>>>` unsigned shift right operator is now supported.
   * The `'` character can now be written as `''` in character literals.
   * The `"` character can now be written as `""` in string literals.
+  * Documented the `end` directive, supported since the initial release.
 
 Glass 0.5 — 2017-01-18
 ----------------------
