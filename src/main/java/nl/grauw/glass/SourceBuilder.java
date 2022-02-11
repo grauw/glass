@@ -40,7 +40,7 @@ public class SourceBuilder {
 	private static final List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
 
 	public SourceBuilder(List<Path> includePaths) {
-		this.source = new Source();
+		this.source = new Source(new GlobalScope());
 		this.terminators = END_TERMINATORS;
 		this.includePaths = includePaths;
 	}

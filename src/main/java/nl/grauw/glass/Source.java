@@ -14,10 +14,6 @@ public class Source {
 	private final Scope scope;
 	private List<Line> lines = new ArrayList<Line>();
 
-	public Source() {
-		scope = new GlobalScope();
-	}
-
 	public Source(Scope scope) {
 		this.scope = scope;
 	}
