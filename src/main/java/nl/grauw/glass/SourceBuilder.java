@@ -26,12 +26,12 @@ import nl.grauw.glass.expressions.Type;
 
 public class SourceBuilder {
 
-	public static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
-	public static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
-	public static final List<String> ENDP_TERMINATORS = Arrays.asList(new String[] { "endp", "ENDP" });
-	public static final List<String> ENDS_TERMINATORS = Arrays.asList(new String[] { "ends", "ENDS" });
-	public static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
-	public static final List<String> ENDIF_TERMINATORS = Arrays.asList(new String[] { "endif", "ENDIF" });
+	private static final List<String> END_TERMINATORS = Arrays.asList(new String[] { "end", "END" });
+	private static final List<String> ENDM_TERMINATORS = Arrays.asList(new String[] { "endm", "ENDM" });
+	private static final List<String> ENDP_TERMINATORS = Arrays.asList(new String[] { "endp", "ENDP" });
+	private static final List<String> ENDS_TERMINATORS = Arrays.asList(new String[] { "ends", "ENDS" });
+	private static final List<String> ELSE_TERMINATORS = Arrays.asList(new String[] { "else", "ELSE", "endif", "ENDIF" });
+	private static final List<String> ENDIF_TERMINATORS = Arrays.asList(new String[] { "endif", "ENDIF" });
 
 	private final Source source;
 	private final List<String> terminators;
@@ -45,7 +45,7 @@ public class SourceBuilder {
 		this.includePaths = includePaths;
 	}
 
-	public SourceBuilder(Scope scope, List<String> terminators, List<Path> includePaths) {
+	private SourceBuilder(Scope scope, List<String> terminators, List<Path> includePaths) {
 		this.source = new Source(scope);
 		this.terminators = terminators;
 		this.includePaths = includePaths;
