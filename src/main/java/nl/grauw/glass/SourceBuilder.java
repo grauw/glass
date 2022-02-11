@@ -40,7 +40,11 @@ public class SourceBuilder {
 	private static final List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
 
 	public SourceBuilder(List<Path> includePaths) {
-		this(new GlobalScope(), END_TERMINATORS, includePaths);
+		this(new GlobalScope(), includePaths);
+	}
+
+	private SourceBuilder(Scope scope, List<Path> includePaths) {
+		this(scope, END_TERMINATORS, includePaths);
 	}
 
 	private SourceBuilder(Scope scope, List<String> terminators, List<Path> includePaths) {
@@ -179,7 +183,7 @@ public class SourceBuilder {
 			throw new AssemblyException("Include only accepts 1 argument.");
 		if (!argument.is(Type.STRING))
 			throw new AssemblyException("A string literal is expected.");
-		SourceBuilder sourceBuilder = new SourceBuilder(source.getScope(), END_TERMINATORS, includePaths);
+		SourceBuilder sourceBuilder = new SourceBuilder(source.getScope(), includePaths);
 		sourceBuilder.parseInclude(argument, sourceFile, once);
 		return new Include(sourceBuilder.source);
 	}
