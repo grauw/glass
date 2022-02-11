@@ -1042,6 +1042,14 @@ public class SourceTest extends TestBase {
 	}
 
 	@Test
+	public void testEnd() {
+		assertArrayEquals(b(), assemble(
+			" END",
+			" nop"
+		));
+	}
+
+	@Test
 	public void testInclude() throws IOException {
 		Files.write(temporaryDirectory.resolve("testInclude.asm"), Arrays.asList(
 			" ld a,a"
