@@ -15,7 +15,7 @@ public class SourceFile {
 	public SourceFile(Path path) {
 		this.path = path;
 		try {
-			this.content = Files.readAllLines(path, Charset.forName("ISO-8859-1"));
+			this.content = Files.readAllLines(path, Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			throw new AssemblyException(e);
 		}
