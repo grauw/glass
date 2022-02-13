@@ -20,6 +20,12 @@ public class Assembler {
 	 */
 	public static void main(String[] args) {
 		if (args.length == 0) {
+			System.out.println(String.format("%s %s by %s",
+				Assembler.class.getPackage().getImplementationTitle(),
+				Assembler.class.getPackage().getImplementationVersion(),
+				Assembler.class.getPackage().getImplementationVendor()
+			));
+			System.out.println();
 			System.out.println("Usage: java -jar glass.jar [OPTION] SOURCE [OBJECT] [SYMBOL]");
 			System.exit(1);
 		}

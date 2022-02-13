@@ -11,6 +11,7 @@ Glass 0.6 — ????-??-??
   * The `"` character can now be written as `""` in string literals.
   * Documented the `end` directive, supported since the initial release.
   * The source file encoding is changed from ISO-8859-1 to UTF-8.
+  * Glass now shows version information when run without arguments.
 
 Glass 0.5 — 2017-01-18
 ----------------------
