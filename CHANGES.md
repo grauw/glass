@@ -1,11 +1,26 @@
 What’s new in Glass
 ===================
 
-Glass 0.6 — ????-??-??
+Glass 0.6 — 2022-03-10
 ----------------------
 
   * The `$` prefix can now be used for hexadecimal numbers.
   * Symbols can no longer start with the `$` character (bc).
+  * The `org` pseudo-op now supports values outside the 0-FFFFH range.
+  * Labels are now associated with the next following mnemonic.
+  * Arguments now look up in their instruction’s parent scope.
+  * Comments can now be added to expressions spanning multiple lines.
+  * Fixed bug where includes sometimes needed a subdirectory in their path.
+  * Fixed bug where member lookups sometimes included the parent scopes.
+  * Macro definition symbol offsets are now included in the symbol file.
+  * Symbols with integer `equ` values are now included in the symbol file.
+  * Fixed erroneous symbol redefinition error for nested directives.
+  * Ternary `?:` expression operands which don’t evaluate no longer throw errors.
+  * Improved handling of labels in `if` directives.
+  * The `db`, `dw` and `dd` pseudo-ops now flatten nested sequences.
+  * It is now possible to index into a string with the `[]` operator.
+  * The line and column numbers in errors are now 1-based as is conventional.
+  * A listing of the assembled source code can now be generated.
   * The `>>>` unsigned shift right operator is now supported.
   * The `'` character can now be written as `''` in character literals.
   * The `"` character can now be written as `""` in string literals.
@@ -51,7 +66,7 @@ Glass 0.3 — 2014-01-11
   * Errors now contain more location information.
   * Section targets can now be reference before they are specified.
   * Division by zero errors are now handled better.
-  * Fix bug when specifying macros with more than one argument.
+  * Fixed bug when specifying macros with more than one argument.
 
 Glass 0.2 — 2014-01-04
 ----------------------
