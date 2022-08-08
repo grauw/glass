@@ -210,6 +210,26 @@ public class SymbolsTest extends TestBase {
 		);
 	}
 
+	@Test
+	public void testCycle() {
+		assertIterableEquals(
+			s(
+				"Test: equ 1H",
+				"Test.x: equ 7H",
+				"Test.y: equ 1H",
+				"Test.z: equ 2H"
+			),
+			symbols(
+				" nop",
+				"Test: PROC",
+				"x: equ 7",
+				"y: equ Test",
+				"   nop",
+				"z: ENDP"
+			)
+		);
+	}
+
 	@TempDir
 	static Path temporaryDirectory;
 

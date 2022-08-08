@@ -124,10 +124,10 @@ public class Scope implements Context {
 	}
 
 	public String serializeSymbols() {
-		return serializeSymbols("");
+		return serializeSymbols("", new SingleLinkedList<Scope>(this, null));
 	}
 
-	public String serializeSymbols(String namePrefix) {
+	public String serializeSymbols(String namePrefix, SingleLinkedList<Scope> breadcrumbs) {
 		StringBuilder builder = new StringBuilder();
 		TreeMap<String, Expression> sortedMap = new TreeMap<>(symbols);
 		for (Map.Entry<String, Expression> entry : sortedMap.entrySet()) {
@@ -143,7 +143,9 @@ public class Scope implements Context {
 			if (value.is(Type.CONTEXT)) {
 				try {
 					Scope context = (Scope)value.getContext();
-					builder.append(context.serializeSymbols(name + "."));
+					if (!breadcrumbs.contains(context)) {
+						builder.append(context.serializeSymbols(name + ".", new SingleLinkedList<Scope>(context, breadcrumbs)));
+					}
 				} catch (EvaluationException e) {
 					// ignore
 				}
@@ -154,6 +156,18 @@ public class Scope implements Context {
 
 	public String toString() {
 		return serializeSymbols();
+	}
+
+	private static class SingleLinkedList<T> {
+		private T head;
+		private SingleLinkedList<T> tail;
+		public SingleLinkedList(T head, SingleLinkedList<T> tail) {
+			this.head = head;
+			this.tail = tail;
+		}
+		public boolean contains(T value) {
+			return value == head || (tail != null && tail.contains(value));
+		}
 	}
 
 }
