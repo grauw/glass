@@ -48,7 +48,7 @@ public class Source {
 	public void assemble(OutputStream output) throws IOException {
 		register();
 		expand();
-		resolve();
+		resolve(IntegerLiteral.ZERO);
 
 		byte[] objectCode = getBytes();
 		output.write(objectCode, 0, objectCode.length);
@@ -72,10 +72,6 @@ public class Source {
 	public void expand(List<Line> newLines) {
 		for (Line line : lines)
 			line.expand(newLines);
-	}
-
-	public Expression resolve() {
-		return resolve(IntegerLiteral.ZERO);
 	}
 
 	public Expression resolve(Expression address) {
