@@ -14,23 +14,24 @@ public class ParameterScope extends Scope {
 			Expression parameter = parameters.getHead();
 			Expression argument;
 
-			if (parameter instanceof Equals) {
-				argument = arguments != null ? arguments.getHead() : ((Equals)parameter).getTerm2();
-				parameter = ((Equals)parameter).getTerm1();
+			if (parameter instanceof Equals equals) {
+				argument = arguments != null ? arguments.getHead() : equals.getTerm2();
+				parameter = equals.getTerm1();
 			} else {
 				if (arguments == null)
 					throw new ArgumentException("Not enough arguments.");
 				argument = arguments.getHead();
 			}
 
-			if (!(parameter instanceof Identifier))
+			if (parameter instanceof Identifier identifier) {
+				addSymbol(identifier.getName(), argument);
+
+				parameters = parameters.getTail();
+				if (arguments != null)
+					arguments = arguments.getTail();
+			} else {
 				throw new ArgumentException("Parameter must be an identifier.");
-
-			addSymbol(((Identifier)parameter).getName(), argument);
-
-			parameters = parameters.getTail();
-			if (arguments != null)
-				arguments = arguments.getTail();
+			}
 		}
 		if (arguments != null)
 			throw new ArgumentException("Too many arguments.");

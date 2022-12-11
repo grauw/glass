@@ -21,10 +21,12 @@ public class MacroInstruction extends InstructionFactory {
 
 		Expression parameter = parameters != null ? parameters.getElement(0) : null;
 		for (int i = 0; parameter != null; i++) {
-			if (!(parameter instanceof Identifier) &&
-					!(parameter instanceof Equals && ((Equals)parameter).getTerm1() instanceof Identifier))
+			if (parameter instanceof Identifier ||
+				(parameter instanceof Equals equals && equals.getTerm1() instanceof Identifier)) {
+				parameter = parameters.getElement(i);
+			} else {
 				throw new ArgumentException("Parameter must be an identifier.");
-			parameter = parameters.getElement(i);
+			}
 		}
 	}
 

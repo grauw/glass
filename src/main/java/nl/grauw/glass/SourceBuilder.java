@@ -111,61 +111,43 @@ public class SourceBuilder {
 	}
 
 	public Directive getDirective(Line line, Parser parser) {
-		switch (line.getMnemonic()) {
-		case "equ":
-		case "EQU":
-			return new Equ();
-		case "include":
-		case "INCLUDE":
-			return getIncludeDirective(line, parser.getSourceFile());
-		case "incbin":
-		case "INCBIN":
-			return new Incbin(getIncludePaths(parser.getSourceFile()));
-		case "macro":
-		case "MACRO":
-			return new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
-		case "rept":
-		case "REPT":
-			return new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
-		case "irp":
-		case "IRP":
-			return new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
-		case "proc":
-		case "PROC":
-			return new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, parser));
-		case "if":
-		case "IF":
-			Source thenBlock = parseBlock(new Scope(line.getScope()), ELSE_TERMINATORS, parser);
-			Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic()) ?
-					parseBlock(new Scope(line.getScope()), ENDIF_TERMINATORS, parser) : new Source(new Scope(line.getScope()));
-			return new If(thenBlock, elseBlock);
-		case "section":
-		case "SECTION":
-			return new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, parser));
-		case "ds":
-		case "DS":
-			return new Ds();
-		case "end":
-		case "END":
-		case "endm":
-		case "ENDM":
-		case "endp":
-		case "ENDP":
-		case "ends":
-		case "ENDS":
-		case "else":
-		case "ELSE":
-		case "endif":
-		case "ENDIF":
-			if (!terminators.contains(line.getMnemonic())) {
-				if (line.getMnemonic() == "end" || line.getMnemonic() == "END")
-					throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
-				throw new AssemblyException("Unexpected " + line.getMnemonic() + ".");
+		return switch (line.getMnemonic()) {
+			case "equ", "EQU" ->
+				new Equ();
+			case "include", "INCLUDE" ->
+				getIncludeDirective(line, parser.getSourceFile());
+			case "incbin", "INCBIN" ->
+				new Incbin(getIncludePaths(parser.getSourceFile()));
+			case "macro", "MACRO" ->
+				new Macro(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
+			case "rept", "REPT" ->
+				new Rept(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
+			case "irp", "IRP" ->
+				new Irp(parseBlock(line.getScope(), ENDM_TERMINATORS, parser));
+			case "proc", "PROC" ->
+				new Proc(parseBlock(line.getScope(), ENDP_TERMINATORS, parser));
+			case "if", "IF" -> {
+				Source thenBlock = parseBlock(new Scope(line.getScope()), ELSE_TERMINATORS, parser);
+				Source elseBlock = !ENDIF_TERMINATORS.contains(thenBlock.getLastLine().getMnemonic())
+						? parseBlock(new Scope(line.getScope()), ENDIF_TERMINATORS, parser)
+						: new Source(new Scope(line.getScope()));
+				yield new If(thenBlock, elseBlock);
 			}
-			return new Terminator();
-		default:
-			return new Instruction();
-		}
+			case "section", "SECTION" ->
+				new Section(parseBlock(source.getScope(), ENDS_TERMINATORS, parser));
+			case "ds", "DS" ->
+				new Ds();
+			case "end", "END", "endm", "ENDM", "endp", "ENDP", "ends", "ENDS", "else", "ELSE", "endif", "ENDIF" -> {
+				if (!terminators.contains(line.getMnemonic())) {
+					if (line.getMnemonic() == "end" || line.getMnemonic() == "END")
+						throw new AssemblyException("Unexpected end of file. Expecting: " + terminators.toString());
+					throw new AssemblyException("Unexpected " + line.getMnemonic() + ".");
+				}
+				yield new Terminator();
+			}
+			default ->
+				new Instruction();
+		};
 	}
 
 	private Directive getIncludeDirective(Line line, SourceFile sourceFile) {

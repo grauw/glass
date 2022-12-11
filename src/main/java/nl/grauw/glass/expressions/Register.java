@@ -117,72 +117,30 @@ public class Register extends Expression {
 	}
 
 	public static Register getByName(String name) {
-		switch (name) {
-		case "b":
-		case "B":
-			return Register.B;
-		case "c":
-		case "C":
-			return Register.C;
-		case "d":
-		case "D":
-			return Register.D;
-		case "e":
-		case "E":
-			return Register.E;
-		case "h":
-		case "H":
-			return Register.H;
-		case "l":
-		case "L":
-			return Register.L;
-		case "a":
-		case "A":
-			return Register.A;
-		case "ixh":
-		case "IXH":
-			return Register.IXH;
-		case "ixl":
-		case "IXL":
-			return Register.IXL;
-		case "iyh":
-		case "IYH":
-			return Register.IYH;
-		case "iyl":
-		case "IYL":
-			return Register.IYL;
-		case "bc":
-		case "BC":
-			return Register.BC;
-		case "de":
-		case "DE":
-			return Register.DE;
-		case "hl":
-		case "HL":
-			return Register.HL;
-		case "sp":
-		case "SP":
-			return Register.SP;
-		case "af":
-		case "AF":
-			return Register.AF;
-		case "af'":
-		case "AF'":
-			return Register.AF_;
-		case "ix":
-		case "IX":
-			return Register.IX;
-		case "iy":
-		case "IY":
-			return Register.IY;
-		case "i":
-		case "I":
-			return Register.I;
-		case "r":
-		case "R":
-			return Register.R;
-		}
-		return null;
+		return switch (name) {
+			case "b", "B" -> Register.B;
+			case "c", "C" -> Register.C;
+			case "d", "D" -> Register.D;
+			case "e", "E" -> Register.E;
+			case "h", "H" -> Register.H;
+			case "l", "L" -> Register.L;
+			case "a", "A" -> Register.A;
+			case "ixh", "IXH" -> Register.IXH;
+			case "ixl", "IXL" -> Register.IXL;
+			case "iyh", "IYH" -> Register.IYH;
+			case "iyl", "IYL" -> Register.IYL;
+			case "bc", "BC" -> Register.BC;
+			case "de", "DE" -> Register.DE;
+			case "hl", "HL" -> Register.HL;
+			case "sp", "SP" -> Register.SP;
+			case "af", "AF" -> Register.AF;
+			case "af'", "AF'" -> Register.AF_;
+			case "ix", "IX" -> Register.IX;
+			case "iy", "IY" -> Register.IY;
+			case "i", "I" -> Register.I;
+			case "r", "R" -> Register.R;
+			default -> null;
+		};
 	}
 
 }

@@ -19,8 +19,8 @@ public class ListingWriter {
 	public void write(Source source) {
 		for (Line line : source.getLines()) {
 			write(line);
-			if (line.getInstruction() instanceof Ds) {
-				for (Section section : ((Ds)line.getInstruction()).getSections()) {
+			if (line.getInstruction() instanceof Ds ds) {
+				for (Section section : ds.getSections()) {
 					write(section.getSource());
 				}
 			}

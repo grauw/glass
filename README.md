@@ -406,7 +406,7 @@ the project information section.
 You are also free to re-use code for your own projects, provided you abide by
 the license terms.
 
-Glass is written in [Java 11](https://adoptium.net/).
+Glass is written in [Java 17](https://adoptium.net/).
 To check your Java version, invoke the `java -version` command. The project can
 be built using [Maven](https://maven.apache.org/) by invoking the following
 command on the command line:

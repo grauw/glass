@@ -51,33 +51,17 @@ public class Flag extends Expression {
 	}
 
 	public static Flag getByName(String name) {
-		switch (name) {
-		case "nz":
-		case "NZ":
-			return Flag.NZ;
-		case "z":
-		case "Z":
-			return Flag.Z;
-		case "nc":
-		case "NC":
-			return Flag.NC;
-		case "c":
-		case "C":
-			return Flag.C;
-		case "po":
-		case "PO":
-			return Flag.PO;
-		case "pe":
-		case "PE":
-			return Flag.PE;
-		case "p":
-		case "P":
-			return Flag.P;
-		case "m":
-		case "M":
-			return Flag.M;
-		}
-		return null;
+		return switch (name) {
+			case "nz", "NZ" -> Flag.NZ;
+			case "z",  "Z"  -> Flag.Z;
+			case "nc", "NC" -> Flag.NC;
+			case "c",  "C"  -> Flag.C;
+			case "po", "PO" -> Flag.PO;
+			case "pe", "PE" -> Flag.PE;
+			case "p",  "P"  -> Flag.P;
+			case "m",  "M"  -> Flag.M;
+			default -> null;
+		};
 	}
 
 }

@@ -28,15 +28,13 @@ public class Macro extends InstructionFactory {
 		Expression parameters = line.getArguments();
 		while (parameters != null) {
 			Expression parameter = parameters.getHead();
-			if (!(parameter instanceof Identifier) &&
-					!(parameter instanceof Equals && ((Equals)parameter).getTerm1() instanceof Identifier))
-				throw new ArgumentException("Parameter must be an identifier.");
 
-			if (parameter instanceof Equals) {
-				Equals equals = (Equals)parameter;
-				parameterScope.addSymbol(((Identifier)equals.getTerm1()).getName(), equals.getTerm2());
+			if (parameter instanceof Identifier identifier) {
+				parameterScope.addSymbol(identifier.getName(), IntegerLiteral.ZERO);
+			} else if (parameter instanceof Equals equals && equals.getTerm1() instanceof Identifier identifier) {
+				parameterScope.addSymbol(identifier.getName(), equals.getTerm2());
 			} else {
-				parameterScope.addSymbol(((Identifier)parameter).getName(), IntegerLiteral.ZERO);
+				throw new ArgumentException("Parameter must be an identifier.");
 			}
 			parameters = parameters.getTail();
 		}

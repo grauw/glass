@@ -120,9 +120,11 @@ public class ExpressionBuilder {
 		@Override
 		public void evaluate() {
 			Expression operandRight = operands.pop();
-			if (!(operandRight instanceof Identifier))
+			if (operandRight instanceof Identifier identifier) {
+				operands.push(new Member(operands.pop(), identifier));
+			} else {
 				throw new ExpressionError("Member operator right hand side must be an identifier.");
-			operands.push(new Member(operands.pop(), (Identifier)operandRight));
+			}
 		};
 	};
 
@@ -283,9 +285,11 @@ public class ExpressionBuilder {
 		public void evaluate() {
 			Expression operandRight = operands.pop();
 			Expression operandLeft = operands.pop();
-			if (!(operandLeft instanceof Identifier))
+			if (operandLeft instanceof Identifier identifier) {
+				operands.push(new Annotation(identifier, operandRight));
+			} else {
 				throw new ExpressionError("Annotation left hand side must be an identifier.");
-			operands.push(new Annotation((Identifier)operandLeft, operandRight));
+			}
 		};
 	};
 

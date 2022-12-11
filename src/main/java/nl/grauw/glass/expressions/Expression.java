@@ -30,19 +30,15 @@ public abstract class Expression {
 	}
 
 	public Register getRegister() {
-		if (is(Type.REGISTER)) {
-			Expression register = get(Type.REGISTER);
-			if (register instanceof Register)
-				return (Register)register;
+		if (is(Type.REGISTER) && get(Type.REGISTER) instanceof Register register) {
+			return register;
 		}
 		throw new EvaluationException("Not a register.");
 	}
 
 	public Flag getFlag() {
-		if (is(Type.FLAG)) {
-			Expression flag = get(Type.FLAG);
-			if (flag instanceof Flag)
-				return (Flag)flag;
+		if (is(Type.FLAG) && get(Type.FLAG) instanceof Flag flag) {
+			return flag;
 		}
 		throw new EvaluationException("Not a flag.");
 	}
