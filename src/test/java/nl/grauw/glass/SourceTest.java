@@ -529,6 +529,19 @@ public class SourceTest extends TestBase {
 	}
 
 	@Test
+	public void testMacroWithProc() {
+		assertArrayEquals(b(0x00, 0x00), assemble(
+			" test",
+			"test: MACRO",
+			"Test: PROC",
+			"label: nop",
+			" ENDP",
+			"label: ENDM",
+			" test"
+		));
+	}
+
+	@Test
 	public void testRept() {
 		assertArrayEquals(b(0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF), assemble(
 			" REPT 3",
