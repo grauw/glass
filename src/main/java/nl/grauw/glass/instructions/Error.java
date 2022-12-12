@@ -1,7 +1,6 @@
 package nl.grauw.glass.instructions;
 
 import nl.grauw.glass.AssemblyException;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
 
@@ -11,9 +10,9 @@ public class Error extends InstructionFactory {
 	public static Schema ARGUMENTS_S = new Schema(Schema.STRING);
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS.check(arguments) || ARGUMENTS_S.check(arguments))
-			return new Error_(context, arguments);
+			return new Error_(address, arguments);
 		throw new ArgumentException();
 	}
 
@@ -21,8 +20,8 @@ public class Error extends InstructionFactory {
 
 		private final Expression argument;
 
-		public Error_(Scope context, Expression argument) {
-			super(context);
+		public Error_(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,11 +8,11 @@ import nl.grauw.glass.expressions.Schema;
 public class Xor extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Xor_R.ARGUMENTS.check(arguments))
-			return new Xor_R(context, arguments);
+			return new Xor_R(address, arguments);
 		if (Xor_N.ARGUMENTS.check(arguments))
-			return new Xor_N(context, arguments);
+			return new Xor_N(address, arguments);
 		throw new ArgumentException();
 	}
 
@@ -23,8 +22,8 @@ public class Xor extends InstructionFactory {
 
 		private Expression argument;
 
-		public Xor_R(Scope context, Expression arguments) {
-			super(context);
+		public Xor_R(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -47,8 +46,8 @@ public class Xor extends InstructionFactory {
 
 		private Expression argument;
 
-		public Xor_N(Scope context, Expression arguments) {
-			super(context);
+		public Xor_N(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 

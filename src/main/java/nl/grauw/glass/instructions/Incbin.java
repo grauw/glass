@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.AssemblyException;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -21,15 +20,15 @@ public class Incbin extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Incbin_.ARGUMENTS_S.check(arguments))
-			return new Incbin_(context, arguments.getElement(0),
+			return new Incbin_(address, arguments.getElement(0),
 					IntegerLiteral.ZERO, null, basePaths);
 		if (Incbin_.ARGUMENTS_S_N.check(arguments))
-			return new Incbin_(context, arguments.getElement(0),
+			return new Incbin_(address, arguments.getElement(0),
 					arguments.getElement(1), null, basePaths);
 		if (Incbin_.ARGUMENTS_S_N_N.check(arguments))
-			return new Incbin_(context, arguments.getElement(0),
+			return new Incbin_(address, arguments.getElement(0),
 					arguments.getElement(1), arguments.getElement(2), basePaths);
 		throw new ArgumentException();
 	}
@@ -46,8 +45,8 @@ public class Incbin extends InstructionFactory {
 		private final List<Path> basePaths;
 		private byte[] bytes;
 
-		public Incbin_(Scope context, Expression path, Expression start, Expression length, List<Path> basePaths) {
-			super(context);
+		public Incbin_(Expression address, Expression path, Expression start, Expression length, List<Path> basePaths) {
+			super(address);
 			this.path = path;
 			this.start = start;
 			this.length = length;

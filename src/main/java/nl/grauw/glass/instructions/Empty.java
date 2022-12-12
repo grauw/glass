@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 
@@ -9,14 +8,14 @@ public class Empty extends InstructionFactory {
 	public static final Empty INSTANCE = new Empty();
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
-		return new EmptyObject(context);
+	public InstructionObject createObject(Expression address, Expression arguments) {
+		return new EmptyObject(address);
 	}
 
 	public static class EmptyObject extends InstructionObject {
 
-		public EmptyObject(Scope context) {
-			super(context);
+		public EmptyObject(Expression address) {
+			super(address);
 		}
 
 		@Override

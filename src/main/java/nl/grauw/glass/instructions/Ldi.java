@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -8,9 +7,9 @@ import nl.grauw.glass.expressions.Schema;
 public class Ldi extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Ldi_.ARGUMENTS.check(arguments))
-			return new Ldi_(context);
+			return new Ldi_(address);
 		throw new ArgumentException();
 	}
 
@@ -18,8 +17,8 @@ public class Ldi extends InstructionFactory {
 
 		public static Schema ARGUMENTS = new Schema();
 
-		public Ldi_(Scope context) {
-			super(context);
+		public Ldi_(Expression address) {
+			super(address);
 		}
 
 		@Override

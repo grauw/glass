@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -8,9 +7,9 @@ import nl.grauw.glass.expressions.Schema;
 public class Rrca extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Rrca_.ARGUMENTS.check(arguments))
-			return new Rrca_(context);
+			return new Rrca_(address);
 		throw new ArgumentException();
 	}
 
@@ -18,8 +17,8 @@ public class Rrca extends InstructionFactory {
 
 		public static Schema ARGUMENTS = new Schema();
 
-		public Rrca_(Scope context) {
-			super(context);
+		public Rrca_(Expression address) {
+			super(address);
 		}
 
 		@Override

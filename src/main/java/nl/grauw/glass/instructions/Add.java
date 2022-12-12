@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,13 +8,13 @@ import nl.grauw.glass.expressions.Schema;
 public class Add extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Add_A_R.ARGUMENTS.check(arguments))
-			return new Add_A_R(context, arguments.getElement(1));
+			return new Add_A_R(address, arguments.getElement(1));
 		if (Add_A_N.ARGUMENTS.check(arguments))
-			return new Add_A_N(context, arguments.getElement(1));
+			return new Add_A_N(address, arguments.getElement(1));
 		if (Add_HL_RR.ARGUMENTS.check(arguments))
-			return new Add_HL_RR(context, arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
+			return new Add_HL_RR(address, arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 		throw new ArgumentException();
 	}
 
@@ -25,8 +24,8 @@ public class Add extends InstructionFactory {
 
 		private Expression argument;
 
-		public Add_A_R(Scope context, Expression arguments) {
-			super(context);
+		public Add_A_R(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -49,8 +48,8 @@ public class Add extends InstructionFactory {
 
 		private Expression argument;
 
-		public Add_A_N(Scope context, Expression arguments) {
-			super(context);
+		public Add_A_N(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -73,8 +72,8 @@ public class Add extends InstructionFactory {
 		private Register register1;
 		private Register register2;
 
-		public Add_HL_RR(Scope context, Register register1, Register register2) {
-			super(context);
+		public Add_HL_RR(Expression address, Register register1, Register register2) {
+			super(address);
 			this.register1 = register1;
 			this.register2 = register2;
 

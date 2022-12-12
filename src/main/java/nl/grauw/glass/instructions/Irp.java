@@ -41,8 +41,8 @@ public class Irp extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
-		return new Empty.EmptyObject(context);
+	public InstructionObject createObject(Expression address, Expression arguments) {
+		return new Empty.EmptyObject(address);
 	}
 
 }

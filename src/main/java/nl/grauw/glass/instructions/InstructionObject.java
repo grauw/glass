@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Add;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -11,14 +10,13 @@ public abstract class InstructionObject {
 
 	private static final byte[] EMPTY_BYTES = new byte[] {};
 
-	protected final Scope context;
+	protected final Expression address;
 
-	public InstructionObject(Scope context) {
-		this.context = context;
+	public InstructionObject(Expression address) {
+		this.address = address;
 	}
 
-	public Expression resolve(Expression address) {
-		context.setAddress(address);
+	public Expression resolve() {
 		return new Add(getSize(), address).get(Type.INTEGER);
 	}
 

@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -8,13 +7,13 @@ import nl.grauw.glass.expressions.Schema;
 public class Jp extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Jp_F_N.ARGUMENTS.check(arguments))
-			return new Jp_F_N(context, arguments.getElement(0), arguments.getElement(1));
+			return new Jp_F_N(address, arguments.getElement(0), arguments.getElement(1));
 		if (Jp_HL.ARGUMENTS.check(arguments) || Jp_HL.ARGUMENTS_ALT.check(arguments))
-			return new Jp_HL(context, arguments.getElement(0));
+			return new Jp_HL(address, arguments.getElement(0));
 		if (Jp_N.ARGUMENTS.check(arguments))
-			return new Jp_N(context, arguments.getElement(0));
+			return new Jp_N(address, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 
@@ -24,8 +23,8 @@ public class Jp extends InstructionFactory {
 
 		private Expression argument;
 
-		public Jp_N(Scope context, Expression argument) {
-			super(context);
+		public Jp_N(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -49,8 +48,8 @@ public class Jp extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Jp_F_N(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Jp_F_N(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -75,8 +74,8 @@ public class Jp extends InstructionFactory {
 
 		private Expression argument;
 
-		public Jp_HL(Scope context, Expression argument) {
-			super(context);
+		public Jp_HL(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

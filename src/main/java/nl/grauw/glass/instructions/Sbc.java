@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,13 +8,13 @@ import nl.grauw.glass.expressions.Schema;
 public class Sbc extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Sbc_A_R.ARGUMENTS.check(arguments))
-			return new Sbc_A_R(context, arguments.getElement(1));
+			return new Sbc_A_R(address, arguments.getElement(1));
 		if (Sbc_A_N.ARGUMENTS.check(arguments))
-			return new Sbc_A_N(context, arguments.getElement(1));
+			return new Sbc_A_N(address, arguments.getElement(1));
 		if (Sbc_HL_RR.ARGUMENTS.check(arguments))
-			return new Sbc_HL_RR(context, arguments.getElement(1));
+			return new Sbc_HL_RR(address, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 
@@ -25,8 +24,8 @@ public class Sbc extends InstructionFactory {
 
 		private Expression argument;
 
-		public Sbc_A_R(Scope context, Expression arguments) {
-			super(context);
+		public Sbc_A_R(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -49,8 +48,8 @@ public class Sbc extends InstructionFactory {
 
 		private Expression argument;
 
-		public Sbc_A_N(Scope context, Expression arguments) {
-			super(context);
+		public Sbc_A_N(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -72,8 +71,8 @@ public class Sbc extends InstructionFactory {
 
 		private Expression argument;
 
-		public Sbc_HL_RR(Scope context, Expression argument) {
-			super(context);
+		public Sbc_HL_RR(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

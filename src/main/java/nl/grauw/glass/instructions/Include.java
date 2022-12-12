@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import java.util.List;
 
 import nl.grauw.glass.Line;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
@@ -25,13 +24,13 @@ public class Include extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
-			return new Empty.EmptyObject(context);
+			return new Empty.EmptyObject(address);
 		if (ARGUMENTS_ONCE.check(arguments)) {
 			String annotation = arguments.getAnnotation().getName();
 			if ("once".equals(annotation) || "ONCE".equals(annotation))
-				return new Empty.EmptyObject(context);
+				return new Empty.EmptyObject(address);
 		}
 		throw new ArgumentException();
 	}

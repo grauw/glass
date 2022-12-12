@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,9 +8,9 @@ import nl.grauw.glass.expressions.Schema;
 public class Push extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Push_RR.ARGUMENTS.check(arguments))
-			return new Push_RR(context, arguments.getElement(0));
+			return new Push_RR(address, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 
@@ -21,8 +20,8 @@ public class Push extends InstructionFactory {
 
 		Expression argument;
 
-		public Push_RR(Scope context, Expression argument) {
-			super(context);
+		public Push_RR(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

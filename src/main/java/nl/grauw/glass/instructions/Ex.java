@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -8,13 +7,13 @@ import nl.grauw.glass.expressions.Schema;
 public class Ex extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Ex_AF.ARGUMENTS.check(arguments))
-			return new Ex_AF(context);
+			return new Ex_AF(address);
 		if (Ex_DE_HL.ARGUMENTS.check(arguments))
-			return new Ex_DE_HL(context);
+			return new Ex_DE_HL(address);
 		if (Ex_SP.ARGUMENTS.check(arguments))
-			return new Ex_SP(context, arguments.getElement(1));
+			return new Ex_SP(address, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 
@@ -22,8 +21,8 @@ public class Ex extends InstructionFactory {
 
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_AF, Schema.DIRECT_AF_);
 
-		public Ex_AF(Scope context) {
-			super(context);
+		public Ex_AF(Expression address) {
+			super(address);
 		}
 
 		@Override
@@ -42,8 +41,8 @@ public class Ex extends InstructionFactory {
 
 		public static Schema ARGUMENTS = new Schema(Schema.DIRECT_DE, Schema.DIRECT_HL);
 
-		public Ex_DE_HL(Scope context) {
-			super(context);
+		public Ex_DE_HL(Expression address) {
+			super(address);
 		}
 
 		@Override
@@ -64,8 +63,8 @@ public class Ex extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ex_SP(Scope context, Expression argument) {
-			super(context);
+		public Ex_SP(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

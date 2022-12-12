@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,11 +8,11 @@ import nl.grauw.glass.expressions.Schema;
 public class Dec extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Dec_R.ARGUMENTS.check(arguments))
-			return new Dec_R(context, arguments.getElement(0));
+			return new Dec_R(address, arguments.getElement(0));
 		if (Dec_RR.ARGUMENTS.check(arguments))
-			return new Dec_RR(context, arguments.getElement(0));
+			return new Dec_RR(address, arguments.getElement(0));
 		throw new ArgumentException();
 	}
 
@@ -23,8 +22,8 @@ public class Dec extends InstructionFactory {
 
 		private Expression argument;
 
-		public Dec_R(Scope context, Expression arguments) {
-			super(context);
+		public Dec_R(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 
@@ -47,8 +46,8 @@ public class Dec extends InstructionFactory {
 
 		private Expression argument;
 
-		public Dec_RR(Scope context, Expression arguments) {
-			super(context);
+		public Dec_RR(Expression address, Expression arguments) {
+			super(address);
 			this.argument = arguments;
 		}
 

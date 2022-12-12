@@ -4,7 +4,6 @@ import java.util.List;
 
 import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
@@ -32,9 +31,9 @@ public class If extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
-			return new IfObject(context, arguments);
+			return new IfObject(address, arguments);
 		throw new ArgumentException();
 	}
 
@@ -42,14 +41,13 @@ public class If extends InstructionFactory {
 
 		private final Expression argument;
 
-		public IfObject(Scope context, Expression argument) {
-			super(context);
+		public IfObject(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
 		@Override
-		public Expression resolve(Expression address) {
-			context.setAddress(address);
+		public Expression resolve() {
 			if (argument.getInteger() != 0) {
 				return thenSource.resolve(address);
 			} else {

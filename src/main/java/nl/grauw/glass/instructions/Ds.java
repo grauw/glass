@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.AssemblyException;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -31,13 +30,13 @@ public class Ds extends InstructionFactory implements SectionContext {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS_N.check(arguments))
-			return new Ds_N_N(context, null, arguments, IntegerLiteral.ZERO);
+			return new Ds_N_N(address, null, arguments, IntegerLiteral.ZERO);
 		if (ARGUMENTS_N_N.check(arguments))
-			return new Ds_N_N(context, null, arguments.getElement(0), arguments.getElement(1));
+			return new Ds_N_N(address, null, arguments.getElement(0), arguments.getElement(1));
 		if (ARGUMENTS_VIRTUAL.check(arguments))
-			return new Ds_N_N(context, arguments.getAnnotation(), arguments.getAnnotee(), IntegerLiteral.ZERO);
+			return new Ds_N_N(address, arguments.getAnnotation(), arguments.getAnnotee(), IntegerLiteral.ZERO);
 		throw new ArgumentException();
 	}
 
@@ -47,8 +46,8 @@ public class Ds extends InstructionFactory implements SectionContext {
 		private final Expression size;
 		private final Expression value;
 
-		public Ds_N_N(Scope context, Identifier annotation, Expression size, Expression value) {
-			super(context);
+		public Ds_N_N(Expression address, Identifier annotation, Expression size, Expression value) {
+			super(address);
 			this.virtual = annotation != null && ("virtual".equals(annotation.getName()) || "VIRTUAL".equals(annotation.getName()));
 			this.size = size;
 			this.value = value;
@@ -58,11 +57,11 @@ public class Ds extends InstructionFactory implements SectionContext {
 		}
 
 		@Override
-		public Expression resolve(Expression address) {
+		public Expression resolve() {
 			Expression innerAddress = address;
 			for (Section section : sections)
 				innerAddress = section.getSource().resolve(innerAddress);
-			return super.resolve(address);
+			return super.resolve();
 		}
 
 		@Override

@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Schema;
@@ -8,9 +7,9 @@ import nl.grauw.glass.expressions.Schema;
 public class Mulub extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Mulub_R_R.ARGUMENTS.check(arguments))
-			return new Mulub_R_R(context, arguments.getElement(1));
+			return new Mulub_R_R(address, arguments.getElement(1));
 		throw new ArgumentException();
 	}
 
@@ -20,8 +19,8 @@ public class Mulub extends InstructionFactory {
 
 		private Expression argument;
 
-		public Mulub_R_R(Scope context, Expression argument) {
-			super(context);
+		public Mulub_R_R(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 

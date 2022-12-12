@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import java.util.List;
 
 import nl.grauw.glass.Line;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Schema;
@@ -30,8 +29,8 @@ public class Proc extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
-		return new Empty.EmptyObject(context);
+	public InstructionObject createObject(Expression address, Expression arguments) {
+		return new Empty.EmptyObject(address);
 	}
 
 }

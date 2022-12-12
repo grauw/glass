@@ -1,6 +1,5 @@
 package nl.grauw.glass.instructions;
 
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
@@ -9,35 +8,35 @@ import nl.grauw.glass.expressions.Schema;
 public class Ld extends InstructionFactory {
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
+	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (Ld_R_R.ARGUMENTS.check(arguments))
-			return new Ld_R_R(context, arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
+			return new Ld_R_R(address, arguments.getElement(0).getRegister(), arguments.getElement(1).getRegister());
 		if (Ld_A_BCDE.ARGUMENTS.check(arguments))
-			return new Ld_A_BCDE(context, arguments.getElement(1));
+			return new Ld_A_BCDE(address, arguments.getElement(1));
 		if (Ld_BCDE_A.ARGUMENTS.check(arguments))
-			return new Ld_BCDE_A(context, arguments.getElement(0));
+			return new Ld_BCDE_A(address, arguments.getElement(0));
 		if (Ld_SP_HL.ARGUMENTS.check(arguments))
-			return new Ld_SP_HL(context, arguments.getElement(1));
+			return new Ld_SP_HL(address, arguments.getElement(1));
 		if (Ld_A_IR.ARGUMENTS.check(arguments))
-			return new Ld_A_IR(context, arguments.getElement(1));
+			return new Ld_A_IR(address, arguments.getElement(1));
 		if (Ld_IR_A.ARGUMENTS.check(arguments))
-			return new Ld_IR_A(context, arguments.getElement(0));
+			return new Ld_IR_A(address, arguments.getElement(0));
 		if (Ld_R_N.ARGUMENTS.check(arguments))
-			return new Ld_R_N(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_R_N(address, arguments.getElement(0), arguments.getElement(1));
 		if (Ld_RR_N.ARGUMENTS.check(arguments))
-			return new Ld_RR_N(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_RR_N(address, arguments.getElement(0), arguments.getElement(1));
 		if (Ld_A_NN.ARGUMENTS.check(arguments))
-			return new Ld_A_NN(context, arguments.getElement(0));
+			return new Ld_A_NN(address, arguments.getElement(0));
 		if (Ld_HL_NN.ARGUMENTS.check(arguments))
-			return new Ld_HL_NN(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_HL_NN(address, arguments.getElement(0), arguments.getElement(1));
 		if (Ld_RR_NN.ARGUMENTS.check(arguments))
-			return new Ld_RR_NN(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_RR_NN(address, arguments.getElement(0), arguments.getElement(1));
 		if (Ld_NN_A.ARGUMENTS.check(arguments))
-			return new Ld_NN_A(context, arguments.getElement(1));
+			return new Ld_NN_A(address, arguments.getElement(1));
 		if (Ld_NN_HL.ARGUMENTS.check(arguments))
-			return new Ld_NN_HL(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_NN_HL(address, arguments.getElement(0), arguments.getElement(1));
 		if (Ld_NN_RR.ARGUMENTS.check(arguments))
-			return new Ld_NN_RR(context, arguments.getElement(0), arguments.getElement(1));
+			return new Ld_NN_RR(address, arguments.getElement(0), arguments.getElement(1));
 		throw new ArgumentException();
 	}
 
@@ -48,8 +47,8 @@ public class Ld extends InstructionFactory {
 		private Register register1;
 		private Register register2;
 
-		public Ld_R_R(Scope context, Register register1, Register register2) {
-			super(context);
+		public Ld_R_R(Expression address, Register register1, Register register2) {
+			super(address);
 			this.register1 = register1;
 			this.register2 = register2;
 
@@ -84,8 +83,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_A_BCDE(Scope context, Expression argument) {
-			super(context);
+		public Ld_A_BCDE(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -107,8 +106,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_BCDE_A(Scope context, Expression argument) {
-			super(context);
+		public Ld_BCDE_A(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -130,8 +129,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_SP_HL(Scope context, Expression argument) {
-			super(context);
+		public Ld_SP_HL(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -153,8 +152,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_A_IR(Scope context, Expression argument) {
-			super(context);
+		public Ld_A_IR(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -178,8 +177,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_IR_A(Scope context, Expression argument) {
-			super(context);
+		public Ld_IR_A(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -204,8 +203,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_R_N(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_R_N(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -230,8 +229,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_RR_N(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_RR_N(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -256,8 +255,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_A_NN(Scope context, Expression argument) {
-			super(context);
+		public Ld_A_NN(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -281,8 +280,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_HL_NN(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_HL_NN(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -307,8 +306,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_RR_NN(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_RR_NN(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -333,8 +332,8 @@ public class Ld extends InstructionFactory {
 
 		private Expression argument;
 
-		public Ld_NN_A(Scope context, Expression argument) {
-			super(context);
+		public Ld_NN_A(Expression address, Expression argument) {
+			super(address);
 			this.argument = argument;
 		}
 
@@ -358,8 +357,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_NN_HL(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_NN_HL(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}
@@ -384,8 +383,8 @@ public class Ld extends InstructionFactory {
 		private Expression argument1;
 		private Expression argument2;
 
-		public Ld_NN_RR(Scope context, Expression argument1, Expression argument2) {
-			super(context);
+		public Ld_NN_RR(Expression address, Expression argument1, Expression argument2) {
+			super(address);
 			this.argument1 = argument1;
 			this.argument2 = argument2;
 		}

@@ -48,24 +48,24 @@ public class Macro extends InstructionFactory {
 	}
 
 	@Override
-	public InstructionObject createObject(Scope context, Expression arguments) {
-		return new MacroObject(context);
+	public InstructionObject createObject(Expression address, Expression arguments) {
+		return new MacroObject(address);
 	}
 
 	public class MacroObject extends Empty.EmptyObject {
 
-		public MacroObject(Scope context) {
-			super(context);
+		public MacroObject(Expression address) {
+			super(address);
 		}
 
 		@Override
-		public Expression resolve(Expression address) {
+		public Expression resolve() {
 			try {
 				source.resolve(IntegerLiteral.ZERO);
 			} catch (AssemblyException e) {
 				// ignore
 			}
-			return super.resolve(address);
+			return super.resolve();
 		}
 
 	}

@@ -3,7 +3,6 @@ package nl.grauw.glass.instructions;
 import java.util.List;
 
 import nl.grauw.glass.Line;
-import nl.grauw.glass.Scope;
 import nl.grauw.glass.expressions.Expression;
 
 public abstract class InstructionFactory {
@@ -12,6 +11,6 @@ public abstract class InstructionFactory {
 		lines.add(line);
 	}
 
-	public abstract InstructionObject createObject(Scope context, Expression arguments);
+	public abstract InstructionObject createObject(Expression address, Expression arguments);
 
 }
