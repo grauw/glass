@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.AssemblyException;
+import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Identifier;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -18,15 +19,15 @@ public class Ds extends InstructionFactory implements SectionContext {
 	public static Schema ARGUMENTS_N_N = new Schema(Schema.INTEGER, Schema.INTEGER);
 	public static Schema ARGUMENTS_VIRTUAL = new Schema(new Schema.IsAnnotation(Schema.INTEGER));
 
-	private final List<Section> sections = new ArrayList<>();
+	private final List<Source> sectionSources = new ArrayList<>();
 
 	@Override
-	public void addSection(Section section) {
-		sections.add(section);
+	public void addSectionSource(Source source) {
+		sectionSources.add(source);
 	}
 
-	public List<Section> getSections() {
-		return sections;
+	public List<Source> getSectionSources() {
+		return sectionSources;
 	}
 
 	@Override
@@ -59,8 +60,8 @@ public class Ds extends InstructionFactory implements SectionContext {
 		@Override
 		public Expression resolve() {
 			Expression innerAddress = address;
-			for (Section section : sections)
-				innerAddress = section.getSource().resolve(innerAddress);
+			for (Source source : sectionSources)
+				innerAddress = source.resolve(innerAddress);
 			return super.resolve();
 		}
 
@@ -72,8 +73,8 @@ public class Ds extends InstructionFactory implements SectionContext {
 		@Override
 		public byte[] getBytes() {
 			ByteArrayOutputStream sourceByteStream = new ByteArrayOutputStream(size.getInteger());
-			for (Section section : sections) {
-				sourceByteStream.writeBytes(section.getSource().getBytes());
+			for (Source source : sectionSources) {
+				sourceByteStream.writeBytes(source.getBytes());
 			}
 
 			if (sourceByteStream.size() > size.getInteger())

@@ -4,7 +4,6 @@ import java.io.PrintStream;
 
 import nl.grauw.glass.SourceFile.SourceFileSpan;
 import nl.grauw.glass.instructions.Ds;
-import nl.grauw.glass.instructions.Section;
 
 public class ListingWriter {
 
@@ -20,8 +19,8 @@ public class ListingWriter {
 		for (Line line : source.getLines()) {
 			write(line);
 			if (line.getInstruction() instanceof Ds ds) {
-				for (Section section : ds.getSections()) {
-					write(section.getSource());
+				for (Source sectionSource : ds.getSectionSources()) {
+					write(sectionSource);
 				}
 			}
 		}

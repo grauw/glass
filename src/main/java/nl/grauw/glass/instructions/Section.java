@@ -30,7 +30,7 @@ public class Section extends InstructionFactory {
 		if (!line.getArguments().is(Type.SECTIONCONTEXT))
 			throw new ArgumentException("Argument does not reference a section context.");
 
-		line.getArguments().getSectionContext().addSection(this);
+		line.getArguments().getSectionContext().addSectionSource(source);
 
 		source.expand();
 		super.expand(line, lines);
