@@ -19,6 +19,11 @@ public class Empty extends InstructionFactory {
 		}
 
 		@Override
+		public Expression resolve() {
+			return address;
+		}
+
+		@Override
 		public Expression getSize() {
 			return IntegerLiteral.ZERO;
 		}
