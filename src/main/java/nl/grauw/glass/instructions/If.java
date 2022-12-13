@@ -33,17 +33,21 @@ public class If extends InstructionFactory {
 	@Override
 	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS.check(arguments))
-			return new IfObject(address, arguments);
+			return new IfObject(address, arguments, thenSource, elseSource);
 		throw new ArgumentException();
 	}
 
-	public class IfObject extends InstructionObject {
+	public static class IfObject extends InstructionObject {
 
 		private final Expression argument;
+		private final Source thenSource;
+		private final Source elseSource;
 
-		public IfObject(Expression address, Expression argument) {
+		public IfObject(Expression address, Expression argument, Source thenSource, Source elseSource) {
 			super(address);
 			this.argument = argument;
+			this.thenSource = thenSource;
+			this.elseSource = elseSource;
 		}
 
 		@Override

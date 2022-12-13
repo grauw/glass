@@ -49,13 +49,16 @@ public class Macro extends InstructionFactory {
 
 	@Override
 	public InstructionObject createObject(Expression address, Expression arguments) {
-		return new MacroObject(address);
+		return new MacroObject(address, source);
 	}
 
-	public class MacroObject extends Empty.EmptyObject {
+	public static class MacroObject extends Empty.EmptyObject {
 
-		public MacroObject(Expression address) {
+		private final Source source;
+
+		public MacroObject(Expression address, Source source) {
 			super(address);
+			this.source = source;
 		}
 
 		@Override

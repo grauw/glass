@@ -33,25 +33,27 @@ public class Ds extends InstructionFactory implements SectionContext {
 	@Override
 	public InstructionObject createObject(Expression address, Expression arguments) {
 		if (ARGUMENTS_N.check(arguments))
-			return new Ds_N_N(address, null, arguments, IntegerLiteral.ZERO);
+			return new Ds_N_N(address, null, arguments, IntegerLiteral.ZERO, sectionSources);
 		if (ARGUMENTS_N_N.check(arguments))
-			return new Ds_N_N(address, null, arguments.getElement(0), arguments.getElement(1));
+			return new Ds_N_N(address, null, arguments.getElement(0), arguments.getElement(1), sectionSources);
 		if (ARGUMENTS_VIRTUAL.check(arguments))
-			return new Ds_N_N(address, arguments.getAnnotation(), arguments.getAnnotee(), IntegerLiteral.ZERO);
+			return new Ds_N_N(address, arguments.getAnnotation(), arguments.getAnnotee(), IntegerLiteral.ZERO, sectionSources);
 		throw new ArgumentException();
 	}
 
-	public class Ds_N_N extends InstructionObject {
+	public static class Ds_N_N extends InstructionObject {
 
 		private final boolean virtual;
 		private final Expression size;
 		private final Expression value;
+		private List<Source> sectionSources;
 
-		public Ds_N_N(Expression address, Identifier annotation, Expression size, Expression value) {
+		public Ds_N_N(Expression address, Identifier annotation, Expression size, Expression value, List<Source> sectionSources) {
 			super(address);
 			this.virtual = annotation != null && ("virtual".equals(annotation.getName()) || "VIRTUAL".equals(annotation.getName()));
 			this.size = size;
 			this.value = value;
+			this.sectionSources = sectionSources;
 
 			if (annotation != null && !virtual)
 				throw new ArgumentException("Unsupported annotation: " + annotation.getName());
