@@ -97,8 +97,8 @@ public class Line {
 
 	public Expression resolve(Expression address) {
 		try {
-			scope.setAddress(address);
 			instructionObject = getInstruction().createObject(address, arguments);
+			scope.setObject(instructionObject);
 			return instructionObject.resolve();
 		} catch (AssemblyException e) {
 			e.addContext(sourceSpan);

@@ -16,6 +16,10 @@ public abstract class InstructionObject {
 		this.address = address;
 	}
 
+	public final Expression getAddress() {
+		return address;
+	}
+
 	public Expression resolve() {
 		return new Add(getSize(), address).get(Type.INTEGER);
 	}

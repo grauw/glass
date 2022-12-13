@@ -12,12 +12,13 @@ import nl.grauw.glass.expressions.ErrorLiteral;
 import nl.grauw.glass.expressions.EvaluationException;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Type;
+import nl.grauw.glass.instructions.InstructionObject;
 
 public class Scope implements Context {
 
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
-	private Expression address;
+	private InstructionObject object;
 
 	public Scope() {
 		this(null);
@@ -37,15 +38,19 @@ public class Scope implements Context {
 
 	@Override
 	public Expression getAddress() {
-		if (this.address == null)
-			throw new EvaluationException("Address not initialized.");
-		return address;
+		return getObject().getAddress();
 	}
 
-	public void setAddress(Expression address) {
-		if (this.address != null)
-			throw new AssemblyException("Address was already set.");
-		this.address = address;
+	public InstructionObject getObject() {
+		if (this.object == null)
+			throw new EvaluationException("Object not initialized.");
+		return object;
+	}
+
+	public void setObject(InstructionObject object) {
+		if (this.object != null)
+			throw new AssemblyException("Object was already set.");
+		this.object = object;
 	}
 
 	public void addSymbol(String name, Expression value) {

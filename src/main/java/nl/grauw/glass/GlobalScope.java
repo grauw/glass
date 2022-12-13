@@ -2,7 +2,6 @@ package nl.grauw.glass;
 
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Instruction;
-import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.instructions.*;
 import nl.grauw.glass.instructions.Error;
 
@@ -10,7 +9,6 @@ public class GlobalScope extends Scope {
 
 	public GlobalScope() {
 		super();
-		setAddress(IntegerLiteral.ZERO);
 
 		addBuiltInSymbol("adc", new Instruction(new Adc(), new Scope(this)));
 		addBuiltInSymbol("add", new Instruction(new Add(), new Scope(this)));
