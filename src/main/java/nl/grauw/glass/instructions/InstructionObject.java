@@ -4,7 +4,6 @@ import nl.grauw.glass.expressions.Add;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Register;
-import nl.grauw.glass.expressions.Type;
 
 public abstract class InstructionObject {
 
@@ -21,7 +20,7 @@ public abstract class InstructionObject {
 	}
 
 	public Expression resolve() {
-		return new Add(getSize(), address).get(Type.INTEGER);
+		return new Add(getSize(), address);
 	}
 
 	public abstract Expression getSize();

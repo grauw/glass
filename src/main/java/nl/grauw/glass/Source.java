@@ -6,6 +6,7 @@ import java.util.List;
 
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
+import nl.grauw.glass.expressions.Type;
 
 public class Source {
 
@@ -71,7 +72,7 @@ public class Source {
 
 	public Expression resolve(Expression address) {
 		for (Line line : lines)
-			address = line.resolve(address);
+			address = line.resolve(address).get(Type.INTEGER);
 		return address;
 	}
 
