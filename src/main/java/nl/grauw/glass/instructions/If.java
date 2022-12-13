@@ -2,10 +2,10 @@ package nl.grauw.glass.instructions;
 
 import java.util.List;
 
-import nl.grauw.glass.AssemblyException;
 import nl.grauw.glass.Line;
 import nl.grauw.glass.Source;
 import nl.grauw.glass.expressions.Expression;
+import nl.grauw.glass.expressions.IfElse;
 import nl.grauw.glass.expressions.Schema;
 
 public class If extends InstructionFactory {
@@ -57,7 +57,7 @@ public class If extends InstructionFactory {
 
 		@Override
 		public Expression getSize() {
-			throw new AssemblyException("Not implemented.");
+			return new IfElse(argument, thenSource.getSize(), elseSource.getSize());
 		}
 
 		@Override

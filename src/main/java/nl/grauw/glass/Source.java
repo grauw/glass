@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.grauw.glass.expressions.Add;
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.IntegerLiteral;
 import nl.grauw.glass.expressions.Type;
@@ -74,6 +75,13 @@ public class Source {
 		for (Line line : lines)
 			address = line.resolve(address).get(Type.INTEGER);
 		return address;
+	}
+
+	public Expression getSize() {
+		Expression size = IntegerLiteral.ZERO;
+		for (Line line : lines)
+			size = new Add(line.getSize(), size).get(Type.INTEGER);
+		return size;
 	}
 
 	public byte[] getBytes() {
