@@ -121,15 +121,43 @@ public class SourceTest extends TestBase {
 	}
 
 	@Test
-	public void testRelativeJumpAssembly() {
-		assertArrayEquals(b(0x18, 0x05, 0x28, 0x03, 0x10, 0x01, 0x00), assemble(
+	public void testRelativeJumpRangeForward() {
+		assertArrayEquals(b(0x18, 0x7F, 0x28, 0x7F, 0x10, 0x7F), assemble(
 			" org 100H",
-			" jr label",    // Because uninitialised labels use value 0, these
-			" jr z,label",  // would be out of range if they would generate
-			" djnz label",  // actual object code in the first pass.
-			" nop",
-			"label:"
+			" jr 181H",
+			" jr z,183H",
+			" djnz 185H"
 		));
+	}
+
+	@Test
+	public void testRelativeJumpRangeBackward() {
+		assertArrayEquals(b(0x18, 0x80, 0x28, 0x80, 0x10, 0x80), assemble(
+			" org 100H",
+			" jr 82H",
+			" jr z,84H",
+			" djnz 86H"
+		));
+	}
+
+	@Test
+	public void testRelativeJumpOutOfRangeForward() {
+		assertArgumentException(1, () -> {
+			assemble(
+				" org 100H",
+				" jr 182H"
+			);
+		});
+	}
+
+	@Test
+	public void testRelativeJumpOutOfRangeBackward() {
+		assertArgumentException(1, () -> {
+			assemble(
+				" org 100H",
+				" jr 81H"
+			);
+		});
 	}
 
 	@Test
