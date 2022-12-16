@@ -8,7 +8,7 @@ public class Equ extends Directive {
 
 	@Override
 	public void register(Scope scope, Line line) {
-		if (line.getLabels().size() == 0)
+		if (line.getLabels().isEmpty())
 			throw new AssemblyException("Equ without label.");
 		for (String label : line.getLabels())
 			scope.addSymbol(label, line.getArguments());

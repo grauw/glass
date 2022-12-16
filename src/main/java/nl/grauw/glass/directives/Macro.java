@@ -22,7 +22,7 @@ public class Macro extends Directive {
 
 	@Override
 	public void register(Scope scope, Line line) {
-		if (line.getLabels().size() == 0)
+		if (line.getLabels().isEmpty())
 			throw new AssemblyException("Macro without label.");
 		Instruction instruction = new Instruction(
 			new MacroInstruction(line.getArguments(), source),

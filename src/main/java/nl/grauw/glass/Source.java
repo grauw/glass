@@ -27,7 +27,7 @@ public class Source {
 	}
 
 	public Line getLastLine() {
-		return lines.size() > 0 ? lines.get(lines.size() - 1) : null;
+		return lines.isEmpty() ? null : lines.get(lines.size() - 1);
 	}
 
 	public Source copy(Scope scope) {
