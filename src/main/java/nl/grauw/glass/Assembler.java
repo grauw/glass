@@ -35,6 +35,7 @@ public class Assembler {
 		Path symbolPath = null;
 		Path listPath = null;
 		List<Path> includePaths = new ArrayList<Path>();
+		boolean perf = false;
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-I")) {
 				if (++i >= args.length)
@@ -44,6 +45,8 @@ public class Assembler {
 				if (++i >= args.length)
 					throw new AssemblyException("Missing argument value.");
 				listPath = Paths.get(args[i]);
+			} else if (args[i].equals("--perf")) {
+				perf = true;
 			} else if (sourcePath == null) {
 				sourcePath = Paths.get(args[i]);
 			} else if (objectPath == null) {
@@ -55,12 +58,18 @@ public class Assembler {
 			}
 		}
 
+		long startTime = System.currentTimeMillis();
+
 		instance = new Assembler(sourcePath, includePaths);
 		instance.writeObject(objectPath);
 		if (symbolPath != null)
 			instance.writeSymbols(symbolPath);
 		if (listPath != null)
 			instance.writeList(listPath);
+		
+		if (perf) {
+			System.out.println(String.format("Assembed in %d ms", System.currentTimeMillis() - startTime));
+		}
 	}
 
 	public Assembler(Path sourcePath, List<Path> includePaths) {
