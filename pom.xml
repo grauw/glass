@@ -15,7 +15,7 @@
 	<licenses>
 		<license>
 			<name>Simplified BSD</name>
-			<url>https://hg.sr.ht/~grauw/fmpcm/raw/@/LICENSE</url>
+			<url>https://github.com/grauw/glass/blob/main/LICENSE</url>
 			<distribution>repo</distribution>
 			<comments>This is a free software license.</comments>
 		</license>
@@ -27,9 +27,9 @@
 	</organization>
 	
 	<scm>
-		<connection>scm:hg:https://hg.sr.ht/~grauw/glass</connection>
-		<developerConnection>scm:hg:https://hg.sr.ht/~grauw/glass</developerConnection>
-		<url>https://hg.sr.ht/~grauw/glass</url>
+		<connection>scm:git:https://github.com/grauw/glass.git</connection>
+		<developerConnection>scm:git:ssh://git@github.com/grauw/glass.git</developerConnection>
+		<url>https://github.com/grauw/glass</url>
 	</scm>
 	
 	<properties>
@@ -72,6 +72,7 @@
 					</execution>
 				</executions>
 				<configuration>
+					<shortRevisionLength>8</shortRevisionLength>
 					<revisionOnScmFailure>${maven.build.timestamp}</revisionOnScmFailure>
 				</configuration>
 			</plugin>

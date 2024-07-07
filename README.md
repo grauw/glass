@@ -8,7 +8,7 @@ Project information
 
   * Author: Laurens Holst <laurens@grauw.nl>
   * Site: <http://www.grauw.nl/projects/glass/>
-  * Source: <https://hg.sr.ht/~grauw/glass>
+  * Source: <https://github.com/grauw/glass>
   * Support: <https://www.msx.org/forum/msx-talk/development/glass-z80-assembler>
   * License: Simplified BSD License
 
