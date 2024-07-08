@@ -2,7 +2,6 @@ package nl.grauw.glass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.function.Executable;
@@ -26,7 +25,7 @@ public class TestBase {
 	}
 
 	public static List<String> s(String... values) {
-		return Arrays.asList(values);
+		return List.of(values);
 	}
 
 	public Expression parseExpression(String text) {

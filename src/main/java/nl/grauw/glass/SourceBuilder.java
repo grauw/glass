@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import nl.grauw.glass.directives.Directive;
@@ -26,12 +25,12 @@ import nl.grauw.glass.expressions.Type;
 
 public class SourceBuilder {
 
-	private static final List<String> END_TERMINATORS = Arrays.asList("end", "END");
-	private static final List<String> ENDM_TERMINATORS = Arrays.asList("endm", "ENDM");
-	private static final List<String> ENDP_TERMINATORS = Arrays.asList("endp", "ENDP");
-	private static final List<String> ENDS_TERMINATORS = Arrays.asList("ends", "ENDS");
-	private static final List<String> ELSE_TERMINATORS = Arrays.asList("else", "ELSE", "endif", "ENDIF");
-	private static final List<String> ENDIF_TERMINATORS = Arrays.asList("endif", "ENDIF");
+	private static final List<String> END_TERMINATORS = List.of("end", "END");
+	private static final List<String> ENDM_TERMINATORS = List.of("endm", "ENDM");
+	private static final List<String> ENDP_TERMINATORS = List.of("endp", "ENDP");
+	private static final List<String> ENDS_TERMINATORS = List.of("ends", "ENDS");
+	private static final List<String> ELSE_TERMINATORS = List.of("else", "ELSE", "endif", "ENDIF");
+	private static final List<String> ENDIF_TERMINATORS = List.of("endif", "ENDIF");
 
 	private final Source source;
 	private final List<String> terminators;

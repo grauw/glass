@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -65,7 +64,7 @@ public class ListFileTest extends TestBase {
 	@Test
 	public void testInclude() throws IOException {
 		Path testInclude = temporaryDirectory.resolve("testInclude.asm");
-		Files.write(testInclude, Arrays.asList(
+		Files.write(testInclude, List.of(
 			"\trst 38H",
 			"\tjp $"
 		));
@@ -95,7 +94,7 @@ public class ListFileTest extends TestBase {
 	static Path temporaryDirectory;
 
 	public List<String> list(String... sourceLines) {
-		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
+		SourceBuilder sourceBuilder = new SourceBuilder(List.of(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
 		source.assemble();
 		source.getBytes();  // force evaluation of checks in byte generation
@@ -109,7 +108,7 @@ public class ListFileTest extends TestBase {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-		return list.isEmpty() ? Collections.emptyList() : Arrays.asList(list.split("\\R"));
+		return list.isEmpty() ? Collections.emptyList() : List.of(list.split("\\R"));
 	}
 
 }

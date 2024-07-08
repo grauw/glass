@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
 public class SourceFile {
@@ -23,7 +22,7 @@ public class SourceFile {
 
 	public SourceFile(String string) {
 		this.path = null;
-		this.content = Arrays.asList(string.split("\\R", -1));
+		this.content = List.of(string.split("\\R", -1));
 	}
 
 	public SourceFileReader getReader() {

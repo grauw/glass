@@ -74,8 +74,7 @@ public class Ds extends InstructionFactory implements SectionContext {
 		public byte[] getBytes() {
 			ByteArrayOutputStream sourceByteStream = new ByteArrayOutputStream(size.getInteger());
 			for (Section section : sections) {
-				byte[] sectionBytes = section.getSource().getBytes();
-				sourceByteStream.write(sectionBytes, 0, sectionBytes.length);
+				sourceByteStream.writeBytes(section.getSource().getBytes());
 			}
 
 			if (sourceByteStream.size() > size.getInteger())
@@ -87,7 +86,7 @@ public class Ds extends InstructionFactory implements SectionContext {
 
 			byte[] padding = new byte[size.getInteger() - sourceByteStream.size()];
 			Arrays.fill(padding, (byte)value.getInteger());
-			sourceByteStream.write(padding, 0, padding.length);
+			sourceByteStream.writeBytes(padding);
 
 			return sourceByteStream.toByteArray();
 		}

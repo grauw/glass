@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -892,7 +892,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIfInclude() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIfInclude.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIfInclude.asm"), List.of(
 			"test: IF condition",
 			" ld a,a",
 			" ENDIF"
@@ -913,7 +913,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIfIncludeConstant() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIfIncludeConstant.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIfIncludeConstant.asm"), List.of(
 			"DEBUG: equ 1",
 			" nop"
 		));
@@ -1091,7 +1091,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testInclude() throws IOException {
-		Files.write(temporaryDirectory.resolve("testInclude.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testInclude.asm"), List.of(
 			" ld a,a"
 		));
 
@@ -1104,7 +1104,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIncludeLabel() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIncludeLabel.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIncludeLabel.asm"), List.of(
 			"test: ld a,a"
 		));
 
@@ -1117,7 +1117,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIncludeLabel2() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIncludeLabel2.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIncludeLabel2.asm"), List.of(
 			" ld a,a"
 		));
 
@@ -1130,7 +1130,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIncludeMacro() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIncludeMacro.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIncludeMacro.asm"), List.of(
 			"test: MACRO",
 			"x: db 11H",
 			"y: db 22H",
@@ -1146,7 +1146,7 @@ public class SourceTest extends TestBase {
 
 	@Test
 	public void testIncludeInRepeat() throws IOException {
-		Files.write(temporaryDirectory.resolve("testIncludeRept.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testIncludeRept.asm"), List.of(
 			"test: db test"
 		));
 
@@ -1168,7 +1168,7 @@ public class SourceTest extends TestBase {
 	static Path temporaryDirectory;
 
 	public byte[] assemble(String... sourceLines) {
-		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
+		SourceBuilder sourceBuilder = new SourceBuilder(List.of(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
 		source.assemble();
 		return source.getBytes();

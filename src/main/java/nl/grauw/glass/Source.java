@@ -78,8 +78,7 @@ public class Source {
 	public byte[] getBytes() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		for (Line line : lines) {
-			byte[] object = line.getBytes();
-			bytes.write(object, 0, object.length);
+			bytes.writeBytes(line.getBytes());
 		}
 		return bytes.toByteArray();
 	}

@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -190,7 +189,7 @@ public class SymbolsTest extends TestBase {
 
 	@Test
 	public void testInclude() throws IOException {
-		Files.write(temporaryDirectory.resolve("testInclude.asm"), Arrays.asList(
+		Files.write(temporaryDirectory.resolve("testInclude.asm"), List.of(
 			"test2: push ix",
 			"test3: pop ix"
 		));
@@ -234,13 +233,13 @@ public class SymbolsTest extends TestBase {
 	static Path temporaryDirectory;
 
 	public List<String> symbols(String... sourceLines) {
-		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
+		SourceBuilder sourceBuilder = new SourceBuilder(List.of(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
 		source.assemble();
 		source.getBytes();  // force evaluation of checks in byte generation
 
 		String symbols = source.getScope().serializeSymbols();
-		return symbols.isEmpty() ? Collections.emptyList() : Arrays.asList(symbols.split("\\R"));
+		return symbols.isEmpty() ? Collections.emptyList() : List.of(symbols.split("\\R"));
 	}
 
 }

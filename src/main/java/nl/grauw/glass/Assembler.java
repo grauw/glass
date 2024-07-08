@@ -79,7 +79,7 @@ public class Assembler {
 	public void writeObject(Path objectPath) {
 		source.assemble();
 
-		try (OutputStream output = objectPath != null ? createBufferedOutputStream(objectPath) : new NullOutputStream()) {
+		try (OutputStream output = objectPath != null ? createBufferedOutputStream(objectPath) : OutputStream.nullOutputStream()) {
 			byte[] objectCode = source.getBytes();
 			output.write(objectCode, 0, objectCode.length);
 		} catch (IOException e) {
@@ -105,12 +105,6 @@ public class Assembler {
 
 	public static OutputStream createBufferedOutputStream(Path path) throws IOException {
 		return new BufferedOutputStream(Files.newOutputStream(path), 0x10000);
-	}
-
-	public static class NullOutputStream extends OutputStream {
-		public void write(int b) throws IOException {}
-		public void write(byte[] b) throws IOException {}
-		public void write(byte[] b, int off, int len) throws IOException {}
 	}
 
 }
