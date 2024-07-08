@@ -33,7 +33,7 @@ public class Ex extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x08 };
+			return b(0x08);
 		}
 
 	}
@@ -53,7 +53,7 @@ public class Ex extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xEB };
+			return b(0xEB);
 		}
 
 	}
@@ -76,7 +76,7 @@ public class Ex extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return indexifyDirect(argument.getRegister(), (byte)0xE3);
+			return indexifyDirect(argument.getRegister(), 0xE3);
 		}
 
 	}

@@ -82,10 +82,10 @@ public class Register extends Expression {
 		return indexCode != NONE;
 	}
 
-	public byte getIndexCode() {
+	public int getIndexCode() {
 		if (indexCode == NONE)
 			throw new EvaluationException("Not an index register.");
-		return (byte)indexCode;
+		return indexCode;
 	}
 
 	public Expression getIndexOffset() {

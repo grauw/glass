@@ -32,7 +32,7 @@ public class Muluw extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)(0xC3 | argument.getRegister().get16BitCode() << 4) };
+			return b(0xED, 0xC3 | argument.getRegister().get16BitCode() << 4);
 		}
 
 	}

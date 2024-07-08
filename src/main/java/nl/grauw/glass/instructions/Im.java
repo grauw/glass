@@ -34,11 +34,11 @@ public class Im extends InstructionFactory {
 		public byte[] getBytes() {
 			int value = argument.getInteger();
 			if (value == 0) {
-				return new byte[] { (byte)0xED, (byte)0x46 };
+				return b(0xED, 0x46);
 			} else if (value == 1) {
-				return new byte[] { (byte)0xED, (byte)0x56 };
+				return b(0xED, 0x56);
 			} else if (value == 2) {
-				return new byte[] { (byte)0xED, (byte)0x5E };
+				return b(0xED, 0x5E);
 			}
 			throw new ArgumentException();
 		}

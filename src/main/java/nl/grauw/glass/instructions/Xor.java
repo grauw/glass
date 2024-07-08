@@ -36,7 +36,7 @@ public class Xor extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)(0xA8 | register.get8BitCode()));
+			return indexifyIndirect(register, 0xA8 | register.get8BitCode());
 		}
 
 	}
@@ -59,7 +59,7 @@ public class Xor extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xEE, (byte)argument.getInteger() };
+			return b(0xEE, argument.getInteger());
 		}
 
 	}

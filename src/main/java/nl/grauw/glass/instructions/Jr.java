@@ -39,7 +39,7 @@ public class Jr extends InstructionFactory {
 			int offset = new Subtract(argument, new Add(context.getAddress(), getSize())).getInteger();
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);
-			return new byte[] { (byte)0x18, (byte)offset };
+			return b(0x18, offset);
 		}
 
 	}
@@ -69,7 +69,7 @@ public class Jr extends InstructionFactory {
 			int offset = new Subtract(argument2, new Add(context.getAddress(), getSize())).getInteger();
 			if (offset < -128 || offset > 127)
 				throw new ArgumentException("Jump offset out of range: " + offset);
-			return new byte[] { (byte)(0x20 | argument1.getFlag().getCode() << 3), (byte)offset };
+			return b(0x20 | argument1.getFlag().getCode() << 3, offset);
 		}
 
 	}

@@ -37,7 +37,7 @@ public class Jp extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument.getInteger();
-			return new byte[] { (byte)0xC3, (byte)address, (byte)(address >> 8) };
+			return b(0xC3, address, address >> 8);
 		}
 
 	}
@@ -63,7 +63,7 @@ public class Jp extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument2.getInteger();
-			return new byte[] { (byte)(0xC2 | argument1.getFlag().getCode() << 3), (byte)address, (byte)(address >> 8) };
+			return b(0xC2 | argument1.getFlag().getCode() << 3, address, address >> 8);
 		}
 
 	}
@@ -87,7 +87,7 @@ public class Jp extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return indexifyDirect(argument.getRegister(), (byte)0xE9);
+			return indexifyDirect(argument.getRegister(), 0xE9);
 		}
 
 	}

@@ -29,7 +29,7 @@ public class Di extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xF3 };
+			return b(0xF3);
 		}
 
 	}

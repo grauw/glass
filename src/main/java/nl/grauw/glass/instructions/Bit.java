@@ -39,7 +39,7 @@ public class Bit extends InstructionFactory {
 			if (value < 0 || value > 7)
 				throw new ArgumentException();
 			Register register = argument2.getRegister();
-			return indexifyOnlyIndirect(register, (byte)0xCB, (byte)(0x40 | value << 3 | register.get8BitCode()));
+			return indexifyOnlyIndirect(register, 0xCB, 0x40 | value << 3 | register.get8BitCode());
 		}
 
 	}

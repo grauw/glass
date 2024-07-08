@@ -29,7 +29,7 @@ public class Ccf extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x3F };
+			return b(0x3F);
 		}
 
 	}

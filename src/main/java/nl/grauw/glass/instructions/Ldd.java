@@ -29,7 +29,7 @@ public class Ldd extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)0xA8 };
+			return b(0xED, 0xA8);
 		}
 
 	}

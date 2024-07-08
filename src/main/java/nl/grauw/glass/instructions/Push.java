@@ -34,7 +34,7 @@ public class Push extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyDirect(register, (byte)(0xC5 | register.get16BitCode() << 4));
+			return indexifyDirect(register, 0xC5 | register.get16BitCode() << 4);
 		}
 
 	}

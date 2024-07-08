@@ -36,7 +36,7 @@ public class Or extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)(0xB0 | register.get8BitCode()));
+			return indexifyIndirect(register, 0xB0 | register.get8BitCode());
 		}
 
 	}
@@ -59,7 +59,7 @@ public class Or extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xF6, (byte)argument.getInteger() };
+			return b(0xF6, argument.getInteger());
 		}
 
 	}

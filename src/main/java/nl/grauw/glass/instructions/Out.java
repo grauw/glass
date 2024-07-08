@@ -34,7 +34,7 @@ public class Out extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)(0x41 | argument.getRegister().get8BitCode() << 3) };
+			return b(0xED, 0x41 | argument.getRegister().get8BitCode() << 3);
 		}
 
 	}
@@ -57,7 +57,7 @@ public class Out extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xD3, (byte)argument.getInteger() };
+			return b(0xD3, argument.getInteger());
 		}
 
 	}

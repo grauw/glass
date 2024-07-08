@@ -31,7 +31,7 @@ public class Ret extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xC9 };
+			return b(0xC9);
 		}
 
 	}
@@ -54,7 +54,7 @@ public class Ret extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)(0xC0 | argument.getFlag().getCode() << 3) };
+			return b(0xC0 | argument.getFlag().getCode() << 3);
 		}
 
 	}

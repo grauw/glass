@@ -29,7 +29,7 @@ public class Rla extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x17 };
+			return b(0x17);
 		}
 
 	}

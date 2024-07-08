@@ -29,7 +29,7 @@ public class Nop extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x00 };
+			return b(0x00);
 		}
 
 	}

@@ -9,6 +9,8 @@ import nl.grauw.glass.expressions.Type;
 
 public abstract class InstructionObject {
 
+	private static final byte[] EMPTY_BYTES = new byte[] {};
+
 	protected final Scope context;
 
 	public InstructionObject(Scope context) {
@@ -24,75 +26,95 @@ public abstract class InstructionObject {
 
 	public abstract byte[] getBytes();
 
-	public Expression indexifyDirect(Register register, Expression size) {
+	protected final Expression indexifyDirect(Register register, Expression size) {
 		return register.isIndex() ? new Add(IntegerLiteral.ONE, size) : size;
 	}
 
-	public Expression indexifyIndirect(Register register, Expression size) {
+	protected final Expression indexifyIndirect(Register register, Expression size) {
 		return register.isIndex() ? register.isPair() ? new Add(IntegerLiteral.TWO, size) : new Add(IntegerLiteral.ONE, size) : size;
 	}
 
 	/**
 	 * Inserts index register prefix in the object code if needed.
 	 */
-	public byte[] indexifyDirect(Register register, byte byte1) {
+	protected final byte[] indexifyDirect(Register register, int byte1) {
 		if (!register.isIndex())
-			return new byte[] { byte1 };
+			return b(byte1);
 		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
 			throw new ArgumentException("Can not have index offset for direct addressing.");
-		return new byte[] { register.getIndexCode(), byte1 };
+		return b(register.getIndexCode(), byte1);
 	}
 
-	public byte[] indexifyDirect(Register register, byte byte1, byte byte2) {
+	protected final byte[] indexifyDirect(Register register, int byte1, int byte2) {
 		if (!register.isIndex())
-			return new byte[] { byte1, byte2 };
+			return b(byte1, byte2);
 		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
 			throw new ArgumentException("Can not have index offset for direct addressing.");
-		return new byte[] { register.getIndexCode(), byte1, byte2 };
+		return b(register.getIndexCode(), byte1, byte2);
 	}
 
-	public byte[] indexifyDirect(Register register, byte byte1, byte byte2, byte byte3) {
+	protected final byte[] indexifyDirect(Register register, int byte1, int byte2, int byte3) {
 		if (!register.isIndex())
-			return new byte[] { byte1, byte2, byte3 };
+			return b(byte1, byte2, byte3);
 		if (register.isPair() && register.getIndexOffset().getInteger() != 0)
 			throw new ArgumentException("Can not have index offset for direct addressing.");
-		return new byte[] { register.getIndexCode(), byte1, byte2, byte3 };
+		return b(register.getIndexCode(), byte1, byte2, byte3);
 	}
 
 	/**
 	 * Inserts index register prefix + offset in the object code if needed.
 	 */
-	public byte[] indexifyIndirect(Register register, byte byte1) {
+	protected final byte[] indexifyIndirect(Register register, int byte1) {
 		if (!register.isIndex())
-			return new byte[] { byte1 };
+			return b(byte1);
 		if (!register.isPair())
 			return indexifyDirect(register, byte1);
 		int offset = register.getIndexOffset().getInteger();
 		if (offset < -128 || offset > 127)
 			throw new ArgumentException("Index offset out of range: " + offset);
-		return new byte[] { register.getIndexCode(), byte1, (byte)offset };
+		return b(register.getIndexCode(), byte1, offset);
 	}
 
-	public byte[] indexifyIndirect(Register register, byte byte1, byte byte2) {
+	protected final byte[] indexifyIndirect(Register register, int byte1, int byte2) {
 		if (!register.isIndex())
-			return new byte[] { byte1, byte2 };
+			return b(byte1, byte2);
 		if (!register.isPair())
 			return indexifyDirect(register, byte1, byte2);
 		int offset = register.getIndexOffset().getInteger();
 		if (offset < -128 || offset > 127)
 			throw new ArgumentException("Index offset out of range: " + offset);
-		return new byte[] { register.getIndexCode(), byte1, (byte)offset, byte2 };
+		return b(register.getIndexCode(), byte1, offset, byte2);
 	}
 
-	public byte[] indexifyOnlyIndirect(Register register, byte byte1, byte byte2) {
+	protected final byte[] indexifyOnlyIndirect(Register register, int byte1, int byte2) {
 		if (!register.isIndex())
-			return new byte[] { byte1, byte2 };
+			return b(byte1, byte2);
 		if (!register.isPair())
 			throw new ArgumentException();
 		int offset = register.getIndexOffset().getInteger();
 		if (offset < -128 || offset > 127)
 			throw new ArgumentException("Index offset out of range: " + offset);
-		return new byte[] { register.getIndexCode(), byte1, (byte)offset, byte2 };
+		return b(register.getIndexCode(), byte1, offset, byte2);
+	}
+
+	protected final byte[] b() {
+		return EMPTY_BYTES;
+	}
+
+	protected final byte[] b(int byte1) {
+		return new byte[] { (byte)byte1 };
+	}
+
+	protected final byte[] b(int byte1, int byte2) {
+		return new byte[] { (byte)byte1, (byte)byte2 };
+	}
+
+	protected final byte[] b(int byte1, int byte2, int byte3) {
+		return new byte[] { (byte)byte1, (byte)byte2, (byte)byte3 };
+	}
+
+	protected final byte[] b(int byte1, int byte2, int byte3, int byte4) {
+		return new byte[] { (byte)byte1, (byte)byte2, (byte)byte3, (byte)byte4 };
 	}
 
 }

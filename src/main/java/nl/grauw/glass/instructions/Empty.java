@@ -15,8 +15,6 @@ public class Empty extends InstructionFactory {
 
 	public static class EmptyObject extends InstructionObject {
 
-		private static final byte[] NO_BYTES = new byte[] {};
-
 		public EmptyObject(Scope context) {
 			super(context);
 		}
@@ -28,7 +26,7 @@ public class Empty extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return NO_BYTES;
+			return b();
 		}
 
 	}

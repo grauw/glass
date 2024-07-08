@@ -34,7 +34,7 @@ public class Rrc extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyOnlyIndirect(register, (byte)0xCB, (byte)(0x08 + register.get8BitCode()));
+			return indexifyOnlyIndirect(register, 0xCB, 0x08 | register.get8BitCode());
 		}
 
 	}

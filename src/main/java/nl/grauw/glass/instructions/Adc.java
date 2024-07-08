@@ -38,7 +38,7 @@ public class Adc extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)(0x88 | register.get8BitCode()));
+			return indexifyIndirect(register, 0x88 | register.get8BitCode());
 		}
 
 	}
@@ -61,7 +61,7 @@ public class Adc extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xCE, (byte)argument.getInteger() };
+			return b(0xCE, argument.getInteger());
 		}
 
 	}
@@ -84,7 +84,7 @@ public class Adc extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)(0x4A | argument.getRegister().get16BitCode() << 4) };
+			return b(0xED, 0x4A | argument.getRegister().get16BitCode() << 4);
 		}
 
 	}

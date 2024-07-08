@@ -73,7 +73,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			return indexifyIndirect(register1.isIndex() ? register1 : register2,
-					(byte)(0x40 | register1.get8BitCode() << 3 | register2.get8BitCode()));
+					0x40 | register1.get8BitCode() << 3 | register2.get8BitCode());
 		}
 
 	}
@@ -96,7 +96,7 @@ public class Ld extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)(0x0A | argument.getRegister().get16BitCode() << 4) };
+			return b(0x0A | argument.getRegister().get16BitCode() << 4);
 		}
 
 	}
@@ -119,7 +119,7 @@ public class Ld extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)(0x02 | argument.getRegister().get16BitCode() << 4) };
+			return b(0x02 | argument.getRegister().get16BitCode() << 4);
 		}
 
 	}
@@ -142,7 +142,7 @@ public class Ld extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return indexifyDirect(argument.getRegister(), (byte)0xF9);
+			return indexifyDirect(argument.getRegister(), 0xF9);
 		}
 
 	}
@@ -166,8 +166,8 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			if (argument.getRegister() == Register.I)
-				return new byte[] { (byte)0xED, (byte)0x57 };
-			return new byte[] { (byte)0xED, (byte)0x5F };
+				return b(0xED, 0x57);
+			return b(0xED, 0x5F);
 		}
 
 	}
@@ -191,8 +191,8 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			if (argument.getRegister() == Register.I)
-				return new byte[] { (byte)0xED, (byte)0x47 };
-			return new byte[] { (byte)0xED, (byte)0x4F };
+				return b(0xED, 0x47);
+			return b(0xED, 0x4F);
 		}
 
 	}
@@ -218,7 +218,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument1.getRegister();
-			return indexifyIndirect(register, (byte)(0x06 | register.get8BitCode() << 3), (byte)argument2.getInteger());
+			return indexifyIndirect(register, 0x06 | register.get8BitCode() << 3, argument2.getInteger());
 		}
 
 	}
@@ -244,8 +244,8 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument1.getRegister();
-			return indexifyDirect(register, (byte)(0x01 | register.get16BitCode() << 4),
-					(byte)argument2.getInteger(), (byte)(argument2.getInteger() >> 8));
+			return indexifyDirect(register, 0x01 | register.get16BitCode() << 4,
+					argument2.getInteger(), argument2.getInteger() >> 8);
 		}
 
 	}
@@ -269,7 +269,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument.getInteger();
-			return new byte[] { (byte)0x32, (byte)address, (byte)(address >> 8) };
+			return b(0x32, address, address >> 8);
 		}
 
 	}
@@ -295,7 +295,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument2.getInteger();
-			return indexifyDirect(argument1.getRegister(), (byte)0x2A, (byte)address, (byte)(address >> 8));
+			return indexifyDirect(argument1.getRegister(), 0x2A, address, address >> 8);
 		}
 
 	}
@@ -321,8 +321,8 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument2.getInteger();
-			return new byte[] { (byte)0xED, (byte)(0x4B | argument1.getRegister().get16BitCode() << 4),
-					(byte)address, (byte)(address >> 8) };
+			return b(0xED, 0x4B | argument1.getRegister().get16BitCode() << 4,
+					address, address >> 8);
 		}
 
 	}
@@ -346,7 +346,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument.getInteger();
-			return new byte[] { (byte)0x3A, (byte)address, (byte)(address >> 8) };
+			return b(0x3A, address, address >> 8);
 		}
 
 	}
@@ -372,7 +372,7 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument1.getInteger();
-			return indexifyDirect(argument2.getRegister(), (byte)0x22, (byte)address, (byte)(address >> 8));
+			return indexifyDirect(argument2.getRegister(), 0x22, address, address >> 8);
 		}
 
 	}
@@ -398,8 +398,8 @@ public class Ld extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			int address = argument1.getInteger();
-			return new byte[] { (byte)0xED, (byte)(0x43 | argument2.getRegister().get16BitCode() << 4),
-					(byte)address, (byte)(address >> 8) };
+			return b(0xED, 0x43 | argument2.getRegister().get16BitCode() << 4,
+					address, address >> 8);
 		}
 
 	}

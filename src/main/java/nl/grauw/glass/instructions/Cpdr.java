@@ -29,7 +29,7 @@ public class Cpdr extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)0xB9 };
+			return b(0xED, 0xB9);
 		}
 
 	}

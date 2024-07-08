@@ -29,7 +29,7 @@ public class Daa extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x27 };
+			return b(0x27);
 		}
 
 	}

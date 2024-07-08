@@ -29,7 +29,7 @@ public class Cpl extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x2F };
+			return b(0x2F);
 		}
 
 	}

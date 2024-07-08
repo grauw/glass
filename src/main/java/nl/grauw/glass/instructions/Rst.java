@@ -35,7 +35,7 @@ public class Rst extends InstructionFactory {
 			int value = argument.getInteger();
 			if (value < 0 || value > 0x38 || (value & 7) != 0)
 				throw new ArgumentException();
-			return new byte[] { (byte)(0xC7 + value) };
+			return b(0xC7 | value);
 		}
 
 	}

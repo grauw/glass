@@ -29,7 +29,7 @@ public class Rlca extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0x07 };
+			return b(0x07);
 		}
 
 	}

@@ -38,7 +38,7 @@ public class Sbc extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)(0x98 | register.get8BitCode()));
+			return indexifyIndirect(register, 0x98 | register.get8BitCode());
 		}
 
 	}
@@ -61,7 +61,7 @@ public class Sbc extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xDE, (byte)argument.getInteger() };
+			return b(0xDE, argument.getInteger());
 		}
 
 	}
@@ -84,7 +84,7 @@ public class Sbc extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)(0x42 | argument.getRegister().get16BitCode() << 4) };
+			return b(0xED, 0x42 | argument.getRegister().get16BitCode() << 4);
 		}
 
 	}

@@ -29,7 +29,7 @@ public class Ldir extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)0xB0 };
+			return b(0xED, 0xB0);
 		}
 
 	}

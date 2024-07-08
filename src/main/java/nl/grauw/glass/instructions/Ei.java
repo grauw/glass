@@ -29,7 +29,7 @@ public class Ei extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xFB };
+			return b(0xFB);
 		}
 
 	}

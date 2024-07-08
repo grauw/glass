@@ -82,7 +82,7 @@ public class Ds extends InstructionFactory implements SectionContext {
 					sourceByteStream.size() + " bytes, available: " + size.getInteger() + " bytes).");
 
 			if (virtual)
-				return new byte[] {};
+				return b();
 
 			byte[] padding = new byte[size.getInteger() - sourceByteStream.size()];
 			Arrays.fill(padding, (byte)value.getInteger());

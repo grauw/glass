@@ -29,7 +29,7 @@ public class Reti extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)0x4D };
+			return b(0xED, 0x4D);
 		}
 
 	}

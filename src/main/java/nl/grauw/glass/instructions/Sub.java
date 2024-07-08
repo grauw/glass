@@ -36,7 +36,7 @@ public class Sub extends InstructionFactory {
 		@Override
 		public byte[] getBytes() {
 			Register register = argument.getRegister();
-			return indexifyIndirect(register, (byte)(0x90 | register.get8BitCode()));
+			return indexifyIndirect(register, 0x90 | register.get8BitCode());
 		}
 
 	}
@@ -59,7 +59,7 @@ public class Sub extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xD6, (byte)argument.getInteger() };
+			return b(0xD6, argument.getInteger());
 		}
 
 	}

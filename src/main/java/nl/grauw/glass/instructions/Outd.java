@@ -29,7 +29,7 @@ public class Outd extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xED, (byte)0xAB };
+			return b(0xED, 0xAB);
 		}
 
 	}

@@ -29,7 +29,7 @@ public class Exx extends InstructionFactory {
 
 		@Override
 		public byte[] getBytes() {
-			return new byte[] { (byte)0xD9 };
+			return b(0xD9);
 		}
 
 	}
