@@ -97,15 +97,15 @@ public class ListFileTest extends TestBase {
 	public List<String> list(String... sourceLines) {
 		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
+		source.assemble();
+		source.getBytes();  // force evaluation of checks in byte generation
+
 		String list;
-		try {
-			source.assemble(new Assembler.NullOutputStream());
-			try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
-				try (PrintStream printStream = new PrintStream(outputStream, false, "UTF-8")) {
-					new ListingWriter(new PrintStream(outputStream)).write(source);
-				}
-				list = outputStream.toString("UTF-8");
+		try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+			try (PrintStream printStream = new PrintStream(outputStream, false, "UTF-8")) {
+				new ListingWriter(new PrintStream(outputStream)).write(source);
 			}
+			list = outputStream.toString("UTF-8");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

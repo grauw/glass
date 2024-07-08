@@ -236,11 +236,9 @@ public class SymbolsTest extends TestBase {
 	public List<String> symbols(String... sourceLines) {
 		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
-		try {
-			source.assemble(new Assembler.NullOutputStream());
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+		source.assemble();
+		source.getBytes();  // force evaluation of checks in byte generation
+
 		String symbols = source.getScope().serializeSymbols();
 		return symbols.isEmpty() ? Collections.emptyList() : Arrays.asList(symbols.split("\\R"));
 	}

@@ -1,8 +1,6 @@
 package nl.grauw.glass;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,13 +43,10 @@ public class Source {
 		this.lines.addAll(lines);
 	}
 
-	public void assemble(OutputStream output) throws IOException {
+	public void assemble() {
 		register();
 		expand();
 		resolve(IntegerLiteral.ZERO);
-
-		byte[] objectCode = getBytes();
-		output.write(objectCode, 0, objectCode.length);
 	}
 
 	public void register() {
@@ -82,8 +77,7 @@ public class Source {
 
 	public byte[] getBytes() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-		for (Line line : lines)
-		{
+		for (Line line : lines) {
 			byte[] object = line.getBytes();
 			bytes.write(object, 0, object.length);
 		}

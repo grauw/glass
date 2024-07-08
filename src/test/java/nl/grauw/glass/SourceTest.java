@@ -2,7 +2,6 @@ package nl.grauw.glass;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -1171,13 +1170,8 @@ public class SourceTest extends TestBase {
 	public byte[] assemble(String... sourceLines) {
 		SourceBuilder sourceBuilder = new SourceBuilder(Arrays.asList(temporaryDirectory));
 		Source source = sourceBuilder.parse(new SourceFile(String.join("\n", sourceLines)));
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		try {
-			source.assemble(output);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
-		return output.toByteArray();
+		source.assemble();
+		return source.getBytes();
 	}
 
 }

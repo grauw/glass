@@ -77,8 +77,11 @@ public class Assembler {
 	}
 
 	public void writeObject(Path objectPath) {
+		source.assemble();
+
 		try (OutputStream output = objectPath != null ? createBufferedOutputStream(objectPath) : new NullOutputStream()) {
-			source.assemble(output);
+			byte[] objectCode = source.getBytes();
+			output.write(objectCode, 0, objectCode.length);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
