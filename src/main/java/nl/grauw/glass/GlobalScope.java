@@ -1,5 +1,7 @@
 package nl.grauw.glass;
 
+import java.util.Map;
+
 import nl.grauw.glass.expressions.Expression;
 import nl.grauw.glass.expressions.Instruction;
 import nl.grauw.glass.expressions.IntegerLiteral;
@@ -9,6 +11,10 @@ import nl.grauw.glass.instructions.Error;
 public class GlobalScope extends Scope {
 
 	public GlobalScope() {
+		this(null);
+	}
+	
+	public GlobalScope(Map<String, String> defines) {
 		super();
 		setAddress(IntegerLiteral.ZERO);
 
@@ -96,6 +102,10 @@ public class GlobalScope extends Scope {
 		addBuiltInSymbol("else", new Instruction(new Else(), new Scope(this)));
 		addBuiltInSymbol("error", new Instruction(new Error(), new Scope(this)));
 		addBuiltInSymbol("warning", new Instruction(new Warning(), new Scope(this)));
+		
+		if (defines != null) {
+			addDefines(defines);
+		}
 	}
 
 	private void addBuiltInSymbol(String symbol, Expression value) {

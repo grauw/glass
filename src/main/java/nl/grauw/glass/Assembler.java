@@ -8,7 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class Assembler {
 
@@ -35,6 +38,7 @@ public class Assembler {
 		Path symbolPath = null;
 		Path listPath = null;
 		List<Path> includePaths = new ArrayList<Path>();
+		Map<String, String> defines = new HashMap<>();
 		for (int i = 0; i < args.length; i++) {
 			if (args[i].equals("-I")) {
 				if (++i >= args.length)
@@ -44,6 +48,24 @@ public class Assembler {
 				if (++i >= args.length)
 					throw new AssemblyException("Missing argument value.");
 				listPath = Paths.get(args[i]);
+			} else if (args[i].equals("-D")) {
+				if (++i >= args.length)
+					throw new AssemblyException("Missing define.");
+				
+				String defineArg = args[i];
+				// Check if we have xxx=yyy
+				int equalSign = defineArg.indexOf('=');
+				if (equalSign > 0) {
+					String name = defineArg.substring(0, equalSign);
+					String value = defineArg.substring(equalSign+1);
+					defines.put(name, value);
+				} else {
+					// No xxx=yyy, so we must have another argument
+					if (++i >= args.length)
+						throw new AssemblyException("Missing define value.");
+					String defineValue = args[i];
+					defines.put(defineArg, defineValue);
+				}
 			} else if (sourcePath == null) {
 				sourcePath = Paths.get(args[i]);
 			} else if (objectPath == null) {
@@ -55,7 +77,7 @@ public class Assembler {
 			}
 		}
 
-		instance = new Assembler(sourcePath, includePaths);
+		instance = new Assembler(sourcePath, includePaths, defines);
 		instance.writeObject(objectPath);
 		if (symbolPath != null)
 			instance.writeSymbols(symbolPath);
@@ -63,8 +85,8 @@ public class Assembler {
 			instance.writeList(listPath);
 	}
 
-	public Assembler(Path sourcePath, List<Path> includePaths) {
-		source = new SourceBuilder(includePaths).parse(sourcePath);
+	public Assembler(Path sourcePath, List<Path> includePaths, Map<String, String> defines) {
+		source = new SourceBuilder(includePaths, defines).parse(sourcePath);
 	}
 
 	public void writeObject(Path objectPath) {
