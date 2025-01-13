@@ -1,10 +1,11 @@
 package nl.grauw.glass;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 
 import nl.grauw.glass.expressions.Context;
 import nl.grauw.glass.expressions.ContextLiteral;
@@ -17,6 +18,7 @@ public class Scope implements Context {
 
 	private final Scope parent;
 	private final Map<String, Expression> symbols = new HashMap<>();
+	private final Map<String, Expression> defines = new HashMap<>();
 	private Expression address;
 
 	public Scope() {
@@ -47,6 +49,44 @@ public class Scope implements Context {
 			throw new AssemblyException("Address was already set.");
 		this.address = address;
 	}
+
+	public void addDefines(Map<String, String> defines) {
+		for(Map.Entry<String, String> defineAndValue : defines.entrySet()) {
+			try {
+				String lowerCaseName = defineAndValue.getKey().toLowerCase(Locale.ENGLISH);
+				String value = defineAndValue.getValue();
+				// Now create a source file with contents:
+				// <Label> equ <value>
+				String sourceLine = lowerCaseName +": equ " + value;
+				SourceFile dummyFile = new SourceFile(sourceLine);
+				Parser parser = new Parser(dummyFile);
+				Line line = parser.parse(new Scope());
+				this.defines.put(lowerCaseName, line.getArguments());
+			} catch (Exception e) {
+				// Warning?
+			}
+		}
+	}
+
+
+	public Expression getDefine(String label) {
+		if (label != null) {
+			Expression localValue = getLocalDefine(label);
+			if (localValue == null && this.parent != null) {
+				return this.parent.getDefine(label);
+			}
+			return localValue;
+		}
+		return null;
+	}
+
+	public Expression getLocalDefine(String label) {
+		if (label != null) {
+			return this.defines.get(label.toLowerCase(Locale.ENGLISH));
+		}
+		return null;
+	}
+
 
 	public void addSymbol(String name, Expression value) {
 		if (name == null || value == null)

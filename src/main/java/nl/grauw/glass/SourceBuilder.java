@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import nl.grauw.glass.directives.Directive;
 import nl.grauw.glass.directives.Ds;
@@ -40,7 +41,11 @@ public class SourceBuilder {
 	private static final List<SourceFile> sourceFiles = new ArrayList<SourceFile>();
 
 	public SourceBuilder(List<Path> includePaths) {
-		this(new Scope(new GlobalScope()), includePaths);
+		this(includePaths, null);
+	}
+
+	public SourceBuilder(List<Path> includePaths, Map<String, String> defines) {
+		this(new Scope(new GlobalScope(defines)), includePaths);
 	}
 
 	private SourceBuilder(Scope scope, List<Path> includePaths) {
