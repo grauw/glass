@@ -43,6 +43,8 @@ Options:
     
   * `-L list_file` File to output a listing of the assembled code to.
 
+  * `-D symbol=value` Define a value for a symbol defined in code with equ.
+
 Note that [Java 8](http://java.com/getjava) must be installed to run Glass.
 To check your Java version, invoke the `java -version` command.
 
